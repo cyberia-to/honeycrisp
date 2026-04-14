@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Required for all DriverKit extensions -->
+    <key>com.apple.developer.driverkit</key>
+    <true/>
+
+    <!-- Allow the DEXT to run (development/testing) -->
+    <key>com.apple.developer.driverkit.allow-any-userclient-access</key>
+    <true/>
+
+    <!-- DriverKit transport types this DEXT supports -->
+    <key>com.apple.developer.driverkit.transport.user</key>
+    <true/>
+
+    <!-- Memory allocation capabilities -->
+    <key>com.apple.developer.driverkit.communicates-with-drivers</key>
+    <true/>
+
+    <!--
+    NOTE: For production deployment, you need:
+      - Apple Developer account with DriverKit capability
+      - Provisioning profile with System Extension entitlement
+      - Proper team ID in code signing
+
+    For local development/testing with SIP partially disabled:
+      csrutil enable --without kext
+      systemextensionsctl developer on
+    -->
+</dict>
+</plist>

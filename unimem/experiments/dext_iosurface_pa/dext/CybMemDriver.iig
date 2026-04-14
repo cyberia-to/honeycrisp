@@ -1,0 +1,66 @@
+/*
+ * CybMemDriver.iig -- DriverKit Interface Definition
+ *
+ * IOUserClient subclass that receives an IOSurface-backed VA range
+ * from userspace, wraps it via CreateMemoryDescriptorFromClient,
+ * resolves to physical/IOVA segments via IODMACommand, returns PA list.
+ *
+ * PATH 2 experiment: IOSurface alloc -> DEXT reads physical addresses
+ */
+
+#ifndef CybMemDriver_h
+#define CybMemDriver_h
+
+#include <Availability.h>
+#include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IODMACommand.iig>
+#include <DriverKit/IOBufferMemoryDescriptor.iig>
+
+enum {
+    kCybMemMethodResolvePA = 0,
+    kCybMemMethodCount     = 1,
+};
+
+#define CYBMEM_MAX_SEGMENTS 32
+
+struct CybMemInput {
+    uint64_t client_va;      // IOSurface base address in client address space
+    uint64_t byte_length;    // IOSurface allocation size
+    uint32_t surface_id;     // IOSurfaceGetID (for logging)
+    uint32_t _pad0;
+};
+
+struct CybMemPhysSegment {
+    uint64_t address;
+    uint64_t length;
+};
+
+struct CybMemOutput {
+    uint32_t num_segments;
+    uint32_t flags;
+    uint64_t total_length;
+    struct CybMemPhysSegment segments[CYBMEM_MAX_SEGMENTS];
+};
+
+class CybMemDriver : public IOUserClient
+{
+public:
+    virtual bool init() override;
+    virtual void free() override;
+    virtual kern_return_t Start(IOService * provider) override;
+    virtual kern_return_t Stop(IOService * provider) override;
+
+    virtual kern_return_t ExternalMethod(
+        uint64_t                            selector,
+        IOUserClientMethodArguments       * arguments,
+        const IOUserClientMethodDispatch  * dispatch,
+        OSObject                          * target,
+        void                              * reference) override;
+
+    virtual kern_return_t CopyClientMemoryForType(
+        uint64_t                type,
+        uint64_t              * options,
+        IOMemoryDescriptor   ** memory) override;
+};
+
+#endif

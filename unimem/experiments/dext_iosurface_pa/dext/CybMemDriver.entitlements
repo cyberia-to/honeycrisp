@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  CybMemDriver.entitlements
+
+  DriverKit extensions require specific entitlements to load.
+  In development, these are applied via ad-hoc codesigning.
+  For distribution, a proper Developer ID + provisioning profile is needed.
+
+  Required entitlements for any DEXT:
+  - com.apple.developer.driverkit: boolean, must be true
+  - com.apple.developer.driverkit.transport.usb (or other transport):
+    lists the transport types the DEXT handles. For a software-only DEXT
+    that doesn't bind to a hardware transport, we omit transport entitlements
+    and instead use the allow-any or family-specific ones.
+
+  For development/testing, we use:
+  - com.apple.developer.driverkit: enables DriverKit
+  - com.apple.developer.driverkit.allow-any-userclient-access:
+    allows any process to open a user client connection
+  - com.apple.security.app-sandbox: false (DEXT are not sandboxed)
+-->
+<plist version="1.0">
+<dict>
+    <!-- Core DriverKit entitlement: required for any DEXT to load -->
+    <key>com.apple.developer.driverkit</key>
+    <true/>
+
+    <!--
+      Allow any user client to connect to this DEXT.
+      Without this, only specifically entitled clients can connect.
+      In production, use more restrictive entitlements.
+    -->
+    <key>com.apple.developer.driverkit.allow-any-userclient-access</key>
+    <true/>
+
+    <!--
+      DriverKit family entitlements: required if matching against
+      specific IOKit families. For our IOResources-based matching,
+      we may need the "generic" family or system extension entitlement.
+    -->
+    <key>com.apple.developer.system-extension.install</key>
+    <true/>
+
+    <!--
+      DMA/memory access: allow the DEXT to create DMA commands
+      and access physical memory mappings.
+    -->
+    <key>com.apple.developer.driverkit.communicates-with-drivers</key>
+    <true/>
+</dict>
+</plist>
