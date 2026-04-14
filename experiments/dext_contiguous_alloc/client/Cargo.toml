@@ -1,0 +1,11 @@
+[package]
+name = "dext_contiguous_client"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "dext_contiguous_client"
+path = "src/main.rs"
+
+[dependencies]
+libc = "0.2"

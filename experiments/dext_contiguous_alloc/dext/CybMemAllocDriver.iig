@@ -1,0 +1,63 @@
+//
+// CybMemAllocDriver.iig
+//
+// DriverKit interface definition for contiguous physical memory allocator.
+//
+// This DEXT allocates physically contiguous memory via IOBufferMemoryDescriptor
+// and exposes it to userspace clients through ExternalMethod and memory mapping.
+//
+
+#ifndef CybMemAllocDriver_h
+#define CybMemAllocDriver_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
+
+// External method selectors
+enum {
+    kCybMemAllocGetInfo       = 0,  // Get allocation info (size, flags)
+    kCybMemAllocGetSegments   = 1,  // Get physical segment list
+    kCybMemAllocMethodCount   = 2,
+};
+
+// Memory type for clientMemoryForType
+enum {
+    kCybMemAllocMemoryType    = 0,  // The contiguous buffer
+};
+
+// ──────────────────────────────────────────────────────────────────
+// CybMemAllocDriver: IOUserClient subclass
+//
+// One instance per userspace connection. On Start(), allocates a
+// physically contiguous IOBufferMemoryDescriptor. Exposes it via:
+//   - ExternalMethod selector 0: returns allocation metadata
+//   - ExternalMethod selector 1: returns physical segment addresses
+//   - CopyClientMemoryForType: maps the buffer into client address space
+// ──────────────────────────────────────────────────────────────────
+
+class CybMemAllocDriver : public IOUserClient
+{
+public:
+    // IOService lifecycle
+    virtual bool init() override;
+    virtual kern_return_t Start(IOService * provider) override;
+    virtual kern_return_t Stop(IOService * provider) override;
+    virtual void free() override;
+
+    // IOUserClient: external method dispatch
+    virtual kern_return_t ExternalMethod(
+        uint64_t             selector,
+        IOUserClientMethodArguments * arguments,
+        const IOUserClientMethodDispatch * dispatch,
+        OSObject           * target,
+        void               * reference) override;
+
+    // IOUserClient: memory mapping for client
+    virtual kern_return_t CopyClientMemoryForType(
+        uint64_t             type,
+        uint64_t           * options,
+        IOMemoryDescriptor ** memory) override;
+};
+
+#endif /* CybMemAllocDriver_h */

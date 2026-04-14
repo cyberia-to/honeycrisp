@@ -1,0 +1,7 @@
+[package]
+name = "cybmem-client"
+version = "0.1.0"
+edition = "2021"
+description = "Userspace client for CybMemDriver DEXT -- IOSurface PA resolution experiment"
+
+[dependencies]

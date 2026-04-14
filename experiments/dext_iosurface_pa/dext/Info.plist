@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Info.plist for CybMemDriver DEXT
+
+  IOKit matching personality:
+  - IOProviderClass: IOUserService  (generic provider for user-initiated DEXTs)
+  - IOUserClass: CybMemDriver      (our DriverKit class name)
+  - IOUserServerName: com.cyb.CybMemDriver  (must match the code-signing identifier)
+  - IOClass: IOUserUserClient       (kernel-side proxy for DriverKit user clients)
+
+  The matching system finds our IOService parent (IOUserService),
+  which then instantiates CybMemDriver in the DriverKit userspace runtime.
+
+  For a DEXT user client, the typical pattern:
+    1. A parent IOService personality matches and loads
+    2. When userspace calls IOServiceOpen(), NewUserClient() creates our IOUserClient
+    3. Or for simple setups, we match directly on IOUserService
+
+  This Info.plist supports both development (manual load) and installed operation.
+-->
+<plist version="1.0">
+<dict>
+    <!-- Bundle metadata -->
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>CybMemDriver</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.cyb.CybMemDriver</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>CybMemDriver</string>
+    <key>CFBundlePackageType</key>
+    <string>DEXT</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <!-- DriverKit minimum version -->
+    <key>OSBundleMinimumDriverKitVersion</key>
+    <string>20.0</string>
+
+    <!-- IOKit Matching Personalities -->
+    <key>IOKitPersonalities</key>
+    <dict>
+        <!--
+          "CybMemDriver" personality:
+          This tells IOKit how to match and instantiate our DEXT.
+        -->
+        <key>CybMemDriver</key>
+        <dict>
+            <!-- Kernel class: IOUserService is the generic entry point for DEXTs -->
+            <key>IOClass</key>
+            <string>IOUserService</string>
+
+            <!--
+              IOUserClass: the DriverKit class to instantiate.
+              Must exactly match the class name in CybMemDriver.iig.
+            -->
+            <key>IOUserClass</key>
+            <string>CybMemDriver</string>
+
+            <!--
+              IOProviderClass: what we match against in the IORegistry.
+              IOResources is the "root" provider for software-only services.
+            -->
+            <key>IOProviderClass</key>
+            <string>IOResources</string>
+
+            <!--
+              IOMatchCategory: allows multiple personalities to match
+              on the same provider.
+            -->
+            <key>IOMatchCategory</key>
+            <string>CybMemDriver</string>
+
+            <!--
+              IOResourceMatch: match when IOKit is ready.
+              IOBSD is available once BSD subsystem is up (always true in practice).
+            -->
+            <key>IOResourceMatch</key>
+            <string>IOBSD</string>
+
+            <!--
+              IOUserServerName: identifies the DEXT server process.
+              Must match the signing identity / bundle ID.
+            -->
+            <key>IOUserServerName</key>
+            <string>com.cyb.CybMemDriver</string>
+
+            <!--
+              UserClientProperties: describes the IOUserClient subclass
+              that gets created when a userspace app calls IOServiceOpen().
+            -->
+            <key>UserClientProperties</key>
+            <dict>
+                <key>IOClass</key>
+                <string>IOUserUserClient</string>
+                <key>IOUserClass</key>
+                <string>CybMemDriver</string>
+            </dict>
+
+            <!--
+              IOProbeScore: higher scores are preferred during matching.
+              Default of 100 is fine for us.
+            -->
+            <key>IOProbeScore</key>
+            <integer>100</integer>
+        </dict>
+    </dict>
+</dict>
+</plist>

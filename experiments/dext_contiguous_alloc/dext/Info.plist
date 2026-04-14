@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+
+    <key>CFBundleExecutable</key>
+    <string>CybMemAllocDriver</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>com.cyborgism.CybMemAllocDriver</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <key>CFBundleName</key>
+    <string>CybMemAllocDriver</string>
+
+    <key>CFBundlePackageType</key>
+    <string>DEXT</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <key>OSBundleMinimumKernelVersion</key>
+    <string>23.0</string>
+
+    <!-- DriverKit personality: tells IOKit how to match and load -->
+    <key>IOKitPersonalities</key>
+    <dict>
+        <key>CybMemAllocDriver</key>
+        <dict>
+            <!-- Class implementing IOUserClient -->
+            <key>IOClass</key>
+            <string>IOUserService</string>
+
+            <!-- The DEXT class name (must match .iig class) -->
+            <key>IOUserClass</key>
+            <string>CybMemAllocDriver</string>
+
+            <!-- The matching service class (IOUserService for standalone DEXTs) -->
+            <key>IOProviderClass</key>
+            <string>IOUserService</string>
+
+            <!-- Unique server name for IOServiceGetMatchingService -->
+            <key>IOUserServerName</key>
+            <string>com.cyborgism.CybMemAllocDriver</string>
+
+            <!-- User client properties -->
+            <key>IOUserClientClass</key>
+            <string>IOUserUserClient</string>
+        </dict>
+    </dict>
+
+    <!-- Required for DriverKit extensions -->
+    <key>OSBundleUsageDescription</key>
+    <string>Allocates physically contiguous memory for ANE/GPU experiments.</string>
+</dict>
+</plist>
