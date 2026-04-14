@@ -1,0 +1,197 @@
+//! Raw FFI bindings to Apple frameworks: Metal, CoreFoundation, libobjc
+
+#![allow(
+    non_camel_case_types,
+    non_upper_case_globals,
+    non_snake_case,
+    dead_code,
+    clippy::not_unsafe_ptr_arg_deref,
+    clippy::missing_safety_doc
+)]
+
+mod selectors;
+mod trampoline;
+
+pub use selectors::*;
+pub use trampoline::*;
+
+use std::ffi::{c_char, c_void, CStr};
+
+// ── Type aliases ──
+
+pub type ObjcClass = *const c_void;
+pub type ObjcSel = *const c_void;
+pub type ObjcId = *mut c_void;
+pub type CFTypeRef = *const c_void;
+pub type CFStringRef = *const c_void;
+pub type CFMutableDictionaryRef = *mut c_void;
+pub type NSUInteger = usize;
+
+// ── MTLSize (used for dispatch) ──
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLSize {
+    pub width: NSUInteger,
+    pub height: NSUInteger,
+    pub depth: NSUInteger,
+}
+
+// ── MTLRegion ──
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLOrigin {
+    pub x: NSUInteger,
+    pub y: NSUInteger,
+    pub z: NSUInteger,
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLRegion {
+    pub origin: MTLOrigin,
+    pub size: MTLSize,
+}
+
+// ── Metal resource options ──
+
+pub const MTLResourceStorageModeShared: NSUInteger = 0;
+pub const MTLResourceStorageModeManaged: NSUInteger = 0x10;
+pub const MTLResourceStorageModePrivate: NSUInteger = 0x20;
+
+// ── Metal pixel formats (common) ──
+
+pub const MTLPixelFormatRGBA8Unorm: NSUInteger = 70;
+pub const MTLPixelFormatBGRA8Unorm: NSUInteger = 80;
+pub const MTLPixelFormatR32Float: NSUInteger = 55;
+pub const MTLPixelFormatRGBA32Float: NSUInteger = 125;
+
+// ── CoreFoundation constants ──
+
+pub const kCFStringEncodingUTF8: u32 = 0x08000100;
+
+// ── Metal.framework ──
+
+#[link(name = "Metal", kind = "framework")]
+extern "C" {
+    pub fn MTLCreateSystemDefaultDevice() -> ObjcId;
+    pub fn MTLCopyAllDevices() -> ObjcId;
+}
+
+// ── CoreFoundation ──
+
+#[link(name = "CoreFoundation", kind = "framework")]
+extern "C" {
+    pub fn CFStringCreateWithCString(
+        alloc: *const c_void,
+        cStr: *const c_char,
+        encoding: u32,
+    ) -> CFStringRef;
+    pub fn CFStringCreateWithBytes(
+        alloc: *const c_void,
+        bytes: *const u8,
+        numBytes: isize,
+        encoding: u32,
+        isExternalRepresentation: bool,
+    ) -> CFStringRef;
+    pub fn CFRelease(cf: CFTypeRef);
+    pub fn CFRetain(cf: CFTypeRef) -> CFTypeRef;
+}
+
+// ── ObjC runtime ──
+
+extern "C" {
+    pub fn objc_getClass(name: *const c_char) -> ObjcClass;
+    pub fn sel_registerName(name: *const c_char) -> ObjcSel;
+    pub fn objc_msgSend() -> ObjcId;
+    pub fn objc_retain(obj: ObjcId) -> ObjcId;
+    pub fn objc_release(obj: ObjcId);
+    pub fn objc_autoreleasePoolPush() -> *mut c_void;
+    pub fn objc_autoreleasePoolPop(pool: *mut c_void);
+    pub fn object_getClass(obj: ObjcId) -> ObjcClass;
+    pub fn class_getMethodImplementation(cls: ObjcClass, sel: ObjcSel) -> *const c_void;
+    /// ARC optimization: if called immediately after a msg_send that returns
+    /// an autoreleased object, the runtime skips the autorelease+retain
+    /// round-trip entirely. Must be called with no intervening code.
+    pub fn objc_retainAutoreleasedReturnValue(obj: ObjcId) -> ObjcId;
+}
+
+// ── String helpers ──
+
+#[mutants::skip] // null err → None — mutant → None passes on success path
+pub fn nserror_string(err: ObjcId) -> Option<String> {
+    if err.is_null() {
+        return None;
+    }
+    unsafe {
+        let desc = msg0(err, SEL_localizedDescription());
+        if desc.is_null() {
+            return None;
+        }
+        nsstring_to_rust(desc)
+    }
+}
+
+pub fn nsstring_to_rust(obj: ObjcId) -> Option<String> {
+    if obj.is_null() {
+        return None;
+    }
+    unsafe {
+        type F = unsafe extern "C" fn(ObjcId, ObjcSel) -> *const c_char;
+        let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+        let cstr = f(obj, SEL_UTF8String());
+        if cstr.is_null() {
+            return None;
+        }
+        Some(CStr::from_ptr(cstr).to_string_lossy().into_owned())
+    }
+}
+
+/// Create NSString from &str. Zero-alloc: uses CFStringCreateWithBytes
+/// directly on the Rust string's UTF-8 bytes, no CString intermediate.
+pub fn nsstring(s: &str) -> ObjcId {
+    unsafe {
+        CFStringCreateWithBytes(
+            std::ptr::null(),
+            s.as_ptr(),
+            s.len() as isize,
+            kCFStringEncodingUTF8,
+            false,
+        ) as ObjcId
+    }
+}
+
+// ── Retain/release (hot path — cached selectors) ──
+
+/// Retain via objc_retain (direct C call, not msg_send).
+#[inline(always)]
+pub unsafe fn retain(obj: ObjcId) -> ObjcId {
+    if !obj.is_null() {
+        objc_retain(obj);
+    }
+    obj
+}
+
+/// Release via objc_release (direct C call, not msg_send).
+#[inline(always)]
+pub unsafe fn release(obj: ObjcId) {
+    if !obj.is_null() {
+        objc_release(obj);
+    }
+}
+
+/// Retain a known-non-null object. No null check — hot path only.
+#[inline(always)]
+pub unsafe fn retain_nonnull(obj: ObjcId) -> ObjcId {
+    debug_assert!(!obj.is_null());
+    objc_retain(obj);
+    obj
+}
+
+/// Release a known-non-null object. No null check — hot path only.
+#[inline(always)]
+pub unsafe fn release_nonnull(obj: ObjcId) {
+    debug_assert!(!obj.is_null());
+    objc_release(obj);
+}
