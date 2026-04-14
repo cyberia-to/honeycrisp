@@ -1,0 +1,131 @@
+# Benchmark baseline — M1Pro (8P+2E), 2026-04-04
+#
+# Purpose: track expected runtimes, detect broken benchmarks,
+# set time budgets. If a bench exceeds max_seconds, it's a bug.
+#
+# Run all: for f in bench/*.rs; do cargo run --release --example "bench_$(basename $f .rs)" 2>&1; done
+# (skip common.rs and baseline.toml)
+
+[meta]
+chip = "M1Pro"
+date = "2026-04-04"
+total_time_seconds = 45  # all benches combined should finish in ~45s
+                         # (excluding sgemm which takes ~90s due to Apple first-pass)
+
+[bench.memory]
+file = "bench/memory.rs"
+max_seconds = 10
+expected_seconds = 5
+notes = "pointer chase + STREAM + prefetch"
+
+[bench.cores]
+file = "bench/cores.rs"
+max_seconds = 15
+expected_seconds = 8
+notes = "P/E core pinning + cross-core latency (ping-pong 50K rounds)"
+
+[bench.elementwise]
+file = "bench/elementwise.rs"
+max_seconds = 30
+expected_seconds = 15
+comparison = "Apple Accelerate"
+notes = "13 ops vs vvexpf/vDSP/cblas"
+
+[bench.sgemm]
+file = "bench/sgemm.rs"
+max_seconds = 120
+expected_seconds = 90
+comparison = "Apple cblas_sgemm"
+notes = "Apple runs ALL sizes first (avoids deadlock). 500 iters for small sizes."
+known_issue = "takes long because Apple Accelerate 4096x4096 at 8 iters is slow"
+
+[bench.integer]
+file = "bench/integer.rs"
+max_seconds = 20
+expected_seconds = 10
+comparison = "scalar Rust (auto-vectorized)"
+notes = "NEON vs compiler. fused ops (SAD, SSD) show real wins."
+
+[bench.numeric]
+file = "bench/numeric.rs"
+max_seconds = 10
+expected_seconds = 5
+notes = "complex_mul_acc, bf16/i8 conversions, RoPE"
+
+[bench.amx]
+file = "bench/amx.rs"
+max_seconds = 10
+expected_seconds = 3
+notes = "AMX instruction bandwidth + compute throughput"
+
+[bench.zk]
+file = "bench/zk.rs"
+max_seconds = 60
+expected_seconds = 40
+notes = "Goldilocks field, Poseidon2, NTT 2^16, Merkle 4096 leaves"
+
+[bench.crypto]
+file = "bench/crypto.rs"
+max_seconds = 15
+expected_seconds = 8
+notes = "AES-128, SHA-256, PMULL via ARM crypto extensions"
+
+[bench.render]
+file = "bench/render.rs"
+max_seconds = 10
+expected_seconds = 5
+comparison = "scalar Rust"
+notes = "rsqrt/recip via FRSQRTE/FRECPE, clamp, lerp"
+
+[bench.ai]
+file = "bench/ai.rs"
+max_seconds = 30
+expected_seconds = 15
+notes = "inference pipeline: sgemm 4K, quant, activations, softmax"
+
+# ── key results (reference numbers, not hard requirements) ────────────
+
+[results.elementwise]
+exp_ns = 1458
+log_ns = 1250
+tanh_ns = 2250
+sigmoid_ns = 2000
+gelu_ns = 3354
+silu_ns = 3000
+softmax_ns = 4292
+normalize_ns = 1375
+note = "vs Apple Accelerate: 10 wins, 3 ties, 0 losses"
+
+[results.sgemm]
+sgemm_32_gf = 524
+sgemm_256_gf = 1200
+sgemm_1024_gf = 2260
+sgemm_4096_gf = 1470
+note = "vs Apple cblas_sgemm"
+
+[results.zk]
+field_mul_batch_ns_per = 1.1
+field_inv_ns = 297
+poseidon2_perm_ns = 5500
+poseidon2_hashes_per_sec = 182000
+merkle_4096_ns = 24000000
+ntt_65536_fwd_ns = 2800000
+note = "Goldilocks p = 2^64 - 2^32 + 1"
+
+[results.crypto]
+aes_128_gb_s = 10.0
+sha256_gb_s = 1.7
+pmull_mops = 1700
+
+[results.render]
+rsqrt_ns = 916
+recip_ns = 792
+clamp_ns = 625
+lerp_ns = 333
+note = "vs scalar Rust, NOT vs Apple"
+
+[results.integer]
+dot_i8_ns = 83
+sad_u8_ns = 125
+scale_acc_i16_ns = 500
+note = "vs scalar Rust, NOT vs Apple"
