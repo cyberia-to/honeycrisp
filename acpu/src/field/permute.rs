@@ -128,8 +128,8 @@ fn apply_m4(x: &mut [u64]) {
 fn mds_internal(state: &mut [u64; 16], diag: &[u64; 16]) {
     // Sum all elements
     let mut sum = state[0];
-    for i in 1..16 {
-        sum = gl_add(sum, state[i]);
+    for s in &state[1..] {
+        sum = gl_add(sum, *s);
     }
     // diag[i] * state[i] + sum
     for i in 0..16 {

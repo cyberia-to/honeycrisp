@@ -3,6 +3,7 @@ name = "metal-benches"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+publish = false
 
 [dependencies]
 aruminium.workspace = true

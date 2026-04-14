@@ -4,6 +4,10 @@ the lightest metal.
 
 pure Rust Apple Metal GPU driver. zero external dependencies. direct `objc_msgSend` FFI to Metal.framework — no objc runtime, no Swift, no headers.
 
+standard Rust Metal bindings (objc2-metal) add retain/release overhead on every call. aruminium pre-resolves ObjC method implementations at construction and dispatches through raw function pointers on the hot path — bypassing `objc_msgSend` entirely in inference loops. the result: 1.79x faster pipelined throughput on identical workloads.
+
+experimental. API unstable.
+
 ```rust,ignore
 let device = aruminium::Gpu::open()?;
 let queue = device.new_command_queue()?;

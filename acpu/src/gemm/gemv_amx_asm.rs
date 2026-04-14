@@ -164,7 +164,7 @@ core::arch::global_asm!(
     "cmp x28, x23",
     "b.lt 10b",
     "50:",
-    // TODO: K remainder (skip for now, handled by caller)
+    // K remainder handled by caller (gemv_pure_asm requires k % 8 == 0)
 
     // Store Z rows → C
     // STZ: operand = addr | (z_row << 56)
@@ -203,8 +203,12 @@ extern "C" {
 
 /// Pure-asm AMX GEMV. Pre-broadcasts A, then calls asm kernel.
 #[cfg(target_arch = "aarch64")]
+#[allow(clippy::needless_range_loop)]
 pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert!(k % 8 == 0, "gemv_pure_asm requires k divisible by 8");
+    debug_assert!(
+        k.is_multiple_of(8),
+        "gemv_pure_asm requires k divisible by 8"
+    );
 
     crate::gemm::ensure_amx();
 

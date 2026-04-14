@@ -3,12 +3,13 @@ name = "rane"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "rust apple neural engine"
+description = "pure Rust driver for Apple Neural Engine"
 repository = "https://github.com/cyberia-to/honeycrisp"
-homepage = "https://github.com/cyberia-to/honeycrisp"
-keywords = ["ane", "neural-engine", "apple-silicon", "gpu", "macos"]
+homepage = "https://github.com/cyberia-to/honeycrisp/tree/master/rane"
+keywords = ["ane", "neural-engine", "apple-silicon", "inference", "macos"]
 categories = ["os::macos-apis", "hardware-support", "science"]
 readme = "README.md"
+exclude = ["CLAUDE.md"]
 
 [dependencies]
 unimem.workspace = true

@@ -3,12 +3,13 @@ name = "aruminium"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "light rust metal driver"
+description = "pure Rust Apple Metal GPU driver"
 repository = "https://github.com/cyberia-to/honeycrisp"
-homepage = "https://github.com/cyberia-to/honeycrisp"
-keywords = ["metal", "gpu", "apple", "compute", "macos"]
+homepage = "https://github.com/cyberia-to/honeycrisp/tree/master/aruminium"
+keywords = ["metal", "gpu", "apple-silicon", "compute", "macos"]
 categories = ["os::macos-apis", "graphics", "hardware-support"]
 readme = "README.md"
+exclude = ["CLAUDE.md"]
 
 [dependencies]
 unimem.workspace = true

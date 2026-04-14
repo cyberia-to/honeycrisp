@@ -43,7 +43,7 @@ pub fn sad_u8(a: &[u8], b: &[u8]) -> u64 {
                 s += (a[i] as i16 - b[i] as i16).unsigned_abs() as u64;
                 i += 1;
             }
-            return s;
+            s
         }
     }
 
@@ -93,7 +93,7 @@ pub fn ssd_i32(a: &[i32], b: &[i32]) -> i64 {
                 s += d * d;
                 i += 1;
             }
-            return s;
+            s
         }
     }
 
@@ -177,7 +177,7 @@ pub fn sum_abs_i8(x: &[i8]) -> u64 {
                 s += x[i].unsigned_abs() as u64;
                 i += 1;
             }
-            return s;
+            s
         }
     }
 

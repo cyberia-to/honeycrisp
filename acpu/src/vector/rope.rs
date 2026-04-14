@@ -17,7 +17,7 @@ use core::arch::aarch64::*;
 ///   out[2*i+1] = x0 * sin(theta) + x1 * cos(theta)
 pub fn rotate(out: &mut [f32], x: &[f32], freqs: &[f32], pos: usize) {
     let dim = x.len();
-    assert!(dim % 2 == 0, "rotate: dimension must be even");
+    assert!(dim.is_multiple_of(2), "rotate: dimension must be even");
     let n_pairs = dim / 2;
     assert!(freqs.len() >= n_pairs, "rotate: not enough frequencies");
     assert!(out.len() >= dim, "rotate: output buffer too small");

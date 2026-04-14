@@ -4,7 +4,7 @@
 //! - `microkernel_16x16`: single tile, Z tile 0
 //! - `microkernel_16x32`: double-wide, Z tiles 0+1, 2× compute per A load
 
-use super::asm::{amx_op, OP_FMA32, OP_LDX, OP_LDY, OP_LDZ, OP_STZ};
+use super::asm::{amx_op, OP_FMA32, OP_LDX, OP_LDY, OP_STZ};
 use super::fma::{fma_acc, fma_first};
 use super::regs::{XRow, YRow};
 

@@ -3,10 +3,13 @@ name = "unimem"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "Zero-copy memory driver for Apple Silicon — IOSurface + bump arena + tensor pool"
+description = "zero-copy memory driver for Apple Silicon"
 repository = "https://github.com/cyberia-to/honeycrisp"
+homepage = "https://github.com/cyberia-to/honeycrisp/tree/master/unimem"
 keywords = ["apple-silicon", "iosurface", "zero-copy", "arena", "memory"]
 categories = ["os::macos-apis", "hardware-support", "memory-management"]
+readme = "README.md"
+exclude = ["CLAUDE.md", "experiments/"]
 
 [dependencies]
 crossbeam-queue.workspace = true

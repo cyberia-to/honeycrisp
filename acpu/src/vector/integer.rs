@@ -45,7 +45,7 @@ pub fn sum_i32(x: &[i32]) -> i64 {
                 s += *p.add(i) as i64;
                 i += 1;
             }
-            return s;
+            s
         }
     }
 
@@ -99,7 +99,7 @@ pub fn max_i32(x: &[i32]) -> i32 {
                 }
                 i += 1;
             }
-            return m;
+            m
         }
     }
 
@@ -147,7 +147,7 @@ pub fn min_i32(x: &[i32]) -> i32 {
                 }
                 i += 1;
             }
-            return m;
+            m
         }
     }
 
@@ -212,7 +212,7 @@ pub fn dot_i8(a: &[i8], b: &[i8]) -> i32 {
                 s += a[i] as i32 * b[i] as i32;
                 i += 1;
             }
-            return s;
+            s
         }
     }
 
@@ -394,7 +394,7 @@ pub fn absmax_i8(x: &[i8]) -> u8 {
                 }
                 i += 1;
             }
-            return m;
+            m
         }
     }
 

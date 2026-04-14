@@ -25,7 +25,7 @@ pub(super) fn matmul_f32_amx_direct(
 
     // Pair32 for larger sizes (≥256). For 64-128, the 16×64 path has lower
     // pack overhead (16-wide vs 32-wide interleaved transpose).
-    let use_pair = m % 32 == 0 && n % 32 == 0 && m >= 32 && n >= 32;
+    let use_pair = m.is_multiple_of(32) && n.is_multiple_of(32) && m >= 32 && n >= 32;
 
     if use_pair {
         matmul_f32_pair32(a, b, c, m, n, k, n_mr, n_nr, bs, first_k);
@@ -68,7 +68,7 @@ fn matmul_f32_pair32(
     });
     let a_buf = a_pack.as_mut_slice();
 
-    let b_aligned = (b.as_ptr() as usize) % 128 == 0 && (bs % 128) == 0;
+    let b_aligned = (b.as_ptr() as usize).is_multiple_of(128) && bs.is_multiple_of(128);
 
     // K-blocked computation: process K in chunks of KC.
     // Within each KC block, B-strip (KC×128 bytes) fits in L1 (192KB).

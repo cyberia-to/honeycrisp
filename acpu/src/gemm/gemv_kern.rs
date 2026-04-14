@@ -9,6 +9,7 @@ use crate::matrix::fma::FmaOp;
 use crate::matrix::regs::{XRow, YRow};
 
 #[cfg(target_arch = "aarch64")]
+#[allow(clippy::needless_range_loop)]
 pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     debug_assert_eq!(a.len(), k);
     debug_assert_eq!(b.len(), k * n);

@@ -35,6 +35,7 @@ type MsgSendUnload = unsafe extern "C" fn(ObjcId, ObjcSel, u32, *mut ObjcId) -> 
 // ============================================================
 
 /// Load compiled model, evaluate on ANE, verify results.
+#[allow(clippy::useless_transmute)]
 pub(crate) unsafe fn load_eval_verify(
     model: ObjcId,
     empty_weights: ObjcId,
@@ -101,6 +102,7 @@ pub(crate) unsafe fn load_eval_verify(
 }
 
 /// Create ANE request, evaluate, read and verify output.
+#[allow(clippy::needless_range_loop, clippy::useless_transmute)]
 unsafe fn evaluate_on_ane(
     model: ObjcId,
     empty_weights: ObjcId,

@@ -14,7 +14,7 @@ pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     debug_assert_eq!(b.len(), k * n);
     debug_assert_eq!(c.len(), n);
 
-    if n >= 128 && n <= 2048 {
+    if (128..=2048).contains(&n) {
         // AMX: K-blocked by 8, Y preloaded, pair LDX, vector FMA
         super::gemv_kern::gemv_asm(a, b, c, n, k);
     } else if n < 128 {

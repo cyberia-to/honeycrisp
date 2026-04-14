@@ -2,9 +2,11 @@
 
 > every Mac has a neural engine. no one lets you use it.
 
-rane is a pure Rust driver for Apple Neural Engine — the 15.8 TOPS
-accelerator sitting idle inside every Apple Silicon chip. no ObjC
-compiler. no Swift. no CoreML. no Python. no dependencies.
+rane is a pure Rust driver for Apple Neural Engine — the 15.8 TOPS accelerator sitting idle inside every Apple Silicon chip. no ObjC compiler. no Swift. no CoreML. no Python. no dependencies.
+
+Apple provides zero public API for ANE. CoreML decides if and when your model runs on the neural engine — you have no control and no visibility. rane bypasses CoreML entirely: three private frameworks loaded via `dlopen`, MIL bytecode format reverse-engineered from CoreML model bundles, weight blob headers decoded from binary inspection. `specs/` and `docs/explanation/` capture everything discovered about ANE internals — the compilation pipeline, the XPC protocol to `aned`, the IOKit driver interface, the SRAM upload lifecycle.
+
+experimental. API unstable.
 
 compile a MIL program, load it into ANE SRAM, dispatch, read the output.
 
@@ -116,7 +118,6 @@ surface.write(|&mut [u16]|)
 
 // MIL program builder
 rane::mil::matmul(ic, oc, seq) -> Source
-Source::from_text(text, in_ch, in_sp, out_ch, out_sp) -> Self
 
 // fp16 conversion (NEON-accelerated)
 rane::f32_to_fp16(f32) -> u16

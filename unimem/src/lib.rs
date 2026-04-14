@@ -1,3 +1,8 @@
+//! Zero-copy memory driver for Apple Silicon.
+//!
+//! IOSurface-backed pinned buffers visible to every compute unit —
+//! CPU, GPU, AMX, ANE — through one allocation.
+
 pub mod block;
 pub mod ffi;
 pub mod grid;

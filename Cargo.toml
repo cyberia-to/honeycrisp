@@ -1,19 +1,38 @@
+[package]
+name = "honeycrisp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "bare-metal Rust drivers for Apple Silicon — unified memory, CPU/AMX, Metal GPU, and Neural Engine"
+repository = "https://github.com/cyberia-to/honeycrisp"
+homepage = "https://github.com/cyberia-to/honeycrisp"
+keywords = ["apple-silicon", "amx", "metal", "neural-engine", "gpu"]
+categories = ["os::macos-apis", "hardware-support"]
+readme = "README.md"
+exclude = ["CLAUDE.md"]
+
 [workspace]
-members = ["unimem", "acpu", "rane", "rane/benches", "aruminium", "aruminium/benches"]
+members = [".", "unimem", "acpu", "rane", "rane/benches", "aruminium", "aruminium/benches"]
 resolver = "2"
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "LicenseRef-Cyber"
 repository = "https://github.com/cyberia-to/honeycrisp"
 
+[dependencies]
+unimem.workspace = true
+acpu.workspace = true
+aruminium.workspace = true
+rane.workspace = true
+
 [workspace.dependencies]
-# internal
-unimem = { path = "unimem" }
-acpu = { path = "acpu" }
-rane = { path = "rane" }
-aruminium = { path = "aruminium" }
+# internal — path for local dev, version for crates.io publish
+unimem = { path = "unimem", version = "0.2.0" }
+acpu = { path = "acpu", version = "0.2.0" }
+rane = { path = "rane", version = "0.2.0" }
+aruminium = { path = "aruminium", version = "0.2.0" }
 # external
 crossbeam-queue = "0.3"
 mutants = "0.0.3"

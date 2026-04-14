@@ -43,7 +43,7 @@ pub fn prefix_sum_f32(out: &mut [f32], x: &[f32]) {
                 vst1q_f32(po.add(i), result);
 
                 // New carry = carry + sum of all 4 elements (last lane of inclusive)
-                carry = vgetq_lane_f32::<3>(v) + carry;
+                carry += vgetq_lane_f32::<3>(v);
                 i += 4;
             }
 
@@ -100,8 +100,8 @@ pub fn transpose_f32(dst: &mut [f32], src: &[f32], rows: usize, cols: usize) {
             // Cache-blocking: process 64×64 super-tiles to keep both
             // src reads and dst writes within L1/L2 cache.
             const BLOCK: usize = 64;
-            let rb = (rows + BLOCK - 1) / BLOCK;
-            let cb = (cols + BLOCK - 1) / BLOCK;
+            let rb = rows.div_ceil(BLOCK);
+            let cb = cols.div_ceil(BLOCK);
             for br in 0..rb {
                 let r_lo = br * BLOCK;
                 let r_hi = (r_lo + BLOCK).min(r4 * 4);

@@ -17,15 +17,15 @@ use super::regs::{XRow, YRow};
 // bit 27: skip_z (no accumulate when set)
 
 const fn fma16_first(xr: XRow, yr: YRow, tile: u8) -> u64 {
-    let x_off = (xr.byte_offset() as u64) << 10;
-    let y_off = yr.byte_offset() as u64;
+    let x_off = xr.byte_offset() << 10;
+    let y_off = yr.byte_offset();
     let z = (tile as u64 & 1) << 20;
     x_off | y_off | z | (1 << 27) // skip_z = no accumulate (overwrite)
 }
 
 const fn fma16_acc(xr: XRow, yr: YRow, tile: u8) -> u64 {
-    let x_off = (xr.byte_offset() as u64) << 10;
-    let y_off = yr.byte_offset() as u64;
+    let x_off = xr.byte_offset() << 10;
+    let y_off = yr.byte_offset();
     let z = (tile as u64 & 1) << 20;
     x_off | y_off | z // accumulate
 }

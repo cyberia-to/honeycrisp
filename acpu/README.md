@@ -2,10 +2,11 @@
 
 the lightest cpu.
 
-pure Rust driver for Apple Silicon CPU compute. direct access to AMX
-matrix coprocessor, NEON vector engine, numeric extensions (fp16, bf16,
-i8mm), sync primitives, and PMU counters. zero external dependencies —
-only inline assembly and system calls.
+pure Rust driver for Apple Silicon CPU compute. direct access to AMX matrix coprocessor, NEON vector engine, numeric extensions (fp16, bf16, i8mm), sync primitives, and PMU counters. zero external dependencies — only inline assembly and system calls.
+
+AMX is Apple's undocumented matrix coprocessor — no headers, no intrinsics, no official documentation. acpu encodes every AMX instruction as raw `.word` in inline assembly, reverse-engineered on hardware. the `specs/amx.md` file is the most complete open-source reference for AMX instruction encoding, register layout, and lifecycle semantics.
+
+experimental. API unstable.
 
 ```rust,ignore
 use acpu::Block;
@@ -41,9 +42,11 @@ for single-import convenience.
 | module | what it does |
 |--------|-------------|
 | `gemm` | sgemm/hgemm/bgemm/qgemm — AMX 16x16 microkernel, GEBP cache blocking, multi-core |
-| `vector` | softmax, rmsnorm, exp, log, tanh, sigmoid, gelu, silu, rope |
+| `vector` | softmax, normalize, exp, log, tanh, sigmoid, gelu, silu, rope, RGB↔YUV, resize |
 | `numeric` | fp16, bf16, i8 — bulk NEON conversion, dot product, quantize/dequantize |
 | `matrix` | raw AMX coprocessor — load/store, fma32/fma16/fmabf16, tile ops |
+| `crypto` | AES-128/192/256, SHA-256, PMULL carry-less multiply — hardware crypto instructions |
+| `field` | Goldilocks field arithmetic, Poseidon2 permutation, batch inverse, Merkle roots |
 | `sync` | memory barriers (dmb/dsb/isb), P-core/E-core affinity, prefetch |
 | `pulse` | PMU performance counters via libkperf.dylib |
 | `probe` | chip detection, feature flags, core counts |
@@ -65,7 +68,7 @@ softmax 4096:         0.8 us
 ```rust,ignore
 // matrix multiply (AMX-accelerated)
 acpu::matmul_f32(a: &[f32], b: &[f32], c: &mut [f32], m, n, k)
-acpu::matmul_f16(a: &[u16], b: &[u16], c: &mut [u16], m, n, k)
+acpu::matmul_f16(a: &[u16], b: &[u16], c: &mut [f32], m, n, k)
 
 // vector math (NEON-accelerated, in-place)
 acpu::vector::softmax(x: &mut [f32])
