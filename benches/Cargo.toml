@@ -1,0 +1,19 @@
+[package]
+name = "metal-benches"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+
+[dependencies]
+aruminium = { path = ".." }
+objc2 = "0.6"
+objc2-metal = { version = "0.3", features = ["MTLDevice", "MTLCommandQueue", "MTLCommandBuffer", "MTLComputeCommandEncoder", "MTLComputePipeline", "MTLResource", "MTLBuffer", "MTLLibrary"] }
+objc2-foundation = { version = "0.3", features = ["NSString", "NSError"] }
+
+[[bin]]
+name = "bench"
+path = "bench.rs"
+
+[[bin]]
+name = "compare"
+path = "compare.rs"

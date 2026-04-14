@@ -1,0 +1,12 @@
+target/
+
+# We include lock files in the repository, since:
+# - It helps CI.
+# - Though they're not published, we maintain binaries.
+# - We'd like to be aware of `trybuild` upgrades.
+# Cargo.lock
+
+tests-ios/*
+!tests-ios/prelude.rs
+mutants.out/
+mutants.out.old/
