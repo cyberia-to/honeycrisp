@@ -1,0 +1,17 @@
+[package]
+name = "rane-benches"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+publish = false
+
+[dependencies]
+rane = { path = ".." }
+
+[[bin]]
+name = "bench"
+path = "bench.rs"
+
+[[bin]]
+name = "compare"
+path = "compare.rs"
