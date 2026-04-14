@@ -1,0 +1,29 @@
+[workspace]
+members = ["unimem", "acpu", "rane", "rane/benches", "aruminium", "aruminium/benches"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "LicenseRef-Cyber"
+repository = "https://github.com/cyberia-to/honeycrisp"
+
+[workspace.dependencies]
+# internal
+unimem = { path = "unimem" }
+acpu = { path = "acpu" }
+rane = { path = "rane" }
+aruminium = { path = "aruminium" }
+# external
+crossbeam-queue = "0.3"
+mutants = "0.0.3"
+criterion = { version = "0.5", features = ["html_reports"] }
+libc = "0.2"
+nebu = { path = "../nebu/rs" }
+objc2 = "0.6"
+objc2-metal = { version = "0.3", features = ["MTLDevice", "MTLCommandQueue", "MTLCommandBuffer", "MTLComputeCommandEncoder", "MTLComputePipeline", "MTLResource", "MTLBuffer", "MTLLibrary"] }
+objc2-foundation = { version = "0.3", features = ["NSString", "NSError"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

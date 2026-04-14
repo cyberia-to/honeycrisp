@@ -1,23 +1,23 @@
 [package]
 name = "unimem"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 description = "Zero-copy memory driver for Apple Silicon — IOSurface + bump arena + tensor pool"
-license = "MIT"
-repository = "https://github.com/cyberia-to/unimem"
+repository = "https://github.com/cyberia-to/honeycrisp"
 keywords = ["apple-silicon", "iosurface", "zero-copy", "arena", "memory"]
 categories = ["os::macos-apis", "hardware-support", "memory-management"]
 
 [dependencies]
-crossbeam-queue = "0.3"
-mutants = "0.0.3"
+crossbeam-queue.workspace = true
+mutants.workspace = true
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
-libc = "0.2"
-rane = { path = "../rane" }
-aruminium = { path = "../aruminium" }
-acpu = { path = "../acpu" }
+criterion.workspace = true
+libc.workspace = true
+rane.workspace = true
+aruminium.workspace = true
+acpu.workspace = true
 
 [[example]]
 name = "ane_matmul"

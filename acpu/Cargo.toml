@@ -1,16 +1,16 @@
 [package]
 name = "acpu"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 description = "pure Rust driver for Apple Silicon CPU compute — AMX, NEON, numeric extensions, sync, PMU"
-license = "LicenseRef-Cyber"
-repository = "https://github.com/cyberia-to/acpu"
+repository = "https://github.com/cyberia-to/honeycrisp"
 
 [dependencies]
-unimem = { path = "../unimem" }
+unimem.workspace = true
 
 [dev-dependencies]
-nebu = { path = "../nebu/rs" }
+nebu.workspace = true
 
 [lib]
 name = "acpu"
@@ -71,7 +71,3 @@ path = "bench/ai.rs"
 [[example]]
 name = "bench_summary"
 path = "bench/summary.rs"
-
-[profile.release]
-lto = "thin"
-codegen-units = 1

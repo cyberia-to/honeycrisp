@@ -1,0 +1,8 @@
+**/target/
+**/build/
+*.dext/
+*.o
+*.d
+.DS_Store
+mutants.out/
+mutants.out.old/

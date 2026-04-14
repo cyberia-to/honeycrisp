@@ -1,28 +1,19 @@
-[workspace]
-members = [".", "benches"]
-resolver = "2"
-
-[workspace.package]
-version = "0.1.0"
-edition = "2021"
-license-file = "LICENSE"
-
 [package]
 name = "aruminium"
-description = "light rust metal driver"
 version.workspace = true
 edition.workspace = true
-license-file.workspace = true
-repository = "https://github.com/cyberia-to/aruminium"
-homepage = "https://github.com/cyberia-to/aruminium"
+license.workspace = true
+description = "light rust metal driver"
+repository = "https://github.com/cyberia-to/honeycrisp"
+homepage = "https://github.com/cyberia-to/honeycrisp"
 keywords = ["metal", "gpu", "apple", "compute", "macos"]
 categories = ["os::macos-apis", "graphics", "hardware-support"]
 readme = "README.md"
 
 [dependencies]
-unimem = { path = "../unimem" }
-acpu = { path = "../acpu" }
-mutants = "0.0.3"
+unimem.workspace = true
+acpu.workspace = true
+mutants.workspace = true
 
 [lib]
 name = "aruminium"
@@ -39,7 +30,3 @@ path = "examples/vecadd.rs"
 [[example]]
 name = "matmul"
 path = "examples/matmul.rs"
-
-[profile.release]
-lto = "thin"
-codegen-units = 1
