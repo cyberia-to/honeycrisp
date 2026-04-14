@@ -1,0 +1,77 @@
+[package]
+name = "acpu"
+version = "0.1.0"
+edition = "2021"
+description = "pure Rust driver for Apple Silicon CPU compute — AMX, NEON, numeric extensions, sync, PMU"
+license = "LicenseRef-Cyber"
+repository = "https://github.com/cyberia-to/acpu"
+
+[dependencies]
+unimem = { path = "../unimem" }
+
+[dev-dependencies]
+nebu = { path = "../nebu/rs" }
+
+[lib]
+name = "acpu"
+path = "src/lib.rs"
+
+[[bin]]
+name = "acpu_probe"
+path = "src/probe/main.rs"
+
+[[example]]
+name = "matmul"
+path = "examples/matmul.rs"
+
+[[example]]
+name = "bench_memory"
+path = "bench/memory.rs"
+
+[[example]]
+name = "bench_cores"
+path = "bench/cores.rs"
+
+[[example]]
+name = "bench_elementwise"
+path = "bench/elementwise.rs"
+
+[[example]]
+name = "bench_sgemm"
+path = "bench/sgemm.rs"
+
+[[example]]
+name = "bench_numeric"
+path = "bench/numeric.rs"
+
+[[example]]
+name = "bench_amx"
+path = "bench/amx.rs"
+
+[[example]]
+name = "bench_integer"
+path = "bench/integer.rs"
+
+[[example]]
+name = "bench_zk"
+path = "bench/zk.rs"
+
+[[example]]
+name = "bench_crypto"
+path = "bench/crypto.rs"
+
+[[example]]
+name = "bench_render"
+path = "bench/render.rs"
+
+[[example]]
+name = "bench_ai"
+path = "bench/ai.rs"
+
+[[example]]
+name = "bench_summary"
+path = "bench/summary.rs"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
