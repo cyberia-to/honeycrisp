@@ -1,0 +1,40 @@
+[workspace]
+members = [".", "benches"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license-file = "LICENSE"
+
+[package]
+name = "rane"
+description = "rust apple neural engine"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+repository = "https://github.com/cyberia-to/rane"
+homepage = "https://github.com/cyberia-to/rane"
+keywords = ["ane", "neural-engine", "apple-silicon", "gpu", "macos"]
+categories = ["os::macos-apis", "hardware-support", "science"]
+readme = "README.md"
+
+[dependencies]
+unimem = { path = "../unimem" }
+acpu = { path = "../acpu" }
+
+[lib]
+name = "rane"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rane_probe"
+path = "src/probe/main.rs"
+
+[[example]]
+name = "matmul"
+path = "examples/matmul.rs"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
