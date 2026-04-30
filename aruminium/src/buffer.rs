@@ -45,6 +45,21 @@ impl Buffer {
         self.ptr
     }
 
+    /// Raw pointer to buffer contents as `*mut u8`. Public escape hatch for
+    /// runtimes that need a stable VA shared with CPU code (Apple Silicon
+    /// unified memory). The pointer is valid for the buffer's lifetime;
+    /// callers must respect that lifetime themselves.
+    ///
+    /// # Safety
+    /// - The buffer must be in shared storage mode (`is_shared()` true).
+    /// - Aliased reads/writes from CPU and GPU must obey IOSurface
+    ///   coherency rules: a `dmb ish` after CPU writes that the GPU will
+    ///   read in the same step.
+    #[inline(always)]
+    pub fn contents_ptr(&self) -> *mut u8 {
+        self.ptr as *mut u8
+    }
+
     /// Read access to buffer data via closure.
     ///
     /// # Panics
