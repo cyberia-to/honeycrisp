@@ -60,6 +60,21 @@ impl Buffer {
         f(slice)
     }
 
+    /// Direct slice view into shared-mode buffer storage.
+    ///
+    /// Slice lifetime is tied to `&self`. Caller is responsible for not
+    /// reading concurrently with in-flight GPU writes (typically: only call
+    /// after a `wait` on the command buffer that wrote to this buffer).
+    ///
+    /// # Panics
+    /// Panics if called on a private-mode buffer.
+    #[inline]
+    #[track_caller]
+    pub fn as_bytes(&self) -> &[u8] {
+        assert!(self.is_shared(), "as_bytes called on private buffer");
+        unsafe { std::slice::from_raw_parts(self.ptr as *const u8, self.size) }
+    }
+
     /// Write access to buffer data via closure.
     ///
     /// # Panics

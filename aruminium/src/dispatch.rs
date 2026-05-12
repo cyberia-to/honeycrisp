@@ -17,6 +17,7 @@ type ImpObj = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId);
 type ImpBuf = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, NSUInteger, NSUInteger);
 type ImpBytes = unsafe extern "C" fn(ObjcId, ObjcSel, *const c_void, NSUInteger, NSUInteger);
 type ImpDisp = unsafe extern "C" fn(ObjcId, ObjcSel, MTLSize, MTLSize);
+type ImpBarrier = unsafe extern "C" fn(ObjcId, ObjcSel, NSUInteger);
 
 /// # Safety
 /// T must be a function pointer type with the same size as `*const c_void`.
@@ -50,6 +51,7 @@ pub struct Dispatch {
     sel_end: ObjcSel,
     sel_commit: ObjcSel,
     sel_wait: ObjcSel,
+    sel_barrier: ObjcSel,
     // Pre-resolved IMPs — all resolved eagerly in new()
     imp_cmd_buf: ImpId,
     imp_encoder: ImpId,
@@ -61,6 +63,7 @@ pub struct Dispatch {
     imp_dispatch: ImpDisp,
     imp_dispatch_groups: ImpDisp,
     imp_end: ImpVoid,
+    imp_barrier: ImpBarrier,
 }
 
 impl Dispatch {
@@ -85,6 +88,7 @@ impl Dispatch {
         let sel_end = SEL_endEncoding();
         let sel_commit = SEL_commit();
         let sel_wait = SEL_waitUntilCompleted();
+        let sel_barrier = SEL_memoryBarrierWithScope();
 
         unsafe {
             let q_cls = object_getClass(q);
@@ -110,6 +114,7 @@ impl Dispatch {
             let imp_dispatch: ImpDisp = resolve_imp(enc_cls, sel_dispatch);
             let imp_dispatch_groups: ImpDisp = resolve_imp(enc_cls, sel_dispatch_groups);
             let imp_end: ImpVoid = resolve_imp(enc_cls, sel_end);
+            let imp_barrier: ImpBarrier = resolve_imp(enc_cls, sel_barrier);
 
             // Cleanup temp objects
             imp_end(enc, sel_end);
@@ -130,6 +135,7 @@ impl Dispatch {
                 sel_end,
                 sel_commit,
                 sel_wait,
+                sel_barrier,
                 imp_cmd_buf,
                 imp_encoder,
                 imp_commit,
@@ -140,6 +146,7 @@ impl Dispatch {
                 imp_dispatch,
                 imp_dispatch_groups,
                 imp_end,
+                imp_barrier,
             }
         }
     }
@@ -254,11 +261,13 @@ impl Dispatch {
             imp_set_bytes: self.imp_set_bytes,
             imp_dispatch: self.imp_dispatch,
             imp_dispatch_groups: self.imp_dispatch_groups,
+            imp_barrier: self.imp_barrier,
             sel_set_pipe: self.sel_set_pipe,
             sel_set_buf: self.sel_set_buf,
             sel_set_bytes: self.sel_set_bytes,
             sel_dispatch: self.sel_dispatch,
             sel_dispatch_groups: self.sel_dispatch_groups,
+            sel_barrier: self.sel_barrier,
         };
 
         encode(&batch);
@@ -295,11 +304,13 @@ impl Dispatch {
             imp_set_bytes: self.imp_set_bytes,
             imp_dispatch: self.imp_dispatch,
             imp_dispatch_groups: self.imp_dispatch_groups,
+            imp_barrier: self.imp_barrier,
             sel_set_pipe: self.sel_set_pipe,
             sel_set_buf: self.sel_set_buf,
             sel_set_bytes: self.sel_set_bytes,
             sel_dispatch: self.sel_dispatch,
             sel_dispatch_groups: self.sel_dispatch_groups,
+            sel_barrier: self.sel_barrier,
         };
 
         encode(&batch);
@@ -340,11 +351,13 @@ impl Dispatch {
             imp_set_bytes: self.imp_set_bytes,
             imp_dispatch: self.imp_dispatch,
             imp_dispatch_groups: self.imp_dispatch_groups,
+            imp_barrier: self.imp_barrier,
             sel_set_pipe: self.sel_set_pipe,
             sel_set_buf: self.sel_set_buf,
             sel_set_bytes: self.sel_set_bytes,
             sel_dispatch: self.sel_dispatch,
             sel_dispatch_groups: self.sel_dispatch_groups,
+            sel_barrier: self.sel_barrier,
         };
 
         encode(&batch);
@@ -409,11 +422,13 @@ pub struct Batch {
     imp_set_bytes: ImpBytes,
     imp_dispatch: ImpDisp,
     imp_dispatch_groups: ImpDisp,
+    imp_barrier: ImpBarrier,
     sel_set_pipe: ObjcSel,
     sel_set_buf: ObjcSel,
     sel_set_bytes: ObjcSel,
     sel_dispatch: ObjcSel,
     sel_dispatch_groups: ObjcSel,
+    sel_barrier: ObjcSel,
 }
 
 impl Batch {
@@ -453,6 +468,17 @@ impl Batch {
             depth: group.2,
         };
         unsafe { (self.imp_dispatch)(self.enc, self.sel_dispatch, g, t) };
+    }
+
+    /// Insert a memory barrier for buffers: ensures writes from prior dispatches
+    /// are visible to subsequent dispatches within this command encoder.
+    /// Required between any two dispatches where the second reads a buffer
+    /// written by the first. Metal does NOT insert these automatically within
+    /// a single compute command encoder.
+    #[inline(always)]
+    pub fn memory_barrier_buffers(&self) {
+        const MTL_BARRIER_SCOPE_BUFFERS: NSUInteger = 1;
+        unsafe { (self.imp_barrier)(self.enc, self.sel_barrier, MTL_BARRIER_SCOPE_BUFFERS) }
     }
 
     #[inline(always)]

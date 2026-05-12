@@ -26,6 +26,7 @@ macro_rules! cached_sel {
 
 // Hot path selectors — called on every command buffer dispatch
 cached_sel!(SEL_commandBuffer, c"commandBuffer");
+cached_sel!(SEL_memoryBarrierWithScope, c"memoryBarrierWithScope:");
 cached_sel!(SEL_computeCommandEncoder, c"computeCommandEncoder");
 cached_sel!(SEL_setComputePipelineState, c"setComputePipelineState:");
 cached_sel!(SEL_setBuffer_offset_atIndex, c"setBuffer:offset:atIndex:");
