@@ -1,9 +1,10 @@
-//! Sparse CSR matrix-vector multiply for graph Laplacian computation.
+//! Sparse operations: CSR matvec and Chebyshev heat-kernel approximation.
 //!
-//! The normalized Laplacian eigensolver (LOBPCG) and the diffusion step both
-//! reduce to: y = A·x where A is sparse CSR. For the bostrom graph (avg
+//! CSR matvec: y = A·x where A is sparse CSR. For the bostrom graph (avg
 //! degree ~1.85) most rows are 1–3 entries — AMX offers no advantage here.
 //! NEON prefetch hides gather latency from the scattered x[col_idx[j]] loads.
+
+pub mod chebyshev;
 
 #[cfg(target_arch = "aarch64")]
 use core::arch::aarch64::*;
