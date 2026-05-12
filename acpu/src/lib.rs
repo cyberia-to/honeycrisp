@@ -11,6 +11,7 @@ pub mod convert;
 pub mod crypto;
 pub mod field;
 pub mod gemm;
+pub mod sparse;
 pub mod matrix;
 pub mod numeric;
 pub mod probe;
@@ -25,6 +26,7 @@ pub use convert::{
     cast_bf16_f32, cast_f16_f32, cast_f32_bf16, cast_f32_f16, cast_f32_i8, cast_i8_f32,
 };
 pub use gemm::{matmul_bf16, matmul_f16, matmul_f32, matmul_f32_set, matmul_i8};
+pub use sparse::{csr_matvec, csr_matvec_set};
 pub use matrix::Matrix;
 pub use numeric::{bf16, complex, fp16, quant};
 pub use probe::{scan, Chip, Feature, Features};

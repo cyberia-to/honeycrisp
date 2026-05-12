@@ -38,7 +38,7 @@ crossbeam-queue = "0.3"
 mutants = "0.0.3"
 criterion = { version = "0.5", features = ["html_reports"] }
 libc = "0.2"
-nebu = { path = "../nebu/rs" }
+nebu = { path = "../strata/nebu/rs", package = "cyb-nebu" }
 objc2 = "0.6"
 objc2-metal = { version = "0.3", features = ["MTLDevice", "MTLCommandQueue", "MTLCommandBuffer", "MTLComputeCommandEncoder", "MTLComputePipeline", "MTLResource", "MTLBuffer", "MTLLibrary"] }
 objc2-foundation = { version = "0.3", features = ["NSString", "NSError"] }
