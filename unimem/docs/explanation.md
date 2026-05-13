@@ -207,4 +207,4 @@ tru         — runs the tri-kernel on the cybergraph
 
 The tri-kernel computation (diffusion + springs + heat) over the cybergraph is the workload. unimem ensures that the data flowing through this computation never gets copied between pipeline stages. Weights load from NVMe directly into pinned memory. AMX does matrix multiplications on the same buffer. ANE runs neural inference on the same buffer. The result is readable by the CPU at the same address. Zero copies, start to finish.
 
-This is how you build a relevance machine that runs at hardware speed.
+This is how you build a convergence VM that runs at hardware speed.
