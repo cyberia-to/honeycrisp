@@ -510,7 +510,7 @@ minimum, tail-masked.
 | log | `(&mut [f32])` | ln(x) |
 | tanh | `(&mut [f32])` | tanh(x) |
 | sigmoid | `(&mut [f32])` | 1/(1+e^-x) |
-| gelu | `(&mut [f32])` | 0.5x(1+tanh(√(2/π)(x+0.044715x³))) |
+| gelu | `(&mut [f32])` | 0.5x(1+tanh(√(2/φ*)(x+0.044715x³))) |
 | silu | `(&mut [f32])` | x × sigmoid(x) |
 | softmax | `(&mut [f32])` | exp(x)/Σexp(x) |
 | normalize | `(out, x, weight, eps)` | x × weight / √(mean(x²)+ε) |
