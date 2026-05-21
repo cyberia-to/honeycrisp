@@ -26,6 +26,25 @@ impl Queue {
         Queue { raw }
     }
 
+    /// Wrap an existing `id<MTLCommandQueue>` (e.g. from wgpu).
+    ///
+    /// Increments the queue's retain count; releases on drop. The caller
+    /// keeps independent ownership — aruminium will not double-free.
+    /// Use this together with [`crate::Gpu::from_raw`] to share one
+    /// `MTLDevice` + `MTLCommandQueue` pair between aruminium and another
+    /// Metal client (e.g. wgpu) so submissions are serialized on a single
+    /// GPU stream and `MTLSharedEvent`s can sync across engines.
+    ///
+    /// # Safety
+    /// - `queue` must be a valid `id<MTLCommandQueue>` pointer.
+    /// - The queue must remain valid for at least the lifetime of the
+    ///   returned `Queue` (caller's retain count must not drop to zero
+    ///   before our `release` runs).
+    pub unsafe fn from_raw_shared(queue: ObjcId) -> Self {
+        unsafe { retain(queue) };
+        Self::from_raw(queue)
+    }
+
     /// Create a new command buffer (retained).
     /// Uses ARC fast-retain to skip autorelease+retain round-trip.
     #[inline(always)]

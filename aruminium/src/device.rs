@@ -30,6 +30,45 @@ impl Gpu {
         devices.into_iter().next().ok_or(GpuError::DeviceNotFound)
     }
 
+    /// Wrap an existing `id<MTLDevice>` (e.g. from wgpu's `MTLDevice`).
+    ///
+    /// Increments the device's retain count; releases on drop. The caller
+    /// retains independent ownership — aruminium will not double-free.
+    /// Enables sharing one `MTLDevice` between aruminium and wgpu so that
+    /// buffers/textures/`MTLSharedEvent`s live in the same residency space.
+    ///
+    /// # Safety
+    /// - `device` must be a valid `id<MTLDevice>` pointer (or null, which
+    ///   returns `GpuError::DeviceNotFound`).
+    /// - The device must remain valid for at least the lifetime of the
+    ///   returned `Gpu` (caller's retain count must not drop to zero
+    ///   before our `release` runs).
+    pub unsafe fn from_raw(device: ObjcId) -> Result<Self, GpuError> {
+        if device.is_null() {
+            return Err(GpuError::DeviceNotFound);
+        }
+        unsafe { retain(device) };
+        Ok(Gpu { raw: device })
+    }
+
+    /// Wrap an existing `id<MTLDevice>` and `id<MTLCommandQueue>` together.
+    ///
+    /// Convenience for the common wgpu-interop path where the caller has
+    /// both handles already. Both are retained; both release on drop.
+    ///
+    /// # Safety
+    /// Same as [`Gpu::from_raw`] for `device` and
+    /// [`Queue::from_raw_shared`] for `queue`. Both handles must remain
+    /// valid for the lifetimes of the returned objects.
+    pub unsafe fn from_raw_with_queue(
+        device: ObjcId,
+        queue: ObjcId,
+    ) -> Result<(Self, Queue), GpuError> {
+        let gpu = unsafe { Self::from_raw(device)? };
+        let q = unsafe { Queue::from_raw_shared(queue) };
+        Ok((gpu, q))
+    }
+
     /// Get all available Metal devices.
     pub fn all() -> Result<Vec<Self>, GpuError> {
         let arr = unsafe { MTLCopyAllDevices() };

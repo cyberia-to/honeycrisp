@@ -34,6 +34,8 @@ source  ->  compile  ->  pipeline  ->  encode  ->  commit  ->  complete
 |--------|-----------|-----------|
 | open | `() -> Result<Gpu>` | get default Metal GPU |
 | all | `() -> Result<Vec<Gpu>>` | enumerate all Metal GPUs |
+| from_raw | `(ObjcId) -> Result<Gpu>` (unsafe) | wrap an existing `id<MTLDevice>`, retain |
+| from_raw_with_queue | `(ObjcId, ObjcId) -> Result<(Gpu, Queue)>` (unsafe) | wrap device + queue together |
 | name | `(&self) -> String` | device name (e.g. "Apple M1 Pro") |
 | has_unified_memory | `(&self) -> bool` | shared CPU/GPU memory architecture |
 | max_buffer_length | `(&self) -> usize` | max buffer allocation in bytes |
@@ -71,6 +73,29 @@ source  ->  compile  ->  pipeline  ->  encode  ->  commit  ->  complete
 | fence | [device newFence] |
 | event | [device newEvent] |
 | shared_event | [device newSharedEvent] |
+
+### sharing a device with another Metal client (wgpu interop)
+
+aruminium can wrap an existing `id<MTLDevice>` and `id<MTLCommandQueue>`
+rather than always opening its own. this lets a single process drive
+both wgpu (raster) and aruminium (custom compute) against one device, so
+buffers/textures live in the same residency space, submissions serialize
+on one GPU stream, and `MTLSharedEvent` works for cross-engine sync.
+
+```rust
+// unsafe — caller guarantees the handles are valid `id<MTLDevice>` /
+// `id<MTLCommandQueue>` pointers and outlive the returned wrappers.
+pub unsafe fn Gpu::from_raw(device: ObjcId) -> Result<Gpu, GpuError>;
+pub unsafe fn Queue::from_raw_shared(queue: ObjcId) -> Queue;
+pub unsafe fn Gpu::from_raw_with_queue(
+    device: ObjcId,
+    queue: ObjcId,
+) -> Result<(Gpu, Queue), GpuError>;
+```
+
+both constructors call `retain` on the wrapped handle and `release` on
+drop, so shared ownership is reference-counted. `Gpu::open()` and
+`Gpu::new_command_queue()` are unchanged for callers that do not share.
 
 ## buffer
 

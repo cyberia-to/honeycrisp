@@ -403,3 +403,70 @@ mod device_tests {
         assert_eq!(Commands::STATUS_ERROR, 5);
     }
 }
+
+#[cfg(test)]
+mod sharing_tests {
+    //! Tests for `Gpu::from_raw` / `Queue::from_raw_shared` — the wgpu
+    //! device-sharing surface. Verifies retain/release semantics by
+    //! allocating from both wrappers, dropping in arbitrary order, and
+    //! relying on the existing leak/double-free coverage of the Drop impls.
+    use crate::{Gpu, Queue};
+
+    #[test]
+    fn from_raw_round_trip() {
+        let g1 = Gpu::open().unwrap();
+        let raw = g1.as_raw();
+        let g2 = unsafe { Gpu::from_raw(raw) }.unwrap();
+
+        // Same underlying device: identical name + unified-memory flag.
+        assert_eq!(g1.name(), g2.name());
+        assert_eq!(g1.has_unified_memory(), g2.has_unified_memory());
+        assert_eq!(g1.as_raw(), g2.as_raw());
+
+        // Both wrappers can independently allocate on the shared device.
+        let b1 = g1.buffer(1024).unwrap();
+        let b2 = g2.buffer(1024).unwrap();
+        drop(b1);
+        drop(b2);
+
+        // Drop the wrapper first, then the original — original retain
+        // count must still be > 0 after g2's release.
+        drop(g2);
+        // g1 must still work after g2 was dropped.
+        let _b3 = g1.buffer(1024).unwrap();
+        drop(g1);
+    }
+
+    #[test]
+    fn from_raw_null_returns_error() {
+        assert!(unsafe { Gpu::from_raw(std::ptr::null_mut()) }.is_err());
+    }
+
+    #[test]
+    fn queue_from_raw_shared_works() {
+        let g = Gpu::open().unwrap();
+        let q1 = g.new_command_queue().unwrap();
+        let q_raw = q1.as_raw();
+        let q2 = unsafe { Queue::from_raw_shared(q_raw) };
+
+        assert_eq!(q1.as_raw(), q2.as_raw());
+
+        // Both wrappers must produce valid command buffers.
+        let _c1 = q1.commands().unwrap();
+        let _c2 = q2.commands().unwrap();
+
+        // Drop one wrapper; the other must remain usable.
+        drop(q2);
+        let _c3 = q1.commands().unwrap();
+    }
+
+    #[test]
+    fn from_raw_with_queue_pair() {
+        let g0 = Gpu::open().unwrap();
+        let q0 = g0.new_command_queue().unwrap();
+        let (g, q) = unsafe { Gpu::from_raw_with_queue(g0.as_raw(), q0.as_raw()) }.unwrap();
+        assert_eq!(g.as_raw(), g0.as_raw());
+        assert_eq!(q.as_raw(), q0.as_raw());
+        let _ = q.commands().unwrap();
+    }
+}
