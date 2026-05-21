@@ -13,13 +13,7 @@ use core::arch::aarch64::*;
 ///
 /// A in CSR format: row i spans col_idx[row_ptr[i]..row_ptr[i+1]]
 /// with corresponding weights values[...].
-pub fn csr_matvec(
-    row_ptr: &[u32],
-    col_idx: &[u32],
-    values:  &[f32],
-    x:       &[f32],
-    y:       &mut [f32],
-) {
+pub fn csr_matvec(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
     let n = row_ptr.len().saturating_sub(1);
     debug_assert_eq!(y.len(), n);
     debug_assert_eq!(col_idx.len(), values.len());
@@ -27,13 +21,7 @@ pub fn csr_matvec(
 }
 
 /// y = A·x  (set; zeroes y first).
-pub fn csr_matvec_set(
-    row_ptr: &[u32],
-    col_idx: &[u32],
-    values:  &[f32],
-    x:       &[f32],
-    y:       &mut [f32],
-) {
+pub fn csr_matvec_set(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
     let n = row_ptr.len().saturating_sub(1);
     debug_assert_eq!(y.len(), n);
     debug_assert_eq!(col_idx.len(), values.len());
@@ -47,21 +35,23 @@ pub fn csr_matvec_set(
 fn inner(
     row_ptr: &[u32],
     col_idx: &[u32],
-    values:  &[f32],
-    x:       &[f32],
-    y:       &mut [f32],
-    n:       usize,
-    _set:    bool,
+    values: &[f32],
+    x: &[f32],
+    y: &mut [f32],
+    n: usize,
+    _set: bool,
 ) {
     // Software prefetch distance: fetch 8 entries ahead.
     const PF: usize = 8;
 
     unsafe {
         for i in 0..n {
-            let s = row_ptr[i]     as usize;
+            let s = row_ptr[i] as usize;
             let e = row_ptr[i + 1] as usize;
             let len = e - s;
-            if len == 0 { continue; }
+            if len == 0 {
+                continue;
+            }
 
             let cols = &col_idx[s..e];
             let vals = &values[s..e];
@@ -95,7 +85,7 @@ fn inner(
 
                 // Gather 4 x values (no hardware gather on ARM; scalar loads).
                 let xarr = [
-                    *x.get_unchecked(cols[j]     as usize),
+                    *x.get_unchecked(cols[j] as usize),
                     *x.get_unchecked(cols[j + 1] as usize),
                     *x.get_unchecked(cols[j + 2] as usize),
                     *x.get_unchecked(cols[j + 3] as usize),
@@ -120,14 +110,14 @@ fn inner(
 fn inner(
     row_ptr: &[u32],
     col_idx: &[u32],
-    values:  &[f32],
-    x:       &[f32],
-    y:       &mut [f32],
-    n:       usize,
-    _set:    bool,
+    values: &[f32],
+    x: &[f32],
+    y: &mut [f32],
+    n: usize,
+    _set: bool,
 ) {
     for i in 0..n {
-        let s = row_ptr[i]     as usize;
+        let s = row_ptr[i] as usize;
         let e = row_ptr[i + 1] as usize;
         let mut acc = 0.0f32;
         for j in s..e {
@@ -148,7 +138,7 @@ mod tests {
         // row_ptr, col_idx, values
         let row_ptr = vec![0, 1, 3, 5, 6];
         let col_idx = vec![1, 0, 2, 1, 3, 2];
-        let values  = vec![1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+        let values = vec![1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
         (row_ptr, col_idx, values)
     }
 
@@ -187,9 +177,12 @@ mod tests {
         let n = 17usize;
         let mut row_ptr = vec![0u32; n + 1];
         let mut col_idx = Vec::new();
-        let mut values  = Vec::new();
+        let mut values = Vec::new();
         // Node 0: neighbors 1..16
-        for j in 1..n { col_idx.push(j as u32); values.push(1.0f32); }
+        for j in 1..n {
+            col_idx.push(j as u32);
+            values.push(1.0f32);
+        }
         row_ptr[1] = (n - 1) as u32;
         // Nodes 1..16: single neighbor = 0
         for i in 1..n {
@@ -202,7 +195,12 @@ mod tests {
         csr_matvec(&row_ptr, &col_idx, &values, &x, &mut y);
         // y[0] = 1+2+...+16 = 136
         let expected0: f32 = (1..n).map(|i| i as f32).sum();
-        assert!((y[0] - expected0).abs() < 1e-2, "y[0]={} expected={}", y[0], expected0);
+        assert!(
+            (y[0] - expected0).abs() < 1e-2,
+            "y[0]={} expected={}",
+            y[0],
+            expected0
+        );
         // y[i] = x[0] = 0 for i in 1..n
         for i in 1..n {
             assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);

@@ -41,8 +41,11 @@ pub fn bessel_i(k: usize, tau: f32) -> f32 {
     let mut scale_acc = 1.0f64; // tracks the accumulated rescaling
 
     // Rescaling for overflow prevention.
-    let rescale = |f_next: &mut f64, f_curr: &mut f64, f_k: &mut f64,
-                   norm_sum: &mut f64, scale_acc: &mut f64| {
+    let rescale = |f_next: &mut f64,
+                   f_curr: &mut f64,
+                   f_k: &mut f64,
+                   norm_sum: &mut f64,
+                   scale_acc: &mut f64| {
         let s = 1.0 / f_curr.abs().max(1e-300);
         *f_next *= s;
         *f_curr *= s;
@@ -58,7 +61,13 @@ pub fn bessel_i(k: usize, tau: f32) -> f32 {
         f_curr = f_prev;
 
         if f_curr.abs() > 1e150 {
-            rescale(&mut f_next, &mut f_curr, &mut f_k, &mut norm_sum, &mut scale_acc);
+            rescale(
+                &mut f_next,
+                &mut f_curr,
+                &mut f_k,
+                &mut norm_sum,
+                &mut scale_acc,
+            );
         }
 
         // Record the value for the requested index k.
@@ -289,7 +298,16 @@ mod tests {
         let mut t1 = vec![0.0f32; n];
 
         chebyshev_matvec(
-            &row_ptr, &col_idx, &values, &d_inv_sqrt, &x, &mut y, &mut t0, &mut t1, 1.0, 20,
+            &row_ptr,
+            &col_idx,
+            &values,
+            &d_inv_sqrt,
+            &x,
+            &mut y,
+            &mut t0,
+            &mut t1,
+            1.0,
+            20,
         );
 
         // Mass should spread: node 1 gains.
@@ -301,9 +319,6 @@ mod tests {
 
         // ‖y‖_2 ≤ ‖x‖_2 = 1.0 (heat kernel contracts).
         let norm_y: f32 = y.iter().map(|&v| v * v).sum::<f32>().sqrt();
-        assert!(
-            norm_y <= 1.01,
-            "‖y‖₂ = {norm_y} should be ≤ ‖x‖₂ = 1"
-        );
+        assert!(norm_y <= 1.01, "‖y‖₂ = {norm_y} should be ≤ ‖x‖₂ = 1");
     }
 }
