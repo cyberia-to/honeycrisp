@@ -1,9 +1,12 @@
-//! aruminium driver benchmark — buffer, dispatch, fp16 conversion
+//! aruminium driver benchmark — buffer, dispatch, render, fp16 conversion
 //!
 //! Layer 1 only: measures hardware driver performance.
 //! No matmul, no attention, no model knowledge.
 
-use aruminium::{Gpu, GpuError};
+use aruminium::ffi::MTLPixelFormatBGRA8Unorm;
+use aruminium::{
+    ColorAttachmentDesc, Gpu, GpuError, PrimitiveType, RenderPassDescriptor, RenderPipelineSpec,
+};
 use std::time::Instant;
 
 fn main() -> Result<(), GpuError> {
@@ -99,6 +102,99 @@ fn main() -> Result<(), GpuError> {
         (cpu_per - gpu_per) * 1000.0,
     );
     println!("Effective bandwidth: {:.1} GB/s", bandwidth);
+    println!();
+
+    // ── Render pass overhead ──
+    let render_src = r#"
+        #include <metal_stdlib>
+        using namespace metal;
+        vertex float4 vmain(uint vid [[vertex_id]]) {
+            float2 v[3] = { float2(-1,-1), float2(1,-1), float2(0,1) };
+            return float4(v[vid], 0.0, 1.0);
+        }
+        fragment float4 fmain() { return float4(1.0); }
+    "#;
+    let rlib = device.compile(render_src)?;
+    let vfn = rlib.function("vmain")?;
+    let ffn = rlib.function("fmain")?;
+    let rspec = RenderPipelineSpec::color(MTLPixelFormatBGRA8Unorm);
+
+    // Pipeline compilation — one-time cost
+    let t_pipe = Instant::now();
+    let rpipeline = device.render_pipeline(&vfn, &ffn, &rspec)?;
+    println!(
+        "RenderPipeline compile: {:.2} ms",
+        t_pipe.elapsed().as_secs_f64() * 1000.0
+    );
+
+    let target = device.render_target(16, 16, MTLPixelFormatBGRA8Unorm)?;
+    let mut rpass = RenderPassDescriptor::new();
+    rpass.color_attachment(0, ColorAttachmentDesc::clear(&target, [0.0; 4]));
+
+    // Warmup
+    for _ in 0..5 {
+        let cmd = queue.commands()?;
+        let enc = cmd.render_encoder(&rpass)?;
+        enc.bind(&rpipeline);
+        enc.draw(PrimitiveType::Triangle, 0, 3);
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+    }
+
+    // Single draw call: CPU time vs GPU time
+    let iters = 200;
+    let mut gpu_total = 0.0f64;
+    let t0 = Instant::now();
+    for _ in 0..iters {
+        let cmd = queue.commands()?;
+        let enc = cmd.render_encoder(&rpass)?;
+        enc.bind(&rpipeline);
+        enc.draw(PrimitiveType::Triangle, 0, 3);
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+        gpu_total += cmd.gpu_time();
+    }
+    let cpu_per = t0.elapsed().as_secs_f64() / iters as f64;
+    let gpu_per = gpu_total / iters as f64;
+    println!(
+        "Render pass (1 draw, 16×16): CPU {:.3} ms | GPU {:.3} ms | overhead {:.3} ms",
+        cpu_per * 1000.0,
+        gpu_per * 1000.0,
+        (cpu_per - gpu_per) * 1000.0,
+    );
+
+    // Draw call encoding throughput: N draws per command buffer
+    println!("Draw call throughput (0-vertex draws, same pipeline):");
+    for &n_draws in &[1usize, 10, 100, 1000] {
+        // Warmup
+        for _ in 0..3 {
+            let cmd = queue.commands()?;
+            let enc = cmd.render_encoder(&rpass)?;
+            enc.bind(&rpipeline);
+            for _ in 0..n_draws {
+                enc.draw(PrimitiveType::Triangle, 0, 0);
+            }
+            enc.end();
+            cmd.submit();
+            cmd.wait();
+        }
+        let t0 = Instant::now();
+        for _ in 0..iters {
+            let cmd = queue.commands()?;
+            let enc = cmd.render_encoder(&rpass)?;
+            enc.bind(&rpipeline);
+            for _ in 0..n_draws {
+                enc.draw(PrimitiveType::Triangle, 0, 0);
+            }
+            enc.end();
+            cmd.submit();
+            cmd.wait();
+        }
+        let per_draw = t0.elapsed().as_secs_f64() / (iters * n_draws) as f64;
+        println!("  {:4} draws/pass: {:.2} µs/draw", n_draws, per_draw * 1e6);
+    }
     println!();
 
     // ── fp16 conversion benchmark ──
