@@ -146,3 +146,27 @@ pub unsafe fn msg_dispatch_void(target: ObjcId, sel: ObjcSel, grid: MTLSize, gro
     let f: F = std::mem::transmute(objc_msgSend as *const c_void);
     f(target, sel, grid, group);
 }
+
+/// Send a message with 1 NSUInteger arg, returning nothing.
+#[inline(always)]
+pub unsafe fn msg1_uint_void(target: ObjcId, sel: ObjcSel, a: NSUInteger) {
+    type F = unsafe extern "C" fn(ObjcId, ObjcSel, NSUInteger);
+    let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+    f(target, sel, a);
+}
+
+/// Send a message with 1 bool arg, returning nothing.
+#[inline(always)]
+pub unsafe fn msg1_bool_void(target: ObjcId, sel: ObjcSel, a: bool) {
+    type F = unsafe extern "C" fn(ObjcId, ObjcSel, bool);
+    let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+    f(target, sel, a);
+}
+
+/// Send a message with 1 NSUInteger arg, returning ObjcId.
+#[inline(always)]
+pub unsafe fn msg1_uint_id(target: ObjcId, sel: ObjcSel, a: NSUInteger) -> ObjcId {
+    type F = unsafe extern "C" fn(ObjcId, ObjcSel, NSUInteger) -> ObjcId;
+    let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+    f(target, sel, a)
+}

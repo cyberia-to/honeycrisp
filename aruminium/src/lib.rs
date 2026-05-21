@@ -16,6 +16,7 @@ pub mod dispatch;
 pub mod encoder;
 pub mod ffi;
 pub mod pipeline;
+pub mod render;
 pub mod shader;
 pub mod sync;
 pub mod texture;
@@ -26,6 +27,10 @@ pub use device::Gpu;
 pub use dispatch::{Batch, Dispatch, GpuFuture};
 pub use encoder::{Copier, Encoder};
 pub use pipeline::Pipeline;
+pub use render::{
+    ColorAttachmentDesc, ColorAttachmentSpec, LoadAction, PrimitiveType, RenderEncoder,
+    RenderPassDescriptor, RenderPipeline, RenderPipelineSpec, StoreAction,
+};
 pub use shader::{Shader, ShaderLib};
 pub use sync::{Event, Fence, SharedEvent};
 pub use texture::Texture;

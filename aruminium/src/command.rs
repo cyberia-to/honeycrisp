@@ -2,6 +2,8 @@
 
 use crate::encoder::{Copier, Encoder};
 use crate::ffi::*;
+use crate::render::encoder::RenderEncoder;
+use crate::render::pass::RenderPassDescriptor;
 use crate::GpuError;
 
 #[cold]
@@ -156,6 +158,23 @@ impl Commands {
     pub unsafe fn encoder_autoreleased(&self) -> Encoder {
         let raw = msg0(self.raw, SEL_computeCommandEncoder());
         Encoder::from_raw(raw, false)
+    }
+
+    /// Create a render command encoder from a render pass descriptor.
+    #[inline]
+    pub fn render_encoder(&self, desc: &RenderPassDescriptor) -> Result<RenderEncoder, GpuError> {
+        let raw = unsafe {
+            msg1::<ObjcId>(
+                self.raw,
+                SEL_renderCommandEncoderWithDescriptor(),
+                desc.as_raw(),
+            )
+        };
+        if raw.is_null() {
+            return Err(err_encoder());
+        }
+        unsafe { retain(raw) };
+        Ok(RenderEncoder::from_raw(raw, true))
     }
 
     /// Create a blit command encoder.

@@ -403,7 +403,91 @@ Metal.framework is public. linked via `#[link(name = "Metal", kind = "framework"
 core path: objc_msgSend with transmuted function pointers.
 hot path: pre-resolved IMP via class_getMethodImplementation.
 
-## render pipeline
+## render pipeline (phase 1)
 
-`RenderPipeline` struct exists (wraps `id<MTLRenderPipelineState>`).
-no render encoder yet — compute-only driver.
+raster path: vertex + fragment shaders, render-target textures, render pass
+descriptors, render encoders. mirrors the compute path 1:1.
+
+```
+shaders -> RenderPipeline -> RenderPassDescriptor -> RenderEncoder
+                                                      -> draw
+                                                      -> end
+```
+
+### render pipeline
+
+`RenderPipeline` wraps `id<MTLRenderPipelineState>`.
+
+| method | signature | semantics |
+|--------|-----------|-----------|
+| color_attachments | `(&self) -> usize` | number of color attachments |
+| sample_count | `(&self) -> u32` | MSAA sample count (1 = none, set by phase 2) |
+| as_raw | `(&self) -> ObjcId` | raw MTLRenderPipelineState |
+
+`RenderPipelineSpec` — builder for `Gpu::render_pipeline`. phase 1 fields:
+`color_attachments: Vec<ColorAttachmentSpec>`.
+
+`ColorAttachmentSpec` — per-slot pixel format + write mask.
+
+### render-target texture
+
+| Gpu method | signature | semantics |
+|-----------|-----------|-----------|
+| render_target | `(&self, w, h, format) -> Result<Texture>` | color render target, usage `RenderTarget \| ShaderRead`, storage Private |
+| render_pipeline | `(&self, &Shader, &Shader, &RenderPipelineSpec) -> Result<RenderPipeline>` | compile vertex+fragment into pipeline state |
+
+### render pass descriptor
+
+`RenderPassDescriptor` wraps `id<MTLRenderPassDescriptor>` — what to render INTO.
+
+| method | signature | semantics |
+|--------|-----------|-----------|
+| new | `() -> Self` | empty descriptor (retained) |
+| color_attachment | `(&mut self, index, ColorAttachmentDesc)` | configure color slot |
+| as_raw | `(&self) -> ObjcId` | raw descriptor |
+
+`ColorAttachmentDesc` — `{ texture, load_action, store_action, clear_color, level, slice }`.
+`LoadAction` = DontCare | Load | Clear. `StoreAction` = DontCare | Store | MultisampleResolve | StoreAndMultisampleResolve.
+
+### render encoder
+
+| Commands method | signature | semantics |
+|----------------|-----------|-----------|
+| render_encoder | `(&self, &RenderPassDescriptor) -> Result<RenderEncoder>` | create encoder for pass |
+
+| RenderEncoder method | signature | semantics |
+|----------------------|-----------|-----------|
+| bind | `(&self, &RenderPipeline)` | bind pipeline state |
+| set_vertex_buffer | `(&self, index, &Buffer, offset)` | vertex stage buffer |
+| set_fragment_buffer | `(&self, index, &Buffer, offset)` | fragment stage buffer |
+| push_vertex | `(&self, &[u8], index)` | inline vertex bytes |
+| push_fragment | `(&self, &[u8], index)` | inline fragment bytes |
+| set_vertex_texture | `(&self, index, &Texture)` | vertex stage texture |
+| set_fragment_texture | `(&self, index, &Texture)` | fragment stage texture |
+| set_viewport | `(&self, x, y, w, h, near, far)` | viewport rect (f64) |
+| set_scissor | `(&self, x, y, w, h)` | scissor rect (u32) |
+| draw | `(&self, PrimitiveType, start, count)` | non-indexed draw |
+| end | `(self)` | finish encoding (consumes) |
+
+`PrimitiveType` = Point | Line | LineStrip | Triangle | TriangleStrip.
+
+### apple mapping (phase 1)
+
+| method | ObjC |
+|--------|------|
+| Gpu::render_target | [device newTextureWithDescriptor:] (usage RenderTarget) |
+| Gpu::render_pipeline | [device newRenderPipelineStateWithDescriptor:error:] |
+| Commands::render_encoder | [cmdBuf renderCommandEncoderWithDescriptor:] |
+| RenderEncoder::bind | [encoder setRenderPipelineState:] |
+| RenderEncoder::set_vertex_buffer | [encoder setVertexBuffer:offset:atIndex:] |
+| RenderEncoder::set_fragment_buffer | [encoder setFragmentBuffer:offset:atIndex:] |
+| RenderEncoder::set_vertex_texture | [encoder setVertexTexture:atIndex:] |
+| RenderEncoder::set_fragment_texture | [encoder setFragmentTexture:atIndex:] |
+| RenderEncoder::set_viewport | [encoder setViewport:] |
+| RenderEncoder::set_scissor | [encoder setScissorRect:] |
+| RenderEncoder::draw | [encoder drawPrimitives:vertexStart:vertexCount:] |
+| RenderEncoder::end | [encoder endEncoding] |
+
+phase 2 adds: depth/stencil attachments + DepthStencilState, MSAA sample
+count + resolve, MTLVertexDescriptor, indexed/instanced draws, blend state,
+cull mode + winding, depth bias.

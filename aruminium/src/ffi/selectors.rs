@@ -137,3 +137,73 @@ cached_sel!(SEL_signaledValue, c"signaledValue");
 // NSString / NSError
 cached_sel!(SEL_localizedDescription, c"localizedDescription");
 cached_sel!(SEL_UTF8String, c"UTF8String");
+
+// ── Render pipeline ──
+
+cached_sel!(
+    SEL_newRenderPipelineStateWithDescriptor_error,
+    c"newRenderPipelineStateWithDescriptor:error:"
+);
+cached_sel!(SEL_setVertexFunction, c"setVertexFunction:");
+cached_sel!(SEL_setFragmentFunction, c"setFragmentFunction:");
+cached_sel!(SEL_colorAttachments, c"colorAttachments");
+cached_sel!(SEL_objectAtIndexedSubscript, c"objectAtIndexedSubscript:");
+cached_sel!(SEL_setPixelFormat, c"setPixelFormat:");
+
+// ── Render pass descriptor + attachments ──
+
+cached_sel!(SEL_renderPassDescriptor, c"renderPassDescriptor");
+cached_sel!(SEL_setTexture, c"setTexture:");
+cached_sel!(SEL_setLoadAction, c"setLoadAction:");
+cached_sel!(SEL_setStoreAction, c"setStoreAction:");
+cached_sel!(SEL_setClearColor, c"setClearColor:");
+cached_sel!(SEL_setLevel, c"setLevel:");
+cached_sel!(SEL_setSlice, c"setSlice:");
+
+// ── Render command encoder ──
+
+cached_sel!(
+    SEL_renderCommandEncoderWithDescriptor,
+    c"renderCommandEncoderWithDescriptor:"
+);
+cached_sel!(SEL_setRenderPipelineState, c"setRenderPipelineState:");
+cached_sel!(
+    SEL_setVertexBuffer_offset_atIndex,
+    c"setVertexBuffer:offset:atIndex:"
+);
+cached_sel!(
+    SEL_setFragmentBuffer_offset_atIndex,
+    c"setFragmentBuffer:offset:atIndex:"
+);
+cached_sel!(
+    SEL_setVertexBytes_length_atIndex,
+    c"setVertexBytes:length:atIndex:"
+);
+cached_sel!(
+    SEL_setFragmentBytes_length_atIndex,
+    c"setFragmentBytes:length:atIndex:"
+);
+cached_sel!(SEL_setVertexTexture_atIndex, c"setVertexTexture:atIndex:");
+cached_sel!(
+    SEL_setFragmentTexture_atIndex,
+    c"setFragmentTexture:atIndex:"
+);
+cached_sel!(SEL_setViewport, c"setViewport:");
+cached_sel!(SEL_setScissorRect, c"setScissorRect:");
+cached_sel!(
+    SEL_drawPrimitives_vertexStart_vertexCount,
+    c"drawPrimitives:vertexStart:vertexCount:"
+);
+
+// ── Texture descriptor extras (render target) ──
+
+cached_sel!(SEL_setTextureType, c"setTextureType:");
+cached_sel!(SEL_setWidth, c"setWidth:");
+cached_sel!(SEL_setHeight, c"setHeight:");
+cached_sel!(SEL_setUsage, c"setUsage:");
+cached_sel!(SEL_setStorageMode, c"setStorageMode:");
+
+// ── Render pipeline color attachment write/blend toggle ──
+
+cached_sel!(SEL_setBlendingEnabled, c"setBlendingEnabled:");
+cached_sel!(SEL_setWriteMask, c"setWriteMask:");

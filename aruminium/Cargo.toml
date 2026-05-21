@@ -31,3 +31,7 @@ path = "examples/vecadd.rs"
 [[example]]
 name = "matmul"
 path = "examples/matmul.rs"
+
+[[example]]
+name = "triangle"
+path = "examples/triangle.rs"

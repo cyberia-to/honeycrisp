@@ -403,3 +403,5 @@ mod device_tests {
         assert_eq!(Commands::STATUS_ERROR, 5);
     }
 }
+
+// Render unit tests live in `src/render/tests.rs`.

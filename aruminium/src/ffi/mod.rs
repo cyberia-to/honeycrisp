@@ -62,10 +62,72 @@ pub const MTLResourceStorageModePrivate: NSUInteger = 0x20;
 
 // ── Metal pixel formats (common) ──
 
+pub const MTLPixelFormatR8Unorm: NSUInteger = 10;
+pub const MTLPixelFormatR32Float: NSUInteger = 55;
 pub const MTLPixelFormatRGBA8Unorm: NSUInteger = 70;
 pub const MTLPixelFormatBGRA8Unorm: NSUInteger = 80;
-pub const MTLPixelFormatR32Float: NSUInteger = 55;
+pub const MTLPixelFormatRGBA16Float: NSUInteger = 115;
 pub const MTLPixelFormatRGBA32Float: NSUInteger = 125;
+
+// ── Metal texture usage ──
+
+pub const MTLTextureUsageShaderRead: NSUInteger = 0x0001;
+pub const MTLTextureUsageShaderWrite: NSUInteger = 0x0002;
+pub const MTLTextureUsageRenderTarget: NSUInteger = 0x0004;
+
+// ── Metal texture types ──
+
+pub const MTLTextureType2D: NSUInteger = 2;
+
+// ── Render pass load/store actions ──
+
+pub const MTLLoadActionDontCare: NSUInteger = 0;
+pub const MTLLoadActionLoad: NSUInteger = 1;
+pub const MTLLoadActionClear: NSUInteger = 2;
+
+pub const MTLStoreActionDontCare: NSUInteger = 0;
+pub const MTLStoreActionStore: NSUInteger = 1;
+pub const MTLStoreActionMultisampleResolve: NSUInteger = 2;
+pub const MTLStoreActionStoreAndMultisampleResolve: NSUInteger = 3;
+
+// ── Primitive type ──
+
+pub const MTLPrimitiveTypePoint: NSUInteger = 0;
+pub const MTLPrimitiveTypeLine: NSUInteger = 1;
+pub const MTLPrimitiveTypeLineStrip: NSUInteger = 2;
+pub const MTLPrimitiveTypeTriangle: NSUInteger = 3;
+pub const MTLPrimitiveTypeTriangleStrip: NSUInteger = 4;
+
+// ── Viewport / scissor (passed by value to encoder) ──
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLViewport {
+    pub origin_x: f64,
+    pub origin_y: f64,
+    pub width: f64,
+    pub height: f64,
+    pub znear: f64,
+    pub zfar: f64,
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLScissorRect {
+    pub x: NSUInteger,
+    pub y: NSUInteger,
+    pub width: NSUInteger,
+    pub height: NSUInteger,
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct MTLClearColor {
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
+    pub alpha: f64,
+}
 
 // ── CoreFoundation constants ──
 
