@@ -43,12 +43,15 @@ source  ->  compile  ->  pipeline  ->  encode  ->  commit  ->  complete
 | buffer | `(&self, bytes) -> Result<Buffer>` | allocate shared buffer (CPU+GPU) |
 | buffer_private | `(&self, bytes) -> Result<Buffer>` | allocate private buffer (GPU-only) |
 | buffer_with_data | `(&self, &[u8]) -> Result<Buffer>` | shared buffer with initial data |
+| buffer_wrap | `unsafe (&self, *mut c_void, usize) -> Result<Buffer>` | zero-copy wrap of caller-owned page-aligned memory |
+| wrap | `(&self, &Block) -> Result<Buffer>` | zero-copy wrap of a `unimem::Block` |
 | compile | `(&self, &str) -> Result<ShaderLib>` | compile MSL source |
 | pipeline | `(&self, &Shader) -> Result<Pipeline>` | create compute pipeline |
 | texture | `(&self, desc) -> Result<Texture>` | create texture from descriptor (unsafe) |
-| fence | `(&self) -> Fence` | create fence |
-| event | `(&self) -> Event` | create event |
-| shared_event | `(&self) -> SharedEvent` | create shared event |
+| fence | `(&self) -> Result<Fence>` | create fence |
+| event | `(&self) -> Result<Event>` | create event |
+| shared_event | `(&self) -> Result<SharedEvent>` | create shared event |
+| as_raw | `(&self) -> ObjcId` | raw MTLDevice |
 
 ### apple mapping
 
@@ -84,19 +87,20 @@ CPU/GPU memory region. two storage modes:
 | method | signature | semantics |
 |--------|-----------|-----------|
 | is_shared | `(&self) -> bool` | true if CPU-accessible (shared mode) |
-| contents | `(&self) -> *mut c_void` | raw pointer to shared memory (cached) |
-| read | `(&self, \|&[u8]\|)` | read access via closure |
-| write | `(&self, \|&mut [u8]\|)` | write access via closure |
+| as_bytes | `(&self) -> &[u8]` | direct slice view; panics on private buffer |
+| read | `(&self, \|&[u8]\|)` | read access via closure; panics on private buffer |
+| write | `(&self, \|&mut [u8]\|)` | write access via closure; panics on private buffer |
 | read_f32 | `(&self, \|&[f32]\|)` | typed read as f32 |
 | write_f32 | `(&self, \|&mut [f32]\|)` | typed write as f32 |
 | size | `(&self) -> usize` | allocation in bytes |
+| as_raw | `(&self) -> ObjcId` | raw MTLBuffer |
 | drop | automatic | [buffer release] |
 
 ### apple mapping
 
 | method | ObjC |
 |--------|------|
-| contents | [buffer contents] |
+| as_bytes / read / write | [buffer contents] (pointer cached at construction) |
 | size | construction parameter |
 | drop | objc_release |
 
@@ -108,6 +112,7 @@ compiled shader code from MSL source text.
 |--------|-----------|-----------|
 | function | `(&self, &str) -> Result<Shader>` | get function by name |
 | function_names | `(&self) -> Vec<String>` | list all function names |
+| as_raw | `(&self) -> ObjcId` | raw MTLLibrary |
 
 ### apple mapping
 
@@ -123,6 +128,7 @@ a single shader entry point extracted from a library.
 | method | signature | semantics |
 |--------|-----------|-----------|
 | name | `(&self) -> String` | function name |
+| as_raw | `(&self) -> ObjcId` | raw MTLFunction |
 
 ## compute pipeline
 
@@ -133,6 +139,7 @@ compiled GPU state — function + hardware config.
 | max_total_threads_per_threadgroup | `(&self) -> usize` | max threads per threadgroup for this pipeline |
 | thread_execution_width | `(&self) -> usize` | SIMD width (32 on Apple GPU) |
 | static_threadgroup_memory_length | `(&self) -> usize` | threadgroup memory used by pipeline (bytes) |
+| as_raw | `(&self) -> ObjcId` | raw MTLComputePipelineState |
 
 ### apple mapping
 
@@ -189,6 +196,7 @@ commands                — retained, safe, standard
 | gpu_start_time | `(&self) -> f64` | GPU start time (seconds since boot) |
 | gpu_end_time | `(&self) -> f64` | GPU end time (seconds since boot) |
 | gpu_time | `(&self) -> f64` | GPU execution duration (end - start) |
+| as_raw | `(&self) -> ObjcId` | raw MTLCommandBuffer |
 
 ### apple mapping
 
@@ -214,6 +222,7 @@ commands                — retained, safe, standard
 | launch | `(&self, grid, group)` | dispatch with auto non-uniform grid handling |
 | launch_groups | `(&self, groups, threads)` | dispatch with explicit group count |
 | finish | `(&self)` | finish encoding |
+| as_raw | `(&self) -> ObjcId` | raw MTLComputeCommandEncoder |
 
 ### apple mapping
 
@@ -232,6 +241,7 @@ commands                — retained, safe, standard
 |--------|-----------|-----------|
 | copy | `(&self, src, src_off, dst, dst_off, size)` | GPU buffer-to-buffer copy |
 | finish | `(&self)` | finish encoding |
+| as_raw | `(&self) -> ObjcId` | raw MTLBlitCommandEncoder |
 
 ### apple mapping
 
@@ -267,6 +277,7 @@ provided to batch closures. same IMP-resolved hot path.
 | push | `(&self, &[u8], index)` | inline constants |
 | launch | `(&self, grid, group)` | dispatch |
 | launch_groups | `(&self, groups, threads)` | dispatch with explicit groups |
+| memory_barrier_buffers | `(&self)` | MTLBarrierScopeBuffers between dispatches in same encoder |
 
 ### gpu future
 
