@@ -178,7 +178,30 @@ fn main() {
         o / piped
     );
 
-    // 5g. Inference simulation: 3 kernels × 100 layers, batched
+    // 5g. Render dispatch overhead (single draw, sync)
+    let iters = 500;
+    let r = min_of(3, || aruminium::render_pass_overhead(iters));
+    let o = min_of(3, || objc2::render_pass_overhead(iters));
+    println!(
+        "{:<30} {:>10.2} us {:>10.2} us {:>9.2}x",
+        "Render dispatch",
+        us(r),
+        us(o),
+        o / r
+    );
+
+    // 5h. Render batch encode (100 draws per pass)
+    let r = min_of(3, || aruminium::render_batch_encode(100, 200));
+    let o = min_of(3, || objc2::render_batch_encode(100, 200));
+    println!(
+        "{:<30} {:>10.2} us {:>10.2} us {:>9.2}x",
+        "Render batch/op (100)",
+        us(r),
+        us(o),
+        o / r
+    );
+
+    // 5i. Inference simulation: 3 kernels × 100 layers, batched
     let inf_r = min_of(3, || aruminium::inference_sim(100, 100));
     let inf_o = min_of(3, || objc2::inference_sim(100, 100));
     println!(

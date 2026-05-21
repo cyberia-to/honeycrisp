@@ -19,3 +19,13 @@ pub const NOOP: &str = r#"
         a[id] = a[id] + 1.0;
     }
 "#;
+
+pub const TRIANGLE: &str = r#"
+    #include <metal_stdlib>
+    using namespace metal;
+    vertex float4 vmain(uint vid [[vertex_id]]) {
+        float2 v[3] = { float2(-1,-1), float2(1,-1), float2(0,1) };
+        return float4(v[vid], 0.0, 1.0);
+    }
+    fragment float4 fmain() { return float4(1.0); }
+"#;

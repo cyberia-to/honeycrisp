@@ -4,7 +4,7 @@ use objc2_foundation::NSString;
 use objc2_metal::*;
 use std::time::Instant;
 
-use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC};
+use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC, TRIANGLE as TRIANGLE_SRC};
 
 fn get_device() -> Retained<ProtocolObject<dyn MTLDevice>> {
     MTLCreateSystemDefaultDevice().expect("no metal device")
@@ -292,6 +292,156 @@ pub fn batch_encode(batch_size: usize, iters: usize) -> f64 {
         cmd.waitUntilCompleted();
     }
     t0.elapsed().as_secs_f64() / (iters * batch_size) as f64
+}
+
+/// Render dispatch: single draw per command buffer, sync
+pub fn render_pass_overhead(iters: usize) -> f64 {
+    let dev = get_device();
+    let queue = dev.newCommandQueue().unwrap();
+    let src = NSString::from_str(TRIANGLE_SRC);
+    let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
+
+    let pipe_desc = MTLRenderPipelineDescriptor::new();
+    pipe_desc.setVertexFunction(Some(&*vfn));
+    pipe_desc.setFragmentFunction(Some(&*ffn));
+    unsafe {
+        pipe_desc
+            .colorAttachments()
+            .objectAtIndexedSubscript(0)
+            .setPixelFormat(MTLPixelFormat::BGRA8Unorm);
+    }
+    let rpipeline = dev
+        .newRenderPipelineStateWithDescriptor_error(&pipe_desc)
+        .unwrap();
+
+    let tex_desc = unsafe {
+        MTLTextureDescriptor::texture2DDescriptorWithPixelFormat_width_height_mipmapped(
+            MTLPixelFormat::BGRA8Unorm,
+            16,
+            16,
+            false,
+        )
+    };
+    tex_desc.setStorageMode(MTLStorageMode::Private);
+    tex_desc.setUsage(MTLTextureUsage::RenderTarget);
+    let target = dev.newTextureWithDescriptor(&tex_desc).unwrap();
+
+    let rpass = MTLRenderPassDescriptor::renderPassDescriptor();
+    unsafe {
+        let att = rpass.colorAttachments().objectAtIndexedSubscript(0);
+        att.setTexture(Some(&*target));
+        att.setLoadAction(MTLLoadAction::Clear);
+        att.setClearColor(MTLClearColor {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0,
+        });
+        att.setStoreAction(MTLStoreAction::Store);
+    }
+
+    for _ in 0..5 {
+        let cmd = queue.commandBuffer().unwrap();
+        let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+        enc.setRenderPipelineState(&rpipeline);
+        unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 3) };
+        enc.endEncoding();
+        cmd.commit();
+        cmd.waitUntilCompleted();
+    }
+
+    let t0 = Instant::now();
+    for _ in 0..iters {
+        let cmd = queue.commandBuffer().unwrap();
+        let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+        enc.setRenderPipelineState(&rpipeline);
+        unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 3) };
+        enc.endEncoding();
+        cmd.commit();
+        cmd.waitUntilCompleted();
+    }
+    t0.elapsed().as_secs_f64() / iters as f64
+}
+
+/// Render batch: N draws per command buffer, amortized per draw
+pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
+    let dev = get_device();
+    let queue = dev.newCommandQueue().unwrap();
+    let src = NSString::from_str(TRIANGLE_SRC);
+    let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
+
+    let pipe_desc = MTLRenderPipelineDescriptor::new();
+    pipe_desc.setVertexFunction(Some(&*vfn));
+    pipe_desc.setFragmentFunction(Some(&*ffn));
+    unsafe {
+        pipe_desc
+            .colorAttachments()
+            .objectAtIndexedSubscript(0)
+            .setPixelFormat(MTLPixelFormat::BGRA8Unorm);
+    }
+    let rpipeline = dev
+        .newRenderPipelineStateWithDescriptor_error(&pipe_desc)
+        .unwrap();
+
+    let tex_desc = unsafe {
+        MTLTextureDescriptor::texture2DDescriptorWithPixelFormat_width_height_mipmapped(
+            MTLPixelFormat::BGRA8Unorm,
+            16,
+            16,
+            false,
+        )
+    };
+    tex_desc.setStorageMode(MTLStorageMode::Private);
+    tex_desc.setUsage(MTLTextureUsage::RenderTarget);
+    let target = dev.newTextureWithDescriptor(&tex_desc).unwrap();
+
+    let rpass = MTLRenderPassDescriptor::renderPassDescriptor();
+    unsafe {
+        let att = rpass.colorAttachments().objectAtIndexedSubscript(0);
+        att.setTexture(Some(&*target));
+        att.setLoadAction(MTLLoadAction::Clear);
+        att.setClearColor(MTLClearColor {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0,
+        });
+        att.setStoreAction(MTLStoreAction::Store);
+    }
+
+    for _ in 0..5 {
+        let cmd = queue.commandBuffer().unwrap();
+        let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+        enc.setRenderPipelineState(&rpipeline);
+        for _ in 0..n_draws {
+            unsafe {
+                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+            };
+        }
+        enc.endEncoding();
+        cmd.commit();
+        cmd.waitUntilCompleted();
+    }
+
+    let t0 = Instant::now();
+    for _ in 0..iters {
+        let cmd = queue.commandBuffer().unwrap();
+        let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+        enc.setRenderPipelineState(&rpipeline);
+        for _ in 0..n_draws {
+            unsafe {
+                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+            };
+        }
+        enc.endEncoding();
+        cmd.commit();
+        cmd.waitUntilCompleted();
+    }
+    t0.elapsed().as_secs_f64() / (iters * n_draws) as f64
 }
 
 /// Inference sim: 3 kernels × N layers, single batch

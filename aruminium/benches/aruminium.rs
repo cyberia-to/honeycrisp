@@ -3,7 +3,7 @@
 use aruminium::Gpu;
 use std::time::Instant;
 
-use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC};
+use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC, TRIANGLE as TRIANGLE_SRC};
 
 // ── basic: device, buffer, shader ──
 
@@ -485,6 +485,88 @@ pub fn inference_sim(layers: usize, iters: usize) -> f64 {
         }
     }
     t0.elapsed().as_secs_f64() / iters as f64
+}
+
+// ── render: dispatch overhead, draw batch ──
+
+pub fn render_pass_overhead(iters: usize) -> f64 {
+    use aruminium::ffi::MTLPixelFormatBGRA8Unorm;
+    use aruminium::{ColorAttachmentDesc, PrimitiveType, RenderPassDescriptor, RenderPipelineSpec};
+
+    let dev = Gpu::open().unwrap();
+    let queue = dev.new_command_queue().unwrap();
+    let lib = dev.compile(TRIANGLE_SRC).unwrap();
+    let vfn = lib.function("vmain").unwrap();
+    let ffn = lib.function("fmain").unwrap();
+    let spec = RenderPipelineSpec::color(MTLPixelFormatBGRA8Unorm);
+    let rpipeline = dev.render_pipeline(&vfn, &ffn, &spec).unwrap();
+    let target = dev.render_target(16, 16, MTLPixelFormatBGRA8Unorm).unwrap();
+    let mut rpass = RenderPassDescriptor::new();
+    rpass.color_attachment(0, ColorAttachmentDesc::clear(&target, [0.0; 4]));
+
+    for _ in 0..5 {
+        let cmd = queue.commands().unwrap();
+        let enc = cmd.render_encoder(&rpass).unwrap();
+        enc.bind(&rpipeline);
+        enc.draw(PrimitiveType::Triangle, 0, 3);
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+    }
+
+    let t0 = Instant::now();
+    for _ in 0..iters {
+        let cmd = queue.commands().unwrap();
+        let enc = cmd.render_encoder(&rpass).unwrap();
+        enc.bind(&rpipeline);
+        enc.draw(PrimitiveType::Triangle, 0, 3);
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+    }
+    t0.elapsed().as_secs_f64() / iters as f64
+}
+
+pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
+    use aruminium::ffi::MTLPixelFormatBGRA8Unorm;
+    use aruminium::{ColorAttachmentDesc, PrimitiveType, RenderPassDescriptor, RenderPipelineSpec};
+
+    let dev = Gpu::open().unwrap();
+    let queue = dev.new_command_queue().unwrap();
+    let lib = dev.compile(TRIANGLE_SRC).unwrap();
+    let vfn = lib.function("vmain").unwrap();
+    let ffn = lib.function("fmain").unwrap();
+    let spec = RenderPipelineSpec::color(MTLPixelFormatBGRA8Unorm);
+    let rpipeline = dev.render_pipeline(&vfn, &ffn, &spec).unwrap();
+    let target = dev.render_target(16, 16, MTLPixelFormatBGRA8Unorm).unwrap();
+    let mut rpass = RenderPassDescriptor::new();
+    rpass.color_attachment(0, ColorAttachmentDesc::clear(&target, [0.0; 4]));
+
+    for _ in 0..5 {
+        let cmd = queue.commands().unwrap();
+        let enc = cmd.render_encoder(&rpass).unwrap();
+        enc.bind(&rpipeline);
+        for _ in 0..n_draws {
+            enc.draw(PrimitiveType::Triangle, 0, 0);
+        }
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+    }
+
+    let t0 = Instant::now();
+    for _ in 0..iters {
+        let cmd = queue.commands().unwrap();
+        let enc = cmd.render_encoder(&rpass).unwrap();
+        enc.bind(&rpipeline);
+        for _ in 0..n_draws {
+            enc.draw(PrimitiveType::Triangle, 0, 0);
+        }
+        enc.end();
+        cmd.submit();
+        cmd.wait();
+    }
+    t0.elapsed().as_secs_f64() / (iters * n_draws) as f64
 }
 
 // ── helpers ──
