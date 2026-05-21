@@ -488,6 +488,110 @@ shaders -> RenderPipeline -> RenderPassDescriptor -> RenderEncoder
 | RenderEncoder::draw | [encoder drawPrimitives:vertexStart:vertexCount:] |
 | RenderEncoder::end | [encoder endEncoding] |
 
-phase 2 adds: depth/stencil attachments + DepthStencilState, MSAA sample
-count + resolve, MTLVertexDescriptor, indexed/instanced draws, blend state,
-cull mode + winding, depth bias.
+## render pipeline (phase 2)
+
+production-grade raster: depth/stencil, MSAA + resolve, vertex
+descriptors, indexed/instanced draws, blend state, cull mode + winding,
+depth bias.
+
+### RenderPipelineSpec — phase 2 fields
+
+| field | type | semantics |
+|-------|------|-----------|
+| depth_format | `Option<MTLPixelFormat>` | depth attachment format (None = none) |
+| stencil_format | `Option<MTLPixelFormat>` | stencil attachment format |
+| sample_count | `u32` | MSAA sample count (1 = none) |
+| vertex_descriptor | `Option<VertexDescriptor>` | typed vertex input layout |
+
+builders: `with_depth(fmt)`, `with_stencil(fmt)`, `with_sample_count(n)`,
+`with_vertex_descriptor(vd)`, `with_blend(idx, blend)`.
+
+### ColorAttachmentSpec — phase 2 fields
+
+| field | type | semantics |
+|-------|------|-----------|
+| blend | `Option<BlendState>` | per-attachment blend |
+| write_mask | `u32` | RGBA write mask (R=1, G=2, B=4, A=8) |
+
+`BlendState { rgb_op, alpha_op, src_rgb, dst_rgb, src_alpha, dst_alpha }`.
+constructors: `BlendState::alpha_over()`, `BlendState::additive()`.
+
+`BlendOp` = Add | Subtract | ReverseSubtract | Min | Max.
+`BlendFactor` = Zero | One | SourceColor | OneMinusSourceColor | ... .
+
+### Depth / stencil
+
+`DepthStencil { compare: CompareFunction, write_enabled: bool }`.
+constructors: `DepthStencil::less_write()`, `DepthStencil::always_no_write()`.
+
+`CompareFunction` = Never | Less | Equal | LessEqual | Greater | NotEqual
+| GreaterEqual | Always.
+
+| Gpu method | signature | semantics |
+|-----------|-----------|-----------|
+| depth_stencil_state | `(&self, DepthStencil) -> Result<DepthStencilState>` | compile depth/stencil state |
+| depth_target | `(&self, w, h, fmt) -> Result<Texture>` | depth render target |
+| depth_target_ms | `(&self, w, h, fmt, samples) -> Result<Texture>` | multisampled depth |
+| render_target_ms | `(&self, w, h, fmt, samples) -> Result<Texture>` | multisampled color |
+
+### RenderPassDescriptor — phase 2
+
+| method | signature | semantics |
+|--------|-----------|-----------|
+| depth_attachment | `(&mut self, DepthAttachmentDesc)` | bind depth attachment |
+
+`DepthAttachmentDesc { texture, load_action, store_action, clear_depth }`.
+constructor: `DepthAttachmentDesc::clear(&tex)` — load=Clear, store=DontCare, clear_depth=1.0.
+
+`ColorAttachmentDesc::resolve_texture: Option<&Texture>` — MSAA resolve target.
+
+### RenderEncoder — phase 2
+
+| method | signature | semantics |
+|--------|-----------|-----------|
+| set_cull_mode | `(&self, CullMode)` | None / Front / Back |
+| set_front_facing_winding | `(&self, Winding)` | Clockwise / CounterClockwise |
+| set_depth_stencil_state | `(&self, &DepthStencilState)` | bind depth/stencil state |
+| set_depth_bias | `(&self, bias, slope_scale, clamp)` | depth offset (shadow maps) |
+| draw_instanced | `(&self, PrimitiveType, start, count, instances)` | non-indexed instanced |
+| draw_indexed | `(&self, PrimitiveType, index_count, IndexType, &Buffer, offset)` | indexed draw |
+| draw_indexed_instanced | `(&self, PrimitiveType, index_count, IndexType, &Buffer, offset, instances)` | indexed instanced |
+
+`IndexType` = UInt16 | UInt32 (with `.size()` accessor).
+
+### Vertex descriptor
+
+`VertexDescriptor` — typed vertex input layout.
+
+```rust
+VertexDescriptor::new()
+    .with_attribute(VertexAttribute { shader_location, format, offset, buffer_index })
+    .with_layout(VertexBufferLayout { buffer_index, stride, step, step_rate })
+```
+
+`VertexFormat` = Float | Float2 | Float3 | Float4 | Half2 | Half4 |
+UChar4Normalized | UInt | Int.
+`VertexStep` = Constant | PerVertex | PerInstance.
+
+### apple mapping (phase 2)
+
+| method | ObjC |
+|--------|------|
+| Gpu::depth_target | [device newTextureWithDescriptor:] (usage RenderTarget, depth format) |
+| Gpu::depth_stencil_state | [device newDepthStencilStateWithDescriptor:] |
+| RenderPipelineSpec::with_depth | [pipelineDesc setDepthAttachmentPixelFormat:] |
+| RenderPipelineSpec::with_sample_count | [pipelineDesc setRasterSampleCount:] |
+| RenderPipelineSpec::with_vertex_descriptor | [pipelineDesc setVertexDescriptor:] |
+| BlendState | [colorAttachment setBlendingEnabled: + set\*BlendFactor: + set\*BlendOperation:] |
+| ColorAttachmentDesc::resolve_texture | [colorAttachment setResolveTexture:] |
+| RenderPassDescriptor::depth_attachment | [passDesc depthAttachment] + setTexture/setLoadAction/setStoreAction/setClearDepth: |
+| RenderEncoder::set_cull_mode | [encoder setCullMode:] |
+| RenderEncoder::set_front_facing_winding | [encoder setFrontFacingWinding:] |
+| RenderEncoder::set_depth_stencil_state | [encoder setDepthStencilState:] |
+| RenderEncoder::set_depth_bias | [encoder setDepthBias:slopeScale:clamp:] |
+| RenderEncoder::draw_indexed | [encoder drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:] |
+| RenderEncoder::draw_indexed_instanced | [encoder drawIndexedPrimitives:...:instanceCount:] |
+| RenderEncoder::draw_instanced | [encoder drawPrimitives:vertexStart:vertexCount:instanceCount:] |
+
+phase 3+ (deferred): argument buffers, tile shaders, mesh shaders,
+acceleration structures.

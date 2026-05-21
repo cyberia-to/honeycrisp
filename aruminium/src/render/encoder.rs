@@ -5,7 +5,7 @@
 
 use crate::buffer::Buffer;
 use crate::ffi::*;
-use crate::render::pipeline::RenderPipeline;
+use crate::render::pipeline::{CullMode, DepthStencilState, RenderPipeline, Winding};
 use crate::texture::Texture;
 use std::ffi::c_void;
 
@@ -18,6 +18,23 @@ pub enum PrimitiveType {
     LineStrip = MTLPrimitiveTypeLineStrip,
     Triangle = MTLPrimitiveTypeTriangle,
     TriangleStrip = MTLPrimitiveTypeTriangleStrip,
+}
+
+/// Index buffer element type (matches `MTLIndexType`).
+#[derive(Debug, Clone, Copy)]
+#[repr(usize)]
+pub enum IndexType {
+    UInt16 = MTLIndexTypeUInt16,
+    UInt32 = MTLIndexTypeUInt32,
+}
+
+impl IndexType {
+    pub fn size(self) -> usize {
+        match self {
+            IndexType::UInt16 => 2,
+            IndexType::UInt32 => 4,
+        }
+    }
 }
 
 /// A render command encoder. Wraps `id<MTLRenderCommandEncoder>`.
@@ -164,6 +181,34 @@ impl RenderEncoder {
         }
     }
 
+    /// Set the cull mode.
+    #[inline]
+    pub fn set_cull_mode(&self, mode: CullMode) {
+        unsafe { msg1_uint_void(self.raw, SEL_setCullMode(), mode as NSUInteger) };
+    }
+
+    /// Set front-face winding.
+    #[inline]
+    pub fn set_front_facing_winding(&self, winding: Winding) {
+        unsafe { msg1_uint_void(self.raw, SEL_setFrontFacingWinding(), winding as NSUInteger) };
+    }
+
+    /// Bind a depth/stencil state.
+    #[inline]
+    pub fn set_depth_stencil_state(&self, state: &DepthStencilState) {
+        unsafe { msg1_void(self.raw, SEL_setDepthStencilState(), state.as_raw()) };
+    }
+
+    /// Set depth bias (offset, slope-scale, clamp).
+    #[inline]
+    pub fn set_depth_bias(&self, bias: f32, slope_scale: f32, clamp: f32) {
+        unsafe {
+            type F = unsafe extern "C" fn(ObjcId, ObjcSel, f32, f32, f32);
+            let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+            f(self.raw, SEL_setDepthBias(), bias, slope_scale, clamp);
+        }
+    }
+
     /// Issue a non-indexed draw.
     #[inline(always)]
     pub fn draw(&self, primitive: PrimitiveType, start: u32, count: u32) {
@@ -176,6 +221,99 @@ impl RenderEncoder {
                 primitive as NSUInteger,
                 start as NSUInteger,
                 count as NSUInteger,
+            );
+        }
+    }
+
+    /// Issue an instanced non-indexed draw.
+    #[inline(always)]
+    pub fn draw_instanced(&self, primitive: PrimitiveType, start: u32, count: u32, instances: u32) {
+        unsafe {
+            type F = unsafe extern "C" fn(
+                ObjcId,
+                ObjcSel,
+                NSUInteger,
+                NSUInteger,
+                NSUInteger,
+                NSUInteger,
+            );
+            let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+            f(
+                self.raw,
+                SEL_drawPrimitives_vertexStart_vertexCount_instanceCount(),
+                primitive as NSUInteger,
+                start as NSUInteger,
+                count as NSUInteger,
+                instances as NSUInteger,
+            );
+        }
+    }
+
+    /// Issue an indexed draw.
+    #[inline(always)]
+    pub fn draw_indexed(
+        &self,
+        primitive: PrimitiveType,
+        index_count: u32,
+        index_type: IndexType,
+        index_buffer: &Buffer,
+        index_buffer_offset: usize,
+    ) {
+        unsafe {
+            type F = unsafe extern "C" fn(
+                ObjcId,
+                ObjcSel,
+                NSUInteger,
+                NSUInteger,
+                NSUInteger,
+                ObjcId,
+                NSUInteger,
+            );
+            let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+            f(
+                self.raw,
+                SEL_drawIndexedPrimitives(),
+                primitive as NSUInteger,
+                index_count as NSUInteger,
+                index_type as NSUInteger,
+                index_buffer.as_raw(),
+                index_buffer_offset,
+            );
+        }
+    }
+
+    /// Issue an instanced indexed draw.
+    #[inline(always)]
+    pub fn draw_indexed_instanced(
+        &self,
+        primitive: PrimitiveType,
+        index_count: u32,
+        index_type: IndexType,
+        index_buffer: &Buffer,
+        index_buffer_offset: usize,
+        instances: u32,
+    ) {
+        unsafe {
+            type F = unsafe extern "C" fn(
+                ObjcId,
+                ObjcSel,
+                NSUInteger,
+                NSUInteger,
+                NSUInteger,
+                ObjcId,
+                NSUInteger,
+                NSUInteger,
+            );
+            let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+            f(
+                self.raw,
+                SEL_drawIndexedPrimitives_instanced(),
+                primitive as NSUInteger,
+                index_count as NSUInteger,
+                index_type as NSUInteger,
+                index_buffer.as_raw(),
+                index_buffer_offset,
+                instances as NSUInteger,
             );
         }
     }

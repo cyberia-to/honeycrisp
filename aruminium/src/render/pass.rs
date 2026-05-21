@@ -31,6 +31,9 @@ pub struct ColorAttachmentDesc<'a> {
     pub load_action: LoadAction,
     pub store_action: StoreAction,
     pub clear_color: [f64; 4],
+    /// Resolve target for MSAA → single-sample. None unless `store_action`
+    /// is one of the multisample-resolve variants.
+    pub resolve_texture: Option<&'a Texture>,
     pub level: u32,
     pub slice: u32,
 }
@@ -43,8 +46,29 @@ impl<'a> ColorAttachmentDesc<'a> {
             load_action: LoadAction::Clear,
             store_action: StoreAction::Store,
             clear_color: clear,
+            resolve_texture: None,
             level: 0,
             slice: 0,
+        }
+    }
+}
+
+/// Depth attachment description.
+pub struct DepthAttachmentDesc<'a> {
+    pub texture: &'a Texture,
+    pub load_action: LoadAction,
+    pub store_action: StoreAction,
+    pub clear_depth: f64,
+}
+
+impl<'a> DepthAttachmentDesc<'a> {
+    /// Convenience: clear depth to 1.0 (far plane), discard after pass.
+    pub fn clear(texture: &'a Texture) -> Self {
+        Self {
+            texture,
+            load_action: LoadAction::Clear,
+            store_action: StoreAction::DontCare,
+            clear_depth: 1.0,
         }
     }
 }
@@ -89,6 +113,23 @@ impl RenderPassDescriptor {
             type F = unsafe extern "C" fn(ObjcId, ObjcSel, MTLClearColor);
             let f: F = std::mem::transmute(objc_msgSend as *const std::ffi::c_void);
             f(slot, SEL_setClearColor(), clear);
+
+            if let Some(resolve) = desc.resolve_texture {
+                msg1_void(slot, SEL_setResolveTexture(), resolve.as_raw());
+            }
+        }
+    }
+
+    /// Configure the depth attachment.
+    pub fn depth_attachment(&mut self, desc: DepthAttachmentDesc<'_>) {
+        unsafe {
+            let slot = msg0(self.raw, SEL_depthAttachment());
+            msg1_void(slot, SEL_setTexture(), desc.texture.as_raw());
+            msg1_uint_void(slot, SEL_setLoadAction(), desc.load_action as NSUInteger);
+            msg1_uint_void(slot, SEL_setStoreAction(), desc.store_action as NSUInteger);
+            type F = unsafe extern "C" fn(ObjcId, ObjcSel, f64);
+            let f: F = std::mem::transmute(objc_msgSend as *const std::ffi::c_void);
+            f(slot, SEL_setClearDepth(), desc.clear_depth);
         }
     }
 

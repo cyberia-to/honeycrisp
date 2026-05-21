@@ -35,3 +35,11 @@ path = "examples/matmul.rs"
 [[example]]
 name = "triangle"
 path = "examples/triangle.rs"
+
+[[example]]
+name = "textured_quad"
+path = "examples/textured_quad.rs"
+
+[[example]]
+name = "depth_cube"
+path = "examples/depth_cube.rs"

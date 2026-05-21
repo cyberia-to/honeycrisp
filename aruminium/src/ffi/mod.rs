@@ -68,6 +68,9 @@ pub const MTLPixelFormatRGBA8Unorm: NSUInteger = 70;
 pub const MTLPixelFormatBGRA8Unorm: NSUInteger = 80;
 pub const MTLPixelFormatRGBA16Float: NSUInteger = 115;
 pub const MTLPixelFormatRGBA32Float: NSUInteger = 125;
+pub const MTLPixelFormatDepth32Float: NSUInteger = 252;
+pub const MTLPixelFormatStencil8: NSUInteger = 253;
+pub const MTLPixelFormatDepth32Float_Stencil8: NSUInteger = 260;
 
 // ── Metal texture usage ──
 
@@ -78,6 +81,7 @@ pub const MTLTextureUsageRenderTarget: NSUInteger = 0x0004;
 // ── Metal texture types ──
 
 pub const MTLTextureType2D: NSUInteger = 2;
+pub const MTLTextureType2DMultisample: NSUInteger = 4;
 
 // ── Render pass load/store actions ──
 
@@ -97,6 +101,62 @@ pub const MTLPrimitiveTypeLine: NSUInteger = 1;
 pub const MTLPrimitiveTypeLineStrip: NSUInteger = 2;
 pub const MTLPrimitiveTypeTriangle: NSUInteger = 3;
 pub const MTLPrimitiveTypeTriangleStrip: NSUInteger = 4;
+
+// ── Index type ──
+
+pub const MTLIndexTypeUInt16: NSUInteger = 0;
+pub const MTLIndexTypeUInt32: NSUInteger = 1;
+
+// ── Cull / winding / compare / blend ──
+
+pub const MTLCullModeNone: NSUInteger = 0;
+pub const MTLCullModeFront: NSUInteger = 1;
+pub const MTLCullModeBack: NSUInteger = 2;
+
+pub const MTLWindingClockwise: NSUInteger = 0;
+pub const MTLWindingCounterClockwise: NSUInteger = 1;
+
+pub const MTLCompareFunctionNever: NSUInteger = 0;
+pub const MTLCompareFunctionLess: NSUInteger = 1;
+pub const MTLCompareFunctionEqual: NSUInteger = 2;
+pub const MTLCompareFunctionLessEqual: NSUInteger = 3;
+pub const MTLCompareFunctionGreater: NSUInteger = 4;
+pub const MTLCompareFunctionNotEqual: NSUInteger = 5;
+pub const MTLCompareFunctionGreaterEqual: NSUInteger = 6;
+pub const MTLCompareFunctionAlways: NSUInteger = 7;
+
+pub const MTLBlendFactorZero: NSUInteger = 0;
+pub const MTLBlendFactorOne: NSUInteger = 1;
+pub const MTLBlendFactorSourceColor: NSUInteger = 2;
+pub const MTLBlendFactorOneMinusSourceColor: NSUInteger = 3;
+pub const MTLBlendFactorSourceAlpha: NSUInteger = 4;
+pub const MTLBlendFactorOneMinusSourceAlpha: NSUInteger = 5;
+pub const MTLBlendFactorDestinationAlpha: NSUInteger = 6;
+pub const MTLBlendFactorOneMinusDestinationAlpha: NSUInteger = 7;
+pub const MTLBlendFactorDestinationColor: NSUInteger = 8;
+pub const MTLBlendFactorOneMinusDestinationColor: NSUInteger = 9;
+
+pub const MTLBlendOperationAdd: NSUInteger = 0;
+pub const MTLBlendOperationSubtract: NSUInteger = 1;
+pub const MTLBlendOperationReverseSubtract: NSUInteger = 2;
+pub const MTLBlendOperationMin: NSUInteger = 3;
+pub const MTLBlendOperationMax: NSUInteger = 4;
+
+// ── Vertex format / step ──
+
+pub const MTLVertexFormatFloat: NSUInteger = 28;
+pub const MTLVertexFormatFloat2: NSUInteger = 29;
+pub const MTLVertexFormatFloat3: NSUInteger = 30;
+pub const MTLVertexFormatFloat4: NSUInteger = 31;
+pub const MTLVertexFormatHalf2: NSUInteger = 25;
+pub const MTLVertexFormatHalf4: NSUInteger = 27;
+pub const MTLVertexFormatUChar4Normalized: NSUInteger = 11;
+pub const MTLVertexFormatUInt: NSUInteger = 36;
+pub const MTLVertexFormatInt: NSUInteger = 32;
+
+pub const MTLVertexStepFunctionConstant: NSUInteger = 0;
+pub const MTLVertexStepFunctionPerVertex: NSUInteger = 1;
+pub const MTLVertexStepFunctionPerInstance: NSUInteger = 2;
 
 // ── Viewport / scissor (passed by value to encoder) ──
 

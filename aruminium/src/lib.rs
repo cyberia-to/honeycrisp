@@ -28,8 +28,11 @@ pub use dispatch::{Batch, Dispatch, GpuFuture};
 pub use encoder::{Copier, Encoder};
 pub use pipeline::Pipeline;
 pub use render::{
-    ColorAttachmentDesc, ColorAttachmentSpec, LoadAction, PrimitiveType, RenderEncoder,
-    RenderPassDescriptor, RenderPipeline, RenderPipelineSpec, StoreAction,
+    BlendFactor, BlendOp, BlendState, ColorAttachmentDesc, ColorAttachmentSpec, CompareFunction,
+    CullMode, DepthAttachmentDesc, DepthStencil, DepthStencilState, IndexType, LoadAction,
+    PrimitiveType, RenderEncoder, RenderPassDescriptor, RenderPipeline, RenderPipelineSpec,
+    StoreAction, VertexAttribute, VertexBufferLayout, VertexDescriptor, VertexFormat, VertexStep,
+    Winding,
 };
 pub use shader::{Shader, ShaderLib};
 pub use sync::{Event, Fence, SharedEvent};

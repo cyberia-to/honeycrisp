@@ -149,6 +149,17 @@ cached_sel!(SEL_setFragmentFunction, c"setFragmentFunction:");
 cached_sel!(SEL_colorAttachments, c"colorAttachments");
 cached_sel!(SEL_objectAtIndexedSubscript, c"objectAtIndexedSubscript:");
 cached_sel!(SEL_setPixelFormat, c"setPixelFormat:");
+cached_sel!(
+    SEL_setDepthAttachmentPixelFormat,
+    c"setDepthAttachmentPixelFormat:"
+);
+cached_sel!(
+    SEL_setStencilAttachmentPixelFormat,
+    c"setStencilAttachmentPixelFormat:"
+);
+cached_sel!(SEL_setSampleCount, c"setSampleCount:");
+cached_sel!(SEL_setRasterSampleCount, c"setRasterSampleCount:");
+cached_sel!(SEL_setVertexDescriptor, c"setVertexDescriptor:");
 
 // ── Render pass descriptor + attachments ──
 
@@ -157,8 +168,11 @@ cached_sel!(SEL_setTexture, c"setTexture:");
 cached_sel!(SEL_setLoadAction, c"setLoadAction:");
 cached_sel!(SEL_setStoreAction, c"setStoreAction:");
 cached_sel!(SEL_setClearColor, c"setClearColor:");
+cached_sel!(SEL_setClearDepth, c"setClearDepth:");
 cached_sel!(SEL_setLevel, c"setLevel:");
 cached_sel!(SEL_setSlice, c"setSlice:");
+cached_sel!(SEL_setResolveTexture, c"setResolveTexture:");
+cached_sel!(SEL_depthAttachment, c"depthAttachment");
 
 // ── Render command encoder ──
 
@@ -193,6 +207,57 @@ cached_sel!(SEL_setScissorRect, c"setScissorRect:");
 cached_sel!(
     SEL_drawPrimitives_vertexStart_vertexCount,
     c"drawPrimitives:vertexStart:vertexCount:"
+);
+cached_sel!(
+    SEL_drawPrimitives_vertexStart_vertexCount_instanceCount,
+    c"drawPrimitives:vertexStart:vertexCount:instanceCount:"
+);
+cached_sel!(
+    SEL_drawIndexedPrimitives,
+    c"drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:"
+);
+cached_sel!(
+    SEL_drawIndexedPrimitives_instanced,
+    c"drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:"
+);
+cached_sel!(SEL_setCullMode, c"setCullMode:");
+cached_sel!(SEL_setFrontFacingWinding, c"setFrontFacingWinding:");
+cached_sel!(SEL_setDepthStencilState, c"setDepthStencilState:");
+cached_sel!(SEL_setDepthBias, c"setDepthBias:slopeScale:clamp:");
+
+// ── Depth stencil state ──
+
+cached_sel!(
+    SEL_newDepthStencilStateWithDescriptor,
+    c"newDepthStencilStateWithDescriptor:"
+);
+cached_sel!(SEL_setDepthCompareFunction, c"setDepthCompareFunction:");
+cached_sel!(SEL_setDepthWriteEnabled, c"setDepthWriteEnabled:");
+
+// ── Vertex descriptor ──
+
+cached_sel!(SEL_attributes, c"attributes");
+cached_sel!(SEL_layouts, c"layouts");
+cached_sel!(SEL_setFormat, c"setFormat:");
+cached_sel!(SEL_setOffset, c"setOffset:");
+cached_sel!(SEL_setBufferIndex, c"setBufferIndex:");
+cached_sel!(SEL_setStride, c"setStride:");
+cached_sel!(SEL_setStepFunction, c"setStepFunction:");
+cached_sel!(SEL_setStepRate, c"setStepRate:");
+
+// ── Render pipeline color attachment blend ──
+
+cached_sel!(SEL_setRgbBlendOperation, c"setRgbBlendOperation:");
+cached_sel!(SEL_setAlphaBlendOperation, c"setAlphaBlendOperation:");
+cached_sel!(SEL_setSourceRGBBlendFactor, c"setSourceRGBBlendFactor:");
+cached_sel!(SEL_setSourceAlphaBlendFactor, c"setSourceAlphaBlendFactor:");
+cached_sel!(
+    SEL_setDestinationRGBBlendFactor,
+    c"setDestinationRGBBlendFactor:"
+);
+cached_sel!(
+    SEL_setDestinationAlphaBlendFactor,
+    c"setDestinationAlphaBlendFactor:"
 );
 
 // ── Texture descriptor extras (render target) ──

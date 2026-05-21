@@ -170,3 +170,11 @@ pub unsafe fn msg1_uint_id(target: ObjcId, sel: ObjcSel, a: NSUInteger) -> ObjcI
     let f: F = std::mem::transmute(objc_msgSend as *const c_void);
     f(target, sel, a)
 }
+
+/// Send a message with 1 ObjcId arg, returning ObjcId.
+#[inline(always)]
+pub unsafe fn msg1_id_id(target: ObjcId, sel: ObjcSel, a: ObjcId) -> ObjcId {
+    type F = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId) -> ObjcId;
+    let f: F = std::mem::transmute(objc_msgSend as *const c_void);
+    f(target, sel, a)
+}
