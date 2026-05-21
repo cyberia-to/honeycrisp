@@ -1,4 +1,5 @@
 //! aruminium driver benchmarks — measures Metal.framework overhead
+#![allow(dead_code)]
 
 use aruminium::Gpu;
 use std::time::Instant;

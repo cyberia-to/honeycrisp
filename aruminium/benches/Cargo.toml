@@ -10,6 +10,9 @@ aruminium.workspace = true
 objc2.workspace = true
 objc2-metal.workspace = true
 objc2-foundation.workspace = true
+metal = "0.33"
+wgpu = "28"
+pollster = "0.4"
 
 [[bin]]
 name = "bench"
@@ -18,3 +21,7 @@ path = "bench.rs"
 [[bin]]
 name = "compare"
 path = "compare.rs"
+
+[[bin]]
+name = "compare_render"
+path = "compare_render.rs"

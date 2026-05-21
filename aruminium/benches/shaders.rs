@@ -1,4 +1,5 @@
 //! Shared MSL kernel sources for benchmarks
+#![allow(dead_code)]
 
 pub const SAXPY: &str = r#"
     #include <metal_stdlib>
