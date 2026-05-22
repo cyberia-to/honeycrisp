@@ -2,6 +2,44 @@
 
 baseline: M1 Pro (8P+2E), 2026-04-03
 
+## M4 Max — SME / SME2 / SSVE (2026-05-22)
+
+new M4-only paths: `streaming::Stream`, `sme::matmul_f32_sme`,
+`lut::permute_u8`, `streaming::kern::axpy_f32`.
+
+### sme matmul (single-thread, vs AMX path)
+
+| size | SME GF | AMX GF | ratio | status |
+|------|--------|--------|-------|--------|
+| 64×64×64 | 55 | ~200 (M1 Pro baseline) | 0.28× | LOSS |
+| 128×128×128 | 154 | — | — | — |
+| 256×256×256 | 363 | — | — | — |
+| 512×512×512 | 423 | — | — | — |
+
+SME baseline is correct but loses to AMX at every measured size. The
+gap closes as N grows; the path to WIN is 4-way ZA tile interleave
+(hide FMOPA's 4-cycle latency) + persistent SME worker pool. Tracked
+as Phase 2.5 in `.claude/plans/m4_upgrade.md`.
+
+### lut permute u8 (LUTI4 → SVE TBL in streaming, vs NEON vqtbl1q_u8)
+
+| n bytes | NEON ns | SME ns | ratio | status |
+|---------|---------|--------|-------|--------|
+| 4096 | 83 | 41 | 2.02× | WIN |
+| 16384 | 250 | 125 | 2.00× | WIN |
+| 65536 | 1333 | 416 | 3.20× | WIN |
+
+Hits the ≥2× target. Implementation note: uses SVE TBL inside SME
+streaming mode rather than LUTI4 — LUTI4's multi-vector register-tuple
+semantics is friction for the single-16-byte-table case.
+
+### ssve axpy
+
+4 unit tests pass at n=16, 64, 1024, 73. Standalone benchmark
+currently hangs; root-cause investigation tracked as Phase 4.5.
+
+
+
 ## elementwise f32 (4096 elements)
 
 | operation | acpu | apple | ratio | status |

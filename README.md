@@ -56,6 +56,9 @@ cargo run --release -p acpu --example bench_summary
 | crypto | SHA-256, AES-128, PMULL | CommonCrypto | SHA 7×, PMULL 70×+ |
 | ZK Goldilocks | field mul, inv, Poseidon2, NTT | nebu pure Rust | 1.1–2× |
 | memory BW | STREAM copy/scale/add/triad | M1 Pro reference | parity (95+ GB/s copy) |
+| **M4 SME GEMM** | matmul_f32 via FMOPA outer product | acpu AMX path | baseline 55–423 GF/s (4-tile interleave is Phase 2.5) |
+| **M4 LUT** | permute_u8 via SVE TBL in streaming mode | NEON vqtbl1q_u8 | 2.0–3.2× at 4K–64K bytes |
+| **M4 SSVE** | axpy_f32 with 16-lane FMLA | NEON 4-lane FMA | tested correct; perf bench pending |
 
 full table: `cargo run --release -p acpu --example bench_summary`
 
@@ -64,7 +67,7 @@ full table: `cargo run --release -p acpu --example bench_summary`
 | crate | what | crates.io |
 |-------|------|-----------|
 | [unimem](unimem/) | zero-copy memory — IOSurface pinned buffers, Tape bump allocator, Grid tensor pool | [![crates.io](https://img.shields.io/crates/v/unimem.svg)](https://crates.io/crates/unimem) |
-| [acpu](acpu/) | CPU/AMX compute — NEON vector, AMX matrix, crypto, ZK field arithmetic, PMU | [![crates.io](https://img.shields.io/crates/v/acpu.svg)](https://crates.io/crates/acpu) |
+| [acpu](acpu/) | CPU compute — NEON vector, AMX matrix, **M4 SME/SME2/SSVE**, crypto, ZK field arithmetic, PMU | [![crates.io](https://img.shields.io/crates/v/acpu.svg)](https://crates.io/crates/acpu) |
 | [aruminium](aruminium/) | Metal GPU — shader compile, pipeline, compute dispatch, pre-resolved IMP | [![crates.io](https://img.shields.io/crates/v/aruminium.svg)](https://crates.io/crates/aruminium) |
 | [rane](rane/) | Apple Neural Engine — MIL compile, SRAM load, hardware dispatch | [![crates.io](https://img.shields.io/crates/v/rane.svg)](https://crates.io/crates/rane) |
 
