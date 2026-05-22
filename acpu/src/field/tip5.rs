@@ -333,6 +333,70 @@ pub fn tip5_hash_pair_n(
     }
 }
 
+/// Multi-threaded Tip5 hash_pair over a slice of pairs.
+///
+/// Partitions the input across `n_threads` P-cores via std::thread::scope
+/// (not rayon — keeps the honeycrisp zero-copy mandate intact) and pins
+/// each worker to a P-core through `acpu::sync::affinity`. Each worker
+/// processes its slice with the scalar `tip5_hash_pair` path, which is
+/// at parity with twenty-first.
+///
+/// `n_threads = 0` selects all available P-cores.
+#[inline(never)]
+pub fn tip5_hash_pair_n_par(
+    pairs: &[([u64; DIGEST_LEN], [u64; DIGEST_LEN])],
+    out: &mut [[u64; DIGEST_LEN]],
+    n_threads: usize,
+) {
+    assert_eq!(pairs.len(), out.len());
+    let total = pairs.len();
+    if total == 0 {
+        return;
+    }
+    let p_cores = crate::probe::scan().p_cores as usize;
+    let n = if n_threads == 0 {
+        p_cores.max(1)
+    } else {
+        n_threads
+    };
+    if n <= 1 || total < n * 4 {
+        // Below the parallel threshold the std::thread::scope spawn cost
+        // (~50 µs/worker) eats the win — run serial.
+        tip5_hash_pair_n(pairs, out);
+        return;
+    }
+
+    let chunk = total.div_ceil(n);
+    let mut out_chunks: Vec<&mut [[u64; DIGEST_LEN]]> = Vec::with_capacity(n);
+    {
+        let mut remaining: &mut [[u64; DIGEST_LEN]] = out;
+        for i in 0..n {
+            let take = chunk.min(remaining.len());
+            // The final worker may absorb a smaller chunk; that's fine.
+            let _ = i;
+            let (head, tail) = remaining.split_at_mut(take);
+            out_chunks.push(head);
+            remaining = tail;
+        }
+    }
+
+    std::thread::scope(|s| {
+        let mut start = 0usize;
+        for out_chunk in out_chunks {
+            let len = out_chunk.len();
+            if len == 0 {
+                continue;
+            }
+            let in_chunk = &pairs[start..start + len];
+            start += len;
+            s.spawn(move || {
+                let _ = crate::sync::affinity::pin_p_core();
+                tip5_hash_pair_n(in_chunk, out_chunk);
+            });
+        }
+    });
+}
+
 /// 4-way interleaved Tip5 — runs four Tip5 permutations simultaneously
 /// in scalar code, hoping that the CPU can issue arithmetic from
 /// independent states out-of-order. No SIMD, no streaming mode; this

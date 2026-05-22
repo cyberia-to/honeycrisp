@@ -10,8 +10,8 @@ mod common;
 use common::*;
 
 use acpu::field::tip5::{
-    tip5_hash_pair, tip5_hash_pair_n, tip5_hash_pair_n_batch4, tip5_hash_varlen, tip5_permute,
-    STATE_SIZE,
+    tip5_hash_pair, tip5_hash_pair_n, tip5_hash_pair_n_batch4, tip5_hash_pair_n_par,
+    tip5_hash_varlen, tip5_permute, STATE_SIZE,
 };
 use twenty_first::prelude::{BFieldElement, Digest, Tip5};
 
@@ -206,6 +206,48 @@ fn main() {
     let n4_mhash = 512e9 / n4_ns as f64 / 1_000_000.0;
     println!("  hash_pair_n      = {n_mhash:.2} M hashes/s");
     println!("  hash_pair_n_b4   = {n4_mhash:.2} M hashes/s  ({:.2}× over seq)", n_ns as f64 / n4_ns as f64);
+
+    // ── Multi-threaded Merkle layer ──────────────────────────────────────
+    score.hdr("Tip5 Merkle layer — P-core parallel (scaling across N)");
+    println!("  P-cores reported: {}", caps.p_cores);
+    for &n in &[1024usize, 4096, 16384, 65536] {
+        let big_pairs: Vec<([u64; 5], [u64; 5])> = (0..n)
+            .map(|i| {
+                (
+                    core::array::from_fn(|j| (i * 10 + j) as u64),
+                    core::array::from_fn(|j| (i * 10 + 5 + j) as u64),
+                )
+            })
+            .collect();
+        let mut out_seq = vec![[0u64; 5]; n];
+        let mut out_par = vec![[0u64; 5]; n];
+
+        // Adapt iter count to keep total bench time bounded.
+        let iters = if n <= 4096 { 50 } else { 10 };
+
+        let seq_ns = best_of(
+            || {
+                tip5_hash_pair_n(&big_pairs, &mut out_seq);
+                std::hint::black_box(&out_seq);
+            },
+            iters,
+        );
+        let par_ns = best_of(
+            || {
+                tip5_hash_pair_n_par(&big_pairs, &mut out_par, 0);
+                std::hint::black_box(&out_par);
+            },
+            iters,
+        );
+        assert_eq!(out_seq, out_par, "n={n}: parallel diverges");
+
+        let seq_mhash = n as f64 * 1e9 / seq_ns as f64 / 1_000_000.0;
+        let par_mhash = n as f64 * 1e9 / par_ns as f64 / 1_000_000.0;
+        let speedup = seq_ns as f64 / par_ns as f64;
+        println!(
+            "  n={n:>6}: seq {seq_mhash:>5.2} M/s   par {par_mhash:>6.2} M/s   {speedup:>5.2}×"
+        );
+    }
 
     // ── Batched Goldilocks multiply (SSVE vs scalar) ────────────────────
     score.hdr("Goldilocks raw_mul: SSVE batch8 vs scalar (8 mults / call)");
