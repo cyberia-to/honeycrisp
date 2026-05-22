@@ -315,6 +315,83 @@ pub fn tip5_hash_pair(left: [u64; DIGEST_LEN], right: [u64; DIGEST_LEN]) -> [u64
     out
 }
 
+/// Hash N independent `(left, right)` digest pairs in one call.
+///
+/// Sequential scalar implementation — this is the API baseline for
+/// Merkle-layer hashing. Use `tip5_hash_pair_n_batch4` for a 4-way
+/// interleaved scalar variant that exposes more ILP to the CPU.
+#[inline(never)]
+pub fn tip5_hash_pair_n(
+    pairs: &[([u64; DIGEST_LEN], [u64; DIGEST_LEN])],
+    out: &mut [[u64; DIGEST_LEN]],
+) {
+    assert_eq!(pairs.len(), out.len());
+    for (i, (l, r)) in pairs.iter().enumerate() {
+        out[i] = tip5_hash_pair(*l, *r);
+    }
+}
+
+/// 4-way interleaved Tip5 — runs four Tip5 permutations simultaneously
+/// in scalar code, hoping that the CPU can issue arithmetic from
+/// independent states out-of-order. No SIMD, no streaming mode; this
+/// purely tests whether instruction-level parallelism gives a free
+/// win over the single-state path.
+#[inline(never)]
+pub fn tip5_hash_pair_n_batch4(
+    pairs: &[([u64; DIGEST_LEN], [u64; DIGEST_LEN])],
+    out: &mut [[u64; DIGEST_LEN]],
+) {
+    assert_eq!(pairs.len(), out.len());
+    let n = pairs.len();
+    let mut i = 0;
+    while i + 4 <= n {
+        let mut s0 = [0u64; STATE_SIZE];
+        let mut s1 = [0u64; STATE_SIZE];
+        let mut s2 = [0u64; STATE_SIZE];
+        let mut s3 = [0u64; STATE_SIZE];
+        for slot in &mut s0[RATE..] {
+            *slot = ONE_MONTY;
+        }
+        for slot in &mut s1[RATE..] {
+            *slot = ONE_MONTY;
+        }
+        for slot in &mut s2[RATE..] {
+            *slot = ONE_MONTY;
+        }
+        for slot in &mut s3[RATE..] {
+            *slot = ONE_MONTY;
+        }
+        for j in 0..DIGEST_LEN {
+            s0[j] = to_monty(pairs[i].0[j]);
+            s0[DIGEST_LEN + j] = to_monty(pairs[i].1[j]);
+            s1[j] = to_monty(pairs[i + 1].0[j]);
+            s1[DIGEST_LEN + j] = to_monty(pairs[i + 1].1[j]);
+            s2[j] = to_monty(pairs[i + 2].0[j]);
+            s2[DIGEST_LEN + j] = to_monty(pairs[i + 2].1[j]);
+            s3[j] = to_monty(pairs[i + 3].0[j]);
+            s3[DIGEST_LEN + j] = to_monty(pairs[i + 3].1[j]);
+        }
+        for r in 0..NUM_ROUNDS {
+            round(&mut s0, r);
+            round(&mut s1, r);
+            round(&mut s2, r);
+            round(&mut s3, r);
+        }
+        for j in 0..DIGEST_LEN {
+            out[i][j] = from_monty(s0[j]);
+            out[i + 1][j] = from_monty(s1[j]);
+            out[i + 2][j] = from_monty(s2[j]);
+            out[i + 3][j] = from_monty(s3[j]);
+        }
+        i += 4;
+    }
+    // Tail
+    while i < n {
+        out[i] = tip5_hash_pair(pairs[i].0, pairs[i].1);
+        i += 1;
+    }
+}
+
 /// Hash a variable-length sequence of canonical field elements.
 /// Matches `Tip5::hash_varlen`.
 ///

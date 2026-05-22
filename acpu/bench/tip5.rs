@@ -9,7 +9,10 @@
 mod common;
 use common::*;
 
-use acpu::field::tip5::{tip5_hash_pair, tip5_hash_varlen, tip5_permute, STATE_SIZE};
+use acpu::field::tip5::{
+    tip5_hash_pair, tip5_hash_pair_n, tip5_hash_pair_n_batch4, tip5_hash_varlen, tip5_permute,
+    STATE_SIZE,
+};
 use twenty_first::prelude::{BFieldElement, Digest, Tip5};
 
 fn ref_permute(state: [u64; STATE_SIZE]) -> [u64; STATE_SIZE] {
@@ -164,6 +167,45 @@ fn main() {
     let ref_mhash = 512.0e9 / ref_ns as f64 / 1_000_000.0;
     println!("  acpu  Merkle layer = {acpu_mhash:.2} M hashes/s");
     println!("  ty-first Merkle layer = {ref_mhash:.2} M hashes/s");
+
+    // ── Batched Merkle layer ─────────────────────────────────────────────
+    score.hdr("Tip5 Merkle layer — batched API (1024 leaves → 512 nodes)");
+    let pairs: Vec<([u64; 5], [u64; 5])> = (0..512)
+        .map(|i| {
+            (
+                core::array::from_fn(|j| (i * 10 + j) as u64),
+                core::array::from_fn(|j| (i * 10 + 5 + j) as u64),
+            )
+        })
+        .collect();
+    let mut out_a = vec![[0u64; 5]; 512];
+    let mut out_b = vec![[0u64; 5]; 512];
+
+    // Sequential through the batched API
+    let n_ns = best_of(
+        || {
+            tip5_hash_pair_n(&pairs, &mut out_a);
+            std::hint::black_box(&out_a);
+        },
+        200,
+    );
+    let n4_ns = best_of(
+        || {
+            tip5_hash_pair_n_batch4(&pairs, &mut out_b);
+            std::hint::black_box(&out_b);
+        },
+        200,
+    );
+
+    // Correctness: batch4 must agree with sequential
+    assert_eq!(out_a, out_b, "batch4 diverges from sequential");
+
+    score.row("hash_pair_n (seq)", n_ns, n_ns);
+    score.row("hash_pair_n_batch4", n4_ns, n_ns);
+    let n_mhash = 512e9 / n_ns as f64 / 1_000_000.0;
+    let n4_mhash = 512e9 / n4_ns as f64 / 1_000_000.0;
+    println!("  hash_pair_n      = {n_mhash:.2} M hashes/s");
+    println!("  hash_pair_n_b4   = {n4_mhash:.2} M hashes/s  ({:.2}× over seq)", n_ns as f64 / n4_ns as f64);
 
     score.summary();
 }
