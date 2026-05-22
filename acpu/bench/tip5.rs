@@ -207,5 +207,97 @@ fn main() {
     println!("  hash_pair_n      = {n_mhash:.2} M hashes/s");
     println!("  hash_pair_n_b4   = {n4_mhash:.2} M hashes/s  ({:.2}× over seq)", n_ns as f64 / n4_ns as f64);
 
+    // ── Batched Goldilocks multiply (SSVE vs scalar) ────────────────────
+    score.hdr("Goldilocks raw_mul: SSVE batch8 vs scalar (8 mults / call)");
+    if caps.has_sme {
+        use acpu::field::tip5::simd::raw_mul_batch8;
+        // 8 elements per call. Compare against 8 scalar Montgomery muls.
+        let a: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xDEAD_BEEF));
+        let b: [u64; 8] = core::array::from_fn(|i| (i as u64 + 17).wrapping_mul(0xCAFE_BABE));
+        let mut out = [0u64; 8];
+
+        // Warm
+        for _ in 0..3 {
+            raw_mul_batch8(&a, &b, &mut out).unwrap();
+        }
+
+        // Batched per timed iteration so the timer can resolve it.
+        const N_CALLS: usize = 1000;
+
+        // SSVE: each call is one SMSTART + 8 muls + one SMSTOP.
+        let sme_ns = best_of(
+            || {
+                for _ in 0..N_CALLS {
+                    raw_mul_batch8(&a, &b, &mut out).unwrap();
+                }
+                std::hint::black_box(&out);
+            },
+            200,
+        );
+
+        const P: u64 = 0xffff_ffff_0000_0001;
+        fn montyred(x: u128) -> u64 {
+            let xl = x as u64;
+            let xh = (x >> 64) as u64;
+            let (a, e) = xl.overflowing_add(xl << 32);
+            let b = a.wrapping_sub(a >> 32).wrapping_sub(e as u64);
+            let (r, c) = xh.overflowing_sub(b);
+            r.wrapping_sub((1 + !P) * c as u64)
+        }
+        let scalar_ns = best_of(
+            || {
+                let mut o = [0u64; 8];
+                for _ in 0..N_CALLS {
+                    for i in 0..8 {
+                        o[i] = montyred((a[i] as u128) * (b[i] as u128));
+                    }
+                    std::hint::black_box(&o);
+                }
+            },
+            200,
+        );
+
+        let sme_per_call = sme_ns / N_CALLS as u64;
+        let scalar_per_call = scalar_ns / N_CALLS as u64;
+        score.row("8× raw_mul (per call)", sme_per_call, scalar_per_call);
+        println!(
+            "  per-mul SSVE   = {:.2} ns ({} calls)",
+            sme_per_call as f64 / 8.0,
+            N_CALLS
+        );
+        println!(
+            "  per-mul scalar = {:.2} ns ({} calls)",
+            scalar_per_call as f64 / 8.0,
+            N_CALLS
+        );
+
+        // Streaming-mode-amortized variant: enter Stream once, do N_CALLS
+        // multiplies, exit once. Strips out the SMSTART/SMSTOP cost.
+        let amort_ns = best_of(
+            || {
+                let stream = acpu::Stream::new().unwrap();
+                for _ in 0..N_CALLS {
+                    unsafe {
+                        // Re-uses the same asm but skips the Stream::new path.
+                        acpu::field::tip5::simd::raw_mul_batch8_in_stream(
+                            &stream, &a, &b, &mut out,
+                        );
+                    }
+                }
+                drop(stream);
+                std::hint::black_box(&out);
+            },
+            200,
+        );
+        let amort_per_call = amort_ns / N_CALLS as u64;
+        println!(
+            "  per-mul SSVE (amort) = {:.2} ns  → {:.2} M-mul/s",
+            amort_per_call as f64 / 8.0,
+            8000.0 / amort_per_call as f64
+        );
+    } else {
+        println!("  SKIP: FEAT_SME not present");
+    }
+
     score.summary();
 }

@@ -255,6 +255,8 @@ fn add_round_constants(state: &mut [u64; STATE_SIZE], round_index: usize) {
 }
 
 mod mds;
+#[cfg(target_arch = "aarch64")]
+pub mod simd;
 use mds::mds_generated;
 
 /// One Tip5 round.
