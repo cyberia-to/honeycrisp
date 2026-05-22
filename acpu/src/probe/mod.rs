@@ -181,6 +181,14 @@ pub enum Feature {
     Lse,
     /// Load-acquire RCpc (FEAT_LRCPC)
     Lrcpc,
+    /// Scalable Matrix Extension (FEAT_SME) — M4+
+    Sme,
+    /// Scalable Matrix Extension v2 with LUTI2/LUTI4 (FEAT_SME2) — M4+
+    Sme2,
+    /// FP64 outer product in ZA (FEAT_SME_F64F64) — M4+
+    SmeF64F64,
+    /// I16×I16 → I64 outer product (FEAT_SME_I16I64) — M4+
+    SmeI16I64,
 }
 
 // ---------------------------------------------------------------------------
@@ -201,6 +209,17 @@ pub struct Features {
     pub has_rdm: bool,
     pub has_lse: bool,
     pub has_lrcpc: bool,
+    /// Scalable Matrix Extension base (FEAT_SME) — present on M4+
+    pub has_sme: bool,
+    /// SME v2 with LUTI2/LUTI4 multi-vector lookup (FEAT_SME2) — M4+
+    pub has_sme2: bool,
+    /// FP64 outer product in ZA (FEAT_SME_F64F64) — M4+
+    pub has_sme_f64f64: bool,
+    /// I16×I16 → I64 outer product (FEAT_SME_I16I64) — M4+
+    pub has_sme_i16i64: bool,
+    /// Streaming vector length in bytes (0 if SME absent).
+    /// 64 on every shipping Apple SME implementation (SVL = 512 bits).
+    pub svl_bytes: u16,
     /// Performance (P) cores
     pub p_cores: u8,
     /// Efficiency (E) cores
@@ -223,6 +242,10 @@ impl Features {
             Feature::Rdm => self.has_rdm,
             Feature::Lse => self.has_lse,
             Feature::Lrcpc => self.has_lrcpc,
+            Feature::Sme => self.has_sme,
+            Feature::Sme2 => self.has_sme2,
+            Feature::SmeF64F64 => self.has_sme_f64f64,
+            Feature::SmeI16I64 => self.has_sme_i16i64,
         }
     }
 }
@@ -348,16 +371,48 @@ fn detect_l2_size() -> usize {
 // Feature detection
 // ---------------------------------------------------------------------------
 
-fn detect_features() -> (bool, bool, bool, bool, bool, bool, bool, bool) {
-    let fp16 = feat_flag(b"hw.optional.arm.FEAT_FP16\0");
-    let bf16 = feat_flag(b"hw.optional.arm.FEAT_BF16\0");
-    let dotprod = feat_flag(b"hw.optional.arm.FEAT_DotProd\0");
-    let i8mm = feat_flag(b"hw.optional.arm.FEAT_I8MM\0");
-    let fcma = feat_flag(b"hw.optional.arm.FEAT_FCMA\0");
-    let rdm = feat_flag(b"hw.optional.arm.FEAT_RDM\0");
-    let lse = feat_flag(b"hw.optional.arm.FEAT_LSE\0");
-    let lrcpc = feat_flag(b"hw.optional.arm.FEAT_LRCPC\0");
-    (fp16, bf16, dotprod, i8mm, fcma, rdm, lse, lrcpc)
+struct DetectedFeatures {
+    fp16: bool,
+    bf16: bool,
+    dotprod: bool,
+    i8mm: bool,
+    fcma: bool,
+    rdm: bool,
+    lse: bool,
+    lrcpc: bool,
+    sme: bool,
+    sme2: bool,
+    sme_f64f64: bool,
+    sme_i16i64: bool,
+}
+
+fn detect_features() -> DetectedFeatures {
+    DetectedFeatures {
+        fp16: feat_flag(b"hw.optional.arm.FEAT_FP16\0"),
+        bf16: feat_flag(b"hw.optional.arm.FEAT_BF16\0"),
+        dotprod: feat_flag(b"hw.optional.arm.FEAT_DotProd\0"),
+        i8mm: feat_flag(b"hw.optional.arm.FEAT_I8MM\0"),
+        fcma: feat_flag(b"hw.optional.arm.FEAT_FCMA\0"),
+        rdm: feat_flag(b"hw.optional.arm.FEAT_RDM\0"),
+        lse: feat_flag(b"hw.optional.arm.FEAT_LSE\0"),
+        lrcpc: feat_flag(b"hw.optional.arm.FEAT_LRCPC\0"),
+        sme: feat_flag(b"hw.optional.arm.FEAT_SME\0"),
+        sme2: feat_flag(b"hw.optional.arm.FEAT_SME2\0"),
+        sme_f64f64: feat_flag(b"hw.optional.arm.FEAT_SME_F64F64\0"),
+        sme_i16i64: feat_flag(b"hw.optional.arm.FEAT_SME_I16I64\0"),
+    }
+}
+
+/// Streaming vector length in bytes for chips that advertise SME.
+///
+/// Every shipping Apple SME implementation uses SVL = 512 bits = 64 bytes.
+/// The streaming module verifies this at first SMSTART by reading RDSVL.
+fn svl_for(has_sme: bool) -> u16 {
+    if has_sme {
+        64
+    } else {
+        0
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -372,19 +427,24 @@ pub fn scan() -> &'static Features {
     CAPS.get_or_init(|| {
         let chip = Chip::detect();
         let amx_ver = chip.amx_version();
-        let (fp16, bf16, dotprod, i8mm, fcma, rdm, lse, lrcpc) = detect_features();
+        let f = detect_features();
 
         Features {
             chip,
             amx_ver,
-            has_fp16: fp16,
-            has_bf16: bf16,
-            has_dotprod: dotprod,
-            has_i8mm: i8mm,
-            has_fcma: fcma,
-            has_rdm: rdm,
-            has_lse: lse,
-            has_lrcpc: lrcpc,
+            has_fp16: f.fp16,
+            has_bf16: f.bf16,
+            has_dotprod: f.dotprod,
+            has_i8mm: f.i8mm,
+            has_fcma: f.fcma,
+            has_rdm: f.rdm,
+            has_lse: f.lse,
+            has_lrcpc: f.lrcpc,
+            has_sme: f.sme,
+            has_sme2: f.sme2,
+            has_sme_f64f64: f.sme_f64f64,
+            has_sme_i16i64: f.sme_i16i64,
+            svl_bytes: svl_for(f.sme),
             p_cores: detect_p_cores(),
             e_cores: detect_e_cores(),
             l1_line: detect_l1_line(),
@@ -453,6 +513,11 @@ mod tests {
             has_rdm: true,
             has_lse: true,
             has_lrcpc: true,
+            has_sme: false,
+            has_sme2: false,
+            has_sme_f64f64: false,
+            has_sme_i16i64: false,
+            svl_bytes: 0,
             p_cores: 4,
             e_cores: 4,
             l1_line: 128,
@@ -462,6 +527,27 @@ mod tests {
         assert!(!caps.has(Feature::Bf16));
         assert!(caps.has(Feature::DotProd));
         assert!(!caps.has(Feature::I8mm));
+        assert!(!caps.has(Feature::Sme));
+    }
+
+    #[test]
+    fn sme_implies_svl() {
+        let caps = scan();
+        if caps.has_sme {
+            assert_eq!(caps.svl_bytes, 64, "Apple SME implementations use SVL=512 bits");
+        } else {
+            assert_eq!(caps.svl_bytes, 0);
+        }
+    }
+
+    #[test]
+    fn m4_has_sme() {
+        // On any M4 host this must be true; on other hosts the test is informational.
+        let caps = scan();
+        if matches!(caps.chip, Chip::M4 | Chip::M4Pro | Chip::M4Max) {
+            assert!(caps.has_sme, "M4 family must advertise FEAT_SME");
+            assert!(caps.has_sme2, "M4 family must advertise FEAT_SME2");
+        }
     }
 
     #[test]

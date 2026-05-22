@@ -25,6 +25,11 @@ fn main() {
     println!("  RDM:        {}", caps.has_rdm);
     println!("  LSE:        {}", caps.has_lse);
     println!("  LRCPC:      {}", caps.has_lrcpc);
+    println!("  SME:        {}", caps.has_sme);
+    println!("  SME2:       {}", caps.has_sme2);
+    println!("  SME f64f64: {}", caps.has_sme_f64f64);
+    println!("  SME i16i64: {}", caps.has_sme_i16i64);
+    println!("  SVL:        {} B", caps.svl_bytes);
     println!();
 
     // -----------------------------------------------------------------------

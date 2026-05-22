@@ -47,7 +47,7 @@ all detection is zero-cost after first call (cached in static).
 | M2 Pro/Max/Ultra | Avalanche/Blizzard | 2 | same as M2 |
 | M3 | Everest/Sawtooth | 3 | + AMX ldx/ldy, matint |
 | M3 Pro/Max/Ultra | Everest/Sawtooth | 3 | same as M3 |
-| M4 | Dorada/Brava | 4 | + AMX extrh/extrv, vecfp/vecint |
+| M4 | Dorada/Brava | 4 | + SME, SME2 (LUTI2/LUTI4), SME_F64F64, SME_I16I64, SSVE (SVL=512), AMX extrh/extrv |
 | M4 Pro/Max | Dorada/Brava | 4 | same as M4 |
 
 ## features
@@ -64,6 +64,11 @@ all detection is zero-cost after first call (cached in static).
 | has_rdm | bool | FEAT_RDM — always true M1+ |
 | has_lse | bool | FEAT_LSE — always true M1+ |
 | has_lrcpc | bool | FEAT_LRCPC — always true M1+ |
+| has_sme | bool | FEAT_SME — M4+ |
+| has_sme2 | bool | FEAT_SME2 (LUTI2/LUTI4, multi-vector ops) — M4+ |
+| has_sme_f64f64 | bool | FEAT_SME_F64F64 — M4+ |
+| has_sme_i16i64 | bool | FEAT_SME_I16I64 — M4+ |
+| svl_bytes | u16 | streaming vector length in bytes (64 on M4, 0 otherwise) |
 | p_cores | u8 | performance core count |
 | e_cores | u8 | efficiency core count |
 | l1_line | usize | L1 cache line size (bytes) |

@@ -76,3 +76,11 @@ path = "bench/ai.rs"
 [[example]]
 name = "bench_summary"
 path = "bench/summary.rs"
+
+[[example]]
+name = "bench_sme"
+path = "bench/sme.rs"
+
+[[example]]
+name = "sme_smoke"
+path = "examples/sme_smoke.rs"
