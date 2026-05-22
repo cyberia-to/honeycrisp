@@ -8,6 +8,7 @@ pub mod merkle;
 pub mod ntt;
 pub mod permute;
 pub mod poly;
+pub mod tip5;
 
 pub use goldilocks::{
     gl_add, gl_inv, gl_mul, gl_mul_batch, gl_pow7, gl_pow7_x16, gl_reduce128, gl_sub,
@@ -16,3 +17,4 @@ pub use merkle::{batch_inv, hash_node, merkle_root};
 pub use ntt::{bit_reverse_permute, ntt_forward, pow_gl};
 pub use permute::poseidon2_permute;
 pub use poly::multilinear_eval;
+pub use tip5::{tip5_hash_pair, tip5_hash_varlen, tip5_permute};

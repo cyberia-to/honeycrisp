@@ -16,6 +16,9 @@ unimem.workspace = true
 
 [dev-dependencies]
 nebu.workspace = true
+# Bit-identity fixture for `tests/tip5_compat.rs` only. Not allowed in
+# acpu's runtime dependency graph — see acpu/CLAUDE.md.
+twenty-first = "1.1"
 
 [lib]
 name = "acpu"
@@ -84,6 +87,10 @@ path = "bench/sme.rs"
 [[example]]
 name = "bench_lut"
 path = "bench/lut.rs"
+
+[[example]]
+name = "bench_ssve"
+path = "bench/ssve.rs"
 
 [[example]]
 name = "sme_smoke"
