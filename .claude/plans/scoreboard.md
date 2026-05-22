@@ -38,6 +38,32 @@ semantics is friction for the single-16-byte-table case.
 4 unit tests pass at n=16, 64, 1024, 73. Standalone benchmark
 currently hangs; root-cause investigation tracked as Phase 4.5.
 
+### tip5 (scalar, vs twenty-first 1.1.0 reference)
+
+| operation | acpu | twenty-first | ratio | status |
+|-----------|------|--------------|-------|--------|
+| permute (batched ×1024) | 309 ns | 313 ns | 1.01× | TIE |
+| hash_pair | 250 ns | 250 ns | 1.00× | TIE |
+| hash_varlen[0..1000] | tied | tied | ~1.00× | TIE |
+| Merkle layer (512 inner nodes) | 149µs | 149µs | 1.00× | TIE |
+
+Throughput on M4 Max single-thread:
+- 3.24 M permutations / s
+- 3.43 M Merkle inner-node hashes / s
+
+5 bit-identity tests (acpu/tests/tip5_compat.rs) pass against
+twenty-first 1.1.0 — 1000 random permutations, 1000 random
+hash_pair calls, hash_varlen across padding boundaries 0,1,9,10,
+11,30,100,1000 plus random length sweep, and 5 edge-case states.
+
+Honest summary: acpu's scalar Tip5 is at performance parity with
+twenty-first and exposes a cleaner u64 API (no BFieldElement /
+Digest construction at the call site). Real perf gain for nika's
+heapify_mary bottleneck (~448ms / proof) requires either P-core
+parallelism (embarrassingly parallel Merkle layers) or batched
+SIMD across multiple Tip5 states — neither is necessary for the
+correctness goal of swapping twenty-first out of the prover hot path.
+
 
 
 ## elementwise f32 (4096 elements)

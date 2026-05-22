@@ -93,5 +93,9 @@ name = "bench_ssve"
 path = "bench/ssve.rs"
 
 [[example]]
+name = "bench_tip5"
+path = "bench/tip5.rs"
+
+[[example]]
 name = "sme_smoke"
 path = "examples/sme_smoke.rs"
