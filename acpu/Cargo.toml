@@ -82,5 +82,9 @@ name = "bench_sme"
 path = "bench/sme.rs"
 
 [[example]]
+name = "bench_lut"
+path = "bench/lut.rs"
+
+[[example]]
 name = "sme_smoke"
 path = "examples/sme_smoke.rs"

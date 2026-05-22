@@ -17,6 +17,8 @@ pub mod probe;
 pub mod pulse;
 pub mod sparse;
 #[cfg(target_arch = "aarch64")]
+pub mod lut;
+#[cfg(target_arch = "aarch64")]
 pub mod sme;
 #[cfg(target_arch = "aarch64")]
 pub mod streaming;
