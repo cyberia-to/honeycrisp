@@ -163,11 +163,7 @@ mod tests {
     /// A_pack[p * 16 + i] = A[i, p] (i.e. column p of A as 16 contiguous f32).
     /// B_pack[p * 16 + j] = B[p, j] (row p of B as 16 contiguous f32).
     /// The outer product Z(A_col) ⊗ Z(B_row) lands in ZA[i, j] = A[i,p] * B[p,j].
-    fn pack_for_tile(
-        a: &[f32],
-        b: &[f32],
-        k: usize,
-    ) -> (Vec<f32>, Vec<f32>) {
+    fn pack_for_tile(a: &[f32], b: &[f32], k: usize) -> (Vec<f32>, Vec<f32>) {
         let mut a_pack = vec![0.0f32; k * 16];
         let mut b_pack = vec![0.0f32; k * 16];
         for p in 0..k {

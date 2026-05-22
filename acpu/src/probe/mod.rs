@@ -534,7 +534,10 @@ mod tests {
     fn sme_implies_svl() {
         let caps = scan();
         if caps.has_sme {
-            assert_eq!(caps.svl_bytes, 64, "Apple SME implementations use SVL=512 bits");
+            assert_eq!(
+                caps.svl_bytes, 64,
+                "Apple SME implementations use SVL=512 bits"
+            );
         } else {
             assert_eq!(caps.svl_bytes, 0);
         }

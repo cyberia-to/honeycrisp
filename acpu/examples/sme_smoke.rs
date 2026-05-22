@@ -26,8 +26,7 @@ fn main() {
         println!("f32 lanes/vec:  {}", stream.svl_lanes_f32());
         println!("f64 lanes/vec:  {}", stream.svl_lanes_f64());
         assert_eq!(
-            svl_runtime as u16,
-            caps.svl_bytes,
+            svl_runtime as u16, caps.svl_bytes,
             "RDSVL must agree with probed SVL"
         );
 

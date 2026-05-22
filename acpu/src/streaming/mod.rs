@@ -16,6 +16,7 @@
 //! two per thread at any time.
 
 pub mod asm;
+pub mod kern;
 pub mod ssve;
 
 use crate::{CpuError, Feature};

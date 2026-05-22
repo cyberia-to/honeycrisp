@@ -36,8 +36,8 @@ fn main() {
     println!();
 
     let table: [u8; 16] = [
-        0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
-        0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
+        0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26,
+        0x27,
     ];
 
     let sizes: &[usize] = &[64, 256, 1024, 4096, 16384, 65536];
@@ -65,9 +65,18 @@ fn main() {
             assert_eq!(a, b, "mismatch at lane {i} (n={n})");
         }
 
-        let iters = if n < 1024 { 5000 } else if n < 16384 { 500 } else { 50 };
+        let iters = if n < 1024 {
+            5000
+        } else if n < 16384 {
+            500
+        } else {
+            50
+        };
 
-        let neon_ns = best_of(|| unsafe { neon_permute(&table, &idx, &mut out_neon) }, iters);
+        let neon_ns = best_of(
+            || unsafe { neon_permute(&table, &idx, &mut out_neon) },
+            iters,
+        );
         let sme_ns = best_of(
             || {
                 acpu::lut::permute_u8(&table, &idx, &mut out_sme).unwrap();

@@ -21,8 +21,13 @@
 ///
 /// Caller must hold a live [`crate::streaming::Stream`].
 #[inline(always)]
-pub unsafe fn fmopa_s<const ZAD: u32, const ZN: u32, const ZM: u32, const PN: u32, const PM: u32>(
-) {
+pub unsafe fn fmopa_s<
+    const ZAD: u32,
+    const ZN: u32,
+    const ZM: u32,
+    const PN: u32,
+    const PM: u32,
+>() {
     const {
         assert!(ZAD < 4, "FMOPA.S ZAd must be 0..3");
         assert!(ZN < 32 && ZM < 16);

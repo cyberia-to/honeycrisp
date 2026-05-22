@@ -137,15 +137,7 @@ fn matmul_bulk(
 
     if n_threads <= 1 {
         run_strip(
-            a_base,
-            b_base,
-            c_base,
-            0,
-            m_strips,
-            n_strips,
-            k,
-            n,
-            accumulate,
+            a_base, b_base, c_base, 0, m_strips, n_strips, k, n, accumulate,
         );
         return;
     }

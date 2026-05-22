@@ -31,12 +31,7 @@ pub fn permute_u8(table: &[u8; 16], idx: &[u8], out: &mut [u8]) -> crate::Result
     let chunks = idx.len() / 64;
     if chunks > 0 {
         unsafe {
-            permute_u8_bulk(
-                zt0_bytes.as_ptr(),
-                idx.as_ptr(),
-                out.as_mut_ptr(),
-                chunks,
-            );
+            permute_u8_bulk(zt0_bytes.as_ptr(), idx.as_ptr(), out.as_mut_ptr(), chunks);
         }
     }
     drop(stream);
@@ -112,8 +107,8 @@ mod tests {
             return;
         }
         let table: [u8; 16] = [
-            0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7,
-            0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7,
+            0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5,
+            0xB6, 0xB7,
         ];
         let idx: Vec<u8> = (0..n).map(|i| (i as u8) & 0x0F).collect();
         let mut out_sme = vec![0u8; n];
