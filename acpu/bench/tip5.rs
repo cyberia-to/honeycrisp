@@ -271,6 +271,62 @@ fn main() {
             N_CALLS
         );
 
+        // ── Fused 8-way x⁷ chain ────────────────────────────────────
+        // The interesting question: does the SSVE win when 4 multiplies
+        // chain register-to-register without touching memory between?
+        score.hdr("Tip5 S-box x⁷ chain: 8-way fused (4 chained muls)");
+        let mut state: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xABCDEF));
+        for _ in 0..3 {
+            acpu::field::tip5::simd::sbox_x7_8way(&mut state).unwrap();
+        }
+        let state_orig: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xABCDEF));
+        let x7_sme_ns = best_of(
+            || {
+                let stream = acpu::Stream::new().unwrap();
+                let mut st = state_orig;
+                for _ in 0..N_CALLS {
+                    unsafe {
+                        acpu::field::tip5::simd::sbox_x7_8way_in_stream(&stream, &mut st);
+                    }
+                }
+                drop(stream);
+                std::hint::black_box(st);
+            },
+            200,
+        );
+        // Scalar reference: do 8 × x⁷ (4 muls each = 32 muls per call)
+        let x7_scalar_ns = best_of(
+            || {
+                let mut st = state_orig;
+                for _ in 0..N_CALLS {
+                    for i in 0..8 {
+                        let s = st[i];
+                        let sq = montyred((s as u128) * (s as u128));
+                        let qu = montyred((sq as u128) * (sq as u128));
+                        let r = montyred(
+                            (s as u128) * (montyred((sq as u128) * (qu as u128)) as u128),
+                        );
+                        st[i] = r;
+                    }
+                    std::hint::black_box(&st);
+                }
+            },
+            200,
+        );
+        let sme_per_chain = x7_sme_ns / N_CALLS as u64;
+        let scl_per_chain = x7_scalar_ns / N_CALLS as u64;
+        score.row("x⁷ 8-way (per call)", sme_per_chain, scl_per_chain);
+        println!(
+            "  SSVE   per x⁷ chain = {:.2} ns ({:.2} M chains/s)",
+            sme_per_chain as f64 / 8.0,
+            8000.0 / sme_per_chain as f64
+        );
+        println!(
+            "  scalar per x⁷ chain = {:.2} ns ({:.2} M chains/s)",
+            scl_per_chain as f64 / 8.0,
+            8000.0 / scl_per_chain as f64
+        );
+
         // Streaming-mode-amortized variant: enter Stream once, do N_CALLS
         // multiplies, exit once. Strips out the SMSTART/SMSTOP cost.
         let amort_ns = best_of(
