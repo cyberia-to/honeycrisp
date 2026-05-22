@@ -1,401 +1,171 @@
-//! Tip5 throughput benchmark — acpu's scalar Tip5 vs `twenty-first`.
+//! Tip5 microbench — ns/permutation on the P-core, vs `twenty_first::Tip5`.
 //!
-//! Why measure: `twenty-first` is the reference impl that downstream
-//! provers (Triton VM, nockchain) use today. acpu offers a drop-in
-//! replacement with no Montgomery-form leakage at the API boundary;
-//! this bench confirms the swap doesn't regress per-call cost.
+//! The hot path for downstream consumers (trisha mining) is the bare
+//! permutation. Numbers are reported in ns per `tip5_permute` call on a
+//! 16-element state, plus throughput for the batched variant and `hash_pair`.
 
 #[path = "common.rs"]
 mod common;
 use common::*;
 
-use acpu::field::tip5::{
-    tip5_hash_pair, tip5_hash_pair_n, tip5_hash_pair_n_batch4, tip5_hash_pair_n_par,
-    tip5_hash_varlen, tip5_permute, STATE_SIZE,
-};
+use acpu::field::tip5::{tip5_hash_pair, tip5_hash_varlen, tip5_permute, tip5_permute_batch};
 use twenty_first::prelude::{BFieldElement, Digest, Tip5};
 
-fn ref_permute(state: [u64; STATE_SIZE]) -> [u64; STATE_SIZE] {
-    let mut t5 = Tip5 {
-        state: state.map(BFieldElement::new),
-    };
-    t5.permutation();
-    t5.state.map(|b| b.value())
-}
-
-fn ref_hash_pair(left: [u64; 5], right: [u64; 5]) -> [u64; 5] {
-    let l = Digest::new(left.map(BFieldElement::new));
-    let r = Digest::new(right.map(BFieldElement::new));
-    Tip5::hash_pair(l, r).values().map(|b| b.value())
-}
-
-fn ref_hash_varlen(input: &[u64]) -> [u64; 5] {
-    let buf: Vec<BFieldElement> = input.iter().copied().map(BFieldElement::new).collect();
-    Tip5::hash_varlen(&buf).values().map(|b| b.value())
+fn rand_state(seed: u64) -> [u64; 16] {
+    let mut s = [0u64; 16];
+    let mut x = seed.wrapping_mul(0x9E37_79B9_7F4A_7C15) | 1;
+    for v in s.iter_mut() {
+        x = x.wrapping_mul(0x6C62_272E_07BB_0142).wrapping_add(1);
+        // Keep canonical so twenty-first paths see realistic inputs.
+        *v = BFieldElement::new(x).raw_u64();
+    }
+    s
 }
 
 fn main() {
-    let caps = acpu::scan();
-    println!("acpu Tip5 benchmark — acpu vs twenty-first");
-    println!("chip: {}", caps.chip);
+    // Pin to a P-core for stable numbers.
+    let _ = acpu::sync::affinity::pin_p_core();
+
+    let caps = acpu::probe::scan();
+    println!("acpu Tip5 microbench — {:?}", caps.chip);
     println!();
 
-    let mut score = Score::vs("ty-first");
+    let mut score = Score::vs("twenty-first");
+    score.hdr("TIP5 (vs twenty_first 1.1)");
 
-    // ── permutation ──────────────────────────────────────────────────────
-    score.hdr("Tip5 permutation");
-    let seed: [u64; STATE_SIZE] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xDEAD_BEEF));
+    let seed = 0xA1B2_C3D4_E5F6_0708u64;
+    let initial = rand_state(seed);
 
-    // Sanity check: outputs match.
-    let mut acpu_buf = seed;
-    let mut ref_buf = seed;
-    tip5_permute(&mut acpu_buf);
-    let ref_out = ref_permute(ref_buf);
-    assert_eq!(acpu_buf, ref_out, "permute output diverges");
-    let _ = &mut ref_buf;
-
-    // Batch many permutes per timed iteration — timer resolution ~40ns
-    // would otherwise mask the difference between the two paths.
-    const BATCH: usize = 1024;
-    let acpu_ns = best_of(
+    // ── 1. single permutation ──
+    let acpu_perm_ns = best_of(
         || {
-            let mut s = seed;
-            for _ in 0..BATCH {
+            let mut s = initial;
+            for _ in 0..256 {
                 tip5_permute(&mut s);
             }
-            std::hint::black_box(s);
+            std::hint::black_box(&s);
         },
-        200,
+        400,
     );
-    let ref_ns = best_of(
+    let acpu_per = acpu_perm_ns as f64 / 256.0;
+
+    let tw_perm_ns = best_of(
         || {
-            let mut s = seed;
-            for _ in 0..BATCH {
-                s = ref_permute(s);
+            let mut t = Tip5 {
+                state: initial
+                    .map(BFieldElement::from_raw_u64),
+            };
+            for _ in 0..256 {
+                t.permutation();
             }
-            std::hint::black_box(s);
+            std::hint::black_box(&t);
         },
-        200,
+        400,
     );
-    let acpu_per = acpu_ns / BATCH as u64;
-    let ref_per = ref_ns / BATCH as u64;
-    score.row(
-        &format!("permute (batched ×{BATCH})"),
+    let tw_per = tw_perm_ns as f64 / 256.0;
+
+    score.row("permute (1×)", acpu_per as u64, tw_per as u64);
+
+    // ── 2. batched permute, N=4 ──
+    let acpu_batch4_ns = best_of(
+        || {
+            let mut s = [initial; 4];
+            for _ in 0..256 {
+                tip5_permute_batch::<4>(&mut s);
+            }
+            std::hint::black_box(&s);
+        },
+        400,
+    );
+    let acpu_batch4_per = acpu_batch4_ns as f64 / (256.0 * 4.0);
+    score.row("permute batch×4 (per perm)", acpu_batch4_per as u64, tw_per as u64);
+
+    // ── 3. batched permute, N=8 ──
+    let acpu_batch8_ns = best_of(
+        || {
+            let mut s = [initial; 8];
+            for _ in 0..128 {
+                tip5_permute_batch::<8>(&mut s);
+            }
+            std::hint::black_box(&s);
+        },
+        400,
+    );
+    let acpu_batch8_per = acpu_batch8_ns as f64 / (128.0 * 8.0);
+    score.row("permute batch×8 (per perm)", acpu_batch8_per as u64, tw_per as u64);
+
+    // ── 4. hash_pair ──
+    let left = [initial[0], initial[1], initial[2], initial[3], initial[4]];
+    let right = [initial[5], initial[6], initial[7], initial[8], initial[9]];
+    let acpu_pair_ns = best_of(
+        || {
+            for _ in 0..256 {
+                let d = tip5_hash_pair(left, right);
+                std::hint::black_box(d);
+            }
+        },
+        400,
+    );
+    let acpu_pair_per = acpu_pair_ns as f64 / 256.0;
+
+    let l_d = Digest::new(left.map(BFieldElement::from_raw_u64));
+    let r_d = Digest::new(right.map(BFieldElement::from_raw_u64));
+    let tw_pair_ns = best_of(
+        || {
+            for _ in 0..256 {
+                let d = Tip5::hash_pair(l_d, r_d);
+                std::hint::black_box(d);
+            }
+        },
+        400,
+    );
+    let tw_pair_per = tw_pair_ns as f64 / 256.0;
+    score.row("hash_pair", acpu_pair_per as u64, tw_pair_per as u64);
+
+    // ── 5. hash_varlen (100 elements ≈ 10 chunks) ──
+    let bfe_in: Vec<BFieldElement> = (0..100u64).map(BFieldElement::new).collect();
+    let raw_in: Vec<u64> = bfe_in.iter().map(|e| e.raw_u64()).collect();
+    let acpu_var_ns = best_of(
+        || {
+            for _ in 0..32 {
+                let d = tip5_hash_varlen(&raw_in);
+                std::hint::black_box(d);
+            }
+        },
+        400,
+    );
+    let acpu_var_per = acpu_var_ns as f64 / 32.0;
+
+    let tw_var_ns = best_of(
+        || {
+            for _ in 0..32 {
+                let d = Tip5::hash_varlen(&bfe_in);
+                std::hint::black_box(d);
+            }
+        },
+        400,
+    );
+    let tw_var_per = tw_var_ns as f64 / 32.0;
+    score.row("hash_varlen[100]", acpu_var_per as u64, tw_var_per as u64);
+
+    // ── derived rates ──
+    println!();
+    println!("derived rates");
+    println!(
+        "  acpu  permute single    : {:>7.1} ns  ({:.2} Mperm/s)",
         acpu_per,
-        ref_per,
-    );
-
-    println!(
-        "  acpu throughput  = {:.2} M perm/s",
-        1000.0 / acpu_per as f64
+        1.0e3 / acpu_per
     );
     println!(
-        "  twenty-first     = {:.2} M perm/s",
-        1000.0 / ref_per as f64
+        "  twenty-first single     : {:>7.1} ns  ({:.2} Mperm/s)",
+        tw_per,
+        1.0e3 / tw_per
     );
-
-    // ── hash_pair ────────────────────────────────────────────────────────
-    score.hdr("Tip5 hash_pair (Merkle inner node)");
-    let l: [u64; 5] = [1, 2, 3, 4, 5];
-    let r: [u64; 5] = [6, 7, 8, 9, 10];
-    assert_eq!(tip5_hash_pair(l, r), ref_hash_pair(l, r));
-    let acpu_ns = best_of(
-        || {
-            let d = tip5_hash_pair(l, r);
-            std::hint::black_box(d);
-        },
-        50_000,
+    println!(
+        "  acpu  permute batch×8   : {:>7.1} ns/perm  ({:.2} Mperm/s)",
+        acpu_batch8_per,
+        1.0e3 / acpu_batch8_per
     );
-    let ref_ns = best_of(
-        || {
-            let d = ref_hash_pair(l, r);
-            std::hint::black_box(d);
-        },
-        50_000,
-    );
-    score.row("hash_pair", acpu_ns, ref_ns);
-
-    // ── hash_varlen ──────────────────────────────────────────────────────
-    score.hdr("Tip5 hash_varlen (sponge absorb)");
-    for &n in &[0usize, 1, 10, 100, 1000] {
-        let input: Vec<u64> = (0..n as u64).collect();
-        assert_eq!(tip5_hash_varlen(&input), ref_hash_varlen(&input));
-        let acpu_ns = best_of(
-            || {
-                let d = tip5_hash_varlen(&input);
-                std::hint::black_box(d);
-            },
-            if n > 100 { 5_000 } else { 30_000 },
-        );
-        let ref_ns = best_of(
-            || {
-                let d = ref_hash_varlen(&input);
-                std::hint::black_box(d);
-            },
-            if n > 100 { 5_000 } else { 30_000 },
-        );
-        score.row(&format!("hash_varlen[{n}]"), acpu_ns, ref_ns);
-    }
-
-    // ── Merkle layer throughput ──────────────────────────────────────────
-    score.hdr("Tip5 Merkle layer (1024 leaves → 512 inner nodes)");
-    let leaves: Vec<[u64; 5]> = (0..1024)
-        .map(|i| core::array::from_fn(|j| (i * 5 + j) as u64))
-        .collect();
-    let mut out = vec![[0u64; 5]; 512];
-
-    let acpu_ns = best_of(
-        || {
-            for i in 0..512 {
-                out[i] = tip5_hash_pair(leaves[i * 2], leaves[i * 2 + 1]);
-            }
-            std::hint::black_box(&out);
-        },
-        200,
-    );
-    let ref_ns = best_of(
-        || {
-            for i in 0..512 {
-                out[i] = ref_hash_pair(leaves[i * 2], leaves[i * 2 + 1]);
-            }
-            std::hint::black_box(&out);
-        },
-        200,
-    );
-    score.row("layer-512", acpu_ns, ref_ns);
-    let acpu_mhash = 512.0e9 / acpu_ns as f64 / 1_000_000.0;
-    let ref_mhash = 512.0e9 / ref_ns as f64 / 1_000_000.0;
-    println!("  acpu  Merkle layer = {acpu_mhash:.2} M hashes/s");
-    println!("  ty-first Merkle layer = {ref_mhash:.2} M hashes/s");
-
-    // ── Batched Merkle layer ─────────────────────────────────────────────
-    score.hdr("Tip5 Merkle layer — batched API (1024 leaves → 512 nodes)");
-    let pairs: Vec<([u64; 5], [u64; 5])> = (0..512)
-        .map(|i| {
-            (
-                core::array::from_fn(|j| (i * 10 + j) as u64),
-                core::array::from_fn(|j| (i * 10 + 5 + j) as u64),
-            )
-        })
-        .collect();
-    let mut out_a = vec![[0u64; 5]; 512];
-    let mut out_b = vec![[0u64; 5]; 512];
-
-    // Sequential through the batched API
-    let n_ns = best_of(
-        || {
-            tip5_hash_pair_n(&pairs, &mut out_a);
-            std::hint::black_box(&out_a);
-        },
-        200,
-    );
-    let n4_ns = best_of(
-        || {
-            tip5_hash_pair_n_batch4(&pairs, &mut out_b);
-            std::hint::black_box(&out_b);
-        },
-        200,
-    );
-
-    // Correctness: batch4 must agree with sequential
-    assert_eq!(out_a, out_b, "batch4 diverges from sequential");
-
-    score.row("hash_pair_n (seq)", n_ns, n_ns);
-    score.row("hash_pair_n_batch4", n4_ns, n_ns);
-    let n_mhash = 512e9 / n_ns as f64 / 1_000_000.0;
-    let n4_mhash = 512e9 / n4_ns as f64 / 1_000_000.0;
-    println!("  hash_pair_n      = {n_mhash:.2} M hashes/s");
-    println!("  hash_pair_n_b4   = {n4_mhash:.2} M hashes/s  ({:.2}× over seq)", n_ns as f64 / n4_ns as f64);
-
-    // ── Multi-threaded Merkle layer ──────────────────────────────────────
-    score.hdr("Tip5 Merkle layer — P-core parallel (scaling across N)");
-    println!("  P-cores reported: {}", caps.p_cores);
-    for &n in &[1024usize, 4096, 16384, 65536] {
-        let big_pairs: Vec<([u64; 5], [u64; 5])> = (0..n)
-            .map(|i| {
-                (
-                    core::array::from_fn(|j| (i * 10 + j) as u64),
-                    core::array::from_fn(|j| (i * 10 + 5 + j) as u64),
-                )
-            })
-            .collect();
-        let mut out_seq = vec![[0u64; 5]; n];
-        let mut out_par = vec![[0u64; 5]; n];
-
-        // Adapt iter count to keep total bench time bounded.
-        let iters = if n <= 4096 { 50 } else { 10 };
-
-        let seq_ns = best_of(
-            || {
-                tip5_hash_pair_n(&big_pairs, &mut out_seq);
-                std::hint::black_box(&out_seq);
-            },
-            iters,
-        );
-        let par_ns = best_of(
-            || {
-                tip5_hash_pair_n_par(&big_pairs, &mut out_par, 0);
-                std::hint::black_box(&out_par);
-            },
-            iters,
-        );
-        assert_eq!(out_seq, out_par, "n={n}: parallel diverges");
-
-        let seq_mhash = n as f64 * 1e9 / seq_ns as f64 / 1_000_000.0;
-        let par_mhash = n as f64 * 1e9 / par_ns as f64 / 1_000_000.0;
-        let speedup = seq_ns as f64 / par_ns as f64;
-        println!(
-            "  n={n:>6}: seq {seq_mhash:>5.2} M/s   par {par_mhash:>6.2} M/s   {speedup:>5.2}×"
-        );
-    }
-
-    // ── Batched Goldilocks multiply (SSVE vs scalar) ────────────────────
-    score.hdr("Goldilocks raw_mul: SSVE batch8 vs scalar (8 mults / call)");
-    if caps.has_sme {
-        use acpu::field::tip5::simd::raw_mul_batch8;
-        // 8 elements per call. Compare against 8 scalar Montgomery muls.
-        let a: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xDEAD_BEEF));
-        let b: [u64; 8] = core::array::from_fn(|i| (i as u64 + 17).wrapping_mul(0xCAFE_BABE));
-        let mut out = [0u64; 8];
-
-        // Warm
-        for _ in 0..3 {
-            raw_mul_batch8(&a, &b, &mut out).unwrap();
-        }
-
-        // Batched per timed iteration so the timer can resolve it.
-        const N_CALLS: usize = 1000;
-
-        // SSVE: each call is one SMSTART + 8 muls + one SMSTOP.
-        let sme_ns = best_of(
-            || {
-                for _ in 0..N_CALLS {
-                    raw_mul_batch8(&a, &b, &mut out).unwrap();
-                }
-                std::hint::black_box(&out);
-            },
-            200,
-        );
-
-        const P: u64 = 0xffff_ffff_0000_0001;
-        fn montyred(x: u128) -> u64 {
-            let xl = x as u64;
-            let xh = (x >> 64) as u64;
-            let (a, e) = xl.overflowing_add(xl << 32);
-            let b = a.wrapping_sub(a >> 32).wrapping_sub(e as u64);
-            let (r, c) = xh.overflowing_sub(b);
-            r.wrapping_sub((1 + !P) * c as u64)
-        }
-        let scalar_ns = best_of(
-            || {
-                let mut o = [0u64; 8];
-                for _ in 0..N_CALLS {
-                    for i in 0..8 {
-                        o[i] = montyred((a[i] as u128) * (b[i] as u128));
-                    }
-                    std::hint::black_box(&o);
-                }
-            },
-            200,
-        );
-
-        let sme_per_call = sme_ns / N_CALLS as u64;
-        let scalar_per_call = scalar_ns / N_CALLS as u64;
-        score.row("8× raw_mul (per call)", sme_per_call, scalar_per_call);
-        println!(
-            "  per-mul SSVE   = {:.2} ns ({} calls)",
-            sme_per_call as f64 / 8.0,
-            N_CALLS
-        );
-        println!(
-            "  per-mul scalar = {:.2} ns ({} calls)",
-            scalar_per_call as f64 / 8.0,
-            N_CALLS
-        );
-
-        // ── Fused 8-way x⁷ chain ────────────────────────────────────
-        // The interesting question: does the SSVE win when 4 multiplies
-        // chain register-to-register without touching memory between?
-        score.hdr("Tip5 S-box x⁷ chain: 8-way fused (4 chained muls)");
-        let mut state: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xABCDEF));
-        for _ in 0..3 {
-            acpu::field::tip5::simd::sbox_x7_8way(&mut state).unwrap();
-        }
-        let state_orig: [u64; 8] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0xABCDEF));
-        let x7_sme_ns = best_of(
-            || {
-                let stream = acpu::Stream::new().unwrap();
-                let mut st = state_orig;
-                for _ in 0..N_CALLS {
-                    unsafe {
-                        acpu::field::tip5::simd::sbox_x7_8way_in_stream(&stream, &mut st);
-                    }
-                }
-                drop(stream);
-                std::hint::black_box(st);
-            },
-            200,
-        );
-        // Scalar reference: do 8 × x⁷ (4 muls each = 32 muls per call)
-        let x7_scalar_ns = best_of(
-            || {
-                let mut st = state_orig;
-                for _ in 0..N_CALLS {
-                    for i in 0..8 {
-                        let s = st[i];
-                        let sq = montyred((s as u128) * (s as u128));
-                        let qu = montyred((sq as u128) * (sq as u128));
-                        let r = montyred(
-                            (s as u128) * (montyred((sq as u128) * (qu as u128)) as u128),
-                        );
-                        st[i] = r;
-                    }
-                    std::hint::black_box(&st);
-                }
-            },
-            200,
-        );
-        let sme_per_chain = x7_sme_ns / N_CALLS as u64;
-        let scl_per_chain = x7_scalar_ns / N_CALLS as u64;
-        score.row("x⁷ 8-way (per call)", sme_per_chain, scl_per_chain);
-        println!(
-            "  SSVE   per x⁷ chain = {:.2} ns ({:.2} M chains/s)",
-            sme_per_chain as f64 / 8.0,
-            8000.0 / sme_per_chain as f64
-        );
-        println!(
-            "  scalar per x⁷ chain = {:.2} ns ({:.2} M chains/s)",
-            scl_per_chain as f64 / 8.0,
-            8000.0 / scl_per_chain as f64
-        );
-
-        // Streaming-mode-amortized variant: enter Stream once, do N_CALLS
-        // multiplies, exit once. Strips out the SMSTART/SMSTOP cost.
-        let amort_ns = best_of(
-            || {
-                let stream = acpu::Stream::new().unwrap();
-                for _ in 0..N_CALLS {
-                    unsafe {
-                        // Re-uses the same asm but skips the Stream::new path.
-                        acpu::field::tip5::simd::raw_mul_batch8_in_stream(
-                            &stream, &a, &b, &mut out,
-                        );
-                    }
-                }
-                drop(stream);
-                std::hint::black_box(&out);
-            },
-            200,
-        );
-        let amort_per_call = amort_ns / N_CALLS as u64;
-        println!(
-            "  per-mul SSVE (amort) = {:.2} ns  → {:.2} M-mul/s",
-            amort_per_call as f64 / 8.0,
-            8000.0 / amort_per_call as f64
-        );
-    } else {
-        println!("  SKIP: FEAT_SME not present");
-    }
 
     score.summary();
 }

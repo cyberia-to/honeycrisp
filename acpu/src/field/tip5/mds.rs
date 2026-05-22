@@ -1,45 +1,49 @@
-//! MDS matrix multiplication for Tip5 — scalar + NEON paths.
+//! Tip5 MDS layer — bit-identical transcription of `Tip5::mds_generated`
+//! plus `generated_function` from twenty-first 1.1.0.
 //!
-//! Bit-identical to `twenty_first::Tip5::mds_generated`. Operates on the 32-bit
-//! lo/hi halves of the Montgomery raw u64 state, runs the auto-generated 16×16
-//! circulant multiplication via `generated_function` over `u64`-wrapping
-//! arithmetic, then folds lo/hi back into a single u64 with the documented
-//! degenerate-Montgomery handling.
+//! Strategy: split each state element's raw u64 into hi (high 32 bits) and lo
+//! (low 32 bits). Run the (pure-`wrapping_*`) generated function on each half
+//! independently. Recombine via `s = (lo[r] >> 4) + (hi[r] << 28)`, fold the
+//! u128 down to a raw-Montgomery u64.
 
-use super::STATE_SIZE;
-
-/// Apply the Tip5 MDS layer to the Montgomery raw state.
+/// In-place MDS layer. Bit-identical to `Tip5::mds_generated`.
 #[inline(always)]
-pub(super) fn mds_generated(state: &mut [u64; STATE_SIZE]) {
-    let mut lo = [0u64; STATE_SIZE];
-    let mut hi = [0u64; STATE_SIZE];
-    for i in 0..STATE_SIZE {
+pub fn mds_generated_inplace(state: &mut [u64; 16]) {
+    let mut lo = [0u64; 16];
+    let mut hi = [0u64; 16];
+    let mut i = 0;
+    while i < 16 {
         let b = state[i];
         hi[i] = b >> 32;
         lo[i] = b & 0xffff_ffff;
+        i += 1;
     }
 
     let lo = generated_function(lo);
     let hi = generated_function(hi);
 
-    for r in 0..STATE_SIZE {
+    let mut r = 0;
+    while r < 16 {
+        // s = (lo >> 4) + (hi << 28), computed as u128.
         let s = (lo[r] >> 4) as u128 + ((hi[r] as u128) << 28);
         let s_hi = (s >> 64) as u64;
         let s_lo = s as u64;
+
         let (res, over) = s_lo.overflowing_add(s_hi.wrapping_mul(0xffff_ffff));
         state[r] = if over {
             res.wrapping_add(0xffff_ffff)
         } else {
             res
         };
+        r += 1;
     }
 }
 
-/// Auto-generated 16×16 circulant MDS multiplication. Bit-identical to
-/// `twenty_first::Tip5::generated_function`. All ops are `u64` wrapping.
+/// `Tip5::generated_function` — pure `wrapping_*` arithmetic on `[u64; 16]`.
+/// Translated mechanically from twenty-first 1.1.0; do not rearrange.
 #[inline(always)]
 #[allow(clippy::too_many_lines)]
-fn generated_function(input: [u64; STATE_SIZE]) -> [u64; STATE_SIZE] {
+pub fn generated_function(input: [u64; 16]) -> [u64; 16] {
     let node_34 = input[0].wrapping_add(input[8]);
     let node_38 = input[4].wrapping_add(input[12]);
     let node_36 = input[2].wrapping_add(input[10]);
