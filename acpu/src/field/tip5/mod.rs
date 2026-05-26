@@ -30,8 +30,10 @@ mod consts;
 mod mds;
 mod neon;
 mod scalar;
+mod sme;
 
 pub use consts::{LOOKUP_TABLE, MDS_MATRIX_FIRST_COLUMN, ROUND_CONSTANTS_RAW};
+pub use sme::tip5_permute_sme;
 
 use mds::mds_generated_inplace;
 use neon::pow7_last12;

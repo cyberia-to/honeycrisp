@@ -100,3 +100,11 @@ path = "bench/tip5.rs"
 [[example]]
 name = "sme_smoke"
 path = "examples/sme_smoke.rs"
+
+[[example]]
+name = "stream_overhead"
+path = "examples/stream_overhead.rs"
+
+[[example]]
+name = "tip5_sme_loop_probe"
+path = "examples/tip5_sme_loop_probe.rs"

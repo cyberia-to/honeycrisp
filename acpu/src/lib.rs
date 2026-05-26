@@ -11,15 +11,15 @@ pub mod convert;
 pub mod crypto;
 pub mod field;
 pub mod gemm;
+#[cfg(target_arch = "aarch64")]
+pub mod lut;
 pub mod matrix;
 pub mod numeric;
 pub mod probe;
 pub mod pulse;
-pub mod sparse;
-#[cfg(target_arch = "aarch64")]
-pub mod lut;
 #[cfg(target_arch = "aarch64")]
 pub mod sme;
+pub mod sparse;
 #[cfg(target_arch = "aarch64")]
 pub mod streaming;
 pub mod sync;
@@ -35,10 +35,10 @@ pub use gemm::{matmul_bf16, matmul_f16, matmul_f32, matmul_f32_set, matmul_i8};
 pub use matrix::Matrix;
 pub use numeric::{bf16, complex, fp16, quant};
 pub use probe::{scan, Chip, Feature, Features};
-#[cfg(target_arch = "aarch64")]
-pub use streaming::Stream;
 pub use pulse::Counters;
 pub use sparse::{chebyshev::chebyshev_matvec, csr_matvec, csr_matvec_set};
+#[cfg(target_arch = "aarch64")]
+pub use streaming::Stream;
 pub use sync::{affinity, prefetch};
 
 use std::fmt;

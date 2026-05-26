@@ -8,7 +8,9 @@
 mod common;
 use common::*;
 
-use acpu::field::tip5::{tip5_hash_pair, tip5_hash_varlen, tip5_permute, tip5_permute_batch};
+use acpu::field::tip5::{
+    tip5_hash_pair, tip5_hash_varlen, tip5_permute, tip5_permute_batch, tip5_permute_sme,
+};
 use twenty_first::prelude::{BFieldElement, Digest, Tip5};
 
 fn rand_state(seed: u64) -> [u64; 16] {
@@ -52,8 +54,7 @@ fn main() {
     let tw_perm_ns = best_of(
         || {
             let mut t = Tip5 {
-                state: initial
-                    .map(BFieldElement::from_raw_u64),
+                state: initial.map(BFieldElement::from_raw_u64),
             };
             for _ in 0..256 {
                 t.permutation();
@@ -78,7 +79,11 @@ fn main() {
         400,
     );
     let acpu_batch4_per = acpu_batch4_ns as f64 / (256.0 * 4.0);
-    score.row("permute batch×4 (per perm)", acpu_batch4_per as u64, tw_per as u64);
+    score.row(
+        "permute batch×4 (per perm)",
+        acpu_batch4_per as u64,
+        tw_per as u64,
+    );
 
     // ── 3. batched permute, N=8 ──
     let acpu_batch8_ns = best_of(
@@ -92,7 +97,51 @@ fn main() {
         400,
     );
     let acpu_batch8_per = acpu_batch8_ns as f64 / (128.0 * 8.0);
-    score.row("permute batch×8 (per perm)", acpu_batch8_per as u64, tw_per as u64);
+    score.row(
+        "permute batch×8 (per perm)",
+        acpu_batch8_per as u64,
+        tw_per as u64,
+    );
+
+    // ── 3b. SME-scoped permute N=8 ──
+    if acpu::probe::scan().has_sme {
+        let sme_batch8_ns = best_of(
+            || {
+                let mut s = [initial; 8];
+                for _ in 0..128 {
+                    let _ = tip5_permute_sme::<8>(&mut s);
+                }
+                std::hint::black_box(&s);
+            },
+            400,
+        );
+        let sme_per = sme_batch8_ns as f64 / (128.0 * 8.0);
+        score.row(
+            "permute SME-scope×8 (per perm)",
+            sme_per as u64,
+            tw_per as u64,
+        );
+
+        // Also test N=16 — what the brief sketches as the natural batch.
+        let sme_batch16_ns = best_of(
+            || {
+                let mut s = [initial; 16];
+                for _ in 0..64 {
+                    let _ = tip5_permute_sme::<16>(&mut s);
+                }
+                std::hint::black_box(&s);
+            },
+            400,
+        );
+        let sme16_per = sme_batch16_ns as f64 / (64.0 * 16.0);
+        score.row(
+            "permute SME-scope×16 (per perm)",
+            sme16_per as u64,
+            tw_per as u64,
+        );
+    } else {
+        println!("skip: FEAT_SME not present — SME-scope rows omitted");
+    }
 
     // ── 4. hash_pair ──
     let left = [initial[0], initial[1], initial[2], initial[3], initial[4]];

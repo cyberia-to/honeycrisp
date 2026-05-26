@@ -300,8 +300,12 @@ pub fn render_pass_overhead(iters: usize) -> f64 {
     let queue = dev.newCommandQueue().unwrap();
     let src = NSString::from_str(TRIANGLE_SRC);
     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
+    let vfn = lib
+        .newFunctionWithName(&NSString::from_str("vmain"))
+        .unwrap();
+    let ffn = lib
+        .newFunctionWithName(&NSString::from_str("fmain"))
+        .unwrap();
 
     let pipe_desc = MTLRenderPipelineDescriptor::new();
     pipe_desc.setVertexFunction(Some(&*vfn));
@@ -371,8 +375,12 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
     let queue = dev.newCommandQueue().unwrap();
     let src = NSString::from_str(TRIANGLE_SRC);
     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
+    let vfn = lib
+        .newFunctionWithName(&NSString::from_str("vmain"))
+        .unwrap();
+    let ffn = lib
+        .newFunctionWithName(&NSString::from_str("fmain"))
+        .unwrap();
 
     let pipe_desc = MTLRenderPipelineDescriptor::new();
     pipe_desc.setVertexFunction(Some(&*vfn));
@@ -418,9 +426,7 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
         enc.setRenderPipelineState(&rpipeline);
         for _ in 0..n_draws {
-            unsafe {
-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
-            };
+            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
         }
         enc.endEncoding();
         cmd.commit();
@@ -433,9 +439,7 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
         enc.setRenderPipelineState(&rpipeline);
         for _ in 0..n_draws {
-            unsafe {
-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
-            };
+            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
         }
         enc.endEncoding();
         cmd.commit();

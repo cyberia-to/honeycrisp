@@ -7,5 +7,6 @@
 pub mod asm;
 pub mod gemm;
 pub mod tile;
+pub mod tile_i16;
 
 pub use gemm::{matmul_f32_sme, matmul_f32_sme_set};
