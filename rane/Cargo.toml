@@ -26,3 +26,103 @@ path = "src/probe/main.rs"
 [[example]]
 name = "matmul"
 path = "examples/matmul.rs"
+
+[[example]]
+name = "matmul_cast"
+path = "examples/matmul_cast.rs"
+
+[[example]]
+name = "matmul_split"
+path = "examples/matmul_split.rs"
+
+[[example]]
+name = "mil_probe"
+path = "examples/mil_probe.rs"
+
+[[example]]
+name = "reduce_test"
+path = "examples/reduce_test.rs"
+
+[[example]]
+name = "ane_introspect"
+path = "examples/ane_introspect.rs"
+
+[[example]]
+name = "int_cast_test"
+path = "examples/int_cast_test.rs"
+
+[[example]]
+name = "bytecode_dump"
+path = "examples/bytecode_dump.rs"
+
+[[example]]
+name = "quant_probe"
+path = "examples/quant_probe.rs"
+
+[[example]]
+name = "coreml_path_probe"
+path = "examples/coreml_path_probe.rs"
+
+[[example]]
+name = "non_mil_probe"
+path = "examples/non_mil_probe.rs"
+
+[[example]]
+name = "is_mil_flip"
+path = "examples/is_mil_flip.rs"
+
+[[example]]
+name = "coreml_mlmodel_probe"
+path = "examples/coreml_mlmodel_probe.rs"
+
+[[example]]
+name = "compiler_opts_probe"
+path = "examples/compiler_opts_probe.rs"
+
+[[example]]
+name = "force_coreml_type"
+path = "examples/force_coreml_type.rs"
+
+[[example]]
+name = "non_mil_opts"
+path = "examples/non_mil_opts.rs"
+
+[[example]]
+name = "anec_ir_probe"
+path = "examples/anec_ir_probe.rs"
+
+[[example]]
+name = "anec_path_fix"
+path = "examples/anec_path_fix.rs"
+
+[[example]]
+name = "anec_nettext_swap"
+path = "examples/anec_nettext_swap.rs"
+
+[[example]]
+name = "anec_opts_inject"
+path = "examples/anec_opts_inject.rs"
+
+[[example]]
+name = "anec_xpc_dlopen"
+path = "examples/anec_xpc_dlopen.rs"
+
+[[example]]
+name = "anec_cvair_probe"
+path = "examples/anec_cvair_probe.rs"
+
+[[example]]
+name = "anec_compile_push"
+path = "examples/anec_compile_push.rs"
+
+[[example]]
+name = "anec_e5_compile"
+path = "examples/anec_e5_compile.rs"
+
+[[example]]
+name = "anec_e5_translate"
+path = "examples/anec_e5_translate.rs"
+
+[[example]]
+name = "anec_coreml_compile"
+path = "examples/anec_coreml_compile.rs"

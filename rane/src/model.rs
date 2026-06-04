@@ -200,6 +200,12 @@ impl Program {
     }
 
     /// Unload the model from ANE hardware.
+    /// Path to the temp directory containing compiled model files (model.mil + bytecode).
+    /// Valid until this Program is dropped.  Use for bytecode inspection and patching.
+    pub fn tmp_dir(&self) -> &std::path::Path {
+        &self.tmp_dir
+    }
+
     pub fn unload(&mut self) -> Result<(), AneError> {
         if !self.loaded {
             return Ok(());

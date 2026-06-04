@@ -45,7 +45,11 @@ pub mod mil;
 pub mod model;
 pub mod surface;
 
-pub use mil::{gen_dyn_matmul, mil_footer, mil_header, pack_weights, Source};
+pub use mil::{
+    gen_dyn_matmul, gen_dyn_matmul_cast, gen_dyn_matmul_chunk, matmul_cast, matmul_split,
+    matmul_split_fp16, matmul_split_fp16_cast, matmul_split_reduce, mil_footer, mil_header,
+    pack_weights, OutputDtype, Source,
+};
 pub use model::Program;
 pub use surface::Buffer;
 

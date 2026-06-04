@@ -94,6 +94,84 @@ impl Buffer {
         }
     }
 
+    /// Lock surface (read-only), call closure with f32 slice, unlock.
+    pub fn read_f32<F, R>(&self, f: F) -> R
+    where
+        F: FnOnce(&[f32]) -> R,
+    {
+        unsafe {
+            IOSurfaceLock(self.raw, 1, ptr::null_mut());
+            let base = IOSurfaceGetBaseAddress(self.raw) as *const f32;
+            let len = self.size / 4;
+            let slice = std::slice::from_raw_parts(base, len);
+            let result = f(slice);
+            IOSurfaceUnlock(self.raw, 1, ptr::null_mut());
+            result
+        }
+    }
+
+    /// Lock surface (read-only), call closure with i16 slice, unlock.
+    pub fn read_i16<F, R>(&self, f: F) -> R
+    where
+        F: FnOnce(&[i16]) -> R,
+    {
+        unsafe {
+            IOSurfaceLock(self.raw, 1, ptr::null_mut());
+            let base = IOSurfaceGetBaseAddress(self.raw) as *const i16;
+            let len = self.size / 2;
+            let slice = std::slice::from_raw_parts(base, len);
+            let result = f(slice);
+            IOSurfaceUnlock(self.raw, 1, ptr::null_mut());
+            result
+        }
+    }
+
+    /// Lock surface (read-only), call closure with i8 slice, unlock.
+    pub fn read_i8<F, R>(&self, f: F) -> R
+    where
+        F: FnOnce(&[i8]) -> R,
+    {
+        unsafe {
+            IOSurfaceLock(self.raw, 1, ptr::null_mut());
+            let base = IOSurfaceGetBaseAddress(self.raw) as *const i8;
+            let slice = std::slice::from_raw_parts(base, self.size);
+            let result = f(slice);
+            IOSurfaceUnlock(self.raw, 1, ptr::null_mut());
+            result
+        }
+    }
+
+    /// Lock surface (read-only), call closure with i32 slice, unlock.
+    pub fn read_i32<F, R>(&self, f: F) -> R
+    where
+        F: FnOnce(&[i32]) -> R,
+    {
+        unsafe {
+            IOSurfaceLock(self.raw, 1, ptr::null_mut());
+            let base = IOSurfaceGetBaseAddress(self.raw) as *const i32;
+            let len = self.size / 4;
+            let slice = std::slice::from_raw_parts(base, len);
+            let result = f(slice);
+            IOSurfaceUnlock(self.raw, 1, ptr::null_mut());
+            result
+        }
+    }
+
+    /// Lock surface (read-only), call closure with raw byte slice, unlock.
+    pub fn read_bytes<F, R>(&self, f: F) -> R
+    where
+        F: FnOnce(&[u8]) -> R,
+    {
+        unsafe {
+            IOSurfaceLock(self.raw, 1, ptr::null_mut());
+            let base = IOSurfaceGetBaseAddress(self.raw) as *const u8;
+            let slice = std::slice::from_raw_parts(base, self.size);
+            let result = f(slice);
+            IOSurfaceUnlock(self.raw, 1, ptr::null_mut());
+            result
+        }
+    }
+
     /// Get the raw IOSurfaceRef for passing to `Program::run_direct()`.
     pub fn as_raw(&self) -> IOSurfaceRef {
         self.raw
