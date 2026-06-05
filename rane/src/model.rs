@@ -199,6 +199,112 @@ impl Program {
         Ok(())
     }
 
+    /// Compile an ANEC IR net.plist into ANE bytecode.
+    ///
+    /// `plist_data` is the raw bytes of a binary-format ANEC IR net.plist.
+    /// `weights` is a list of `(filename, data)` pairs for the weight files
+    /// referenced in the plist (e.g. `("net.additional.weights", &bytes)`).
+    /// Filenames must be plain names with no path separators.
+    ///
+    /// Unlike `compile()` which accepts MIL text, this path invokes ANECCompile
+    /// directly and enables hardware-native ops such as MatmulQuantAtom (Int8 GEMM).
+    pub fn compile_anec(plist_data: &[u8], weights: &[(&str, &[u8])]) -> Result<Self, AneError> {
+        load_ane_frameworks();
+
+        // SAFETY: All FFI calls use objc_msgSend transmuted to typed function pointers
+        // matching the private ObjC method signatures. Null checks on every return value.
+        unsafe {
+            let cls_descriptor = cls("_ANEInMemoryModelDescriptor");
+            if cls_descriptor.is_null() {
+                return Err(AneError::ClassNotFound("_ANEInMemoryModelDescriptor"));
+            }
+            let cls_model_class = cls("_ANEInMemoryModel");
+            if cls_model_class.is_null() {
+                return Err(AneError::ClassNotFound("_ANEInMemoryModel"));
+            }
+
+            let plist_nsdata = msg_send_2::<*const u8, u64>(
+                cls("NSData") as ObjcId,
+                "dataWithBytes:length:",
+                plist_data.as_ptr(),
+                plist_data.len() as u64,
+            );
+            if plist_nsdata.is_null() {
+                return Err(AneError::CompilationFailed(
+                    "Failed to create NSData for plist".into(),
+                ));
+            }
+
+            let empty_dict: ObjcId = msg_send_0(cls("NSDictionary") as ObjcId, "dictionary");
+
+            // _ANEInMemoryModelDescriptor.modelWithNetworkDescription:weights:optionsPlist:
+            // Sets isMILModel=0, triggering ANECCompile (not MIL compiler).
+            let descriptor = msg_send_3::<ObjcId, ObjcId, ObjcId>(
+                cls_descriptor as ObjcId,
+                "modelWithNetworkDescription:weights:optionsPlist:",
+                plist_nsdata,
+                empty_dict,
+                ptr::null_mut(),
+            );
+            if descriptor.is_null() {
+                return Err(AneError::DescriptorCreationFailed);
+            }
+
+            let model = msg_send_1::<ObjcId>(
+                cls_model_class as ObjcId,
+                "inMemoryModelWithDescriptor:",
+                descriptor,
+            );
+            if model.is_null() {
+                return Err(AneError::ModelCreationFailed);
+            }
+
+            // localModelPath is a hash-keyed subdir in $TMPDIR
+            let lp_nsstr = msg_send_0(model, "localModelPath");
+            let lp = objc_nsstring_to_rust(lp_nsstr)
+                .ok_or_else(|| AneError::CompilationFailed("localModelPath is nil".into()))?;
+            let local_model_path = std::path::PathBuf::from(&lp);
+
+            std::fs::create_dir_all(&local_model_path)?;
+
+            // saveModelFiles writes net.plist into localModelPath
+            type VoidFn = unsafe extern "C" fn(ObjcId, ObjcSel);
+            let save: VoidFn = std::mem::transmute(objc_msgSend as *const c_void);
+            save(model, sel("saveModelFiles"));
+
+            // Copy weight files alongside net.plist
+            for &(name, data) in weights {
+                if name.contains('/') || name.contains("..") {
+                    return Err(AneError::CompilationFailed(format!(
+                        "Invalid weight filename: {}",
+                        name
+                    )));
+                }
+                std::fs::write(local_model_path.join(name), data)?;
+            }
+
+            let mut error: ObjcId = ptr::null_mut();
+            let ok = msg_send_compile(
+                model,
+                "compileWithQoS:options:error:",
+                21,
+                empty_dict,
+                &mut error,
+            );
+            if !ok {
+                let msg = nserror_string(error).unwrap_or_else(|| "unknown error".into());
+                return Err(AneError::CompilationFailed(msg));
+            }
+
+            Ok(Program {
+                objc_model: model,
+                empty_dict,
+                loaded: false,
+                tmp_dir: local_model_path,
+            })
+        }
+    }
+
     /// Unload the model from ANE hardware.
     /// Path to the temp directory containing compiled model files (model.mil + bytecode).
     /// Valid until this Program is dropped.  Use for bytecode inspection and patching.
