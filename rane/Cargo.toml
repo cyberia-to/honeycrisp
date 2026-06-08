@@ -126,3 +126,19 @@ path = "examples/anec_e5_translate.rs"
 [[example]]
 name = "anec_coreml_compile"
 path = "examples/anec_coreml_compile.rs"
+
+[[example]]
+name = "mlmodel_int8_load"
+path = "examples/mlmodel_int8_load.rs"
+
+[[example]]
+name = "mlmodel_int8_infer"
+path = "examples/mlmodel_int8_infer.rs"
+
+[[example]]
+name = "ane_accum_precision"
+path = "examples/ane_accum_precision.rs"
+
+[[example]]
+name = "text_md7_throughput"
+path = "examples/text_md7_throughput.rs"
