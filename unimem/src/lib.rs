@@ -1,9 +1,11 @@
-//! Zero-copy memory driver for Apple Silicon.
+//! Zero-copy memory driver: pinned buffers visible to every compute unit
+//! through one allocation.
 //!
-//! IOSurface-backed pinned buffers visible to every compute unit —
-//! CPU, GPU, AMX, ANE — through one allocation.
+//! Apple Silicon: IOSurface (CPU, Metal, AMX, ANE). Android/Linux: memfd —
+//! same CPU semantics, fd-exportable for GPU import.
 
 pub mod block;
+#[cfg(target_vendor = "apple")]
 pub mod ffi;
 pub mod grid;
 pub mod layout;
@@ -25,8 +27,8 @@ impl std::fmt::Display for MemError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             MemError::ZeroSize => write!(f, "zero-size allocation"),
-            MemError::BlockCreateFailed => write!(f, "IOSurfaceCreate failed"),
-            MemError::BlockLockFailed(kr) => write!(f, "IOSurfaceLock failed: {:#x}", kr),
+            MemError::BlockCreateFailed => write!(f, "block allocation failed"),
+            MemError::BlockLockFailed(kr) => write!(f, "block map/lock failed: {:#x}", kr),
         }
     }
 }

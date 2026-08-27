@@ -35,3 +35,6 @@ harness = false
 [[bench]]
 name = "bandwidth"
 harness = false
+
+[target.'cfg(not(target_vendor = "apple"))'.dependencies]
+libc = "0.2"
