@@ -79,6 +79,19 @@ impl Gpu {
     }
 
     /// Create a new command queue.
+    /// Block until everything submitted on `queue` has finished.
+    ///
+    /// Metal executes command buffers on a queue in submission order, so an
+    /// empty buffer committed last and waited on is a fence for all the work
+    /// before it. Passes can then record and submit without stalling
+    /// individually — only the reader waits, once.
+    pub fn sync(&self, queue: &Queue) -> Result<(), GpuError> {
+        let cmd = queue.commands()?;
+        cmd.submit();
+        cmd.wait();
+        Ok(())
+    }
+
     pub fn new_command_queue(&self) -> Result<Queue, GpuError> {
         let raw = unsafe { msg0(self.raw, SEL_newCommandQueue()) };
         if raw.is_null() {
