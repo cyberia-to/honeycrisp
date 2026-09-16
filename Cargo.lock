@@ -1559,25 +1559,25 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "strata-compute"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
 
 [[package]]
 name = "strata-core"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "strata-ext"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
 
 [[package]]
 name = "strata-nebu"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-compute",
  "strata-core",
@@ -1587,7 +1587,7 @@ dependencies = [
 
 [[package]]
 name = "strata-proof"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
