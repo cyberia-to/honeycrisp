@@ -15,16 +15,16 @@ use core::arch::aarch64::*;
 /// with corresponding weights values[...].
 pub fn csr_matvec(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
     let n = row_ptr.len().saturating_sub(1);
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(col_idx.len(), values.len());
+    assert_eq!(y.len(), n, "csr_matvec: y.len() != row count");
+    assert_eq!(col_idx.len(), values.len(), "csr_matvec: col_idx.len() != values.len()");
     inner(row_ptr, col_idx, values, x, y, n, false);
 }
 
 /// y = A·x  (set; zeroes y first).
 pub fn csr_matvec_set(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
     let n = row_ptr.len().saturating_sub(1);
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(col_idx.len(), values.len());
+    assert_eq!(y.len(), n, "csr_matvec_set: y.len() != row count");
+    assert_eq!(col_idx.len(), values.len(), "csr_matvec_set: col_idx.len() != values.len()");
     y.fill(0.0);
     inner(row_ptr, col_idx, values, x, y, n, true);
 }
@@ -205,5 +205,27 @@ mod tests {
         for i in 1..n {
             assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);
         }
+    }
+
+    /// A short `y` used to silently under-write via `get_unchecked_mut` on
+    /// the aarch64 path in release builds, since the length check was a
+    /// `debug_assert!` compiled out there. It must now panic loudly.
+    #[test]
+    #[should_panic(expected = "y.len() != row count")]
+    fn matvec_set_rejects_short_y() {
+        let (rp, ci, v) = path4();
+        let x = [1.0f32; 4];
+        let mut y = [0.0f32; 3];
+        csr_matvec_set(&rp, &ci, &v, &x, &mut y);
+    }
+
+    #[test]
+    #[should_panic(expected = "col_idx.len() != values.len()")]
+    fn matvec_rejects_mismatched_col_idx_and_values() {
+        let (rp, ci, _v) = path4();
+        let x = [1.0f32; 4];
+        let mut y = [0.0f32; 4];
+        let short_values = vec![1.0f32; ci.len() - 1];
+        csr_matvec(&rp, &ci, &short_values, &x, &mut y);
     }
 }
