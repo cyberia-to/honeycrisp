@@ -147,9 +147,9 @@ pub fn chebyshev_matvec(
     order: usize,
 ) {
     let n = x.len();
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(t0.len(), n);
-    debug_assert_eq!(t1.len(), n);
+    assert_eq!(y.len(), n, "chebyshev_matvec: y.len() != x.len()");
+    assert_eq!(t0.len(), n, "chebyshev_matvec: t0.len() != x.len()");
+    assert_eq!(t1.len(), n, "chebyshev_matvec: t1.len() != x.len()");
 
     let coeffs = chebyshev_coeffs(tau, order);
 
@@ -320,5 +320,37 @@ mod tests {
         // ‖y‖_2 ≤ ‖x‖_2 = 1.0 (heat kernel contracts).
         let norm_y: f32 = y.iter().map(|&v| v * v).sum::<f32>().sqrt();
         assert!(norm_y <= 1.01, "‖y‖₂ = {norm_y} should be ≤ ‖x‖₂ = 1");
+    }
+
+    /// `chebyshev_matvec`'s scratch-length checks were `debug_assert_eq!`,
+    /// compiled out in release, ahead of a `t1` that reaches the same
+    /// unchecked-write `csr_matvec_set` fixed in row 117. They must panic
+    /// loudly regardless of build profile.
+    #[test]
+    #[should_panic(expected = "t1.len() != x.len()")]
+    fn chebyshev_matvec_rejects_short_t1() {
+        let row_ptr = vec![0u32, 1, 3, 5, 6];
+        let col_idx = vec![1u32, 0, 2, 1, 3, 2];
+        let values = vec![1.0f32; 6];
+        let d_inv_sqrt = vec![1.0f32; 4];
+        let x = vec![1.0f32, 0.0, 0.0, 0.0];
+        let mut y = vec![0.0f32; 4];
+        let mut t0 = vec![0.0f32; 4];
+        let mut t1 = vec![0.0f32; 3];
+        chebyshev_matvec(&row_ptr, &col_idx, &values, &d_inv_sqrt, &x, &mut y, &mut t0, &mut t1, 1.0, 20);
+    }
+
+    #[test]
+    #[should_panic(expected = "y.len() != x.len()")]
+    fn chebyshev_matvec_rejects_short_y() {
+        let row_ptr = vec![0u32, 1, 3, 5, 6];
+        let col_idx = vec![1u32, 0, 2, 1, 3, 2];
+        let values = vec![1.0f32; 6];
+        let d_inv_sqrt = vec![1.0f32; 4];
+        let x = vec![1.0f32, 0.0, 0.0, 0.0];
+        let mut y = vec![0.0f32; 3];
+        let mut t0 = vec![0.0f32; 4];
+        let mut t1 = vec![0.0f32; 4];
+        chebyshev_matvec(&row_ptr, &col_idx, &values, &d_inv_sqrt, &x, &mut y, &mut t0, &mut t1, 1.0, 20);
     }
 }
