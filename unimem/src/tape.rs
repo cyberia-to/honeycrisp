@@ -60,7 +60,7 @@ impl Tape {
     /// Lock-free: single compare_exchange loop. ~1ns.
     #[inline]
     pub fn take(&self, size: usize, align: usize) -> Option<*mut u8> {
-        debug_assert!(align.is_power_of_two(), "alignment must be power of 2");
+        assert!(align.is_power_of_two(), "alignment must be power of 2");
         if size == 0 {
             return None;
         }
@@ -126,5 +126,28 @@ impl Tape {
     #[inline]
     pub fn block(&self) -> &Block {
         &self.block
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected = "alignment must be power of 2")]
+    fn take_rejects_non_power_of_two_alignment_in_release_too() {
+        let tape = Tape::start(4096).unwrap();
+        // align=3: mask=2 computes a bogus, silently wrong aligned offset
+        // instead of failing, once the check is debug-only.
+        tape.take(8, 3);
+    }
+
+    #[test]
+    fn take_accepts_every_power_of_two_alignment_up_to_the_page_size() {
+        let tape = Tape::start(1 << 16).unwrap();
+        for shift in 0..16 {
+            let align = 1usize << shift;
+            assert!(tape.take(1, align).is_some(), "align={align}");
+        }
     }
 }

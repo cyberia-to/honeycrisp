@@ -6,17 +6,8 @@ version = 4
 name = "acpu"
 version = "0.2.0"
 dependencies = [
- "cyb-nebu",
- "unimem 0.2.0",
-]
-
-[[package]]
-name = "acpu"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81089272e2a248781b1e2c38ad7247a98bea63a602c0a445dc63e955b2035375"
-dependencies = [
- "unimem 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "strata-nebu",
+ "unimem",
 ]
 
 [[package]]
@@ -65,9 +56,9 @@ checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
 name = "aruminium"
 version = "0.2.0"
 dependencies = [
- "acpu 0.2.0",
+ "acpu",
  "mutants",
- "unimem 0.2.0",
+ "unimem",
 ]
 
 [[package]]
@@ -332,17 +323,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "460fbee9c2c2f33933d720630a6a0bac33ba7053db5344fac858d4b8952d77d5"
 
 [[package]]
-name = "cyb-nebu"
-version = "0.1.0"
-dependencies = [
- "acpu 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "strata-compute",
- "strata-core",
- "strata-ext",
- "strata-proof",
-]
-
-[[package]]
 name = "dispatch2"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -556,10 +536,10 @@ checksum = "dfa686283ad6dd069f105e5ab091b04c62850d3e4cf5d67debad1933f55023df"
 name = "honeycrisp"
 version = "0.2.0"
 dependencies = [
- "acpu 0.2.0",
+ "acpu",
  "aruminium",
  "rane",
- "unimem 0.2.0",
+ "unimem",
 ]
 
 [[package]]
@@ -999,8 +979,8 @@ dependencies = [
 name = "rane"
 version = "0.2.0"
 dependencies = [
- "acpu 0.2.0",
- "unimem 0.2.0",
+ "acpu",
+ "unimem",
 ]
 
 [[package]]
@@ -1194,25 +1174,35 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "strata-compute"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
 
 [[package]]
 name = "strata-core"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "strata-ext"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
 
 [[package]]
+name = "strata-nebu"
+version = "0.1.1"
+dependencies = [
+ "strata-compute",
+ "strata-core",
+ "strata-ext",
+ "strata-proof",
+]
+
+[[package]]
 name = "strata-proof"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "strata-core",
 ]
@@ -1283,23 +1273,13 @@ checksum = "b4ac048d71ede7ee76d585517add45da530660ef4390e49b098733c6e897f254"
 name = "unimem"
 version = "0.2.0"
 dependencies = [
- "acpu 0.2.0",
+ "acpu",
  "aruminium",
  "criterion",
  "crossbeam-queue",
  "libc",
  "mutants",
  "rane",
-]
-
-[[package]]
-name = "unimem"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a91794fe345844d09b134c55fde134bc9d51593964b906dde2f667162e49918d"
-dependencies = [
- "crossbeam-queue",
- "mutants",
 ]
 
 [[package]]
