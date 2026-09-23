@@ -17,6 +17,7 @@ pub fn csr_matvec(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y
     let n = row_ptr.len().saturating_sub(1);
     debug_assert_eq!(y.len(), n);
     debug_assert_eq!(col_idx.len(), values.len());
+    assert_col_idx_in_range(col_idx, x);
     inner(row_ptr, col_idx, values, x, y, n, false);
 }
 
@@ -25,8 +26,30 @@ pub fn csr_matvec_set(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32
     let n = row_ptr.len().saturating_sub(1);
     debug_assert_eq!(y.len(), n);
     debug_assert_eq!(col_idx.len(), values.len());
+    assert_col_idx_in_range(col_idx, x);
     y.fill(0.0);
     inner(row_ptr, col_idx, values, x, y, n, true);
+}
+
+/// The aarch64 `inner` gathers `x[col_idx[j]]` through `get_unchecked` — real
+/// undefined behavior, not a panic, if a column index is out of range for
+/// `x`. Reject before that loop runs, in every build, not only debug: this
+/// is a release/debug enforcement gap of the same class already closed
+/// elsewhere in this repo (`unimem::Tape::take`'s alignment check), and this
+/// one guards an out-of-bounds read instead of a wrong value.
+///
+/// O(nnz) — the same order as the matvec itself, so this roughly doubles
+/// the cost of the call. Callers with a graph-derived CSR structure that is
+/// already known-valid (e.g. built once through a bounds-checked builder)
+/// pay this on every iteration; hoisting the check to construction time is
+/// a possible follow-up if that cost is measured to matter.
+#[inline]
+fn assert_col_idx_in_range(col_idx: &[u32], x: &[f32]) {
+    assert!(
+        col_idx.iter().all(|&c| (c as usize) < x.len()),
+        "csr_matvec: col_idx entry out of range for x (len {})",
+        x.len()
+    );
 }
 
 // ── inner dispatch ────────────────────────────────────────────────────────────
@@ -205,5 +228,42 @@ mod tests {
         for i in 1..n {
             assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);
         }
+    }
+
+    /// Pre-fix, this col_idx entry (3) is out of range for a 3-element x on
+    /// the aarch64 path: `get_unchecked` reads past the end of x instead of
+    /// panicking. Must be rejected before the unsafe loop ever runs.
+    #[test]
+    #[should_panic(expected = "out of range")]
+    fn matvec_rejects_col_idx_past_x_len() {
+        let row_ptr = vec![0, 1];
+        let col_idx = vec![3u32]; // x has only indices 0..2
+        let values = vec![1.0f32];
+        let x = [1.0f32, 2.0, 3.0];
+        let mut y = [0.0f32; 1];
+        csr_matvec(&row_ptr, &col_idx, &values, &x, &mut y);
+    }
+
+    #[test]
+    #[should_panic(expected = "out of range")]
+    fn matvec_set_rejects_col_idx_past_x_len() {
+        let row_ptr = vec![0, 1];
+        let col_idx = vec![3u32];
+        let values = vec![1.0f32];
+        let x = [1.0f32, 2.0, 3.0];
+        let mut y = [0.0f32; 1];
+        csr_matvec_set(&row_ptr, &col_idx, &values, &x, &mut y);
+    }
+
+    #[test]
+    fn matvec_accepts_col_idx_at_x_len_minus_one() {
+        // Boundary: the largest valid index (x.len() - 1) must not trip the guard.
+        let row_ptr = vec![0, 1];
+        let col_idx = vec![2u32];
+        let values = vec![1.0f32];
+        let x = [1.0f32, 2.0, 3.0];
+        let mut y = [0.0f32; 1];
+        csr_matvec(&row_ptr, &col_idx, &values, &x, &mut y);
+        assert!((y[0] - 3.0).abs() < 1e-5, "y[0]={}", y[0]);
     }
 }
