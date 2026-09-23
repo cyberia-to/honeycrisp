@@ -11,9 +11,15 @@ use crate::matrix::regs::{XRow, YRow};
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::needless_range_loop)]
 pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert_eq!(a.len(), k);
-    debug_assert_eq!(b.len(), k * n);
-    debug_assert_eq!(c.len(), n);
+    assert_eq!(a.len(), k, "gemv_asm: a.len() {} != k {}", a.len(), k);
+    assert_eq!(
+        b.len(),
+        k * n,
+        "gemv_asm: b.len() {} != k*n {}",
+        b.len(),
+        k * n
+    );
+    assert_eq!(c.len(), n, "gemv_asm: c.len() {} != n {}", c.len(), n);
 
     crate::gemm::ensure_amx();
 
@@ -189,5 +195,14 @@ mod tests {
     #[ignore] // n=48 (3 tiles) triggers inefficient path, use NEON fallback
     fn t_small() {
         check(48, 100);
+    }
+
+    #[test]
+    #[should_panic(expected = "gemv_asm: c.len()")]
+    fn c_length_mismatch_panics() {
+        let a = vec![0.0f32; 128];
+        let b = vec![0.0f32; 128 * 256];
+        let mut c = vec![0.0f32; 200]; // wrong: should be 256
+        gemv_asm(&a, &b, &mut c, 256, 128);
     }
 }

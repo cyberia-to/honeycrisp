@@ -10,9 +10,15 @@ use core::arch::aarch64::*;
 /// Matrix-vector multiply: c[n] += a[k] * b[k][n], row-major B.
 #[cfg(target_arch = "aarch64")]
 pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert_eq!(a.len(), k);
-    debug_assert_eq!(b.len(), k * n);
-    debug_assert_eq!(c.len(), n);
+    assert_eq!(a.len(), k, "matvec_f32: a.len() {} != k {}", a.len(), k);
+    assert_eq!(
+        b.len(),
+        k * n,
+        "matvec_f32: b.len() {} != k*n {}",
+        b.len(),
+        k * n
+    );
+    assert_eq!(c.len(), n, "matvec_f32: c.len() {} != n {}", c.len(), n);
 
     if (128..=2048).contains(&n) {
         // AMX: K-blocked by 8, Y preloaded, pair LDX, vector FMA
@@ -271,5 +277,14 @@ mod tests {
     #[test]
     fn matvec_rectangular() {
         check_matvec(11008, 4096);
+    }
+
+    #[test]
+    #[should_panic(expected = "matvec_f32: c.len()")]
+    fn c_length_mismatch_panics() {
+        let a = vec![0.0f32; 8];
+        let b = vec![0.0f32; 8 * 16];
+        let mut c = vec![0.0f32; 10]; // wrong: should be 16
+        matvec_f32(&a, &b, &mut c, 16, 8);
     }
 }
