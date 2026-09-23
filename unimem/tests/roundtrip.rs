@@ -437,7 +437,7 @@ fn mem_error_display_block_create_failed() {
     let e = MemError::BlockCreateFailed;
     let s = format!("{}", e);
     assert!(!s.is_empty());
-    assert!(s.contains("IOSurfaceCreate"));
+    assert!(s.contains("block allocation failed"));
 }
 
 #[test]
@@ -445,6 +445,6 @@ fn mem_error_display_block_lock_failed() {
     let e = MemError::BlockLockFailed(0x1234);
     let s = format!("{}", e);
     assert!(!s.is_empty());
-    assert!(s.contains("IOSurfaceLock"));
+    assert!(s.contains("block map/lock failed"));
     assert!(s.contains("0x1234"));
 }

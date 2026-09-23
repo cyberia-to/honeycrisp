@@ -35,3 +35,6 @@ harness = false
 [[bench]]
 name = "bandwidth"
 harness = false
+
+[target.'cfg(all(not(target_vendor = "apple"), not(target_os = "android")))'.dependencies]
+libc = "0.2"

@@ -149,14 +149,33 @@ extern "C" {
 extern "C" {
     pub fn dlopen(filename: *const c_char, flags: i32) -> *mut c_void;
     pub fn dlsym(handle: *mut c_void, symbol: *const c_char) -> *mut c_void;
+    pub fn dlerror() -> *const c_char;
 }
 
 // ── ObjC runtime ──
+
+pub type ObjcIvar = *mut c_void;
+pub type ObjcMethod = *mut c_void;
 
 extern "C" {
     pub fn objc_getClass(name: *const c_char) -> ObjcClass;
     pub fn sel_registerName(name: *const c_char) -> ObjcSel;
     pub fn objc_msgSend() -> ObjcId;
+    pub fn object_getClass(obj: ObjcId) -> ObjcClass;
+    pub fn class_getName(cls: ObjcClass) -> *const c_char;
+    pub fn class_copyIvarList(cls: ObjcClass, out_count: *mut u32) -> *mut ObjcIvar;
+    pub fn ivar_getName(ivar: ObjcIvar) -> *const c_char;
+    pub fn ivar_getTypeEncoding(ivar: ObjcIvar) -> *const c_char;
+    pub fn ivar_getOffset(ivar: ObjcIvar) -> isize;
+    pub fn object_getIvar(obj: ObjcId, ivar: ObjcIvar) -> ObjcId;
+    pub fn class_copyMethodList(cls: ObjcClass, out_count: *mut u32) -> *mut ObjcMethod;
+    pub fn method_getName(method: ObjcMethod) -> ObjcSel;
+    pub fn method_getTypeEncoding(method: ObjcMethod) -> *const c_char;
+    pub fn sel_getName(sel: ObjcSel) -> *const c_char;
+    pub fn class_getSuperclass(cls: ObjcClass) -> ObjcClass;
+    pub fn objc_copyClassList(out_count: *mut u32) -> *mut ObjcClass;
+    pub fn class_getClassMethod(cls: ObjcClass, sel: ObjcSel) -> ObjcMethod;
+    pub fn class_getInstanceMethod(cls: ObjcClass, sel: ObjcSel) -> ObjcMethod;
 }
 
 // ── Helpers ──

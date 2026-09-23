@@ -78,13 +78,13 @@ drivers expose raw capabilities. runtimes compose them.
 
 ## architecture
 
-single crate, six organs:
+single crate, nine organs (the last three are M4-only):
 
 ```
 src/
   lib.rs              pub API re-exports, RamxError
-  probe.rs            Chip, Caps, Feature, detect()
-  matrix/             AMX coprocessor
+  probe.rs            Chip, Caps, Feature, detect() — including FEAT_SME*
+  matrix/             AMX coprocessor (M1+)
     mod.rs            AmxCtx lifecycle (set/clr)
     ops.rs            load/store, fma32/fma16/fmabf16/mac16
     regs.rs           XRow, YRow, ZRow typed wrappers
@@ -101,20 +101,27 @@ src/
     quant.rs          DotProd, I8MM, quantize/dequantize
     complex.rs        FCMA complex mul-acc
   sync/               concurrency primitives
-    mod.rs            barriers, wfe/sev
-    affinity.rs       pin_p_core, pin_e_core
-    prefetch.rs       PRFM wrappers
-  pulse/              performance counters
-    mod.rs            PulseCtx, Counter, Snapshot
-    ffi.rs            dlopen libkperf, kpc_* symbols
-  gemm.rs             sgemm, hgemm, bgemm, qgemm (auto-dispatch)
-  convert.rs          bulk conversion re-exports
-  probe/
-    main.rs           acpu_probe binary
+  pulse/              performance counters (libkperf)
+  gemm.rs             sgemm, hgemm, bgemm, qgemm (AMX/NEON dispatch)
+  streaming/          [M4+] SME / SSVE lifecycle
+    mod.rs            Stream lifecycle (SMSTART/SMSTOP)
+    asm.rs            raw .word encodings for SMSTART, RDSVL, ZERO ZA
+    ssve.rs           predicated SSVE op wrappers (ld1w, st1w, fmla, ...)
+    kern.rs           SSVE numerical kernels (axpy_f32)
+  sme/                [M4+] outer-product matmul
+    mod.rs            public matmul_f32_sme*
+    asm.rs            FMOPA / MOVA encodings
+    tile.rs           16×16 f32 ZA tile microkernel
+    gemm.rs           cache-blocked matmul, MT dispatch
+  lut/                [M4+] SME2 indexed-lookup primitives
+    mod.rs            permute_u8 (currently via SVE TBL in stream mode)
+    asm.rs            LUTI2 / LUTI4 / ZT0 load/store encodings
+specs/
+  README.md           probe + matrix + vector + numeric API spec
+  sme.md              streaming + sme + lut API spec (M4+)
 examples/
   matmul.rs           AMX matrix multiply demo
-specs/
-  README.md           API specification (source of truth)
+  sme_smoke.rs        streaming mode + SVL readout (M4+)
 ```
 
 ## source of truth
