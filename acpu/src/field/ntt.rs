@@ -29,7 +29,7 @@ pub fn pow_gl(mut base: u64, mut exp: u64) -> u64 {
 /// `vals.len()` must be a power of two.
 pub fn bit_reverse_permute(vals: &mut [u64]) {
     let n = vals.len();
-    debug_assert!(n.is_power_of_two());
+    assert!(n.is_power_of_two(), "bit_reverse_permute: length must be a power of two");
     let log_n = n.trailing_zeros() as usize;
     for i in 0..n {
         let j = bit_reverse(i, log_n);
@@ -218,5 +218,16 @@ mod tests {
         bit_reverse_permute(&mut v);
         bit_reverse_permute(&mut v);
         assert_eq!(v, original);
+    }
+
+    #[test]
+    #[should_panic(expected = "power of two")]
+    fn bit_reverse_permute_rejects_non_power_of_two() {
+        // `debug_assert!` compiles out in `--release`; this must panic in
+        // every build, since a release-mode call silently permutes into the
+        // wrong slots via a `trailing_zeros()`-derived `log_n` that no longer
+        // matches `n` instead of failing.
+        let mut v: Vec<u64> = (0..6).collect();
+        bit_reverse_permute(&mut v);
     }
 }

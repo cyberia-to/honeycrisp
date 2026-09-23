@@ -26,7 +26,7 @@ use super::goldilocks::{gl_add, gl_mul, gl_sub};
 /// ```
 pub fn multilinear_eval(evals: &[u64], point: &[u64]) -> u64 {
     let len = evals.len();
-    debug_assert!(len.is_power_of_two());
+    assert!(len.is_power_of_two(), "multilinear_eval: evals length must be a power of two");
     if len == 1 {
         return evals[0];
     }
@@ -144,5 +144,17 @@ mod tests {
             let result = canonicalize(multilinear_eval(&evals, pt));
             assert_eq!(result, evals[i], "corner {i} mismatch");
         }
+    }
+
+    #[test]
+    #[should_panic(expected = "power of two")]
+    fn multilinear_eval_rejects_non_power_of_two() {
+        // `debug_assert!` compiles out in `--release`; this must panic in
+        // every build. A release-mode call over a non-power-of-two `evals`
+        // does not fail at this boundary — it recurses on mismatched
+        // `evals`/`point` splits and either returns a silently wrong value
+        // or panics deep inside on an unrelated `point[0]` index instead.
+        let evals = [1u64, 2, 3];
+        multilinear_eval(&evals, &[0u64, 0u64]);
     }
 }
