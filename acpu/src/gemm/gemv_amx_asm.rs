@@ -205,10 +205,13 @@ extern "C" {
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::needless_range_loop)]
 pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert!(
+    assert!(
         k.is_multiple_of(8),
-        "gemv_pure_asm requires k divisible by 8"
+        "gemv_pure_asm requires k divisible by 8: k={k}"
     );
+    assert_eq!(a.len(), k, "gemv_pure_asm: a.len() must equal k");
+    assert_eq!(b.len(), k * n, "gemv_pure_asm: b.len() must equal k * n");
+    assert_eq!(c.len(), n, "gemv_pure_asm: c.len() must equal n");
 
     crate::gemm::ensure_amx();
 
@@ -226,5 +229,74 @@ pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     unsafe {
         acpu_gemv_amx(c.as_mut_ptr(), a_ptr, b.as_ptr(), n, k, n_tiles);
         std::alloc::dealloc(a_ptr, layout);
+    }
+}
+
+#[cfg(test)]
+#[cfg(target_arch = "aarch64")]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn matches_naive_gemv() {
+        let (n, k) = (64, 64);
+        let a: Vec<f32> = (0..k).map(|i| (i % 7) as f32 * 0.1).collect();
+        let b: Vec<f32> = (0..k * n).map(|i| (i % 11) as f32 * 0.01).collect();
+        let mut c = vec![0.0f32; n];
+        let mut r = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+        for ki in 0..k {
+            for j in 0..n {
+                r[j] += a[ki] * b[ki * n + j];
+            }
+        }
+        for j in 0..n {
+            assert!(
+                (c[j] - r[j]).abs() < r[j].abs() * 1e-3 + 1e-1,
+                "at {j}: {} vs {} (n={n},k={k})",
+                c[j],
+                r[j]
+            );
+        }
+    }
+
+    #[test]
+    #[should_panic(expected = "k divisible by 8")]
+    fn rejects_k_not_multiple_of_8() {
+        let (n, k) = (16, 9);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "a.len() must equal k")]
+    fn rejects_short_a() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k - 1];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "b.len() must equal k * n")]
+    fn rejects_short_b() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n - 1];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "c.len() must equal n")]
+    fn rejects_short_c() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n - 1];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
     }
 }
