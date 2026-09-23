@@ -306,7 +306,7 @@ pub unsafe fn release(obj: ObjcId) {
 /// Retain a known-non-null object. No null check — hot path only.
 #[inline(always)]
 pub unsafe fn retain_nonnull(obj: ObjcId) -> ObjcId {
-    debug_assert!(!obj.is_null());
+    assert!(!obj.is_null(), "retain_nonnull: obj is null");
     objc_retain(obj);
     obj
 }
@@ -314,6 +314,28 @@ pub unsafe fn retain_nonnull(obj: ObjcId) -> ObjcId {
 /// Release a known-non-null object. No null check — hot path only.
 #[inline(always)]
 pub unsafe fn release_nonnull(obj: ObjcId) {
-    debug_assert!(!obj.is_null());
+    assert!(!obj.is_null(), "release_nonnull: obj is null");
     objc_release(obj);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::ptr::null_mut;
+
+    #[test]
+    #[should_panic(expected = "retain_nonnull: obj is null")]
+    fn retain_nonnull_rejects_null() {
+        unsafe {
+            retain_nonnull(null_mut());
+        }
+    }
+
+    #[test]
+    #[should_panic(expected = "release_nonnull: obj is null")]
+    fn release_nonnull_rejects_null() {
+        unsafe {
+            release_nonnull(null_mut());
+        }
+    }
 }
