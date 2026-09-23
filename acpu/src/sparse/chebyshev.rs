@@ -150,6 +150,12 @@ pub fn chebyshev_matvec(
     debug_assert_eq!(y.len(), n);
     debug_assert_eq!(t0.len(), n);
     debug_assert_eq!(t1.len(), n);
+    // d_inv_sqrt is documented above as length n like y/t0/t1, but unlike
+    // them had no length check at all — every access is ordinary safe
+    // indexing, so a mismatch already panics rather than corrupting memory,
+    // but only after doing partial work and with a less useful message than
+    // failing at the boundary. Matches row 117/118's siblings for consistency.
+    assert_eq!(d_inv_sqrt.len(), n, "chebyshev_matvec: d_inv_sqrt length must match x");
 
     let coeffs = chebyshev_coeffs(tau, order);
 
@@ -320,5 +326,25 @@ mod tests {
         // ‖y‖_2 ≤ ‖x‖_2 = 1.0 (heat kernel contracts).
         let norm_y: f32 = y.iter().map(|&v| v * v).sum::<f32>().sqrt();
         assert!(norm_y <= 1.01, "‖y‖₂ = {norm_y} should be ≤ ‖x‖₂ = 1");
+    }
+
+    #[test]
+    #[should_panic(expected = "d_inv_sqrt length")]
+    fn chebyshev_matvec_rejects_short_d_inv_sqrt() {
+        let row_ptr = vec![0u32, 1, 3, 5, 6];
+        let col_idx = vec![1u32, 0, 2, 1, 3, 2];
+        let values = vec![1.0f32; 6];
+        let n = 4;
+
+        // One entry short of the required length n=4.
+        let d_inv_sqrt = vec![1.0f32, 1.0 / 2.0f32.sqrt(), 1.0 / 2.0f32.sqrt()];
+        let x = vec![1.0f32, 0.0, 0.0, 0.0];
+        let mut y = vec![0.0f32; n];
+        let mut t0 = vec![0.0f32; n];
+        let mut t1 = vec![0.0f32; n];
+
+        chebyshev_matvec(
+            &row_ptr, &col_idx, &values, &d_inv_sqrt, &x, &mut y, &mut t0, &mut t1, 1.0, 20,
+        );
     }
 }
