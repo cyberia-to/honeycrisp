@@ -1,0 +1,461 @@
+
+running 127 tests
+test field::goldilocks::tests::test_mul ... ok
+test field::goldilocks::tests::test_add_sub ... ok
+test crypto::tests::test_sha256_compress ... ok
+test field::goldilocks::tests::test_pow7_x16 ... ok
+test crypto::tests::test_pmull_64 ... ok
+test field::ntt::tests::bit_reverse_size4 ... ok
+test field::goldilocks::tests::test_pow7 ... ok
+test field::goldilocks::tests::test_mul_batch ... ok
+test field::merkle::tests::batch_inv_correctness ... ok
+test field::merkle::tests::batch_inv_handles_zero ... ok
+test field::goldilocks::tests::test_inv ... ok
+test field::ntt::tests::ntt_convolution ... ok
+test crypto::tests::test_aes128_encrypt ... ok
+test field::ntt::tests::bit_reverse_involution ... ok
+test crypto::tests::test_aes128_encrypt_blocks ... ok
+test field::ntt::tests::ntt_length_1 ... ok
+test field::ntt::tests::ntt_length_2_primitive_root ... ok
+test field::ntt::tests::ntt_length_2_second_element ... ok
+test field::ntt::tests::ntt_linearity ... ok
+test field::permute::tests::permute_changes_state ... ok
+test field::poly::tests::eval_at_half_is_midpoint ... ok
+test field::poly::tests::eval_at_one_returns_second ... ok
+test field::merkle::tests::merkle_root_changes_with_input ... ok
+test field::permute::tests::permute_deterministic ... ok
+test field::poly::tests::eval_at_zero_returns_first ... ok
+test field::permute::tests::permute_diffusion ... ok
+test field::poly::tests::eval_length_1 ... ok
+test field::poly::tests::eval_size_8_corners ... ok
+test field::poly::tests::eval_two_variables_arbitrary_point ... ok
+test field::poly::tests::eval_two_variables_corners ... ok
+test gemm::gemv_kern::tests::t_small ... ignored
+test gemm::matvec::tests::matvec_basic ... ok
+test field::merkle::tests::merkle_root_deterministic ... ok
+test gemm::gemv_kern::tests::t64 ... ok
+test gemm::other::tests::matmul_i8_basic ... ok
+test gemm::tests::matmul_f32_small ... ok
+test matrix::fma::tests::operand_acc_xn_yn ... ok
+test matrix::fma::tests::operand_tile_select ... ok
+test matrix::fma::tests::operand_first_rank1 ... ok
+test numeric::bf16::tests::bulk_bf16 ... ok
+test gemm::tests::matmul_f32_identity ... ok
+test numeric::bf16::tests::rne_rounding ... ok
+test numeric::bf16::tests::roundtrip_bf16 ... ok
+test numeric::complex::tests::complex_mul_acc_accumulates ... ok
+test numeric::complex::tests::complex_mul_acc_basic ... ok
+test numeric::fp16::tests::bulk_roundtrip ... ok
+test numeric::fp16::tests::roundtrip_normal ... ok
+test numeric::quant::tests::clamp_overflow ... ok
+test numeric::quant::tests::quantize_dequantize_symmetric ... ok
+test probe::tests::amx_versions ... ok
+test probe::tests::caps_has_roundtrip ... ok
+test gemm::tests::matmul_f32_vs_naive ... ok
+test probe::tests::chip_display ... ok
+test probe::tests::parse_brand_m1 ... ok
+test probe::tests::parse_brand_m4 ... ok
+test probe::tests::scan_returns_consistent ... ok
+test probe::tests::parse_brand_unknown ... ok
+test sparse::chebyshev::tests::bessel_i0_known_values ... ok
+test sparse::tests::matvec_long_row ... ok
+test sparse::chebyshev::tests::chebyshev_matvec_path4_smooth ... ok
+test sparse::tests::matvec_set_zeroes_first ... ok
+test sparse::tests::matvec_path4_accumulate ... ok
+test vector::integer::tests::test_absmax_i8 ... ok
+test vector::integer::tests::test_add_mul_i32 ... ok
+test vector::integer::tests::test_dot_i8 ... ok
+test vector::integer::tests::test_macc_i16 ... ok
+test vector::integer::tests::test_max_min_i32 ... ok
+test sparse::chebyshev::tests::chebyshev_coeffs_at_x1 ... ok
+test vector::integer_fused::tests::test_sad_u8 ... ok
+test vector::integer_fused::tests::test_scale_acc_i16 ... ok
+test vector::integer_fused::tests::test_ssd_i32 ... ok
+test vector::integer::tests::test_sum_i32 ... ok
+test vector::integer_fused::tests::test_sum_abs_i8 ... ok
+test vector::math::tests::test_exp_basic ... ok
+test vector::math::tests::test_log_basic ... ok
+test vector::math::tests::test_gelu_zero ... ok
+test vector::math::tests::test_sigmoid_bounds ... ok
+test vector::math::tests::test_silu_zero ... ok
+test vector::media::tests::test_histogram_empty ... ok
+test vector::math::tests::test_tanh_bounds ... ok
+test vector::media::tests::test_histogram_repeated ... ok
+test vector::media::tests::test_resize_downsample ... ok
+test vector::media::tests::test_histogram_uniform ... ok
+test vector::media::tests::test_rgb_to_yuv_known ... ok
+test vector::media::tests::test_resize_identity ... ok
+test vector::media::tests::test_rgb_to_yuv_various ... ok
+test vector::media::tests::test_resize_upsample ... ok
+test vector::media::tests::test_yuv_to_rgb_black_white ... ok
+test vector::reduce::tests::test_dot ... ok
+test vector::media::tests::test_rgb_yuv_roundtrip ... ok
+test vector::reduce::tests::test_empty ... ok
+test vector::reduce::tests::test_length ... ok
+test vector::reduce::tests::test_max_min ... ok
+test vector::reduce::tests::test_sum ... ok
+test vector::render::tests::test_cross3_known ... ok
+test vector::render::tests::test_clamp_bounds ... ok
+test vector::render::tests::test_recip_accuracy ... ok
+test vector::render::tests::test_rsqrt_accuracy ... ok
+test vector::reduce::tests::test_sum_large ... ok
+test vector::rope::tests::test_rope_identity_at_zero ... ok
+test vector::render::tests::test_rsqrt_to ... ok
+test vector::render::tests::test_lerp_endpoints ... ok
+test vector::rope::tests::test_rope_preserves_norm ... ok
+test vector::rope::tests::test_rope_odd_pairs ... ok
+test vector::scan::tests::test_prefix_sum_basic ... ok
+test vector::rope::tests::test_rope_rotation ... ok
+test vector::scan::tests::test_prefix_sum_empty ... ok
+test vector::scan::tests::test_transpose_empty ... ok
+test vector::scan::tests::test_transpose_large ... ok
+test vector::scan::tests::test_prefix_sum_large ... ok
+test vector::scan::tests::test_prefix_sum_neon_block ... ok
+test vector::scan::tests::test_transpose_4x4 ... ok
+test vector::scan::tests::test_transpose_non_square ... ok
+test vector::softmax::tests::test_normalize_scaling ... ok
+test vector::softmax::tests::test_normalize_unit_weight ... ok
+test vector::softmax::tests::test_softmax_equal ... ok
+test vector::softmax::tests::test_softmax_single ... ok
+test vector::softmax::tests::test_softmax_sums_to_one ... ok
+test numeric::complex::tests::complex_mul_acc_large ... ok
+test gemm::gemv_kern::tests::t_odd ... ok
+test gemm::gemv_kern::tests::t512 ... ok
+test gemm::matvec::tests::matvec_small_tiled ... ok
+test gemm::gemv_kern::tests::t1024 ... ok
+test gemm::matvec::tests::matvec_medium_tiled ... ok
+test gemm::tests::matmul_f32_large_parallel ... ok
+test gemm::matvec::tests::matvec_large_broadcast ... ok
+test gemm::matvec::tests::matvec_rectangular ... ok
+
+test result: ok. 126 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.62s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 56 tests
+test amx_ctx_new ... ok
+test amx_ldy_sty_roundtrip ... ok
+test amx_ldx_stx_roundtrip ... ok
+test all_row_constants ... ok
+test amx_ldz_stz_roundtrip ... ok
+test complex_mul_acc_known_pair ... ok
+test affinity_pin_p_core ... ok
+test fp16_roundtrip ... ok
+test affinity_pin_any ... ok
+test amx_fma32_outer_product ... ok
+test fp16_subnormal ... ok
+test affinity_pin_e_core ... ok
+test complex_mul_acc_multiple_pairs ... ok
+test bf16_roundtrip ... ok
+test math_exp ... ok
+test math_sigmoid ... ok
+test bf16_bulk ... ok
+test math_log ... ok
+test fp16_bulk_1024 ... ok
+test math_silu ... ok
+test math_gelu ... ok
+test math_tanh ... ok
+test matmul_bf16_identity ... ok
+test matmul_f16_identity ... ok
+test prefetch_no_crash ... ok
+test probe_chip_not_unknown ... ok
+test probe_detect_cached ... ok
+test probe_detect_valid_caps ... ok
+test probe_has_feature ... ok
+test probe_has_returns_consistent ... ok
+test pmu_counters_new ... ok
+test quant_clamp ... ok
+test quant_roundtrip ... ok
+test reduce_dot ... ok
+test reduce_empty ... ok
+test reduce_length_explicit ... ok
+test reduce_max_min ... ok
+test reduce_norm_l2 ... ok
+test reduce_sum ... ok
+test rmsnorm_scaling ... ok
+test rmsnorm_unit_weight ... ok
+test rope_first_pair ... ok
+test rope_identity_at_zero ... ok
+test rope_preserves_norms ... ok
+test row_index_value ... ok
+test sgemm_identity ... ok
+test sgemm_vs_naive ... ok
+test softmax_equal ... ok
+test softmax_monotonic ... ok
+test softmax_properties ... ok
+test sync_barriers_no_crash ... ok
+test sync_wake_no_crash ... ok
+test sync_wake_then_wait ... ok
+test xrow_bounds ... ok
+test yrow_bounds ... ok
+test zrow_bounds ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 50 tests
+test render::tests::index_type_size ... ok
+test render::tests::multiple_color_attachments_spec ... ok
+test render::tests::render_target_zero_size_rejected ... ok
+test render::tests::depth_stencil_state_build ... ok
+test tests::device_tests::buffer_create_and_access ... ok
+test tests::device_tests::buffer_read ... ok
+test tests::device_tests::command_buffer_status_constants ... ok
+test tests::device_tests::buffer_zero_size_rejected ... ok
+test render::tests::render_target_msaa ... ok
+test render::tests::render_target_create ... ok
+test render::tests::depth_target_create ... ok
+test render::tests::pass_descriptor_clear_helper ... ok
+test render::tests::pass_descriptor_color_attachment ... ok
+test render::tests::pass_descriptor_with_depth ... ok
+test tests::device_tests::private_buffer_not_shared ... ok
+test tests::device_tests::open_works ... ok
+test tests::device_tests::sync_primitives ... ok
+test tests::device_tests::private_buffer_read_panics - should panic ... ok
+test tests::device_tests::texture_create_and_properties ... ok
+test tests::error_tests::error_display_all_variants ... ok
+test tests::error_tests::error_is_error_trait ... ok
+test tests::fp16_tests::bulk_cast_f16_f32_matches_scalar ... ok
+test tests::fp16_tests::bulk_cast_f32_f16_matches_scalar ... ok
+test tests::fp16_tests::infinity ... ok
+test tests::fp16_tests::bulk_tail_handling ... ok
+test tests::fp16_tests::nan_round_trip ... ok
+test tests::fp16_tests::negative_infinity ... ok
+test tests::fp16_tests::negative_one_round_trip ... ok
+test tests::fp16_tests::negative_zero_round_trip ... ok
+test tests::fp16_tests::one_round_trip ... ok
+test tests::fp16_tests::overflow_to_infinity ... ok
+test tests::fp16_tests::small_values ... ok
+test tests::fp16_tests::subnormal_fp16 ... ok
+test tests::fp16_tests::tiny_exponents_no_panic ... ok
+test tests::fp16_tests::underflow_to_zero ... ok
+test tests::fp16_tests::zero_round_trip ... ok
+test tests::fp16_tests::all_u16_round_trip_no_panic ... ok
+test render::tests::render_pipeline_requires_color_attachment ... ok
+test tests::device_tests::pipeline_properties ... ok
+test render::tests::render_pipeline_build_basic ... ok
+test render::tests::render_pipeline_with_blend ... ok
+test render::tests::render_pipeline_with_depth_and_msaa ... ok
+test tests::device_tests::function_not_found ... ok
+test tests::device_tests::shader_compile_and_function ... ok
+test tests::device_tests::shader_compile_error ... ok
+test tests::device_tests::gpu_timing ... ok
+test render::tests::vertex_descriptor_attaches_to_pipeline ... ok
+test render::tests::encoder_lifecycle ... ok
+test render::tests::encoder_drops_without_end ... ok
+test render::tests::encoder_indexed_and_cull ... ok
+
+test result: ok. 50 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 26 tests
+test gpu_all_returns_non_empty ... ok
+test gpu_max_threads_per_threadgroup ... ok
+test gpu_has_unified_memory ... ok
+test gpu_buffer_wrap ... ok
+test gpu_recommended_max_working_set_size ... ok
+test copier_as_raw_not_null ... ok
+test private_buffer_blit_copy ... ok
+test commands_status_completed ... ok
+test batch_push_bytes ... ok
+test commands_gpu_start_end_time ... ok
+test texture_replace_region_get_bytes ... ok
+test dispatch_single ... ok
+test dispatch_with_bytes ... ok
+test queue_commands_unchecked ... ok
+test encoder_launch_groups ... ok
+test compute_dispatcher_batch ... ok
+test compute_dispatcher_async_pipelining ... ok
+test vecadd_1024 ... ok
+test wrap_block_vecadd ... ok
+test commands_error_none_on_success ... ok
+test matmul_64x64 ... ok
+test queue_commands_fast ... ok
+test batch_launch_groups ... ok
+test pipeline_static_threadgroup_memory_length ... ok
+test autorelease_pool_dispatch ... ok
+test drop_stress_leak ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 8 tests
+test compile_load_run_identity ... ok
+test compile_load_unload ... ok
+test double_unload_is_safe ... ok
+test matmul_various_sizes ... ok
+test run_without_load_fails ... ok
+test multiple_runs_same_model ... ok
+test run_direct_with_raw_surfaces ... ok
+test run_direct_with_unimem_block ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+
+running 16 tests
+test buffer_oversized_is_err ... ok
+test buffer_zero_size_is_err ... ok
+test fp16_bulk_conversion ... ok
+test ane_error_display_variants ... ok
+test fp16_roundtrip_exact ... ok
+test mil_footer_contains_closing ... ok
+test mil_header_contains_keywords ... ok
+test mil_matmul_shape ... ok
+test gen_dyn_matmul_produces_mil_ops ... ok
+test mil_matmul_text_is_valid ... ok
+test pack_weights_empty ... ok
+test pack_weights_length_and_header ... ok
+test surface_bounds_check ... ok
+test surface_write_read_roundtrip ... ok
+test surface_with_shape ... ok
+test surface_create_and_size ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 9 tests
+test block::tests::checked_rounding_and_native_disagreement ... ok
+test block::tests::checked_numeric_boundaries_without_native_allocation ... ok
+test block::tests::rejected_sizes_and_planning_create_no_native_owners ... ok
+test block::tests::dictionary_and_surface_null_release_properties ... ok
+test block::tests::every_number_null_releases_only_preceding_create_references ... ok
+test block::tests::success_transfers_one_locked_owner_to_block_drop ... ok
+test block::tests::failed_lock_releases_without_unlock ... ok
+test block::tests::mapping_rejections_unlock_then_release ... ok
+test block::tests::extent_mismatch_is_fatal_before_lock ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 5 tests
+test precise_error_displays ... ok
+test public_invalid_requests_are_classified ... ok
+test large_extent_equality_and_initialized_endpoints ... ok
+test caller_can_account_before_open_and_reuse_numeric_plan ... ok
+test native_alignment_extent_and_raw_row_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 36 tests
+test block_zero_size_errors ... ok
+test block_cross_view_u16_bytes ... ok
+test block_slice_pointer ... ok
+test block_cross_view_f32_bytes ... ok
+test block_handle ... ok
+test block_slice_lengths ... ok
+test grid_address_spacing ... ok
+test block_open_and_access ... ok
+test grid_take_give ... ok
+test block_large ... ok
+test cell_bytes ... ok
+test cell_id_distinct ... ok
+test grid_reuse ... ok
+test grid_tape_access ... ok
+test block_id_unique ... ok
+test grid_full ... ok
+test mem_error_display_block_create_failed ... ok
+test mem_error_display_block_lock_failed ... ok
+test mem_error_display_zero_size ... ok
+test tape_block_access ... ok
+test tape_clear ... ok
+test layout_clear_pass ... ok
+test tape_owns ... ok
+test tape_alignment ... ok
+test tape_full ... ok
+test tape_owns_boundary ... ok
+test tape_basic_take ... ok
+test layout_new_total ... ok
+test tape_take_one ... ok
+test tape_start_warm ... ok
+test layout_tape_accessors ... ok
+test layout_stat ... ok
+test layout_clear_talk ... ok
+test stat_display ... ok
+test tape_warm_after_start ... ok
+test block_drop_no_leak ... ok
+
+test result: ok. 36 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+running 1 test
+test acpu/src/pulse/mod.rs - pulse::Counters (line 85) - compile ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 4 tests
+test aruminium/src/dispatch.rs - dispatch::Dispatch::batch_async (line 327) ... ignored
+test aruminium/src/lib.rs - (line 11) ... ignored
+test aruminium/src/lib.rs - (line 65) ... ignored
+test aruminium/src/lib.rs - (line 78) ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+test rane/src/lib.rs - (line 8) - compile ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+running 2 tests
+test unimem/src/block.rs - block::BlockPlan (line 18) - compile fail ... ok
+test unimem/src/block.rs - block::BlockPlan (line 23) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

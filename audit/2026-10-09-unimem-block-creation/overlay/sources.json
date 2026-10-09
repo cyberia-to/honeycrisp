@@ -1,0 +1,45 @@
+{
+  "classification": "local combined candidate; not origin/release",
+  "honeycrisp": "76b2f26432cca15607ab1dd18e488df68db51ca0",
+  "strata": "56aedb2d12b3126c601eb333419136d403614dbb",
+  "frozen_overlay_manifest_sha256": "e28991a40b49a908ff1882ba14079217f39570187d2374c7601943c59368db87",
+  "overlay": [
+    {
+      "sha256": "242afac207471b7f6e553809937630434f346cd64be4b698ca355a5a879ba5f8",
+      "path": "unimem/src/block.rs"
+    },
+    {
+      "sha256": "41ba9db2a57ec1f9b6185e0b0fbe05bc4f13e6f16a6a7740534d9303b743d4bb",
+      "path": "unimem/src/block/creation.rs"
+    },
+    {
+      "sha256": "6504079f13fc2cc166708a1aaba67632c209ef08938fe247310fb90129f31360",
+      "path": "unimem/src/block/tests.rs"
+    },
+    {
+      "sha256": "5cfbfff217f40dc313820d04f3100f0b17c233480a231b696d1383aedd7e8539",
+      "path": "unimem/src/ffi.rs"
+    },
+    {
+      "sha256": "49ce6ad52c8fb5aa6d1c4fc721faaef7807ea8491d52ae597b6b58dd5b012fe1",
+      "path": "unimem/src/lib.rs"
+    },
+    {
+      "sha256": "473a609509163e69b0fa1b86d450e86a71f0d035176596087543c93d9c2fd916",
+      "path": "unimem/tests/block_creation.rs"
+    },
+    {
+      "sha256": "20e79fadfbb39b29fb0179871c3d53962b60f8f8de26f5ec20cac383ad55e6c2",
+      "path": "unimem/tests/roundtrip.rs"
+    },
+    {
+      "sha256": "6475bd489d1d3a05f0cadc0dfa66b23fb8ea1dde81c19a8b5f175c40f5f4d01f",
+      "path": "unimem/specs/README.md"
+    },
+    {
+      "sha256": "a568295dc984b621482f2a3ee431fca66f7524b9214e69c8b4666ff25af6fd6d",
+      "path": "unimem/specs/api-sketch.md"
+    }
+  ],
+  "target": "/tmp/unimem-block-overlay.fXgCHW/target"
+}

@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation, program: "/Users/master/.rustup/toolchains/nightly-2025-11-26-aarch64-apple-darwin/bin/rustc", arguments: [-vV]}

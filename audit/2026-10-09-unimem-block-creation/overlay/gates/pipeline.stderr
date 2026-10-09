@@ -1,0 +1,46 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling rayon-core v1.13.0
+   Compiling either v1.15.0
+   Compiling serde_json v1.0.149
+   Compiling anstyle v1.0.14
+   Compiling num-traits v0.2.19
+   Compiling memchr v2.8.0
+   Compiling regex-syntax v0.8.10
+   Compiling plotters-backend v0.3.7
+   Compiling ciborium-io v0.2.2
+   Compiling itoa v1.0.18
+   Compiling clap_lex v1.1.0
+   Compiling serde_derive v1.0.228
+   Compiling half v2.7.1
+   Compiling itertools v0.10.5
+   Compiling clap_builder v4.6.0
+   Compiling same-file v1.0.6
+   Compiling plotters-svg v0.3.7
+   Compiling cast v0.3.0
+   Compiling walkdir v2.5.0
+   Compiling ciborium-ll v0.2.2
+   Compiling is-terminal v0.4.17
+   Compiling oorandom v11.1.5
+   Compiling once_cell v1.21.4
+   Compiling anes v0.1.6
+   Compiling regex-automata v0.4.14
+   Compiling criterion-plot v0.5.0
+   Compiling clap v4.6.0
+   Compiling regex v1.12.3
+   Compiling plotters v0.3.7
+   Compiling crossbeam-queue v0.3.12
+   Compiling crossbeam-epoch v0.9.18
+   Compiling unimem v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/unimem)
+   Compiling crossbeam-deque v0.8.6
+   Compiling acpu v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/acpu)
+   Compiling rayon v1.12.0
+   Compiling aruminium v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/rane)
+   Compiling tinytemplate v1.2.1
+   Compiling ciborium v0.2.2
+   Compiling criterion v0.5.1
+    Finished `release` profile [optimized] target(s) in 12.33s
+     Running `/tmp/unimem-block-overlay.fXgCHW/target/release/examples/pipeline`

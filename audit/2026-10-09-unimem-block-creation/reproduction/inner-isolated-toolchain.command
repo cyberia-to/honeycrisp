@@ -1,0 +1,1 @@
+{directory: "/private/tmp/unimem-block-audit-repro.o5SVlb/prepared/isolated", program: rustc, arguments: [-vV], environment: {CARGO_TARGET_DIR: "/private/tmp/unimem-block-audit-repro.o5SVlb/prepared/isolated/target"}}

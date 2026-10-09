@@ -1,0 +1,78 @@
+
+running 9 tests
+test block::tests::checked_numeric_boundaries_without_native_allocation ... ok
+test block::tests::checked_rounding_and_native_disagreement ... ok
+test block::tests::dictionary_and_surface_null_release_properties ... ok
+test block::tests::every_number_null_releases_only_preceding_create_references ... ok
+test block::tests::rejected_sizes_and_planning_create_no_native_owners ... ok
+test block::tests::success_transfers_one_locked_owner_to_block_drop ... ok
+test block::tests::failed_lock_releases_without_unlock ... ok
+test block::tests::mapping_rejections_unlock_then_release ... ok
+test block::tests::extent_mismatch_is_fatal_before_lock ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 5 tests
+test public_invalid_requests_are_classified ... ok
+test precise_error_displays ... ok
+test large_extent_equality_and_initialized_endpoints ... ok
+test caller_can_account_before_open_and_reuse_numeric_plan ... ok
+test native_alignment_extent_and_raw_row_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 36 tests
+test block_zero_size_errors ... ok
+test block_open_and_access ... ok
+test block_cross_view_u16_bytes ... ok
+test grid_tape_access ... ok
+test grid_full ... ok
+test cell_id_distinct ... ok
+test grid_take_give ... ok
+test block_id_unique ... ok
+test grid_address_spacing ... ok
+test block_slice_pointer ... ok
+test block_handle ... ok
+test block_cross_view_f32_bytes ... ok
+test block_large ... ok
+test grid_reuse ... ok
+test block_slice_lengths ... ok
+test cell_bytes ... ok
+test mem_error_display_block_create_failed ... ok
+test mem_error_display_block_lock_failed ... ok
+test layout_new_total ... ok
+test mem_error_display_zero_size ... ok
+test layout_clear_talk ... ok
+test layout_stat ... ok
+test tape_alignment ... ok
+test tape_basic_take ... ok
+test tape_block_access ... ok
+test tape_clear ... ok
+test layout_tape_accessors ... ok
+test tape_owns ... ok
+test tape_full ... ok
+test tape_owns_boundary ... ok
+test tape_start_warm ... ok
+test tape_take_one ... ok
+test tape_warm_after_start ... ok
+test layout_clear_pass ... ok
+test stat_display ... ok
+test block_drop_no_leak ... ok
+
+test result: ok. 36 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+running 2 tests
+test src/block.rs - block::BlockPlan (line 18) - compile fail ... ok
+test src/block.rs - block::BlockPlan (line 23) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Compiling unimem v0.2.0 (/private/tmp/unimem-block-creation-validation/candidate/unimem)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.34s
+     Running unittests src/lib.rs (target/debug/deps/unimem-0b10eb0e135d02c6)
+     Running tests/block_creation.rs (target/debug/deps/block_creation-e67357700090077f)
+     Running tests/roundtrip.rs (target/debug/deps/roundtrip-33f0a63ebaedf2bd)
+   Doc-tests unimem

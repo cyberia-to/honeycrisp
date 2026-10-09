@@ -1,0 +1,1 @@
+{directory: "/tmp/unimem-block-overlay.fXgCHW/honeycrisp/unimem", environment: {CARGO_TARGET_DIR: "/tmp/unimem-block-overlay.fXgCHW/target"}, program: cargo, arguments: [run, --example, pipeline, --release, --locked, --offline]}

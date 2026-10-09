@@ -1,0 +1,319 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+    Checking strata-core v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/core)
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.185
+   Compiling autocfg v1.5.0
+   Compiling libm v0.2.16
+    Checking cfg-if v1.0.4
+   Compiling zerocopy v0.8.48
+   Compiling cfg_aliases v0.2.1
+    Checking once_cell v1.21.4
+    Checking bitflags v2.11.0
+   Compiling thiserror v2.0.18
+   Compiling objc2 v0.6.4
+    Checking core-foundation-sys v0.8.7
+   Compiling paste v1.0.15
+   Compiling serde_core v1.0.228
+    Checking strata-proof v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/proof)
+    Checking strata-compute v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/compute)
+    Checking strata-ext v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/ext)
+    Checking log v0.4.29
+   Compiling parking_lot_core v0.9.12
+   Compiling naga v28.0.0
+    Checking strata-nebu v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/nebu/rs)
+    Checking foldhash v0.2.0
+    Checking unicode-width v0.2.2
+    Checking bit-vec v0.8.0
+   Compiling num-traits v0.2.19
+    Checking scopeguard v1.2.0
+    Checking equivalent v1.0.2
+    Checking hashbrown v0.17.1
+    Checking foreign-types-shared v0.3.1
+    Checking smallvec v1.15.1
+    Checking objc2-encode v4.1.0
+    Checking bit-set v0.8.0
+    Checking lock_api v0.4.14
+    Checking codespan-reporting v0.12.0
+    Checking hashbrown v0.16.1
+   Compiling wgpu-hal v28.0.1
+    Checking indexmap v2.14.0
+    Checking rustc-hash v1.1.0
+   Compiling serde v1.0.228
+    Checking block v0.1.6
+   Compiling zmij v1.0.21
+    Checking arrayvec v0.7.6
+    Checking hexf-parse v0.2.1
+   Compiling serde_json v1.0.149
+   Compiling rayon-core v1.13.0
+    Checking raw-window-handle v0.6.2
+    Checking profiling v1.0.18
+    Checking either v1.15.0
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/unimem)
+    Checking crossbeam-epoch v0.9.18
+    Checking crossbeam-deque v0.8.6
+   Compiling wgpu-core v28.0.1
+   Compiling syn v2.0.117
+    Checking clap_lex v1.1.0
+    Checking ciborium-io v0.2.2
+   Compiling litrs v1.0.0
+    Checking anstyle v1.0.14
+    Checking plotters-backend v0.3.7
+    Checking regex-syntax v0.8.10
+    Checking memchr v2.8.0
+    Checking itoa v1.0.18
+   Compiling document-features v0.2.12
+    Checking plotters-svg v0.3.7
+    Checking clap_builder v4.6.0
+    Checking regex-automata v0.4.14
+    Checking objc2-core-foundation v0.3.2
+    Checking block2 v0.6.2
+    Checking itertools v0.10.5
+   Compiling wgpu v28.0.0
+    Checking cast v0.3.0
+    Checking same-file v1.0.6
+    Checking walkdir v2.5.0
+    Checking regex v1.12.3
+    Checking clap v4.6.0
+   Compiling zerocopy-derive v0.8.48
+   Compiling bytemuck_derive v1.10.2
+    Checking core-foundation v0.10.1
+    Checking malloc_buf v0.0.6
+   Compiling foreign-types-macros v0.2.3
+   Compiling thiserror-impl v2.0.18
+    Checking core-graphics-types v0.2.0
+    Checking objc v0.2.7
+    Checking parking_lot v0.12.5
+   Compiling serde_derive v1.0.228
+    Checking criterion-plot v0.5.0
+    Checking foreign-types v0.5.0
+    Checking is-terminal v0.4.17
+    Checking objc2-foundation v0.3.2
+    Checking bytemuck v1.25.0
+    Checking plotters v0.3.7
+    Checking dispatch2 v0.3.1
+    Checking anes v0.1.6
+    Checking static_assertions v1.1.0
+    Checking oorandom v11.1.5
+    Checking pollster v0.4.0
+    Checking objc2-metal v0.3.2
+    Checking rayon v1.12.0
+    Checking acpu v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/acpu)
+error: duplicated attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+note: first defined here
+    --> acpu/src/gemm/mod.rs:1093:9
+     |
+1093 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: remove this attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#duplicated_attributes
+     = note: `-D clippy::duplicated-attributes` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::duplicated_attributes)]`
+
+error: manual implementation of an assign operation
+   --> acpu/src/sparse/chebyshev.rs:171:9
+    |
+171 |         t1[i] = -d_inv_sqrt[i] * t1[i];
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace it with: `t1[i] *= -d_inv_sqrt[i]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#assign_op_pattern
+    = note: `-D clippy::assign-op-pattern` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::assign_op_pattern)]`
+
+error: the loop variable `k` is used to index `coeffs`
+   --> acpu/src/sparse/chebyshev.rs:192:14
+    |
+192 |     for k in 2..=order {
+    |              ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+192 -     for k in 2..=order {
+192 +     for (k, <item>) in coeffs.iter().enumerate().take(order + 1).skip(2) {
+    |
+
+error: the loop variable `pf` is only used to index `cols`
+  --> acpu/src/sparse/mod.rs:61:23
+   |
+61 |             for pf in 0..len.min(PF) {
+   |                       ^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+   |
+61 -             for pf in 0..len.min(PF) {
+61 +             for <item> in cols.iter().take(len.min(PF)) {
+   |
+
+error: could not compile `acpu` (lib) due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: the loop variable `i` is used to index `state`
+   --> acpu/src/field/goldilocks.rs:299:18
+    |
+299 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+299 -         for i in 0..16 {
+299 +         for (i, <item>) in state.iter_mut().enumerate() {
+    |
+
+error: the loop variable `i` is only used to index `expected`
+   --> acpu/src/field/goldilocks.rs:303:18
+    |
+303 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+    |
+303 -         for i in 0..16 {
+303 +         for <item> in &mut expected {
+    |
+
+error: the loop variable `i` is used to index `rc`
+   --> acpu/src/field/permute.rs:146:18
+    |
+146 |         for i in 0..144 {
+    |                  ^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+146 -         for i in 0..144 {
+146 +         for (i, <item>) in rc.iter_mut().enumerate() {
+    |
+
+error: the loop variable `i` is used to index `d`
+   --> acpu/src/field/permute.rs:154:18
+    |
+154 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+154 -         for i in 0..16 {
+154 +         for (i, <item>) in d.iter_mut().enumerate() {
+    |
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> acpu/src/numeric/bf16.rs:167:13
+    |
+167 |             3.14,
+    |             ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+    = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: the loop variable `k` is used to index `coeffs`
+   --> acpu/src/sparse/chebyshev.rs:192:14
+    |
+192 |     for k in 2..=order {
+    |              ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+192 -     for k in 2..=order {
+192 +     for (k, <item>) in coeffs.iter().enumerate().take(order + 1).skip(2) {
+    |
+
+error: float has excessive precision
+   --> acpu/src/sparse/chebyshev.rs:247:33
+    |
+247 |             (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
+    |                                 ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#excessive_precision
+    = note: `-D clippy::excessive-precision` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::excessive_precision)]`
+help: consider changing the type or truncating it to
+    |
+247 -             (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
+247 +             (bessel_i(0, 1.0) - 1.266_066).abs() < 1e-4,
+    |
+
+error: the loop variable `i` is used to index `y`
+   --> acpu/src/sparse/mod.rs:205:18
+    |
+205 |         for i in 1..n {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+205 -         for i in 1..n {
+205 +         for (i, <item>) in y.iter().enumerate().take(n).skip(1) {
+    |
+
+error: casting to the same type is unnecessary (`i32` -> `i32`)
+   --> acpu/src/vector/integer.rs:411:45
+    |
+411 |         let v: Vec<i32> = (0..4096).map(|i| (i % 100) as i32 - 50).collect();
+    |                                             ^^^^^^^^^^^^^^^^ help: try: `(i % 100)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unnecessary_cast
+    = note: `-D clippy::unnecessary-cast` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_cast)]`
+
+error: the loop variable `c` is used to index `out`
+   --> acpu/src/vector/media.rs:417:18
+    |
+417 |         for c in 0..3 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+417 -         for c in 0..3 {
+417 +         for (c, <item>) in out.iter().enumerate().take(3) {
+    |
+
+error: useless use of `vec!`
+   --> acpu/src/crypto/mod.rs:362:21
+    |
+362 |         let mut w = vec![0u32; 44];
+    |                     ^^^^^^^^^^^^^^ help: you can use an array directly: `[0u32; 44]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+    = note: `-D clippy::useless-vec` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::useless_vec)]`
+
+error: useless use of `vec!`
+   --> acpu/src/vector/media.rs:386:30
+    |
+386 |         rgb_to_yuv(&mut yuv, &vec![0u8; 48]);
+    |                              ^^^^^^^^^^^^^^ help: you can use a slice directly: `&[0u8; 48]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: useless use of `vec!`
+   --> acpu/src/vector/media.rs:467:39
+    |
+467 |         resize_bilinear_f32(&mut dst, &vec![7.5f32; 16], 4, 4, 2, 2);
+    |                                       ^^^^^^^^^^^^^^^^^ help: you can use a slice directly: `&[7.5f32; 16]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: could not compile `acpu` (lib test) due to 16 previous errors

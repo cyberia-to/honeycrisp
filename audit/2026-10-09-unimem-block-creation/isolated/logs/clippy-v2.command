@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation/candidate/unimem, program: cargo, arguments: [clippy, --all-targets, --locked, --, -D, warnings]}

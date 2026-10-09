@@ -1,0 +1,13 @@
+
+running 2 tests
+test src/block.rs - block::BlockPlan (line 18) - compile fail ... ok
+test src/block.rs - block::BlockPlan (line 23) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0 (/private/tmp/unimem-block-creation-validation/candidate/unimem)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.52s
+   Doc-tests unimem

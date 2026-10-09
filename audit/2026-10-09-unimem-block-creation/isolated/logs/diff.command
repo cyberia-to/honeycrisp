@@ -1,0 +1,1 @@
+{directory: /Users/master/cyber/honeycrisp-kadek-block-creation, program: git, arguments: [diff, --check]}

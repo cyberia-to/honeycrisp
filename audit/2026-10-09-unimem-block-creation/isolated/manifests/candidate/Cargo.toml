@@ -1,0 +1,13 @@
+[package]
+name = "unimem"
+version = "0.2.0"
+edition = "2021"
+license = "LicenseRef-Cyber"
+autoexamples = false
+autobenches = false
+
+[workspace]
+
+[dependencies]
+crossbeam-queue = "=0.3.12"
+mutants = "=0.0.3"

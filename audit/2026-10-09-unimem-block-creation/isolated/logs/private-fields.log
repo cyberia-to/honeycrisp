@@ -1,0 +1,12 @@
+error[E0451]: fields `requested`, `row_bytes` and `allocation_size` of struct `BlockPlan` are private
+ --> /tmp/unimem-block-creation-validation/private_plan.rs:3:17
+  |
+3 |     BlockPlan { requested: 1, row_bytes: 1, allocation_size: 1 }
+  |                 ^^^^^^^^^     ^^^^^^^^^     ^^^^^^^^^^^^^^^ private field
+  |                 |             |
+  |                 |             private field
+  |                 private field
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0451`.

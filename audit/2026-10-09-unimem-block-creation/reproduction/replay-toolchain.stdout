@@ -1,0 +1,8 @@
+rustc 1.95.0 (59807616e 2026-04-14) (Homebrew)
+binary: rustc
+commit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860
+commit-date: 2026-04-14
+host: aarch64-apple-darwin
+release: 1.95.0
+LLVM version: 22.1.3
+

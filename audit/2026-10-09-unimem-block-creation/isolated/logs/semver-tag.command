@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation/candidate/unimem, program: cargo, arguments: [semver-checks, check-release, --manifest-path, "/tmp/unimem-block-creation-validation/candidate/unimem/Cargo.toml", --baseline-root, /tmp/unimem-block-creation-validation/tag/unimem]}

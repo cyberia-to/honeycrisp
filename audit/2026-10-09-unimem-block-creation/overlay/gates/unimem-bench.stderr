@@ -1,0 +1,77 @@
+   Compiling unimem v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/unimem)
+    Finished `bench` profile [optimized] target(s) in 5.21s
+     Running unittests src/lib.rs (/tmp/unimem-block-overlay.fXgCHW/target/release/deps/unimem-233c6f54908db9c7)
+     Running benches/alloc.rs (/tmp/unimem-block-overlay.fXgCHW/target/release/deps/alloc-bdd1b0dcf0d13b1b)
+Gnuplot not found, using plotters backend
+Benchmarking take_comparison/tape_take_64b
+Benchmarking take_comparison/tape_take_64b: Warming up for 3.0000 s
+Benchmarking take_comparison/tape_take_64b: Collecting 100 samples in estimated 5.0000 s (6.8B iterations)
+Benchmarking take_comparison/tape_take_64b: Analyzing
+Benchmarking take_comparison/tape_take_4kb
+Benchmarking take_comparison/tape_take_4kb: Warming up for 3.0000 s
+Benchmarking take_comparison/tape_take_4kb: Collecting 100 samples in estimated 5.0000 s (7.6B iterations)
+Benchmarking take_comparison/tape_take_4kb: Analyzing
+Benchmarking take_comparison/tape_take_1mb
+Benchmarking take_comparison/tape_take_1mb: Warming up for 3.0000 s
+Benchmarking take_comparison/tape_take_1mb: Collecting 100 samples in estimated 5.0000 s (7.4B iterations)
+Benchmarking take_comparison/tape_take_1mb: Analyzing
+Benchmarking take_comparison/vec_4kb
+Benchmarking take_comparison/vec_4kb: Warming up for 3.0000 s
+Benchmarking take_comparison/vec_4kb: Collecting 100 samples in estimated 5.0000 s (254M iterations)
+Benchmarking take_comparison/vec_4kb: Analyzing
+Benchmarking take_comparison/malloc_4kb
+Benchmarking take_comparison/malloc_4kb: Warming up for 3.0000 s
+Benchmarking take_comparison/malloc_4kb: Collecting 100 samples in estimated 5.0000 s (273M iterations)
+Benchmarking take_comparison/malloc_4kb: Analyzing
+Benchmarking take_comparison/tape_clear
+Benchmarking take_comparison/tape_clear: Warming up for 3.0000 s
+Benchmarking take_comparison/tape_clear: Collecting 100 samples in estimated 5.0000 s (15B iterations)
+Benchmarking take_comparison/tape_clear: Analyzing
+Benchmarking grid_comparison/grid_take_give
+Benchmarking grid_comparison/grid_take_give: Warming up for 3.0000 s
+Benchmarking grid_comparison/grid_take_give: Collecting 100 samples in estimated 5.0000 s (577M iterations)
+Benchmarking grid_comparison/grid_take_give: Analyzing
+Benchmarking grid_comparison/malloc_free_4kb
+Benchmarking grid_comparison/malloc_free_4kb: Warming up for 3.0000 s
+Benchmarking grid_comparison/malloc_free_4kb: Collecting 100 samples in estimated 5.0000 s (190M iterations)
+Benchmarking grid_comparison/malloc_free_4kb: Analyzing
+Benchmarking block_open/block_open_16mb
+Benchmarking block_open/block_open_16mb: Warming up for 3.0000 s
+Benchmarking block_open/block_open_16mb: Collecting 100 samples in estimated 5.0567 s (207k iterations)
+Benchmarking block_open/block_open_16mb: Analyzing
+Benchmarking block_open/mmap_16mb
+Benchmarking block_open/mmap_16mb: Warming up for 3.0000 s
+Benchmarking block_open/mmap_16mb: Collecting 100 samples in estimated 5.0015 s (13M iterations)
+Benchmarking block_open/mmap_16mb: Analyzing
+     Running benches/bandwidth.rs (/tmp/unimem-block-overlay.fXgCHW/target/release/deps/bandwidth-9ece16b107c8e98b)
+Gnuplot not found, using plotters backend
+Benchmarking bandwidth/tape_write
+Benchmarking bandwidth/tape_write: Warming up for 3.0000 s
+Benchmarking bandwidth/tape_write: Collecting 100 samples in estimated 5.0570 s (1900 iterations)
+Benchmarking bandwidth/tape_write: Analyzing
+Benchmarking bandwidth/tape_read
+Benchmarking bandwidth/tape_read: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 5.6s, enable flat sampling, or reduce sample count to 60.
+Benchmarking bandwidth/tape_read: Collecting 100 samples in estimated 5.6024 s (5050 iterations)
+Benchmarking bandwidth/tape_read: Analyzing
+Benchmarking bandwidth/vec_write
+Benchmarking bandwidth/vec_write: Warming up for 3.0000 s
+Benchmarking bandwidth/vec_write: Collecting 100 samples in estimated 5.0999 s (1600 iterations)
+Benchmarking bandwidth/vec_write: Analyzing
+Benchmarking bandwidth/vec_read
+Benchmarking bandwidth/vec_read: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 6.4s, enable flat sampling, or reduce sample count to 60.
+Benchmarking bandwidth/vec_read: Collecting 100 samples in estimated 6.4391 s (5050 iterations)
+Benchmarking bandwidth/vec_read: Analyzing
+Benchmarking bandwidth/malloc_write
+Benchmarking bandwidth/malloc_write: Warming up for 3.0000 s
+Benchmarking bandwidth/malloc_write: Collecting 100 samples in estimated 5.1603 s (2100 iterations)
+Benchmarking bandwidth/malloc_write: Analyzing
+Benchmarking bandwidth/malloc_read
+Benchmarking bandwidth/malloc_read: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 7.4s, enable flat sampling, or reduce sample count to 50.
+Benchmarking bandwidth/malloc_read: Collecting 100 samples in estimated 7.4438 s (5050 iterations)
+Benchmarking bandwidth/malloc_read: Analyzing

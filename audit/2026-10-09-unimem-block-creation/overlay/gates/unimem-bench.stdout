@@ -1,0 +1,90 @@
+
+running 9 tests
+test block::tests::checked_numeric_boundaries_without_native_allocation ... ignored
+test block::tests::checked_rounding_and_native_disagreement ... ignored
+test block::tests::dictionary_and_surface_null_release_properties ... ignored
+test block::tests::every_number_null_releases_only_preceding_create_references ... ignored
+test block::tests::extent_mismatch_is_fatal_before_lock ... ignored
+test block::tests::failed_lock_releases_without_unlock ... ignored
+test block::tests::mapping_rejections_unlock_then_release ... ignored
+test block::tests::rejected_sizes_and_planning_create_no_native_owners ... ignored
+test block::tests::success_transfers_one_locked_owner_to_block_drop ... ignored
+
+test result: ok. 0 passed; 0 failed; 9 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+take_comparison/tape_take_64b
+                        time:   [1.0259 ns 1.0517 ns 1.0859 ns]
+Found 19 outliers among 100 measurements (19.00%)
+  13 (13.00%) high mild
+  6 (6.00%) high severe
+take_comparison/tape_take_4kb
+                        time:   [695.45 ps 708.13 ps 720.75 ps]
+Found 6 outliers among 100 measurements (6.00%)
+  2 (2.00%) low mild
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+take_comparison/tape_take_1mb
+                        time:   [671.46 ps 688.15 ps 707.37 ps]
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+take_comparison/vec_4kb time:   [19.178 ns 19.804 ns 20.470 ns]
+Found 13 outliers among 100 measurements (13.00%)
+  9 (9.00%) high mild
+  4 (4.00%) high severe
+take_comparison/malloc_4kb
+                        time:   [23.270 ns 24.828 ns 26.729 ns]
+Found 6 outliers among 100 measurements (6.00%)
+  5 (5.00%) high mild
+  1 (1.00%) high severe
+take_comparison/tape_clear
+                        time:   [272.48 ps 280.45 ps 290.58 ps]
+Found 20 outliers among 100 measurements (20.00%)
+  4 (4.00%) high mild
+  16 (16.00%) high severe
+
+grid_comparison/grid_take_give
+                        time:   [7.8890 ns 8.4460 ns 9.1117 ns]
+Found 3 outliers among 100 measurements (3.00%)
+  3 (3.00%) high mild
+grid_comparison/malloc_free_4kb
+                        time:   [23.235 ns 24.379 ns 25.528 ns]
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+block_open/block_open_16mb
+                        time:   [23.843 µs 25.872 µs 28.169 µs]
+Found 6 outliers among 100 measurements (6.00%)
+  3 (3.00%) high mild
+  3 (3.00%) high severe
+block_open/mmap_16mb    time:   [408.27 ns 423.43 ns 441.70 ns]
+Found 4 outliers among 100 measurements (4.00%)
+  2 (2.00%) high mild
+  2 (2.00%) high severe
+
+bandwidth/tape_write    time:   [2.5047 ms 2.5346 ms 2.5641 ms]
+                        thrpt:  [24.375 GiB/s 24.658 GiB/s 24.953 GiB/s]
+bandwidth/tape_read     time:   [1.0565 ms 1.0982 ms 1.1500 ms]
+                        thrpt:  [54.349 GiB/s 56.910 GiB/s 59.158 GiB/s]
+Found 12 outliers among 100 measurements (12.00%)
+  4 (4.00%) high mild
+  8 (8.00%) high severe
+bandwidth/vec_write     time:   [2.8454 ms 2.9026 ms 2.9614 ms]
+                        thrpt:  [21.105 GiB/s 21.532 GiB/s 21.965 GiB/s]
+bandwidth/vec_read      time:   [1.1939 ms 1.2292 ms 1.2727 ms]
+                        thrpt:  [49.107 GiB/s 50.848 GiB/s 52.351 GiB/s]
+Found 13 outliers among 100 measurements (13.00%)
+  2 (2.00%) low mild
+  8 (8.00%) high mild
+  3 (3.00%) high severe
+bandwidth/malloc_write  time:   [2.4446 ms 2.4932 ms 2.5438 ms]
+                        thrpt:  [24.569 GiB/s 25.068 GiB/s 25.567 GiB/s]
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+bandwidth/malloc_read   time:   [1.0624 ms 1.0772 ms 1.0932 ms]
+                        thrpt:  [57.172 GiB/s 58.023 GiB/s 58.827 GiB/s]
+Found 3 outliers among 100 measurements (3.00%)
+  2 (2.00%) high mild
+  1 (1.00%) high severe
+

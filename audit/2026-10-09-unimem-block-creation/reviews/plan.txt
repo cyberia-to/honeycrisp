@@ -1,0 +1,54 @@
+# PLAN review — checked Block creation (unimem)
+
+**Verdict: APPROVE**, with the binding implementation conditions in §6. Fresh different-vendor review, source and supplied headers only; no commands run, no gates claimed.
+
+---
+
+## 1. Correctness against the supplied primary headers
+
+Each FFI correction in the plan matches the headers as supplied:
+
+- `CFNumber.h`:31 — `typedef CF_ENUM(CFIndex, CFNumberType)`. `CFBase.h`:556–565 — `CFIndex` is `signed long long` only under `__LLP64__`, otherwise `signed long`. aarch64-apple-darwin is LP64, so `CFIndex` = 64-bit signed = `isize`. The current `theType: i32` declaration is wrong as a declaration; `isize` is right.
+- `CFDictionary.h`:380 — `CFDictionaryCreateMutable(CFAllocatorRef, CFIndex capacity, ...)`. Current `capacity: i64` is coincidentally ABI-equal on this target; `isize` is the correct declaration.
+- `IOSurfaceRef.h`:171 — `IOSurfaceRef IOSurfaceCreate(CFDictionaryRef properties)`. The parameter is immutable; the plan's change to `CFDictionaryRef` is a declaration repair, and the fixed-array `CFDictionaryCreate` path (header:283) removes the `void`-returning `CFDictionarySetValue` growth sequence entirely. The header states explicitly that the callbacks structures are copied and that stack arrays are legal, so the plan's stack `keys`/`values` arrays are sound.
+- `IOSurfaceRef.h`:350–390 — `GetPropertyAlignment` returns 1 when a property has no requirement, and names `kIOSurfaceBytesPerRow` as a property the caller must align when computing it. Treating a returned 0 as `BlockAlignmentInvalid` is correct, because 0 is outside the documented range.
+- `IOSurfaceRef.h`:24–26 — `kIOSurfaceAllocSize` is the total allocation including all planes and *must* be specified for dimensionless buffers; for the retained one-row shape it defaults to `height * bytesPerRow`. Supplying it explicitly as `align(row, alloc_align)` with `height = 1` is consistent, not redundant-but-wrong.
+- The plan's refusal to use `IOSurfaceGetPropertyMaximum` as an allocation bound is right: header:350–368 scopes it to all-device image compatibility and returns 0 for properties with no limit.
+
+The measured probe is consistent with the plan's premise rather than being stretched past it: 54/54 creates, `actual == requested` on every row, `row_alignment=128`, `allocation_alignment=1`. The `aligned_row` profile the plan adopts is the one actually exercised at all 18 boundary sizes.
+
+## 2. Minimality
+
+The surface added is one concrete immutable value plus three accessors and `open`, no trait, no generic allocator, no reservation ledger, no introspection API added for tests' benefit. `Block::open` remains and is defined as `plan()?.open()`, so no consumer rewrite is implied. `cf_str`/`cf_i64` are `pub(crate)`, so their removal is internal. Spec work is paragraph-level in two existing files. This is the smallest shape that lets a caller reserve before creating, which is the stated row-6/row-3 prerequisite.
+
+## 3. Pointer, size and CF ownership
+
+- Ordering is right: validate, query alignment, round up with checked arithmetic, bound by `usize`/`i64`/`isize::MAX`, and only then create native objects. "Never pass an overflowing value to C" closes the current unchecked `size as i64`.
+- Ownership is right: every `Create` result is owned immediately by a private RAII guard; the dictionary retains via `kCFType` callbacks, so the six local number references release exactly once; the SDK key constants are borrowed and never released.
+- The post-create failure ladder is correct for IOSurface lock semantics: extent mismatch and lock failure release without unlocking; a post-lock base-address failure unlocks then releases; success moves the locked owner into `Block`, whose `Drop` performs exactly one unlock and one release. No partially initialized `Block` is published.
+- Adding the typed-base alignment and `address + extent` non-wrap checks is the right scope increment, since `as_f32`/`as_u16` already cast the base.
+
+## 4. Source-compatibility disclosure
+
+Disclosure is adequate and honest: new `MemError` variants break exhaustive matches, the `ffi` type corrections break source uses of the raw declarations, and the plan commits to recording the actual `cargo semver-checks` diagnostics against both `v0.2.0` and origin instead of asserting a clean comparison. The retained `≥ requested` contract for existing callers is stated, together with the deliberate change for small unaligned requests (1 byte now returns 128). Existing oracles assert `>= requested`, so this is compatible in fact as well as in claim.
+
+## 5. Tests, fault seam, isolation, scope
+
+- The fault/trace seam keeps real CF and surface objects, injects failure at each stage, counts ownership acquisitions rather than unique pointers (correct: CF small-integer numbers may be cached), and never hands synthetic pointers to CF. The stated limits — it does not model internal CF allocations, does not prove kernel reclamation, is not a Miri substitute — are the correct limits to state.
+- Isolation discipline is sound: fresh archived roots, named overlaid sources with hashes, `--locked`, private target, no resolution through the dirty originals, and the isolated manifest labelled as a harness rather than a production change.
+- The honeycrisp `cyb-nebu` vs strata-origin `strata-nebu` package-name mismatch is correctly carried as a *source observation* blocking the required workspace and dependent gates, with no shim and no rename. The plan does not claim isolated green equals merge readiness, and ring ≥1 dependent gates are named as separate closures.
+- Scope exclusions are explicit and respected: the `&self`-returning mutable view unsoundness, raw-handle/GPU-import lifetime, initialization/publication, `no_std`/portability, and physical-pinning wording all stay out, and no new safety claim is attached to them.
+
+## 6. Binding conditions for implementation / CODE review
+
+1. **`BlockPlan` linearity.** `Copy` plus `open(self)` implies single use while permitting double use. Pick one: drop `Copy` (keep `Clone`), or take `&self` in `open`. State in the doc comment that a plan carries numbers only and confers no reservation.
+2. **Extern static access form.** `kCFTypeDictionaryKeyCallBacks`/`ValueCallBacks` are structures — take their address with `std::ptr::addr_of!`, not `&`. The `kIOSurface*` keys are `const CFStringRef` globals — read the pointer value. Do not repeat the current `&kCFType… as *const c_void` pattern.
+3. **FFI claim wording.** Record that on aarch64-apple-darwin `isize` and `i64` are ABI-identical, so these are declaration-correctness repairs with no observed miscompile. Do not report them as a fixed runtime defect.
+4. **`IOSurfaceAlignProperty` cross-check.** Row alignment was not cross-checked against `AlignProperty` in the measurement. If the remainder round-up and `AlignProperty` disagree on the real device for `kIOSurfaceBytesPerRow`, return to review rather than quietly deleting the cross-check or widening the error.
+5. **Extent equality is a hard failure.** Document in the spec that `GetAllocSize != planned` fails creation by design, and that the 256 MB roundtrip equality is first exercised by tests, not by the 1 B–16 MB probe.
+6. **Compile-negative mechanism.** With no new dev dependencies permitted, express the private-field and no-unchecked-constructor negatives as `compile_fail` doc tests. Do not introduce `trybuild`.
+7. **Seam placement.** The `cfg(test)` fault seam only exists for unit tests inside `src/`; `tests/block_creation.rs` cannot reach it. Keep the injected-failure cases in `src/block/tests.rs` and the integration file to native-path assertions.
+8. **Version and publication.** Leave the workspace version untouched; the semver diagnostics are a receipt for the owner, and any bump, promotion or publish stays an owner decision.
+9. **Receipt placement.** Gate output, semver diagnostics and measured extents go to `audit/`; `specs/` keeps requirements only.
+
+Nothing in §6 changes the plan's shape, so no second PLAN round is required. CODE review before merge, and merge readiness remains conditional on the unresolved sibling-dependency unit and the required upstream workspace and dependent gates.

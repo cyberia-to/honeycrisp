@@ -1,0 +1,515 @@
+warning: output filename collision at /tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling strata-core v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/core)
+   Compiling unicode-ident v1.0.24
+   Compiling cfg-if v1.0.4
+   Compiling bitflags v2.11.0
+   Compiling once_cell v1.21.4
+   Compiling log v0.4.29
+   Compiling crossbeam-utils v0.8.21
+   Compiling libc v0.2.185
+   Compiling libm v0.2.16
+   Compiling serde_core v1.0.228
+   Compiling core-foundation-sys v0.8.7
+   Compiling foreign-types-shared v0.3.1
+   Compiling objc2-encode v4.1.0
+   Compiling equivalent v1.0.2
+   Compiling unicode-width v0.2.2
+   Compiling hashbrown v0.17.1
+   Compiling strata-proof v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/proof)
+   Compiling strata-compute v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/compute)
+   Compiling strata-ext v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/ext)
+   Compiling proc-macro2 v1.0.106
+   Compiling foldhash v0.2.0
+   Compiling strata-nebu v0.1.1 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/strata/nebu/rs)
+   Compiling scopeguard v1.2.0
+   Compiling either v1.15.0
+   Compiling smallvec v1.15.1
+   Compiling bit-vec v0.8.0
+   Compiling lock_api v0.4.14
+   Compiling hashbrown v0.16.1
+   Compiling zmij v1.0.21
+   Compiling hexf-parse v0.2.1
+   Compiling codespan-reporting v0.12.0
+   Compiling bit-set v0.8.0
+   Compiling clap_lex v1.1.0
+   Compiling arrayvec v0.7.6
+   Compiling anstyle v1.0.14
+   Compiling itoa v1.0.18
+   Compiling objc2 v0.6.4
+   Compiling crossbeam-queue v0.3.12
+   Compiling crossbeam-epoch v0.9.18
+   Compiling regex-syntax v0.8.10
+   Compiling ciborium-io v0.2.2
+   Compiling plotters-backend v0.3.7
+   Compiling block v0.1.6
+   Compiling rustc-hash v1.1.0
+   Compiling unimem v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/unimem)
+   Compiling memchr v2.8.0
+   Compiling core-foundation v0.10.1
+   Compiling malloc_buf v0.0.6
+   Compiling acpu v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/acpu)
+   Compiling quote v1.0.45
+   Compiling objc v0.2.7
+   Compiling crossbeam-deque v0.8.6
+   Compiling parking_lot_core v0.9.12
+   Compiling plotters-svg v0.3.7
+   Compiling rayon-core v1.13.0
+   Compiling syn v2.0.117
+   Compiling parking_lot v0.12.5
+   Compiling clap_builder v4.6.0
+   Compiling itertools v0.10.5
+   Compiling same-file v1.0.6
+   Compiling raw-window-handle v0.6.2
+   Compiling core-graphics-types v0.2.0
+   Compiling indexmap v2.14.0
+   Compiling profiling v1.0.18
+   Compiling cast v0.3.0
+   Compiling walkdir v2.5.0
+   Compiling is-terminal v0.4.17
+   Compiling oorandom v11.1.5
+   Compiling anes v0.1.6
+   Compiling static_assertions v1.1.0
+   Compiling pollster v0.4.0
+   Compiling rayon v1.12.0
+   Compiling num-traits v0.2.19
+   Compiling aruminium v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/rane)
+   Compiling objc2-core-foundation v0.3.2
+   Compiling block2 v0.6.2
+   Compiling dispatch2 v0.3.1
+   Compiling regex-automata v0.4.14
+   Compiling plotters v0.3.7
+   Compiling honeycrisp v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp)
+   Compiling criterion-plot v0.5.0
+warning: method `diff` is never used
+  --> acpu/examples/amx_reverse.rs:59:8
+   |
+28 | impl Snapshot {
+   | ------------- method in this implementation
+...
+59 |     fn diff(&self, other: &Snapshot) -> Vec<String> {
+   |        ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling objc2-foundation v0.3.2
+   Compiling clap v4.6.0
+   Compiling serde_json v1.0.149
+warning: `acpu` (example "amx_reverse") generated 1 warning
+warning: variable does not need to be mutable
+  --> acpu/bench/zk.rs:22:9
+   |
+22 |     let mut score = Score::new();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::time::Instant`
+ --> acpu/bench/integer.rs:7:5
+  |
+7 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:62:42
+   |
+62 |     let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
+   |                                          ^                   ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+62 -     let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
+62 +     let i32_a: Vec<i32> = (0..N).map(|i| i as i32 * 7 - 2000).collect();
+   |
+
+warning: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:63:42
+   |
+63 |     let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
+   |                                          ^                  ^
+   |
+help: remove these parentheses
+   |
+63 -     let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
+63 +     let i32_b: Vec<i32> = (0..N).map(|i| i as i32 * 3 + 500).collect();
+   |
+
+warning: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:66:42
+   |
+66 |     let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+66 -     let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
+66 +     let i16_a: Vec<i16> = (0..N).map(|i| i as i16 * 5 - 2000).collect();
+   |
+
+warning: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:67:42
+   |
+67 |     let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+67 -     let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
+67 +     let i16_b: Vec<i16> = (0..N).map(|i| i as i16 * 3 + 1000).collect();
+   |
+
+   Compiling rane-benches v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/rane/benches)
+warning: `acpu` (example "bench_zk") generated 1 warning (run `cargo fix --example "bench_zk" -p acpu` to apply 1 suggestion)
+warning: `vDSP_vmul` redeclared with a different signature
+   --> acpu/bench/numeric.rs:11:5
+    |
+ 11 |       fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:196:5
+    |
+196 | /     pub fn vDSP_vmul(
+197 | |         a: *const f32,
+198 | |         stride_a: i32,
+199 | |         b: *const f32,
+...   |
+203 | |         n: u64,
+204 | |     );
+    | |______- `vDSP_vmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+    = note: `#[warn(clashing_extern_declarations)]` on by default
+
+warning: `vDSP_vadd` redeclared with a different signature
+   --> acpu/bench/numeric.rs:13:5
+    |
+ 13 |       fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:187:5
+    |
+187 | /     pub fn vDSP_vadd(
+188 | |         a: *const f32,
+189 | |         stride_a: i32,
+190 | |         b: *const f32,
+...   |
+194 | |         n: u64,
+195 | |     );
+    | |______- `vDSP_vadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+warning: unused import: `std::time::Instant`
+ --> acpu/bench/crypto.rs:7:5
+  |
+7 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::time::Instant`
+ --> acpu/bench/summary.rs:8:5
+  |
+8 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `acpu` (example "bench_integer") generated 5 warnings (run `cargo fix --example "bench_integer" -p acpu` to apply 5 suggestions)
+   Compiling regex v1.12.3
+warning: unused variable: `b_stride`
+   --> acpu/examples/trace64.rs:289:17
+    |
+289 |             let b_stride = N * 4; // bytes
+    |                 ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_b_stride`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `acpu` (example "bench_crypto") generated 1 warning (run `cargo fix --example "bench_crypto" -p acpu` to apply 1 suggestion)
+warning: unused variable: `fma_first`
+  --> acpu/examples/pair_test.rs:10:13
+   |
+10 |         let fma_first: u64 = 1 << 27; // skip_z, X[0], Y[0], tile 0
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fma_first`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `acpu` (example "bench_numeric") generated 2 warnings
+warning: `acpu` (example "pair_test") generated 1 warning (run `cargo fix --example "pair_test" -p acpu` to apply 1 suggestion)
+warning: variable does not need to be mutable
+    --> acpu/bench/summary.rs:2054:9
+     |
+2054 |     let mut pmull_a = 0xDEADBEEFCAFEBABEu64;
+     |         ----^^^^^^^
+     |         |
+     |         help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `acpu` (example "trace64") generated 1 warning (run `cargo fix --example "trace64" -p acpu` to apply 1 suggestion)
+warning: `vDSP_sve` redeclared with a different signature
+   --> acpu/bench/summary.rs:154:5
+    |
+154 |     fn vDSP_sve(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:182:5
+    |
+182 |     pub fn vDSP_sve(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ---------------------------------------------------------------------- `vDSP_sve` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+    = note: `#[warn(clashing_extern_declarations)]` on by default
+
+warning: `vDSP_svesq` redeclared with a different signature
+   --> acpu/bench/summary.rs:155:5
+    |
+155 |     fn vDSP_svesq(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:183:5
+    |
+183 |     pub fn vDSP_svesq(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ------------------------------------------------------------------------ `vDSP_svesq` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+warning: `vDSP_maxv` redeclared with a different signature
+   --> acpu/bench/summary.rs:156:5
+    |
+156 |     fn vDSP_maxv(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:184:5
+    |
+184 |     pub fn vDSP_maxv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ----------------------------------------------------------------------- `vDSP_maxv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+warning: `vDSP_minv` redeclared with a different signature
+   --> acpu/bench/summary.rs:157:5
+    |
+157 |     fn vDSP_minv(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:185:5
+    |
+185 |     pub fn vDSP_minv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ----------------------------------------------------------------------- `vDSP_minv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+warning: `vDSP_vneg` redeclared with a different signature
+   --> acpu/bench/summary.rs:158:5
+    |
+158 |     fn vDSP_vneg(a: *const f32, ia: i64, c: *mut f32, ic: i64, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:186:5
+    |
+186 |     pub fn vDSP_vneg(a: *const f32, stride_a: i32, c: *mut f32, stride_c: i32, n: u64);
+    |     ----------------------------------------------------------------------------------- `vDSP_vneg` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, i64, u64)`
+
+warning: `vDSP_vadd` redeclared with a different signature
+   --> acpu/bench/summary.rs:159:5
+    |
+159 |       fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:187:5
+    |
+187 | /     pub fn vDSP_vadd(
+188 | |         a: *const f32,
+189 | |         stride_a: i32,
+190 | |         b: *const f32,
+...   |
+194 | |         n: u64,
+195 | |     );
+    | |______- `vDSP_vadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+warning: `vDSP_vmul` redeclared with a different signature
+   --> acpu/bench/summary.rs:160:5
+    |
+160 |       fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:196:5
+    |
+196 | /     pub fn vDSP_vmul(
+197 | |         a: *const f32,
+198 | |         stride_a: i32,
+199 | |         b: *const f32,
+...   |
+203 | |         n: u64,
+204 | |     );
+    | |______- `vDSP_vmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+warning: `vDSP_vsadd` redeclared with a different signature
+   --> acpu/bench/summary.rs:162:5
+    |
+162 |       fn vDSP_vsadd(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:205:5
+    |
+205 | /     pub fn vDSP_vsadd(
+206 | |         a: *const f32,
+207 | |         stride_a: i32,
+208 | |         b: *const f32,
+...   |
+211 | |         n: u64,
+212 | |     );
+    | |______- `vDSP_vsadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+warning: `vDSP_vsmul` redeclared with a different signature
+   --> acpu/bench/summary.rs:163:5
+    |
+163 |       fn vDSP_vsmul(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:213:5
+    |
+213 | /     pub fn vDSP_vsmul(
+214 | |         a: *const f32,
+215 | |         stride_a: i32,
+216 | |         b: *const f32,
+...   |
+219 | |         n: u64,
+220 | |     );
+    | |______- `vDSP_vsmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+warning: `vDSP_vsdiv` redeclared with a different signature
+   --> acpu/bench/summary.rs:164:5
+    |
+164 |       fn vDSP_vsdiv(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:221:5
+    |
+221 | /     pub fn vDSP_vsdiv(
+222 | |         a: *const f32,
+223 | |         stride_a: i32,
+224 | |         b: *const f32,
+...   |
+227 | |         n: u64,
+228 | |     );
+    | |______- `vDSP_vsdiv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+warning: `vDSP_svdiv` redeclared with a different signature
+   --> acpu/bench/summary.rs:165:5
+    |
+165 |       fn vDSP_svdiv(a: *const f32, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:229:5
+    |
+229 | /     pub fn vDSP_svdiv(
+230 | |         a: *const f32,
+231 | |         b: *const f32,
+232 | |         stride_b: i32,
+...   |
+235 | |         n: u64,
+236 | |     );
+    | |______- `vDSP_svdiv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, *const f32, i64, *mut f32, i64, u64)`
+
+   Compiling zerocopy-derive v0.8.48
+   Compiling foreign-types-macros v0.2.3
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.18
+   Compiling serde_derive v1.0.228
+   Compiling foreign-types v0.5.0
+warning: `acpu` (example "bench_summary") generated 13 warnings (run `cargo fix --example "bench_summary" -p acpu` to apply 2 suggestions)
+   Compiling bytemuck v1.25.0
+   Compiling thiserror v2.0.18
+   Compiling zerocopy v0.8.48
+   Compiling serde v1.0.228
+   Compiling objc2-metal v0.3.2
+   Compiling metal v0.33.0
+   Compiling wgpu-types v28.0.0
+   Compiling half v2.7.1
+   Compiling ciborium-ll v0.2.2
+   Compiling naga v28.0.0
+   Compiling tinytemplate v1.2.1
+   Compiling ciborium v0.2.2
+   Compiling criterion v0.5.1
+   Compiling wgpu-hal v28.0.1
+   Compiling wgpu-core-deps-apple v28.0.0
+   Compiling wgpu-core v28.0.1
+   Compiling wgpu v28.0.0
+   Compiling metal-benches v0.2.0 (/private/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp/aruminium/benches)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 40.86s
+     Running unittests src/lib.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/acpu-9699e574cee9b1ae)
+     Running unittests src/probe/main.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/acpu_probe-e04e3d562122f93f)
+     Running tests/integration.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/integration-83dec9c1fe3da055)
+     Running unittests src/lib.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/aruminium-847eefd8e1be97bc)
+     Running unittests src/probe.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/metal_probe-f624b19ddb55fdcb)
+     Running tests/integration.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/integration-2b893fc1619042b6)
+     Running unittests src/lib.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/honeycrisp-c552394354524643)
+     Running unittests bench.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/bench-cd2f027583ba5e20)
+     Running unittests compare.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/compare-5b7267baf6a41c59)
+     Running unittests compare_render.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/compare_render-e654f24f20e62b9e)
+     Running unittests src/lib.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/rane-302ddfe203beb83b)
+     Running unittests src/probe/main.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/rane_probe-75b3cac427ea53f0)
+     Running tests/hardware.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/hardware-e52c8229471ea541)
+     Running tests/integration.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/integration-05da7393e5177c91)
+     Running unittests bench.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/bench-2e03d3c579bf19b0)
+     Running unittests compare.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/compare-14ccf4893414ab7b)
+     Running unittests src/lib.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/unimem-2e5375918a19aa24)
+     Running tests/roundtrip.rs (/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target/debug/deps/roundtrip-2e20c5bc95e0010d)
+   Doc-tests acpu
+   Doc-tests aruminium
+   Doc-tests honeycrisp
+   Doc-tests rane
+   Doc-tests unimem

@@ -1,0 +1,58 @@
+=== Transformer layer pipeline: unimem vs standard ===
+    dim=512 heads=8 seq=128 ffn=1376
+
+>>> STANDARD (Vec + separate allocs) <<<
+
+  alloc:        578.333µs
+  CPU rmsnorm:  19.708µs
+  AMX qkv:      260.083µs
+  CPU rope:     15.5µs
+  AMX attn:     12.875µs
+  CPU softmax:  6.875µs
+  AMX attn@V:   8.458µs
+  AMX ffn up:   309.292µs
+  CPU silu:     78.375µs
+  AMX ffn down: 129.084µs
+  ANE compile:  36.710666ms
+  ANE run:      241.584µs
+  TOTAL:        41.40875ms
+  pass:         true
+
+>>> CYB-MEM (tape, zero-copy) <<<
+
+  alloc (tape): 935.833µs  (14.7 MB used / 15.7 MB cap)
+  CPU rmsnorm:   11.625µs
+  AMX qkv:       250.083µs
+  CPU rope:      13.417µs
+  AMX attn:      4.917µs
+  CPU softmax:   8.208µs
+  AMX attn@V:    5.375µs
+  AMX ffn up:    269.292µs
+  CPU silu:      94.375µs
+  AMX ffn down:  132.209µs
+  ANE compile:   18.081ms
+  ANE run:       212.083µs
+  TOTAL:         21.01775ms
+  pass:          true
+
+
+=== Comparison ===
+
+  Stage                            Standard       unimem  Speedup
+  -----                            --------      -------  -------
+  alloc + fill                      578.3µs      935.8µs     0.6x
+  CPU: rmsnorm                       19.7µs       11.6µs     1.7x
+  AMX: qkv projection               260.1µs      250.1µs     1.0x
+  CPU: rope                          15.5µs       13.4µs     1.2x
+  AMX: attention matmul              12.9µs        4.9µs     2.6x
+  CPU: softmax                        6.9µs        8.2µs     0.8x
+  AMX: attn @ V                       8.5µs        5.4µs     1.6x
+  AMX: ffn up+gate                  309.3µs      269.3µs     1.1x
+  CPU: silu                          78.4µs       94.4µs     0.8x
+  AMX: ffn down                     129.1µs      132.2µs     1.0x
+  ANE: compile+load                  36.7ms       18.1ms     2.0x
+  ANE: matmul run                   241.6µs      212.1µs     1.1x
+  TOTAL                              41.4ms       21.0ms     2.0x
+
+  reference verified: true
+  unimem verified:   true
