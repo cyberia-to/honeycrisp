@@ -1,0 +1,1 @@
+{program: nu, arguments: ["/Users/master/cyber/honeycrisp-kadek-block-creation/audit/2026-10-09-unimem-block-creation/check-records.nu"]}

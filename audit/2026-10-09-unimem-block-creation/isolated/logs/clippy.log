@@ -1,0 +1,36 @@
+    Checking crossbeam-utils v0.8.21
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0 (/private/tmp/unimem-block-creation-validation/candidate/unimem)
+error: redundant pattern matching, consider using `is_ok()`
+   --> src/block/tests.rs:170:13
+    |
+170 |     assert!(matches!(BlockPlan::checked(last, 1, 128), Ok(_)));
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `BlockPlan::checked(last, 1, 128).is_ok()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#redundant_pattern_matching
+    = note: `-D clippy::redundant-pattern-matching` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::redundant_pattern_matching)]`
+
+error: could not compile `unimem` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: manual creation of a dangling pointer
+  --> tests/roundtrip.rs:98:24
+   |
+98 |     assert!(!tape.owns(0x1 as *const u8));
+   |                        ^^^^^^^^^^^^^^^^ help: use: `std::ptr::dangling::<u8>()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#manual_dangling_ptr
+   = note: `-D clippy::manual-dangling-ptr` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::manual_dangling_ptr)]`
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/roundtrip.rs:396:20
+    |
+396 |     let val: f32 = 3.14;
+    |                    ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+    = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: could not compile `unimem` (test "roundtrip") due to 2 previous errors

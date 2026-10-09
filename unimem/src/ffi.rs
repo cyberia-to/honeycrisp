@@ -10,31 +10,52 @@ use std::ffi::c_void;
 pub type IOSurfaceRef = *mut c_void;
 pub type CFTypeRef = *const c_void;
 pub type CFStringRef = *const c_void;
+pub type CFDictionaryRef = *const c_void;
 pub type CFMutableDictionaryRef = *mut c_void;
+/// SDK signed pointer-width index (`long` on the supported Apple LP64 target).
+pub type CFIndex = isize;
+pub type CFNumberType = CFIndex;
 pub type kern_return_t = i32;
 
 pub const KERN_SUCCESS: kern_return_t = 0;
-pub const kCFNumberSInt64Type: i32 = 4;
+pub const kCFNumberSInt64Type: CFNumberType = 4;
 
 // IOSurface
 
 #[link(name = "IOSurface", kind = "framework")]
 extern "C" {
-    pub fn IOSurfaceCreate(properties: CFMutableDictionaryRef) -> IOSurfaceRef;
+    pub fn IOSurfaceCreate(properties: CFDictionaryRef) -> IOSurfaceRef;
     pub fn IOSurfaceLock(surface: IOSurfaceRef, options: u32, seed: *mut u32) -> kern_return_t;
     pub fn IOSurfaceUnlock(surface: IOSurfaceRef, options: u32, seed: *mut u32) -> kern_return_t;
     pub fn IOSurfaceGetBaseAddress(surface: IOSurfaceRef) -> *mut c_void;
     pub fn IOSurfaceGetAllocSize(surface: IOSurfaceRef) -> usize;
     pub fn IOSurfaceGetID(surface: IOSurfaceRef) -> u32;
+    pub fn IOSurfaceGetPropertyAlignment(property: CFStringRef) -> usize;
+    pub fn IOSurfaceAlignProperty(property: CFStringRef, value: usize) -> usize;
+
+    pub static kIOSurfaceWidth: CFStringRef;
+    pub static kIOSurfaceHeight: CFStringRef;
+    pub static kIOSurfaceBytesPerElement: CFStringRef;
+    pub static kIOSurfaceBytesPerRow: CFStringRef;
+    pub static kIOSurfaceAllocSize: CFStringRef;
+    pub static kIOSurfacePixelFormat: CFStringRef;
 }
 
 // CoreFoundation
 
 #[link(name = "CoreFoundation", kind = "framework")]
 extern "C" {
+    pub fn CFDictionaryCreate(
+        allocator: *const c_void,
+        keys: *const *const c_void,
+        values: *const *const c_void,
+        count: CFIndex,
+        keyCallBacks: *const c_void,
+        valueCallBacks: *const c_void,
+    ) -> CFDictionaryRef;
     pub fn CFDictionaryCreateMutable(
         allocator: *const c_void,
-        capacity: i64,
+        capacity: CFIndex,
         keyCallBacks: *const c_void,
         valueCallBacks: *const c_void,
     ) -> CFMutableDictionaryRef;
@@ -45,7 +66,7 @@ extern "C" {
     );
     pub fn CFNumberCreate(
         allocator: *const c_void,
-        theType: i32,
+        theType: CFNumberType,
         valuePtr: *const c_void,
     ) -> *const c_void;
     pub fn CFStringCreateWithCString(
@@ -60,22 +81,3 @@ extern "C" {
 }
 
 pub const kCFStringEncodingUTF8: u32 = 0x08000100;
-
-// Helpers
-
-pub(crate) fn cf_str(s: &str) -> CFStringRef {
-    unsafe {
-        let c = std::ffi::CString::new(s).unwrap();
-        CFStringCreateWithCString(std::ptr::null(), c.as_ptr(), kCFStringEncodingUTF8)
-    }
-}
-
-pub(crate) fn cf_i64(v: i64) -> *const c_void {
-    unsafe {
-        CFNumberCreate(
-            std::ptr::null(),
-            kCFNumberSInt64Type,
-            &v as *const i64 as *const c_void,
-        )
-    }
-}

@@ -1,0 +1,140 @@
+{
+  "baseline": "/tmp/honeycrisp-nebu-closure.GUEZG7",
+  "candidate": "/tmp/unimem-block-overlay.fXgCHW",
+  "fmt_output_equal_after_root_normalization": true,
+  "baseline_unique_clippy_count": 16,
+  "candidate_unique_clippy_count": 16,
+  "clippy_diagnostics_equal": true,
+  "baseline_clippy": [
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/crypto/mod.rs:362:21"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `state`",
+      "location": "acpu/src/field/goldilocks.rs:299:18"
+    },
+    {
+      "message": "error: the loop variable `i` is only used to index `expected`",
+      "location": "acpu/src/field/goldilocks.rs:303:18"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `rc`",
+      "location": "acpu/src/field/permute.rs:146:18"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `d`",
+      "location": "acpu/src/field/permute.rs:154:18"
+    },
+    {
+      "message": "error: duplicated attribute",
+      "location": "acpu/src/gemm/mod.rs:1094:9"
+    },
+    {
+      "message": "error: approximate value of `f{32, 64}::consts::PI` found",
+      "location": "acpu/src/numeric/bf16.rs:167:13"
+    },
+    {
+      "message": "error: manual implementation of an assign operation",
+      "location": "acpu/src/sparse/chebyshev.rs:171:9"
+    },
+    {
+      "message": "error: the loop variable `k` is used to index `coeffs`",
+      "location": "acpu/src/sparse/chebyshev.rs:192:14"
+    },
+    {
+      "message": "error: float has excessive precision",
+      "location": "acpu/src/sparse/chebyshev.rs:247:33"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `y`",
+      "location": "acpu/src/sparse/mod.rs:205:18"
+    },
+    {
+      "message": "error: the loop variable `pf` is only used to index `cols`",
+      "location": "acpu/src/sparse/mod.rs:61:23"
+    },
+    {
+      "message": "error: casting to the same type is unnecessary (`i32` -> `i32`)",
+      "location": "acpu/src/vector/integer.rs:411:45"
+    },
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/vector/media.rs:386:30"
+    },
+    {
+      "message": "error: the loop variable `c` is used to index `out`",
+      "location": "acpu/src/vector/media.rs:417:18"
+    },
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/vector/media.rs:467:39"
+    }
+  ],
+  "candidate_clippy": [
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/crypto/mod.rs:362:21"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `state`",
+      "location": "acpu/src/field/goldilocks.rs:299:18"
+    },
+    {
+      "message": "error: the loop variable `i` is only used to index `expected`",
+      "location": "acpu/src/field/goldilocks.rs:303:18"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `rc`",
+      "location": "acpu/src/field/permute.rs:146:18"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `d`",
+      "location": "acpu/src/field/permute.rs:154:18"
+    },
+    {
+      "message": "error: duplicated attribute",
+      "location": "acpu/src/gemm/mod.rs:1094:9"
+    },
+    {
+      "message": "error: approximate value of `f{32, 64}::consts::PI` found",
+      "location": "acpu/src/numeric/bf16.rs:167:13"
+    },
+    {
+      "message": "error: manual implementation of an assign operation",
+      "location": "acpu/src/sparse/chebyshev.rs:171:9"
+    },
+    {
+      "message": "error: the loop variable `k` is used to index `coeffs`",
+      "location": "acpu/src/sparse/chebyshev.rs:192:14"
+    },
+    {
+      "message": "error: float has excessive precision",
+      "location": "acpu/src/sparse/chebyshev.rs:247:33"
+    },
+    {
+      "message": "error: the loop variable `i` is used to index `y`",
+      "location": "acpu/src/sparse/mod.rs:205:18"
+    },
+    {
+      "message": "error: the loop variable `pf` is only used to index `cols`",
+      "location": "acpu/src/sparse/mod.rs:61:23"
+    },
+    {
+      "message": "error: casting to the same type is unnecessary (`i32` -> `i32`)",
+      "location": "acpu/src/vector/integer.rs:411:45"
+    },
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/vector/media.rs:386:30"
+    },
+    {
+      "message": "error: the loop variable `c` is used to index `out`",
+      "location": "acpu/src/vector/media.rs:417:18"
+    },
+    {
+      "message": "error: useless use of `vec!`",
+      "location": "acpu/src/vector/media.rs:467:39"
+    }
+  ]
+}

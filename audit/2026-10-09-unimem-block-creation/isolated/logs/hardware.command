@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation, program: sysctl, arguments: [-n, "hw.model", "hw.pagesize"]}

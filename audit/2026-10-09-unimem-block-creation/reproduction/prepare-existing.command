@@ -1,0 +1,1 @@
+{name: prepare-existing, expected: 1, program: nu, arguments: ["/Users/master/cyber/honeycrisp-kadek-block-creation/audit/2026-10-09-unimem-block-creation/prepare.nu", "/tmp/unimem-block-audit-repro.o5SVlb/prepared", --honeycrisp, /Users/master/cyber/honeycrisp-kadek-block-creation, --strata, /Users/master/cyber/strata]}

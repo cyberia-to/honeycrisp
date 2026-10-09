@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation/candidate/unimem, program: env, arguments: ["RUSTDOCFLAGS=-Dwarnings", cargo, doc, --no-deps, --locked]}

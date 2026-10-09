@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation/candidate/unimem, program: cargo, arguments: [test, --test, block_creation, native_alignment_extent_and_raw_row_boundaries, --locked]}

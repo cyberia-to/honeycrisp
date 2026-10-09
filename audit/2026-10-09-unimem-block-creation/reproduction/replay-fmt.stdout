@@ -1,0 +1,105 @@
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:300:
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:371:
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:418:
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:433:
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:300:
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:371:
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:418:
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+Diff in /private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp/aruminium/benches/objc2.rs:433:
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+

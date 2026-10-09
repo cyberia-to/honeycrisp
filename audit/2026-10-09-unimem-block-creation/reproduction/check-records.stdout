@@ -1,0 +1,24 @@
+{
+  "fmt_equal": true,
+  "clippy_equal": true,
+  "clippy_count": 16,
+  "warnings_equal": true,
+  "warning_count": 25,
+  "baseline_tests": {
+    "passed": 320,
+    "failed": 0,
+    "ignored": 5
+  },
+  "overlay_tests": {
+    "passed": 336,
+    "failed": 0,
+    "ignored": 5
+  },
+  "unimem_tests": {
+    "passed": 52,
+    "failed": 0,
+    "ignored": 0
+  },
+  "pipeline_verified": true,
+  "benchmark_cases": 16
+}

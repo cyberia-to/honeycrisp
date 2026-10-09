@@ -1,0 +1,9 @@
+error[E0599]: no function or associated item named `new_unchecked` found for struct `BlockPlan` in the current scope
+ --> /tmp/unimem-block-creation-validation/unchecked_plan.rs:3:25
+  |
+3 |     unsafe { BlockPlan::new_unchecked(1, 1, 1) }
+  |                         ^^^^^^^^^^^^^ function or associated item not found in `BlockPlan`
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0599`.

@@ -1,0 +1,1 @@
+{name: source-equivalence, directory: /Users/master/cyber/honeycrisp-kadek-block-creation, program: git, arguments: [diff, --exit-code, "76b2f26432cca15607ab1dd18e488df68db51ca0", "6715335a3283e22218ad5f762316f2c735acb56f^", --, "Cargo.toml", "Cargo.lock", src, acpu, unimem, rane, aruminium]}

@@ -1,0 +1,292 @@
+{
+  "classification": "local combined candidate; not origin/release",
+  "gates": [
+    {
+      "gate": "clippy",
+      "exit": 101
+    },
+    {
+      "gate": "fmt",
+      "exit": 1
+    },
+    {
+      "gate": "pipeline",
+      "exit": 0
+    },
+    {
+      "gate": "release",
+      "exit": 0
+    },
+    {
+      "gate": "tests",
+      "exit": 0
+    },
+    {
+      "gate": "unimem-bench",
+      "exit": 0
+    },
+    {
+      "gate": "unimem-build",
+      "exit": 0
+    },
+    {
+      "gate": "unimem-tests",
+      "exit": 0
+    }
+  ],
+  "workspace_tests": {
+    "passed": 336,
+    "failed": 0,
+    "ignored": 5
+  },
+  "baseline_tests": {
+    "passed": 320,
+    "failed": 0,
+    "ignored": 5
+  },
+  "unimem_tests": {
+    "passed": 52,
+    "failed": 0,
+    "ignored": 0
+  },
+  "pipeline": [
+    {
+      "mode": "reference",
+      "verified": "true"
+    },
+    {
+      "mode": "unimem",
+      "verified": "true"
+    }
+  ],
+  "pipeline_verified": true,
+  "benchmark_cases": [
+    "take_comparison/tape_take_64b",
+    "take_comparison/tape_take_4kb",
+    "take_comparison/tape_take_1mb",
+    "take_comparison/vec_4kb",
+    "take_comparison/malloc_4kb",
+    "take_comparison/tape_clear",
+    "grid_comparison/grid_take_give",
+    "grid_comparison/malloc_free_4kb",
+    "block_open/block_open_16mb",
+    "block_open/mmap_16mb",
+    "bandwidth/tape_write",
+    "bandwidth/tape_read",
+    "bandwidth/vec_write",
+    "bandwidth/vec_read",
+    "bandwidth/malloc_write",
+    "bandwidth/malloc_read"
+  ],
+  "benchmark_case_count": 16,
+  "fmt_equal_to_baseline": true,
+  "clippy_equal_to_baseline": true,
+  "clippy_unique_diagnostics": 16,
+  "test_source_warnings_equal": true,
+  "test_source_warning_count": 25,
+  "baseline_source_warnings": [
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/crypto.rs:7:5"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:62:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:63:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:66:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:67:42"
+    },
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/integer.rs:7:5"
+    },
+    {
+      "message": "warning: `vDSP_vmul` redeclared with a different signature",
+      "location": "acpu/bench/numeric.rs:11:5"
+    },
+    {
+      "message": "warning: `vDSP_vadd` redeclared with a different signature",
+      "location": "acpu/bench/numeric.rs:13:5"
+    },
+    {
+      "message": "warning: `vDSP_sve` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:154:5"
+    },
+    {
+      "message": "warning: `vDSP_svesq` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:155:5"
+    },
+    {
+      "message": "warning: `vDSP_maxv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:156:5"
+    },
+    {
+      "message": "warning: `vDSP_minv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:157:5"
+    },
+    {
+      "message": "warning: `vDSP_vneg` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:158:5"
+    },
+    {
+      "message": "warning: `vDSP_vadd` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:159:5"
+    },
+    {
+      "message": "warning: `vDSP_vmul` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:160:5"
+    },
+    {
+      "message": "warning: `vDSP_vsadd` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:162:5"
+    },
+    {
+      "message": "warning: `vDSP_vsmul` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:163:5"
+    },
+    {
+      "message": "warning: `vDSP_vsdiv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:164:5"
+    },
+    {
+      "message": "warning: `vDSP_svdiv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:165:5"
+    },
+    {
+      "message": "warning: variable does not need to be mutable",
+      "location": "acpu/bench/summary.rs:2054:9"
+    },
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/summary.rs:8:5"
+    },
+    {
+      "message": "warning: variable does not need to be mutable",
+      "location": "acpu/bench/zk.rs:22:9"
+    },
+    {
+      "message": "warning: method `diff` is never used",
+      "location": "acpu/examples/amx_reverse.rs:59:8"
+    },
+    {
+      "message": "warning: unused variable: `fma_first`",
+      "location": "acpu/examples/pair_test.rs:10:13"
+    },
+    {
+      "message": "warning: unused variable: `b_stride`",
+      "location": "acpu/examples/trace64.rs:289:17"
+    }
+  ],
+  "candidate_source_warnings": [
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/crypto.rs:7:5"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:62:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:63:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:66:42"
+    },
+    {
+      "message": "warning: unnecessary parentheses around closure body",
+      "location": "acpu/bench/integer.rs:67:42"
+    },
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/integer.rs:7:5"
+    },
+    {
+      "message": "warning: `vDSP_vmul` redeclared with a different signature",
+      "location": "acpu/bench/numeric.rs:11:5"
+    },
+    {
+      "message": "warning: `vDSP_vadd` redeclared with a different signature",
+      "location": "acpu/bench/numeric.rs:13:5"
+    },
+    {
+      "message": "warning: `vDSP_sve` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:154:5"
+    },
+    {
+      "message": "warning: `vDSP_svesq` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:155:5"
+    },
+    {
+      "message": "warning: `vDSP_maxv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:156:5"
+    },
+    {
+      "message": "warning: `vDSP_minv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:157:5"
+    },
+    {
+      "message": "warning: `vDSP_vneg` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:158:5"
+    },
+    {
+      "message": "warning: `vDSP_vadd` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:159:5"
+    },
+    {
+      "message": "warning: `vDSP_vmul` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:160:5"
+    },
+    {
+      "message": "warning: `vDSP_vsadd` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:162:5"
+    },
+    {
+      "message": "warning: `vDSP_vsmul` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:163:5"
+    },
+    {
+      "message": "warning: `vDSP_vsdiv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:164:5"
+    },
+    {
+      "message": "warning: `vDSP_svdiv` redeclared with a different signature",
+      "location": "acpu/bench/summary.rs:165:5"
+    },
+    {
+      "message": "warning: variable does not need to be mutable",
+      "location": "acpu/bench/summary.rs:2054:9"
+    },
+    {
+      "message": "warning: unused import: `std::time::Instant`",
+      "location": "acpu/bench/summary.rs:8:5"
+    },
+    {
+      "message": "warning: variable does not need to be mutable",
+      "location": "acpu/bench/zk.rs:22:9"
+    },
+    {
+      "message": "warning: method `diff` is never used",
+      "location": "acpu/examples/amx_reverse.rs:59:8"
+    },
+    {
+      "message": "warning: unused variable: `fma_first`",
+      "location": "acpu/examples/pair_test.rs:10:13"
+    },
+    {
+      "message": "warning: unused variable: `b_stride`",
+      "location": "acpu/examples/trace64.rs:289:17"
+    }
+  ],
+  "frozen_overlay_unchanged": true
+}

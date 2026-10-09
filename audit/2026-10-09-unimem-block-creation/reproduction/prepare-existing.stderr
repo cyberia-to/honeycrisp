@@ -1,0 +1,10 @@
+Error: nu::shell::error
+
+  x output must be a new private directory
+    ,-[/Users/master/cyber/honeycrisp-kadek-block-creation/audit/2026-10-09-unimem-block-creation/prepare.nu:19:45]
+ 18 |     if $honeycrisp == null or $strata == null { error make {msg: '--honeycrisp and --strata Git repositories are required'} }
+ 19 |     if ($output | path exists) { error make {msg: 'output must be a new private directory'} }
+    :                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 20 |     let files = (open --raw ($audit | path join 'source-freeze.sha256') | lines | parse '{sha256}  {path}' | where {|row| $row.path starts-with 'unimem/' })
+    `----
+

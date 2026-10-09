@@ -1,0 +1,27 @@
+
+--- failure enum_variant_added: enum variant added on exhaustive enum ---
+
+Description:
+A publicly-visible enum without #[non_exhaustive] has a new variant.
+        ref: https://doc.rust-lang.org/cargo/reference/semver.html#enum-variant-new
+       impl: https://github.com/obi1kenobi/cargo-semver-checks/tree/v0.51.0/src/lints/enum_variant_added.ron
+
+Failed in:
+  variant MemError:SizeOverflow in /private/tmp/unimem-block-creation-validation/candidate/unimem/src/lib.rs:20
+  variant MemError:BlockAlignmentInvalid in /private/tmp/unimem-block-creation-validation/candidate/unimem/src/lib.rs:21
+  variant MemError:BlockPropertiesFailed in /private/tmp/unimem-block-creation-validation/candidate/unimem/src/lib.rs:22
+  variant MemError:BlockExtentMismatch in /private/tmp/unimem-block-creation-validation/candidate/unimem/src/lib.rs:25
+  variant MemError:BlockAddressInvalid in /private/tmp/unimem-block-creation-validation/candidate/unimem/src/lib.rs:26
+    Building unimem v0.2.0 (current)
+       Built [   0.438s] (current)
+     Parsing unimem v0.2.0 (current)
+      Parsed [   0.001s] (current)
+    Building unimem v0.2.0 (baseline)
+       Built [  21.746s] (baseline)
+     Parsing unimem v0.2.0 (baseline)
+      Parsed [   0.001s] (baseline)
+    Checking unimem v0.2.0 -> v0.2.0 (no change; assume minor)
+     Checked [   0.008s] 202 checks: 201 pass, 1 fail, 0 warn, 58 skip
+
+     Summary semver requires new major version: 1 major and 0 minor checks failed
+    Finished [  23.031s] unimem

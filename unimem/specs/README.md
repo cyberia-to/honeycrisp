@@ -94,8 +94,7 @@ IOSurface FFI functions:
 - `IOSurfaceGetID(block)` → global block ID (for sharing)
 
 CoreFoundation FFI functions:
-- `CFDictionaryCreateMutable(alloc, capacity, keyCallbacks, valueCallbacks)` → dict
-- `CFDictionarySetValue(dict, key, value)` → set property
+- `CFDictionaryCreate(alloc, keys, values, count, keyCallbacks, valueCallbacks)` → immutable dict
 - `CFNumberCreate(alloc, type, valuePtr)` → wrap int as CFNumber
 - `CFRelease(ref)` → release any CF object
 
@@ -103,9 +102,23 @@ IOSurface property keys (extern CFStringRef constants):
 - `kIOSurfaceWidth` → size (total bytes as width)
 - `kIOSurfaceHeight` → 1 (single row)
 - `kIOSurfaceBytesPerElement` → 1 (raw bytes)
-- `kIOSurfaceBytesPerRow` → size (full row)
-- `kIOSurfaceAllocSize` → size (allocation size)
+- `kIOSurfaceBytesPerRow` → size rounded up to its native property alignment
+- `kIOSurfaceAllocSize` → row stride rounded up to allocation-property alignment
 - `kIOSurfacePixelFormat` → 0 (no pixel format, raw buffer)
+
+`Block::plan(size)` returns an immutable `BlockPlan` with requested size, row
+stride and allocation extent. All are checked for integer and Rust slice
+representability; alignment arithmetic must agree with `IOSurfaceAlignProperty`.
+The native row alignment follows `IOSurfaceRef.h`'s requirement for manually
+calculated BytesPerRow. Width remains the requested byte count; padding increases
+the returned allocation size when necessary.
+
+A plan carries numbers only and confers no reservation. `BlockPlan::open(&self)`
+uses those exact properties; `Block::open(size)` delegates through a plan.
+Callers reserve the API-visible backing extent and their own control/metadata
+before creation. CF/kernel bookkeeping and physical residency are separate.
+`IOSurfaceGetAllocSize` must equal the planned extent; mismatch fails creation.
+Planning neither initializes contents nor certifies immutable publication.
 
 ### Lock model
 
@@ -159,7 +172,11 @@ Throughput measured with volatile u64, single thread, no SIMD. With NEON/AMX: 60
 - Block is Send + Sync (immutable after creation, lock held for lifetime)
 - Drop sequence: IOSurfaceUnlock → CFRelease — no leaks
 - open(0) returns error (ZeroSize)
-- Allocation failure returns error, never panics
+- Size/alignment failures and returned native null/lock errors return `MemError`.
+  Opaque framework allocation failures have no universal recoverability guarantee.
+- Owned temporary CF references release on every path; borrowed constant keys
+  remain borrowed. A successful lock is unlocked before the surface is released.
+- Successful Block mappings are nonnull, typed-view aligned and slice-representable.
 
 ---
 
@@ -320,8 +337,13 @@ No trait needed — direct method calls. Trait appears in v1 when DEXT adds IOVA
 | Error | Layer | Cause |
 |-------|-------|-------|
 | ZeroSize | block, tape | open(0) / start(0) — zero-size allocation requested |
+| SizeOverflow | block | requested or aligned extent exceeds integer/slice bounds |
+| BlockAlignmentInvalid | block | zero native alignment or alignment calculation disagreement |
+| BlockPropertiesFailed | block | CF number or immutable dictionary creation returned null |
 | BlockCreateFailed | block | IOSurfaceCreate returned null (OOM or system limit) |
 | BlockLockFailed | block | IOSurfaceLock returned non-zero |
+| BlockExtentMismatch { expected, actual } | block | native extent differs from the planned allocation |
+| BlockAddressInvalid | block | null, misaligned or wrapping CPU mapping |
 | InvalidAlignment | tape | alignment not power of 2 |
 | tape full | tape | take: not enough space remaining |
 | grid full | grid | all cells in use |

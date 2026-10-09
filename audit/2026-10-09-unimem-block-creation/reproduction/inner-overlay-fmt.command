@@ -1,0 +1,1 @@
+{directory: "/private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/honeycrisp", program: cargo, arguments: [fmt, --all, --, --check], environment: {CARGO_TARGET_DIR: "/private/tmp/unimem-block-audit-repro.o5SVlb/prepared/overlay/target"}}

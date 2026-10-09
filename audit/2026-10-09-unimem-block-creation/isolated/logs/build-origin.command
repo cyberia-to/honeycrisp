@@ -1,0 +1,1 @@
+{directory: /tmp/unimem-block-creation-validation/origin/unimem, program: cargo, arguments: [build, --locked]}

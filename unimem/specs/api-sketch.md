@@ -12,15 +12,20 @@ pub mod block;
 pub mod tape;
 pub mod grid;
 
-pub use block::Block;
+pub use block::{Block, BlockPlan};
 pub use tape::Tape;
 pub use grid::{Grid, Cell};
 
 #[derive(Debug)]
 pub enum MemError {
     ZeroSize,
+    SizeOverflow,
+    BlockAlignmentInvalid,
+    BlockPropertiesFailed,
     BlockCreateFailed,
     BlockLockFailed(i32),
+    BlockExtentMismatch { expected: usize, actual: usize },
+    BlockAddressInvalid,
 }
 ```
 
@@ -35,32 +40,36 @@ IOSurface + CoreFoundation raw FFI. No objc2, no wrappers.
 pub type IOSurfaceRef = *mut c_void;
 pub type CFTypeRef = *const c_void;
 pub type CFStringRef = *const c_void;
+pub type CFDictionaryRef = *const c_void;
 pub type CFMutableDictionaryRef = *mut c_void;
+pub type CFIndex = isize;
+pub type CFNumberType = CFIndex;
 pub type kern_return_t = i32;
 
 // IOSurface.framework
 extern "C" {
-    pub fn IOSurfaceCreate(properties: CFMutableDictionaryRef) -> IOSurfaceRef;
+    pub fn IOSurfaceCreate(properties: CFDictionaryRef) -> IOSurfaceRef;
     pub fn IOSurfaceLock(block: IOSurfaceRef, options: u32, seed: *mut u32) -> kern_return_t;
     pub fn IOSurfaceUnlock(block: IOSurfaceRef, options: u32, seed: *mut u32) -> kern_return_t;
     pub fn IOSurfaceGetBaseAddress(block: IOSurfaceRef) -> *mut c_void;
     pub fn IOSurfaceGetAllocSize(block: IOSurfaceRef) -> usize;
     pub fn IOSurfaceGetID(block: IOSurfaceRef) -> u32;
+    pub fn IOSurfaceGetPropertyAlignment(property: CFStringRef) -> usize;
+    pub fn IOSurfaceAlignProperty(property: CFStringRef, value: usize) -> usize;
 }
 
 // CoreFoundation
 extern "C" {
-    pub fn CFDictionaryCreateMutable(...) -> CFMutableDictionaryRef;
+    pub fn CFDictionaryCreate(...) -> CFDictionaryRef;
+    pub fn CFDictionaryCreateMutable(...) -> CFMutableDictionaryRef; // capacity: CFIndex
     pub fn CFDictionarySetValue(dict, key, value);
-    pub fn CFNumberCreate(allocator, theType, valuePtr) -> *const c_void;
+    pub fn CFNumberCreate(allocator, theType: CFNumberType, valuePtr) -> *const c_void;
     pub fn CFRelease(cf: CFTypeRef);
     pub static kCFTypeDictionaryKeyCallBacks: c_void;
     pub static kCFTypeDictionaryValueCallBacks: c_void;
 }
 
-// Helpers
-pub(crate) fn cf_str(s: &str) -> CFStringRef;  // string → CFString
-pub(crate) fn cf_i64(v: i64) -> *const c_void;  // i64 → CFNumber
+// Block uses borrowed kIOSurface* keys and owned temporary CF numbers/dictionary.
 ```
 
 ---
@@ -80,6 +89,9 @@ pub struct Block {
 // Send + Sync — immutable after creation
 
 impl Block {
+    /// Check native alignment and integer/slice bounds without creating a surface.
+    pub fn plan(size: usize) -> Result<BlockPlan, MemError>;
+
     /// Create pinned IOSurface. Locked immediately.
     /// ~20µs, size-independent. Errors on size=0.
     pub fn open(size: usize) -> Result<Self, MemError>;
@@ -97,6 +109,16 @@ impl Block {
     pub fn handle(&self) -> IOSurfaceRef;
 }
 
+#[derive(Clone, Copy, Debug)]
+pub struct BlockPlan { /* private checked numeric fields */ }
+
+impl BlockPlan {
+    pub fn requested_size(&self) -> usize;
+    pub fn row_bytes(&self) -> usize;
+    pub fn allocation_size(&self) -> usize;
+    pub fn open(&self) -> Result<Block, MemError>;
+}
+
 impl Drop for Block {
     fn drop(&mut self) {
         // IOSurfaceUnlock → CFRelease
@@ -111,9 +133,16 @@ IOSurface properties set at creation:
 | IOSurfaceWidth | size |
 | IOSurfaceHeight | 1 |
 | IOSurfaceBytesPerElement | 1 |
-| IOSurfaceBytesPerRow | size |
-| IOSurfaceAllocSize | size |
+| IOSurfaceBytesPerRow | size aligned to the native row requirement |
+| IOSurfaceAllocSize | row stride aligned to the native allocation requirement |
 | IOSurfacePixelFormat | 0 |
+
+The plan stores these numeric properties and grants no reservation or initialized
+contents. Repeated `open` calls create independent allocations. The actual native
+extent must equal the plan or creation fails; base mapping validation precedes
+publication. Returned native failures release owned temporaries and any surface,
+unlocking first only when a lock succeeded. Hidden framework allocation failures
+are outside the returned-error guarantee.
 
 ---
 

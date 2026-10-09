@@ -1,0 +1,1 @@
+{name: replay-toolchain, expected: 0, program: nu, arguments: ["/Users/master/cyber/honeycrisp-kadek-block-creation/audit/2026-10-09-unimem-block-creation/replay.nu", "/tmp/unimem-block-audit-repro.o5SVlb/prepared", isolated, toolchain], environment: {CARGO_TARGET_DIR: /must-not-be-used}}

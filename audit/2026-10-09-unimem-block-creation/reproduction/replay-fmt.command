@@ -1,0 +1,1 @@
+{name: replay-fmt, expected: 1, program: nu, arguments: ["/Users/master/cyber/honeycrisp-kadek-block-creation/audit/2026-10-09-unimem-block-creation/replay.nu", "/tmp/unimem-block-audit-repro.o5SVlb/prepared", overlay, fmt], environment: {CARGO_TARGET_DIR: /must-not-be-used}}

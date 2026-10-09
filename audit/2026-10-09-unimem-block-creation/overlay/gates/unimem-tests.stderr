@@ -1,0 +1,15 @@
+   Compiling num-traits v0.2.19
+   Compiling zerocopy v0.8.48
+   Compiling serde v1.0.228
+   Compiling tinytemplate v1.2.1
+   Compiling plotters v0.3.7
+   Compiling half v2.7.1
+   Compiling ciborium-ll v0.2.2
+   Compiling ciborium v0.2.2
+   Compiling criterion v0.5.1
+   Compiling unimem v0.2.0 (/private/tmp/unimem-block-overlay.fXgCHW/honeycrisp/unimem)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.36s
+     Running unittests src/lib.rs (/tmp/unimem-block-overlay.fXgCHW/target/debug/deps/unimem-544c4e9aa3808bfb)
+     Running tests/block_creation.rs (/tmp/unimem-block-overlay.fXgCHW/target/debug/deps/block_creation-e5fef310bbf2cfaf)
+     Running tests/roundtrip.rs (/tmp/unimem-block-overlay.fXgCHW/target/debug/deps/roundtrip-0fc0abf45c74e658)
+   Doc-tests unimem

@@ -1,0 +1,57 @@
+# CODE review — checked Block creation (unimem)
+
+**Verdict: APPROVE.**
+
+Different-vendor review of the frozen source manifest only. No commands run; no gate, workspace, rung, release or merge-readiness claim made or endorsed here. Scope limited to the unit under review: `BlockPlan` planning/open, the SDK FFI declaration repairs, the RAII temporary ownership in `src/block/creation.rs`, extent/alignment admission, and the two narrow spec edits.
+
+---
+
+## 1. Explicitly not certified
+
+I did not review, and this approval does not cover:
+
+- `Block::as_bytes_mut` / `as_f32_mut` / `as_u16_mut` returning `&mut [T]` from `&self` (`block.rs`, the `// ── Typed slice accessors ──` group) and the `unsafe impl Send/Sync for Block` that makes that reachable across threads. Unchanged by this unit; still unsound as a public API.
+- `Block::handle()` handing a `IOSurfaceRef` to rane/aruminium with no lifetime tie.
+- Initialization/publication of surface contents (`as_bytes()` on a never-written block still reads memory Rust never initialized).
+- "Pinned"/"wired"/physical-residency wording in `specs/README.md`.
+- `Grid::new`'s unchecked `CELL_SIZE * CELLS` multiply, `Tape`/`Grid`/`Layout` internals, `acpu`/`rane`/`aruminium`.
+- Any claim that the isolated receipts constitute the required upstream gates. The `semver-origin` exit 100 (five added `MemError` variants on an exhaustive enum) and the untouched-`acpu` Clippy red are carried as-is, not waived.
+
+## 2. Does this unit introduce additional unsoundness?
+
+**No.** The specific hazards named for attention each check out:
+
+**Partial array initialization ownership** — `creation.rs::properties`, the `let numbers = [number(..)?, …]` literal. rustc lowers an array literal to per-element temporaries moved into a single `Rvalue::Aggregate`; each element temporary is a scope-live local with its own drop obligation, so an early `return Err` from the 2nd–6th `?` drops exactly the already-constructed `OwnedCf` prefix and nothing else. `every_number_null_releases_only_preceding_create_references` pins this empirically at all six positions with `assert_balanced(&events, index - 1)`. Sound.
+
+**Dictionary callbacks** — `kCFTypeDictionaryKeyCallBacks`/`ValueCallBacks` are reached with `ptr::addr_of!`, so no `&c_void` reference is formed to an extern static whose byte pattern is not a valid `c_void` (the old `&kCFType… as *const c_void` did form one). Keys are the borrowed `kIOSurface*` pointer constants, read by value inside `unsafe`, never released. Values are six live `OwnedCf`-held Create references; `CFDictionaryCreate` retains them per `CFDictionary.h:283` ("The retain callback will be used within this function"), then `numbers` drops at the end of `properties` after the `Ok(dictionary)` tail expression has moved the owner into the return slot. Exactly one Create reference released per acquisition. Stack `keys`/`values` arrays are explicitly legal per the same header clause. `count: 6` is `CFIndex`-typed by inference. Sound.
+
+**Returned-null cleanup** — every native Create result enters `OwnedCf::from_create` before anything else can fail, and `NonNull::new(…)? → None → ok_or(..)?` means a null never becomes an owner. Dictionary-null releases the six numbers; surface-null releases the numbers *and* the dictionary. Tested at both stages with acquisition counts 6 and 7.
+
+**No-unlock after failed lock** — `Surface { locked: false }` is only flipped to `true` after `result == KERN_SUCCESS`; the extent-mismatch and lock-failure returns drop a `Surface` with `locked == false`, so `Drop for Surface` performs release only. `failed_lock_releases_without_unlock` and `extent_mismatch_is_fatal_before_lock` assert `!events.contains(&Event::Unlocked)` and `!contains(&Event::Locked)`.
+
+**Unlock before release** — `Drop for Surface` unlocks in the body and lets the `owner: OwnedCf` field release after the destructor body returns; `Block::drop → creation::unlock_and_release` does the same in sequence. `assert_unlock_before_final_release` pins `events[len-2] == Unlocked` and `events[len-1] == Release(_)` for all three post-lock mapping rejections and for the success path. `Surface::into_raw` uses `mem::forget(self)` so success transfers both the single owned reference and the single lock to `Block` with no intermediate release. No path produces two unlocks, two releases, or a release-before-unlock.
+
+**Plan reusability** — `BlockPlan` keeps `Copy` and `open` takes `&self` (plan-review §6.1 satisfied by the second branch). A plan is pure numbers; two `open` calls produce two independent surfaces with distinct IDs and addresses, asserted in `tests/block_creation.rs::caller_can_account_before_open_and_reuse_numeric_plan`. A stale plan cannot produce a short mapping, because `size` is taken from `IOSurfaceGetAllocSize` *after* an equality gate against `plan.allocation_size`.
+
+**Bounded size/pointer arithmetic** — `block.rs::checked_size` rejects 0 and anything above `isize::MAX` (hence also above `i64::MAX`) before any value reaches C; `aligned_size` uses remainder-based round-up with `checked_add`, assumes no power of two, and re-runs `checked_size` on the rounded result, so `row_bytes` and `allocation_size` are both `≤ isize::MAX`. `Block::plan` validates before `IOSurfaceAlignProperty` is ever called with `size` or `row_bytes`, so no overflowing value is passed to C. After lock, `base` is checked non-null, `is_multiple_of(4)` (covers both `u16` and `f32` views) and `address.checked_add(actual).is_some()`. Together with `actual ≤ isize::MAX` this discharges the full `slice::from_raw_parts` contract for all six accessors — non-null, aligned, no address-space wrap, `len * size_of::<T>() ≤ isize::MAX`. `aligned_size(usize::MAX - 1, 4)` and both `last + 1` cases are tested as `SizeOverflow`. No `ptr::add` appears in `creation.rs`; the only arithmetic is on `usize`.
+
+**Independent tests** — `tests/block_creation.rs` recomputes the expectation as `requested.div_ceil(row_alignment) * row_alignment` rather than reusing `aligned_size`, and reads back width/height/bytes-per-element/bytes-per-row/pixel-format through test-local `extern "C"` declarations, so the shape claim is checked against the framework, not against the implementation. Every buffer read in that file is preceded by a write of the same range. The unit-test fault seam lives only in `src/block/tests.rs` and is unreachable from the integration binary (plan-review §6.7 satisfied); `rejected_sizes_and_planning_create_no_native_owners` proves planning creates no owners; `assert_balanced` counts ownership acquisitions per pointer rather than unique pointers, which is the correct accounting for a CF implementation free to return a cached `CFNumber` for `1` twice.
+
+**FFI** — `CFNumberType`/`CFIndex` as `isize` matches `CFNumber.h:31` `CF_ENUM(CFIndex, CFNumberType)` with `CFBase.h`'s non-`__LLP64__` `signed long`; `CFDictionaryCreate`'s six parameters match `CFDictionary.h:283`; `IOSurfaceCreate(CFDictionaryRef)` matches `IOSurfaceRef.h:171`; `IOSurfaceGetPropertyAlignment`/`IOSurfaceAlignProperty` match the `size_t` signatures at `IOSurfaceRef.h:350–390`; the six `kIOSurface*` keys are declared as `CFStringRef` statics inside the IOSurface `#[link]` block and read by value. `kCFNumberSInt64Type = 4` matches the header enumerator, and the `i64` payload in `number()` is live for the duration of the call. In non-`test` builds the `native_call!` `$failure` token is cfg-stripped together with its `let` statement, so the `#[cfg(test)]`-only `tests::LOCK_ERROR` path cannot leak into the library build — confirmed by `docs.exit 0` and `clippy-v2.exit 0`, both of which build the non-test lib target.
+
+Behavioural change I checked for downstream breakage: `Block::open(n)` may now return a larger `size()` than before for small unaligned `n` (1 → row alignment). `Tape::start`, `Grid::new`, `Layout::new` and all existing `roundtrip.rs` oracles assert `>= requested`, and `Grid<64, 1>` still lays out correctly over an over-sized tape. `specs` and the `Block::open` doc comment now say "at least `size` bytes". No consumer in the supplied source depends on byte equality.
+
+## 3. Non-blocking observations
+
+1. `specs/README.md` § "Operations" still lists only `open | size (bytes) | Block or error | ~20us` — `plan` is described in prose above but absent from the operations table. Worth one row for consistency with the canonical-specs rule.
+2. Production code verifies `AllocSize` equality but not `IOSurfaceGetBytesPerRow == plan.row_bytes` (only `tests/block_creation.rs` does). Not a soundness gap — the exposed extent derives from `AllocSize` alone — but if a later consumer starts relying on the stride, the guarantee it gets today is extent-only. Fine to leave; do not add a check without a reviewed reason.
+3. `MemError` remains exhaustive. Since this change already forces a major source break, `#[non_exhaustive]` would make it the last one. That is an owner-level API decision and a scope expansion — flagging only, not requesting.
+4. `IOSurfaceUnlock`'s `kern_return_t` is discarded in `creation.rs::unlock` (pre-existing in `Block::drop`). Acceptable in a destructor; no action.
+5. The two `compile_fail` doctests pin exact rustc codes `E0451`/`E0599`. That is stricter than necessary and will need a touch if the diagnostics are renumbered. Acceptable, and it was the right choice over a new dev dependency (§6.6).
+6. Plan-review §6.9 (receipts under `audit/`) is not satisfied by the supplied tree — the validation logs live under `/tmp/unimem-block-creation-validation/logs/`. That is a receipt-placement obligation on the merge path, not a source defect; per `CLAUDE.md` the audit/semver/extent receipts belong in `audit/release-…` or `audit/<subsystem>/` with their dates and commands preserved before the owner is asked for anything.
+
+## 4. Outstanding, restated not certified
+
+Merge readiness still depends on items outside this unit: the honeycrisp `cyb-nebu` vs strata-origin `strata-nebu` identity/lock prerequisite, the untouched `acpu` Clippy red, the required upstream workspace and ring ≥1 dependent gates, and placement of the receipts. None of those are source defects in the reviewed files, and none are closed by this approval.
+
+**APPROVE** — the unit is correct on its own terms and introduces no additional unsoundness.

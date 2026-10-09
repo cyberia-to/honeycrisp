@@ -1,0 +1,1 @@
+cwd=/tmp/honeycrisp-nebu-closure.GUEZG7/honeycrisp; CARGO_TARGET_DIR=/tmp/honeycrisp-nebu-closure.GUEZG7/candidate-target; cargo fmt --all -- --check
