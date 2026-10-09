@@ -1,7 +1,106 @@
 use crate::ffi::*;
 use crate::MemError;
-use std::ffi::c_void;
-use std::ptr::{self, NonNull};
+use std::ptr::NonNull;
+
+mod creation;
+#[cfg(test)]
+mod tests;
+
+/// Checked numeric properties for one raw IOSurface row.
+///
+/// A plan carries numbers only and confers no reservation. Each `open` creates
+/// an independent allocation. Callers account for `allocation_size()` plus their
+/// own control/metadata before opening. CF/kernel bookkeeping and residency are
+/// separate from that API-visible extent. A plan neither initializes contents
+/// nor certifies immutable publication.
+///
+/// Fields can only be constructed through [`Block::plan`].
+/// ```compile_fail,E0451
+/// use unimem::BlockPlan;
+/// let plan = BlockPlan { requested: 1, row_bytes: 1, allocation_size: 1 };
+/// ```
+/// There is no unchecked constructor.
+/// ```compile_fail,E0599
+/// use unimem::BlockPlan;
+/// let plan = unsafe { BlockPlan::new_unchecked(1, 1, 1) };
+/// ```
+#[derive(Clone, Copy, Debug)]
+pub struct BlockPlan {
+    requested: usize,
+    row_bytes: usize,
+    allocation_size: usize,
+}
+
+impl BlockPlan {
+    /// Logical byte width, before row padding.
+    pub fn requested_size(&self) -> usize {
+        self.requested
+    }
+
+    /// Row stride including native property alignment.
+    pub fn row_bytes(&self) -> usize {
+        self.row_bytes
+    }
+
+    /// Exact API-visible backing extent required by this plan.
+    pub fn allocation_size(&self) -> usize {
+        self.allocation_size
+    }
+
+    /// Create and lock an independent surface using these exact properties.
+    ///
+    /// A returned extent differing from this plan is a creation error. Returned
+    /// native failures release all temporary owners; opaque framework allocation
+    /// failures have no universal recoverability guarantee.
+    pub fn open(&self) -> Result<Block, MemError> {
+        creation::open(self)
+    }
+
+    fn checked(
+        requested: usize,
+        row_alignment: usize,
+        alloc_alignment: usize,
+    ) -> Result<Self, MemError> {
+        checked_size(requested)?;
+        let row_bytes = aligned_size(requested, row_alignment)?;
+        let allocation_size = aligned_size(row_bytes, alloc_alignment)?;
+        Ok(Self {
+            requested,
+            row_bytes,
+            allocation_size,
+        })
+    }
+
+    fn check_native_alignment(&self, row: usize, allocation: usize) -> Result<(), MemError> {
+        if row != self.row_bytes || allocation != self.allocation_size {
+            return Err(MemError::BlockAlignmentInvalid);
+        }
+        Ok(())
+    }
+}
+
+fn checked_size(size: usize) -> Result<i64, MemError> {
+    if size == 0 {
+        return Err(MemError::ZeroSize);
+    }
+    isize::try_from(size).map_err(|_| MemError::SizeOverflow)?;
+    i64::try_from(size).map_err(|_| MemError::SizeOverflow)
+}
+
+fn aligned_size(size: usize, alignment: usize) -> Result<usize, MemError> {
+    if alignment == 0 {
+        return Err(MemError::BlockAlignmentInvalid);
+    }
+    let remainder = size % alignment;
+    let aligned = if remainder == 0 {
+        size
+    } else {
+        size.checked_add(alignment - remainder)
+            .ok_or(MemError::SizeOverflow)?
+    };
+    checked_size(aligned)?;
+    Ok(aligned)
+}
 
 /// Pinned shared memory block backed by IOSurface.
 ///
@@ -19,64 +118,35 @@ unsafe impl Send for Block {}
 unsafe impl Sync for Block {}
 
 impl Block {
-    /// Open a pinned memory block of `size` bytes.
+    /// Check a raw row's native alignment and integer/slice bounds.
+    ///
+    /// Planning queries native properties without creating CF objects or backing
+    /// storage. Logical width stays `size`; native row padding may increase the
+    /// allocation. Callers reserve from the returned plan before opening it.
+    pub fn plan(size: usize) -> Result<BlockPlan, MemError> {
+        checked_size(size)?;
+        // SAFETY: These SDK constants are borrowed CFStringRefs. Only checked,
+        // representable numeric arguments reach the native alignment helper.
+        unsafe {
+            let plan = BlockPlan::checked(
+                size,
+                IOSurfaceGetPropertyAlignment(kIOSurfaceBytesPerRow),
+                IOSurfaceGetPropertyAlignment(kIOSurfaceAllocSize),
+            )?;
+            plan.check_native_alignment(
+                IOSurfaceAlignProperty(kIOSurfaceBytesPerRow, size),
+                IOSurfaceAlignProperty(kIOSurfaceAllocSize, plan.row_bytes),
+            )?;
+            Ok(plan)
+        }
+    }
+
+    /// Open a pinned memory block of at least `size` bytes.
     ///
     /// The block is locked immediately — `address()` is valid until drop.
     /// Allocation is lazy: kernel reserves address space, pages backed on first touch.
     pub fn open(size: usize) -> Result<Self, MemError> {
-        if size == 0 {
-            return Err(MemError::ZeroSize);
-        }
-
-        unsafe {
-            let dict = CFDictionaryCreateMutable(
-                ptr::null(),
-                0,
-                &kCFTypeDictionaryKeyCallBacks as *const c_void,
-                &kCFTypeDictionaryValueCallBacks as *const c_void,
-            );
-
-            let sz = size as i64;
-            CFDictionarySetValue(dict, cf_str("IOSurfaceWidth") as _, cf_i64(sz));
-            CFDictionarySetValue(dict, cf_str("IOSurfaceHeight") as _, cf_i64(1));
-            CFDictionarySetValue(dict, cf_str("IOSurfaceBytesPerElement") as _, cf_i64(1));
-            CFDictionarySetValue(dict, cf_str("IOSurfaceBytesPerRow") as _, cf_i64(sz));
-            CFDictionarySetValue(dict, cf_str("IOSurfaceAllocSize") as _, cf_i64(sz));
-            CFDictionarySetValue(dict, cf_str("IOSurfacePixelFormat") as _, cf_i64(0));
-
-            let raw = IOSurfaceCreate(dict);
-            CFRelease(dict as CFTypeRef);
-
-            if raw.is_null() {
-                return Err(MemError::BlockCreateFailed);
-            }
-
-            let kr = IOSurfaceLock(raw, 0, ptr::null_mut());
-            if kr != KERN_SUCCESS {
-                CFRelease(raw as CFTypeRef);
-                return Err(MemError::BlockLockFailed(kr));
-            }
-
-            let base = IOSurfaceGetBaseAddress(raw);
-            let va = match NonNull::new(base as *mut u8) {
-                Some(p) => p,
-                None => {
-                    IOSurfaceUnlock(raw, 0, ptr::null_mut());
-                    CFRelease(raw as CFTypeRef);
-                    return Err(MemError::BlockCreateFailed);
-                }
-            };
-
-            let actual_size = IOSurfaceGetAllocSize(raw);
-            let id = IOSurfaceGetID(raw);
-
-            Ok(Block {
-                raw,
-                va,
-                size: actual_size,
-                id,
-            })
-        }
+        Self::plan(size)?.open()
     }
 
     /// Memory address. Always valid (block is locked).
@@ -85,7 +155,7 @@ impl Block {
         self.va.as_ptr()
     }
 
-    /// Size in bytes.
+    /// API-visible allocation size in bytes, including native row padding.
     #[inline(always)]
     pub fn size(&self) -> usize {
         self.size
@@ -148,11 +218,8 @@ impl Block {
 }
 
 impl Drop for Block {
-    #[mutants::skip] // RAII release — kernel-level cleanup, not observable in tests
     fn drop(&mut self) {
-        unsafe {
-            IOSurfaceUnlock(self.raw, 0, ptr::null_mut());
-            CFRelease(self.raw as CFTypeRef);
-        }
+        // SAFETY: Successful creation transfers one owned, locked surface here.
+        unsafe { creation::unlock_and_release(self.raw) }
     }
 }

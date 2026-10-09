@@ -95,7 +95,7 @@ fn tape_owns() {
     assert!(tape.owns(p));
     assert!(tape.owns(unsafe { p.add(99) }));
     assert!(!tape.owns(std::ptr::null()));
-    assert!(!tape.owns(0x1 as *const u8));
+    assert!(!tape.owns(std::ptr::dangling::<u8>()));
 }
 
 #[test]
@@ -393,7 +393,7 @@ fn block_slice_pointer() {
 #[test]
 fn block_cross_view_f32_bytes() {
     let b = Block::open(4096).unwrap();
-    let val: f32 = 3.14;
+    let val = f32::from_bits(0x4048_f5c3); // Exact 3.14f32 byte-pattern fixture.
     b.as_f32_mut()[0] = val;
     let expected = val.to_ne_bytes();
     assert_eq!(&b.as_bytes()[..4], &expected);
