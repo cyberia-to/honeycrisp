@@ -1,0 +1,14 @@
+{
+  "plan-brief": {
+    "sha256": "83fb460c151c9d4a150802a6919c74d3a39728b6d01fd1b0506c59ff173a5338",
+    "bytes": 80399
+  },
+  "plan-v2-brief": {
+    "sha256": "0ebe28876c5438ffaad85871e894eaea8b1acd273ce8d916e292ab7c617e2561",
+    "bytes": 98670
+  },
+  "code-brief": {
+    "sha256": "238996e5dcdccd49480cebcbec8d8e12f0fd68637cbde1b9d3056f190704d8d8",
+    "bytes": 625515
+  }
+}
