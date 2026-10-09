@@ -1,0 +1,77 @@
+# PLAN REVIEW — nebu package identity
+
+**Verdict: REQUEST CHANGES**
+
+Scope is right, the baseline is honest (an executed resolution failure, not a guess), and the one-line `package` repair is the correct minimal fix. Six concrete defects in the plan must be fixed before implementation, all in acceptance criteria and gate selection rather than in the change itself.
+
+## What the supplied evidence already settles (no objection)
+
+- `package`-only change preserves the extern name: strata-nebu declares `[lib] name = "nebu"`, so `nebu = { path = "../strata/nebu/rs", package = "strata-nebu" }` keeps `use nebu::{Goldilocks, ntt}` valid. `Goldilocks::new`, `ntt::ntt`, `ntt::intt` are present in the pinned `field.rs`/`ntt.rs`.
+- No version requirement exists on that dependency, so none changes. Worth recording *why* the breakage survived publication: Cargo strips path dev-dependencies that carry no version at package time, and the published `acpu 0.2.0` lock entry depends only on `unimem` — crates.io never had to resolve `cyb-nebu`.
+- Archives place strata as a sibling of honeycrisp, which the baseline stderr confirms (`location searched: .../strata/nebu/rs`). Relative-path closure is genuinely isolated.
+- Rung/release boundaries are stated honestly: metadata success ≠ gates ≠ rung closure; no bump, tag, promote, or crates.io action. Consistent with the release-train rules.
+
+## Blockers
+
+### B1 — Step 2's lock criterion contradicts the required lock delta
+
+"existing registry tuples must remain unchanged" forbids the change this repair must produce. `acpu 0.2.0 (registry+…)` exists in the lock **only** because the stale `cyb-nebu 0.1.0` entry depended on it, and `unimem 0.2.0 (registry+…)` exists only because that registry acpu depends on it. With `strata-nebu` `default = []` and `fast` off, both registry duplicates must disappear. Retaining them is the red signal (it means `fast` got enabled), not the pass condition.
+
+Pre-register the expected delta as the acceptance criterion:
+
+- removed: `cyb-nebu 0.1.0`, `acpu 0.2.0 (registry…)`, `unimem 0.2.0 (registry…)`
+- added: `strata-nebu 0.1.1`
+- version-bumped: `strata-core`, `strata-proof`, `strata-compute`, `strata-ext` → `0.1.1` (strata `workspace.package.version = "0.1.1"`; its internal reqs say `version = "0.1.0"`, and `^0.1.0` admits 0.1.1 — path wins)
+- **disambiguator collapse**: once the registry duplicates are gone, Cargo rewrites dependency entries from `"acpu 0.2.0"` / `"unimem 0.2.0"` to bare `"acpu"` / `"unimem"`, touching the `acpu`, `aruminium`, `honeycrisp`, `rane`, and `unimem` blocks. The lock diff will be substantially larger than five lines. Say so now, or the review will read legitimate churn as unrelated churn.
+- everything else byte-identical.
+
+Also state the expectation that strata-nebu's dev-deps (`criterion`, `proptest`) do **not** enter the resolve, since strata-nebu is a non-member path dependency; a `proptest` entry appearing is a red to explain.
+
+### B2 — toolchain/edition compatibility is unverified and unnamed
+
+strata-nebu is `edition.workspace = true` → **edition 2024**, `rust-version = 1.89`; the strata workspace uses `resolver = "3"`. The honeycrisp root pins `resolver = "2"` and edition 2021. Two consequences the plan must record as preconditions:
+
+1. The merged graph is resolved by **resolver 2** (honeycrisp is the workspace root), so strata's resolver 3 and `rust-version` do not influence selection. The only enforcement point for `rust-version = 1.89` and edition 2024 is compilation.
+2. If the local toolchain is below 1.89 or lacks edition-2024 support, the resulting red is a **toolchain** red, not a resolution red, and must be reported as such.
+
+Add a step that captures `rustc --version` and `cargo --version` into the receipt before step 2 and asserts ≥ 1.89.
+
+### B3 — the gate set does not exercise the repaired edge
+
+nebu is a **dev-dependency** consumed only by acpu examples. `cargo build --release --workspace` never builds dev-dependencies, and `cargo clippy --workspace` without `--all-targets` lints neither examples nor benches. As written, step 3 can go fully green while proving nothing about the repair.
+
+Required:
+
+- `cargo clippy --workspace --all-targets --locked -- -D warnings`
+- explicit example compilation: `cargo build --release --workspace --examples --locked` (or `cargo check --workspace --all-targets --locked`)
+- name the two examples that touch nebu, and state compile-only versus run for each. acpu/CLAUDE.md's gate is "examples run"; `bench_zk` is a long benchmark the plan refuses to run, so the honest formulation is "compiles and links; not executed," written as such.
+- state per gate what it proves. `cargo metadata`, clippy `--all-targets`, `cargo test`, and example compilation are the only gates with any bearing on this change.
+
+### B4 — no attributable baseline for clippy/build/test
+
+The only executed baseline is the resolution failure, which by construction precludes a downstream baseline. So any red in step 3 cannot be attributed between "pre-existing code error" and "this identity change" — yet step 5 proposes merging a `wip:` commit into the branch that feeds the friday candidate on exactly that distinction.
+
+Add a discriminating control, in the throwaway archive only, never committed: the same two archives with acpu's `nebu` dev-dependency deleted, running the identical clippy/build/test/example set. That yields the pre-state the unit currently lacks. Absent that control, a required red has no evidence base and the PR should not be opened.
+
+### B5 — the lock is validated in a tree the consumer never uses
+
+The lock is generated where `../strata` is the pinned `56aedb2`, then copied into the worktree where `../strata` resolves to the live `/Users/master/cyber/strata`, which research already describes as outside the task inputs and potentially dirty. The next unit (unimem Block) consumes the lock from the worktree, not from `/tmp`.
+
+Add: after copying the lock back, run `cargo metadata --format-version 1 --locked --offline` **in the worktree**, and record `git -C ../strata rev-parse HEAD` plus `git status --porcelain`. If live strata diverges from the pin, report the divergence as a fact and withhold any claim that the committed lock is reproducible for the dependent unit.
+
+### B6 — the feature transition is a drift, not a decision
+
+"Keeping the existing dependency's unspecified feature policy" lands on `default = []` by accident of upstream defaults. The outcome is correct; the reasoning must be recorded, because the next reader will otherwise "fix" it by adding `features = ["fast"]`. Record in the audit receipt:
+
+- `fast = ["acpu"]` pulls **registry** `acpu 0.2`, which would link a second acpu copy — one carrying AMX inline asm — alongside the local path acpu into the same test binary. That is the reason `fast` stays off, beyond the upstream linux-cross rationale in strata's comment.
+- acceleration and benchmark speed are out of scope, unmeasured, and unclaimed. The plan already says this; it belongs in the frozen receipt, not only in the plan.
+
+## Non-blocking corrections
+
+- Step 2's "missing cache artifacts may be fetched at locked identities after resolution" is incoherent under `--offline`: `--offline` cannot fetch. Per B1 the delta is net-removal, so no fetch should be needed; a fetch requirement is itself a diagnostic. Specify the single permitted fallback (one network run, recorded) or delete the sentence.
+- `cargo semver-checks` against v0.2.0 needs registry access, compares public API, and this unit changes no source and touches only a dev-dependency. It cannot change. Keep it as a smoke check with a time box; do not let a tool/network failure consume the unit.
+- "private target and exact source hashes" is too vague to reproduce. Name the host chip, the target triple, and whether hardware-dependent tests (AMX, ANE, Metal) executed or were skipped.
+- Root CLAUDE.md states nebu lives at `github.com/cyberia-to/nebu`, while the manifest will now name `strata-nebu` under `../strata`. Either fix that line or record the drift plus an explicit deferral decision in the receipt — the settled identity fact has to land in a repo file this session.
+- Root CLAUDE.md lists `Cargo.toml` dependency versions under "do not touch without explicit discussion." This change is to `package`, not a version, but cite the session authorization in the receipt so the guard is visibly satisfied.
+
+Fix B1–B6 in `plan.md` and this is approvable without a second plan round.

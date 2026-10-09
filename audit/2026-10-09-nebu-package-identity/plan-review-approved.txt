@@ -1,0 +1,32 @@
+# PLAN REVIEW (correction round) — nebu package identity
+
+**Verdict: APPROVE**
+
+All six blockers from the prior round are resolved in the supplied `plan.md`/`research.md`. No new blocker. Implementation may proceed; the notes below are refinements to apply while executing, not gates.
+
+## Blocker disposition
+
+**B1 — lock delta pre-registered.** Resolved. Step 2 now states the expected delta as the acceptance criterion: `cyb-nebu 0.1.0` → `strata-nebu 0.1.1`, four strata tier packages → `0.1.1`, registry `acpu`/`unimem` duplicates removed, and — the part that would otherwise read as unrelated churn — "their path-package dependency disambiguators collapsing." The residual criterion is correctly narrowed to "remaining registry tuples must be identical," and strata's nonmember dev-deps are explicitly excluded from the resolve. The contradiction is gone.
+
+**B2 — toolchain pinned and classified.** Resolved. 1.95.0 / `aarch64-apple-darwin` / Cargo 1.95.0 are recorded in research from an executed `rustc -Vv`, which clears strata's `rust-version = 1.89` and edition 2024 with margin. Plan step 1 states that honeycrisp's resolver 2 governs the merged graph (research cites the resolver-versions rule for why strata's resolver 3 is not inherited) and that a toolchain red is a distinct class from a resolution red. Correct on both points.
+
+**B3 — gate set now touches the repaired edge.** Resolved. `clippy --workspace --all-targets --locked -- -D warnings` plus an explicit `cargo build -p acpu --release --example bench_zk --example bench_summary --locked` makes the dev-dependency actually link. The compile-only limit is written as a limit against acpu/CLAUDE.md's examples-run doctrine rather than papered over, and the bounded `cargo run --example matmul` gate is kept separate with no claim that it exercises nebu. That is the honest formulation.
+
+**B4 — attribution control, without false attribution.** Resolved, and improved over what the prior round asked for. Deleting acpu's nebu dev-dependency in a throwaway control makes `bench_zk`/`bench_summary` fail by construction; the plan says so up front and restricts the control's evidentiary power to "identical diagnostics in untouched common source," refusing to classify candidate nebu errors from it. Control edits and the control lock stay out of the PR. The conditional trigger (run the control before attributing any downstream red) is sufficient; running it unconditionally would buy nothing.
+
+**B5 — lock validated where it is consumed, with the dependency boundary stated.** Resolved. Authoritative gates and the dependent Block unit consume archived exact sources; the worktree `--locked --offline` run is explicitly labeled convenience and is attempted only when live sibling HEAD is clean and exactly at `56aedb2`, with divergence recorded and the check skipped otherwise, plus a post-run status recheck. Research already records the clean-at-pin reading. I accept the correction that the prior round's premise — that the Block unit builds against the live sibling — was wrong; with archived exact inputs on both sides, "live sibling state is never a prerequisite" is the right invariant and it is now written down.
+
+**B6 — `fast` is a decision, not a drift.** Resolved. The reason is recorded where the next reader will hit it: `fast` pulls a registry `acpu` beside the local path `acpu`, i.e. a second driver implementation in one binary. Selected features will be audited from actual metadata/tree output rather than inferred from the upstream manifest, and benchmark speed/acceleration remain explicitly unmeasured and unclaimed.
+
+Non-blocking items from the prior round are also closed: the `--offline` fetch incoherence is replaced with one recorded network metadata run as the single permitted fallback under the same tuple comparison; host chip, target triple and executed/skipped AMX/ANE/Metal test names are now receipt items; the root CLAUDE.md standalone-nebu URL is carried as a named deferred drift with the settled identity landing in the audit receipt this session; and the "do not touch dependency versions" guard is visibly satisfied by citing session authorization and noting no version requirement changes.
+
+## Notes to apply during execution (not gates)
+
+1. **Name the tree for each gate.** Step 2 implies the authoritative gates run in the archives; step 3 never says so. Write the tree next to every command in the receipt, so a later reader cannot mistake an archive green for a worktree green.
+2. **Make the control's expected failure evidence, not assertion.** Record the actual diagnostic (unresolved import `nebu`, with its error code) for each control example, and consider running the control's comparable surface as `--lib --bins --tests` so the candidate/control diff is 1:1 on targets that can compile in both.
+3. **Confirm the example list mechanically.** acpu declares thirteen examples; research asserts two use nebu. Re-derive that set in step 1 (`rg -n '\bnebu\b' acpu/bench acpu/examples`) and extend the explicit `--example` list if a third appears, rather than leaning on `--all-targets` to catch it silently.
+4. **Use a feature-aware command for the B6 audit.** `cargo metadata` alone is a resolution report; quote `cargo tree -e features -p acpu --locked` (or metadata's `resolve.nodes[].features`) and show `fast` absent from strata-nebu's selected features.
+5. **Add one cheap on-disk proof of the same fact.** In the refreshed lock, the `strata-nebu` entry's dependency list should contain exactly the four tier crates and no `acpu`. That single line is the strongest evidence that defaults stayed empty; name it in the expected delta.
+6. **Time-box semver-checks and report absence as absence.** If the tool is missing or network-blocked, record "not run" — never let a tool failure read as compatibility.
+
+Red conditions that must stop the unit rather than be explained away: any registry tuple change outside the pre-registered delta; `proptest`/`criterion` appearing from strata-nebu; a registry `acpu` surviving in the lock; or a worktree `--locked` failure after the lock copy-back.

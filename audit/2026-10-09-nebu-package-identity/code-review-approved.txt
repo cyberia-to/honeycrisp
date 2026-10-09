@@ -1,0 +1,52 @@
+# CODE REVIEW — nebu package identity (`76b2f264` over `9593c721`, strata `56aedb2d`)
+
+**Verdict: APPROVE** for the scoped ordinary source merge (manifest + lock only). Not an approval of versions, tags, promotion, publication, or any ring/rung status. The lint, format and semver-tag gates are red and remain red; this commit does not fix them and does not claim to.
+
+I cannot execute anything here. Everything below is verification of the supplied bytes against each other and against the pinned source pack; the raw logs are treated as the runner's evidence, not as my results.
+
+## The change
+
+`Cargo.toml`, one line, `nebu.package`: `cyb-nebu` → `strata-nebu`. Path, alias, absent version requirement and absent `features` key all unchanged. No other manifest key touched — `members`, `resolver = "2"`, `workspace.package`, every other `workspace.dependencies` entry and `[profile.release]` are byte-identical in the current file. Correct against the pinned source: `strata/nebu/rs/Cargo.toml` declares `name = "strata-nebu"` with `[lib] name = "nebu"`, so `use nebu::{Goldilocks, ntt}` in the two benchmark examples still resolves, and `Goldilocks::new`, `ntt::ntt`, `ntt::intt` all exist in the pinned `field.rs`/`ntt.rs`.
+
+## Lock closure, checked against the pre-registered delta
+
+Every item B1 required, and nothing else:
+
+- removed `cyb-nebu 0.1.0` (path), `acpu 0.2.0 (registry…)`, `unimem 0.2.0 (registry…)` — the latter two existed only because the phantom `cyb-nebu` entry depended on registry `acpu`, which depends on registry `unimem`.
+- added `strata-nebu 0.1.1`, whose dependency list is **exactly** `strata-compute`, `strata-core`, `strata-ext`, `strata-proof` — no `acpu`. That single stanza is the strongest on-disk proof that `default = []` held and `fast` stayed off, and it is corroborated by `cargo tree -e features -p acpu` (`strata-nebu feature "default"`, `fast` absent) and by metadata `resolve.nodes` (`features: ["default"]`).
+- `strata-core/-proof/-compute/-ext` 0.1.0 → 0.1.1, consistent with strata's `workspace.package.version = "0.1.1"` and `^0.1.0` internal reqs (path wins).
+- disambiguator collapse `"acpu 0.2.0"`/`"unimem 0.2.0"` → `"acpu"`/`"unimem"` in the `acpu`, `aruminium`, `honeycrisp`, `rane`, `unimem` stanzas — legitimate consequence of the duplicates disappearing, and pre-registered as such.
+- every remaining registry tuple identical. I checked the stop conditions explicitly: no `proptest` entry (strata-nebu's non-member dev-deps correctly stay out of the resolve); `criterion 0.5.1` is unchanged from the parent lock and belongs to unimem, not strata-nebu; no registry `acpu` survives; `crossbeam-queue` is still `0.3.12` in the committed lock, so the semver tool's scratch resolution of `0.3.14` did **not** leak into the production lock. Lock format `version = 4` unchanged; stanza ordering stays alphabetical.
+
+The reconstructed `strata-ext`/`strata-nebu` hunk (the one whose unified diff reads awkwardly) matches the current file byte-for-byte.
+
+`cargo metadata --locked --offline` exit 0 in the archive, and exit 0 again in the owned worktree after copy-back, with live strata clean at `56aedb2d` before and after. The authoritative inputs remain the archives; the original dirty honeycrisp is excluded.
+
+## Gate attribution
+
+The honest part of this unit, and it holds up:
+
+- **clippy 101, 16 diagnostics** — all in `acpu/src/**` (`gemm/mod.rs`, `sparse/*`, `field/*`, `numeric/bf16.rs`, `vector/*`, `crypto/mod.rs`). The dependency-removed control at the same pins reproduces the identical 16; `candidate_only` and `control_only` are both empty. Pre-existing, not attributable to this change, and not waived.
+- **fmt 1** — four hunks in `aruminium/benches/objc2.rs`, a file this commit does not touch; control output identical after path normalization.
+- **semver vs tag `v0.2.0` 101** — the failure is `failed to read .../tag/nebu/rs/Cargo.toml`: at that tag the dependency pointed at `../nebu/rs`, absent from the archive layout. Reported as *no compatibility verdict*, which is the only correct reading. Semver vs source parent is exit 0 across the five public crates, correctly labelled an API smoke check, with the tool's network index use and scratch manifests/locks disclosed and retained.
+- **repaired edge is actually exercised** — `clippy --all-targets`, `cargo test --workspace`, and the named `--example bench_zk --example bench_summary` all compile `strata-nebu 0.1.1` from the archived strata path (visible in the compile lines); the release build does not, which matches "production only". Tests 320 pass / 5 ignored, and the five ignored are enumerated (`gemm::gemv_kern::tests::t_small` + four aruminium doctests) — arithmetic checks out against the per-binary counts. `matmul` is run and reported as a correctness smoke with no performance claim; benchmark examples are stated as compiled-and-linked, not executed, against acpu/CLAUDE.md's examples-run doctrine.
+
+Bonus: the control's `cargo test --workspace` gives a *mechanical* confirmation of the example set — across all thirteen declared examples, only `bench_zk` and `bench_summary` fail with E0433 on `nebu`. That is better evidence than the planned `rg` re-derivation.
+
+## Reproducer
+
+`reproduce.nu` archives all four trees from the two object databases, asserts the control seam (`nebu.workspace = true`) before editing and errors out loudly if absent, isolates four target dirs, records exit/stdout/stderr per gate, and closes by telling the reader the known reds are still reds. The earlier literal-`--output=$tar` defect is fixed: the committed script passes `--output $tar` as separate arguments, and tars land in the scratch tree (`$root/<tree>/<name>.tar`), never in a source checkout. The incident, the move, and the untouched pre-existing dirty files are disclosed in the receipt. Replay under `/tmp/nebu-identity-replay.PN072I` reproduced 320/0/5 and the same red set.
+
+## Non-blocking
+
+1. The receipt's gate table does not carry a tree column; `evidence.json` does record `cwd` and `CARGO_TARGET_DIR` per gate. Adding the tree beside each row would stop a later reader mistaking an archive green for a worktree green.
+2. The first semver run has no `CARGO_TARGET_DIR` (scratch under the archive's own `target/`), while the replay uses `semver-target`. Harmless — throwaway archive, committed lock verified unaffected — but worth normalising in the runner.
+3. The control differs from the candidate by two things, not one: the removed dev-dependency *and* the parent's stale `cyb-nebu` workspace entry (unused, so resolution succeeds). The receipt already restricts the control's evidentiary power to identical diagnostics in untouched common source, which is the right bound; no change needed.
+4. Root CLAUDE.md still names `github.com/cyberia-to/nebu`. Carried as named deferred drift, with the settled source identity landed in `audit/2026-10-09-nebu-package-identity/README.md` this session — doctrine satisfied, but the CLAUDE.md line should be a follow-up unit.
+
+## Conditions on the merge
+
+- The PR must carry the `wip:` prefix with a first diagnostic and a `decision`, per the plan's required-red rule. I cannot see the commit message in the supplied pack, so this is stated as a condition, not verified.
+- No bump, tag, promotion, crates.io publish or release-pin action rides with this. `soft3` registry placement (nox/layer 1) is a read, not a validation; rung, dependent-repo and release gates are not established here and the receipt says so.
+
+Scope, delta, attribution and reproducer are all sound. Merge the manifest and lock.
