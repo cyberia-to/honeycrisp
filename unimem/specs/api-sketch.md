@@ -86,7 +86,7 @@ pub struct Block {
     id: u32,
 }
 
-// Send + Sync — immutable after creation
+// Send + Sync — owning mapping; typed access requires the unsafe contract below.
 
 impl Block {
     /// Check native alignment and integer/slice bounds without creating a surface.
@@ -107,6 +107,13 @@ impl Block {
 
     /// Raw IOSurfaceRef for ANE (rane) / GPU (Metal).
     pub fn handle(&self) -> IOSurfaceRef;
+
+    pub unsafe fn as_bytes(&self) -> &[u8];
+    pub unsafe fn as_bytes_mut(&mut self) -> &mut [u8];
+    pub unsafe fn as_f32(&self) -> &[f32];
+    pub unsafe fn as_f32_mut(&mut self) -> &mut [f32];
+    pub unsafe fn as_u16(&self) -> &[u16];
+    pub unsafe fn as_u16_mut(&mut self) -> &mut [u16];
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -125,6 +132,14 @@ impl Drop for Block {
     }
 }
 ```
+
+All six views require initialized bytes throughout their returned extent,
+including padding: `size()` for bytes, `floor(size()/sizeof(T))*sizeof(T)` for
+typed lanes. Shared borrows exclude overlapping writes; mutable borrows exclude
+every conflicting CPU/raw/device alias for their lifetime. Establish prior device
+completion/visibility and retain the mapping through all imported uses. Creating
+a view just for len/pointer inspection has the same duties. Block locks only at
+creation and unlocks at drop, without per-access synchronization.
 
 IOSurface properties set at creation:
 
@@ -157,12 +172,20 @@ pub struct Tape {
     total: usize,
 }
 
-// Send + Sync — atomic cursor, immutable block
+// Send + Sync — atomic cursor; raw memory access retains its unsafe duties.
 
 impl Tape {
     /// Create tape backed by IOSurface.
     /// ~20µs (block creation cost).
     pub fn start(total: usize) -> Result<Self, MemError>;
+
+    /// Fresh unpublished tape; touch one byte at a fixed 16 KiB stride.
+    pub fn start_warm(size: usize) -> Result<Self, MemError>;
+
+    /// Zero offsets 0,16384,... below total; preserve other bytes and the cursor.
+    /// Caller excludes conflicting references/raw/device access and values
+    /// invalidated by those writes. This does not initialize the whole backing.
+    pub unsafe fn warm(&mut self);
 
     /// Allocate bytes. ~1ns. Lock-free compare_exchange loop.
     /// Returns None if exhausted.

@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-10-10T01:02:25.077654+00:00",
+  "base": "7b148906263da5ea8aabc5ddb0e2e44ff2288ecc",
+  "docs": [
+    {
+      "path": ".claude/tasks/unimem-block-access/research.md",
+      "sha256": "a0fad47ecdd3014096295e5d82faaeb7f22c31977ed2b698b98d6702f2e898b6",
+      "bytes": 29000,
+      "lines": 434
+    },
+    {
+      "path": ".claude/tasks/unimem-block-access/plan.md",
+      "sha256": "009acda60798f2d819c011723ab98b6a49c049d7d5b90f9fafaaad74c17cd5b6",
+      "bytes": 21738,
+      "lines": 326
+    }
+  ],
+  "primary_manifest": {
+    "path": "/tmp/kadek-unimem-block-access-primary/REVIEW-V3-SHA256SUMS",
+    "sha256": "2cc06f416881bf4593c6c96fb2e719f05e9cfb642ba60215eafe0fe4f2b2e422"
+  },
+  "baseline_manifest_sha256": "e620a15100c4f5205d5c470de6852c9f8a8fcb456ce1914cc7c0e799a78f022b",
+  "response_sha256": "df54f561602637cd97c09c0e50a00045ba73d18120d7a7142314c403e4d406c3",
+  "production_status": {
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0
+  }
+}

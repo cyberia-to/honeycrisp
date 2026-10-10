@@ -131,15 +131,19 @@ impl Gpu {
 
     /// Wrap an existing pointer as a Metal buffer — zero copy.
     ///
-    /// The pointer must be page-aligned and the memory must stay alive
-    /// for the lifetime of the returned buffer. Metal reads/writes
-    /// directly to the provided memory — no allocation, no copy.
+    /// Metal accesses the supplied backing directly. This import retains no
+    /// backing owner and performs no wait.
     ///
     /// # Safety
-    /// - `ptr` must be page-aligned (4096 or 16384 on Apple Silicon)
-    /// - `size` must be page-aligned
-    /// - Memory at `ptr..ptr+size` must remain valid while the buffer exists
-    /// - Caller must not free the memory while GPU commands are in flight
+    /// - `ptr` and `size` must be aligned to the runtime VM page size, with the
+    ///   entire valid extent contained in one VM region. Never round beyond backing.
+    /// - Retain backing through Buffer lifetime and all encoded/in-flight uses.
+    /// - Initialize every byte exposed by CPU views and exclude conflicting
+    ///   CPU/raw/device aliases and live Rust references for each access.
+    /// - For shared MTLCommandBuffer storage, finish CPU writes before commit;
+    ///   exclude conflicting CPU access until GPU work completes. Wait and check
+    ///   success before CPU readback. These duties include retained aliases and
+    ///   other threads.
     pub unsafe fn buffer_wrap(
         &self,
         ptr: *mut std::ffi::c_void,
@@ -170,9 +174,24 @@ impl Gpu {
 
     /// Wrap a unimem::Block as a Metal buffer — zero copy.
     ///
-    /// The MTLBuffer shares the Block's physical memory (IOSurface-backed).
-    /// Block must outlive the returned Buffer.
-    pub fn wrap(&self, block: &unimem::Block) -> Result<Buffer, GpuError> {
+    /// The import uses the actual Block extent without retaining its owner or waiting.
+    ///
+    /// # Safety
+    /// The actual address and size must be runtime VM-page aligned, with the whole
+    /// backing in one VM region; Block creation alone does not prove compatibility.
+    /// Keep Block alive through Buffer lifetime and all encoded/in-flight uses.
+    /// Initialize every byte exposed by CPU views and exclude conflicting
+    /// CPU/raw/device aliases and Rust references, across threads/retained imports.
+    /// For shared MTLCommandBuffer storage, finish CPU writes before commit;
+    /// exclude conflicting CPU access until completion, and wait/check success
+    /// before CPU readback. The caller supplies all synchronization.
+    ///
+    /// ```compile_fail,E0133
+    /// fn import(gpu: &aruminium::Gpu, block: &unimem::Block) {
+    ///     let _ = gpu.wrap(block);
+    /// }
+    /// ```
+    pub unsafe fn wrap(&self, block: &unimem::Block) -> Result<Buffer, GpuError> {
         unsafe { self.buffer_wrap(block.address() as *mut std::ffi::c_void, block.size()) }
     }
 

@@ -1,0 +1,11 @@
+{
+  "commands": 37,
+  "green": 16,
+  "red": 21,
+  "scenarios": 17,
+  "overlay_sha256": "f90b902c6121e90b219dc87295a2e45e1c86b6973e8e091955bdebd328eb691c",
+  "source_manifest": "1ead683ed4e75cfb0c2edd196e6e18e979f3ca83634e69c3bcdd2bfe72e1b1be",
+  "command_lock_and_log_checks": true,
+  "local_metadata_paths_confined": true,
+  "source_diff_whitelist_checked": true
+}

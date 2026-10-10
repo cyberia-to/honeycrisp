@@ -1,0 +1,45 @@
+{
+  "base": "7b148906263da5ea8aabc5ddb0e2e44ff2288ecc",
+  "files": 96,
+  "local": 50,
+  "candidate_source_files": 16,
+  "tracked_local_exact_base": 32,
+  "frozen_task_docs": [
+    {
+      "path": ".claude/tasks/unimem-block-access/research.md",
+      "sha256": "a0fad47ecdd3014096295e5d82faaeb7f22c31977ed2b698b98d6702f2e898b6"
+    },
+    {
+      "path": ".claude/tasks/unimem-block-access/plan.md",
+      "sha256": "009acda60798f2d819c011723ab98b6a49c049d7d5b90f9fafaaad74c17cd5b6"
+    }
+  ],
+  "primary_manifest_sha256": "2cc06f416881bf4593c6c96fb2e719f05e9cfb642ba60215eafe0fe4f2b2e422",
+  "instruction_words": 337,
+  "brief_bytes": 928310,
+  "brief_sha256": "401074a4ce894a1405655942f11225e414a665f25e0016146bb0942a4646bedd",
+  "inputs_sha256": "1ae4a8562fa88f30e4a698636e54ae8ef96d6da346fc05c67479edd36417f85c",
+  "script_sha256": "38daf75d9b022d80f8123e5f8f3c4d76dd694a6ebf463f346d0a26957724a818",
+  "external_receipt": "/tmp/unimem-dependent-candidate.DU0t4L/README.md",
+  "external_freeze": [
+    {
+      "path": "README.md",
+      "sha256": "bec182afb0c04e18583b25f6e42c5553b22c04acc5b4e7ddf58c097c13aaba79"
+    },
+    {
+      "path": "SHA256SUMS",
+      "sha256": "7a8afd984de59d7d1d326816c79ed603259229b580b69955728f9b4f263ec4e8"
+    },
+    {
+      "path": "comparison.json",
+      "sha256": "edbb9c5b23134f41d7c32f6dca44c18f2661d9253d01a8594f29fb5a2a55ec6e"
+    },
+    {
+      "path": "verification.json",
+      "sha256": "dc1527fbbe12fa7c0553d82ae2e309a8138bf22d0b610566a9414718916db595"
+    }
+  ],
+  "external_baseline_manifest_sha256": "d2f7485eb0e59b06025b3301e53e5d23bc05ea35fa005656325b6718f16db5d2",
+  "native_manifest_sha256": "01a13098cdcea78a290a08c2c5476066cc1710f531f7ec293a732266fd1cae7c",
+  "reviewer_invoked": false
+}

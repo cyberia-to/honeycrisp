@@ -1,0 +1,160 @@
+# Independent PLAN v3 review — unimem raw Block access
+
+**Base:** `7b148906263da5ea8aabc5ddb0e2e44ff2288ecc`
+**Reviewed:** research `a0fad47e…`, plan `009acda6…`, in-repo source at base, pinned external consumer source, Apple/SDK/XNU primary excerpts, complete 157-file caller inventory + scan scripts, `start_warm` supplement, parent-baseline gate receipts + `diagnostics.nu`, dependent-baseline README, historical v2 verdict (as evidence only).
+**Method:** source-and-evidence reading. No commands, no tools, no inherited approval. The v2 REQUEST CHANGES is treated as a claim to test, not an authority.
+
+---
+
+## VERDICT: APPROVE
+
+C1 and R2–R4 are resolved, and in two cases the correction **overturned the v2 reviewer's own factual assertions using observation** rather than accepting them — which is the right outcome. I found no blocker in the revised whole design. Eight non-blocking findings for the CODE stage are listed at the end.
+
+---
+
+## C1 — lint reachability: resolved, and v2's suggestions were wrong
+
+v2 proposed two alternatives on the assumption that each would be green. PLAN v3 **ran both on the exact parent** and both fail:
+
+| v2 suggestion | Observed parent result | Why v2 was wrong |
+|---|---:|---|
+| `clippy -p unimem -p aruminium -p rane --all-targets -- -D warnings` (v2: "path dependencies are built, not linted with `-D`") | `clippy-owned` exit **101**, same acpu diagnostics | `cargo clippy -p X` lints X *and its path dependencies* unless `--no-deps` is passed. Package selection alone does not stop acpu masking. |
+| workspace `--all-targets -- -W warnings` (v2: "expected exit 0") | `clippy-warnings` exit **101**: 4 acpu warnings, **36 E0433** in aruminium benchmark targets, 2 failure notes | Pre-existing auto-discovered benchmark targets do not compile — standalone `aruminium.rs` has too many leading `super`, `wgpu_bench.rs` lacks wgpu/pollster. |
+
+The actual fix is two **observed-green** gates that reach the changed code:
+
+- `clippy -p unimem -p aruminium --lib --no-deps --locked --offline -- -D warnings -D clippy::missing_safety_doc` → exit 0. Retained stderr shows `Checking unimem` / `Checking acpu` / `Checking aruminium`: `--no-deps` builds acpu without linting it, and the two selected libs are the linted set.
+- `clippy -p unimem -p aruminium -p rane --tests --no-deps --locked --offline --message-format=json -- -W warnings` → exit 0 with exactly eight pre-existing `needless_range_loop` at `rane/tests/hardware.rs:49/140/187`, `rane/tests/integration.rs:37/43`, `aruminium/tests/integration.rs:30/35/52`.
+
+I verified reachability of all eight newly-unsafe functions against the selection:
+
+| Function | Crate / target | Reached by `--lib --no-deps` |
+|---|---|:-:|
+| `Block::as_bytes`, `as_bytes_mut`, `as_f32`, `as_f32_mut`, `as_u16`, `as_u16_mut` | unimem lib (`src/block.rs`) | ✓ |
+| `Tape::warm` | unimem lib (`src/tape.rs`) | ✓ |
+| `Gpu::wrap` | aruminium lib (`src/device.rs`) | ✓ |
+
+And I confirmed no `allow` suppresses the lint on any of those paths: `unimem/src/lib.rs` has no crate-level allow; `unimem/src/ffi.rs`'s allow list is `non_camel_case_types, non_upper_case_globals, non_snake_case, dead_code` (and is a different module); `aruminium/src/lib.rs`'s list is `non_camel_case_types, non_upper_case_globals, non_snake_case, clippy::missing_transmute_annotations`; the only `clippy::missing_safety_doc` allow in the tree is module-scoped in `aruminium/src/ffi/mod.rs`, which contains none of the eight. Both `Block`/`Tape` and `Gpu` are `pub` in `pub mod`s, so the lint applies on the candidate.
+
+The selection is also correctly *minimal*: rane's lib is absent from the strict gate because `Program::run_direct` was already unsafe with a `# Safety` section; rane is present in the `--tests` gate because `rane/tests/hardware.rs` is a changed fixture.
+
+Both red gates are retained with the required honest framing — "Failure can mask targets, so no full-workspace lint coverage is inferred from a matching failed set" — plus multiset comparison via `diagnostics.nu` (target/kind/code/message, source text, child messages, **duplicate counts** preserved; coordinates excluded from keys only, retained in `diagnostics.json`), and a separate per-code/location comparison of the retained `-D` stderr. That is strictly what v2 asked for, with the masking fact stated rather than implied.
+
+---
+
+## R2 — `start_warm` inventory: resolved, and v2's line numbers were stale
+
+v2 asserted two call sites (`layout.rs:36`, `roundtrip.rs:275`). The v3 scripted scan over all 157 exact-source files — with a hash-equality assertion against the original inventory before reporting — finds **five** calls plus one definition:
+
+`benches/alloc.rs:7`, `benches/bandwidth.rs:41`, `examples/pipeline.rs:267`, `src/layout.rs:28`, `tests/roundtrip.rs:271`; definition at `src/tape.rs:35`.
+
+I verified `layout.rs:28` by counting the supplied file (2 use lines, blank, 6 doc lines, struct 10–14, blank, `impl` 16, 5 doc lines, `pub fn new(` 22, three params, `) -> Result` 26, `Ok(Layout {` 27, `weights: Tape::start_warm(weights_size)?,` **28**). v2's `:36` is off by eight. v2 also missed three sites entirely (two benches, one example).
+
+The semantic correction is precise and matters: the 26 changed-API calls include the `warm()` invocation **inside** `start_warm` at `tape.rs:37`, and exclude calls **to** `start_warm` because `_` is a word character, so `\bwarm\b` cannot match inside the longer identifier. Research states exactly this. Since `start_warm`'s signature is unchanged, its five callers need no edit; only its body gains `let mut tape` and an `unsafe` block, and its fresh-unpublished-local proof is genuine (no aliases, no takes issued, no device access).
+
+---
+
+## R3 — duplicate unprovenanced table: resolved with the stronger option
+
+I confirmed the duplication from the supplied spec: README §Layer 1's "Measured performance (from experiment)" table carries 4 KB / 1 MB / 16 MB / 256 MB with `18/15/17/20 us` and `22.8–23.6 GB/s`, and README:460's verified-experiments row repeats `~20us alloc, ~23 GB/s write` alongside the "contiguous VM region" claim. Same numbers, same absent provenance.
+
+v3 moves **both** verbatim to the owner audit, and additionally takes the adjacent projection sentence ("With NEON/AMX: 60-70+ GB/s expected") — a correct catch, since that extrapolation rides entirely on the unprovenanced table. Inspecting the tracked probe directory found only `Cargo.toml`/lock/source with no raw output, machine or run revision; `1d1b866d` is an import revision, not a run revision. The plan refuses to substitute a fresh measurement for either claim.
+
+The scope line ("Other unrelated performance sections stay outside this access repair") is adequate under v2's own stated test: the moved material is the material whose adjacent row carries the single-VM-region claim this unit repairs. README §Performance targets is forward-looking, and api-sketch's benchmark table carries capability rows (`pinned`, `HW shared`) rather than region/aliasing claims. A bounded exclusion, not silence.
+
+---
+
+## R4 — lock claim: resolved to exactly what the source proves
+
+The pack contains no IOSurfaceRef.h lock-options documentation, so a general "IOSurfaceLock is not a fence" claim would be unsupported. The restated claim is source-provable: `creation.rs` calls `IOSurfaceLock(surface.raw(), 0, null)` exactly once in `open` and sets `locked = true`; `Block::drop` → `unlock_and_release` unlocks once then releases once; no accessor contains a lock call. Research now says "Creation locks once and drop unlocks once; no lock/unlock occurs around a typed view, so Block performs no per-access synchronization. This is a source claim, not a universal statement about IOSurfaceLock's API semantics."
+
+Keeping this Block-specific is the right call: `rane/src/surface.rs` *does* lock/unlock around each `read`/`write`, so the two crates have genuinely different lock disciplines, and the plan avoids conflating them.
+
+---
+
+## Independent verification of the revised whole design
+
+### The defect and the minimality of the repair
+
+`block.rs:189` is `pub fn as_bytes_mut(&self) -> &mut [u8]` with `#[allow(clippy::mut_from_ref)]`, and `Block` is `Send + Sync`. Two successive calls yield two live `&mut [u8]` over identical bytes — UB from safe code, no `unsafe` required, across threads. Separately, `creation.rs` performs create → extent check → lock → base-address/alignment/wrap checks → `GetID` and **writes no bytes**, so every returned view also violates `from_raw_parts[_mut]`'s initialized-values requirement.
+
+After the change, the boundary is complete for Block memory: `Block` otherwise exposes only `address() -> *mut u8` and `handle()`; `Tape::block() -> &Block` cannot produce a mutable view at all (the three mutable accessors need `&mut Block`) and needs `unsafe` for the immutable three; `Layout` reaches Block only through `&Tape`; `Grid` exposes a raw pointer and already-unsafe `Cell::bytes`. I found no `Deref`/`AsRef`/`Index` impl on `Block` or `Tape` that would leak a slice — `Drop` is the only trait impl on `Block`.
+
+`Gpu::wrap(&self, &Block)` is today a safe wrapper over already-unsafe `buffer_wrap`, discharging none of its three documented preconditions. Marking it unsafe is correct.
+
+### Initialization and aliasing contract
+
+The contract matches the code exactly. Typed extents: `as_f32` → `size/4` elements = `floor(size/4)*4` bytes; `as_u16` → `size/2`. Creation proves 4-byte alignment (`align_of::<f32>().max(align_of::<u16>())`), which satisfies both; `checked_size` enforces `isize::try_from`; `address.checked_add(actual).is_none()` rejects wraparound. So pointer validity, alignment and length representability hold, leaving exactly initialization and exclusion — which is what the contract addresses. "All u8/u16/f32 bit patterns are valid once initialized" is correct for all three types.
+
+The sharpest clause is the one that names the actual bug shape in the existing fixtures: "Constructing a view to call len/as_ptr, or slicing it afterward, does not waive initialization." `block_cross_view_f32_bytes` does `b.as_f32_mut()[0] = val` — the UB is at whole-view construction over 4096 uninitialized bytes, not at the index. Requiring `address().write_bytes(0, size())` on the **actual** extent (which includes row padding spanned by the views) before any view is the only test shape that distinguishes "initialized" from "we happened to read the prefix we wrote."
+
+### Page / single-VM-region compatibility
+
+`metal-no-copy.md` requires a page-aligned pointer, a length "that results in a page-aligned region of memory", and — marked **Important** — that "The existing memory allocation needs to exist within a single virtual memory (VM) region." `iosurface-base.md` and `iosurface-size.md` mention neither, so declining to infer a universal single-region IOSurface guarantee is correct. `getpagesize(3)` states the returned size "is a system page size and may not be the same as the underlying hardware page size", which justifies the runtime query over `tape.rs`'s literal `16384`; `block_creation.rs` already declares `getpagesize()` test-locally, so there is precedent.
+
+The existing `wrap_block_vecadd` requests 1024 bytes and therefore has no page proof; the plan's "a previous successful run cannot waive the documented precondition" is the honest reading. The repair rounds the **request** upward and then **asserts** `actual % page == 0` and `address % page == 0` rather than inferring them — a failing assert beats handing Metal an illegal import. `gpu_buffer_wrap`'s current shape has two defects I confirmed (hardcoded 16384; `from_raw_parts_mut::<f32>` over freshly `std::alloc::alloc`'d memory before any write), and replacing the manual allocation with an owning page-sized Block removes both plus the fallible `dealloc` path while preserving direct raw-import/readback coverage.
+
+I recomputed the mach ABI from the supplied SDK excerpt. Under `#pragma pack(push, 4)`: `protection@0, max_protection@4, inheritance@8, offset@12, user_tag@20, ref_count@24, shadow_depth@28, external_pager@30, share_mode@31, is_submap@32, behavior@36, object_id@40, user_wired_count@44, flags@46` → **48 bytes, 12 `natural_t` words, `is_submap` at byte 32**, matching `VM_REGION_SUBMAP_SHORT_INFO_COUNT_64 = 48/4 = 12`. All component typedefs are present in the pack (`vm_prot_t`=int, `vm_inherit_t`=unsigned int, `memory_object_offset_t`=unsigned long long, `boolean_t`=int, `vm_behavior_t`=int, `vm32_object_id_t`=uint32_t, `natural_t`=unsigned int).
+
+From the pinned XNU `vm_map_region_recurse_64`: `*count < SHORT_INFO_COUNT_64 → KERN_INVALID_ARGUMENT`, and `original_count < V0_COUNT_64` selects short-info and sets `*count = 12`; the descent `break` under `depth = u32::MAX` can only be the leaf, so `short_info->is_submap = 0`; and the returned range is clamped by both `curr_entry->vme_{start,end}` and the enclosing submap windows, making it a **subset** of the leaf mapping — so containment is conservative and can only over-reject. The `mach_vm.h:299–313` declaration has no `object_name` out-parameter, so no send right is created. The one path returning `is_submap = 0` without a real mapping is the purgeable-footprint fake region, reachable only when the address is unmapped, and it returns `vm_map_last_entry(map)->vme_end` which containment rejects. RW is correctly scoped as a fixture need, not a Metal precondition.
+
+The plan closes the query→import TOCTOU window by construction ("Locals retain the fresh mapping through import/use/drop, without remap or external aliases") rather than claiming the query is a guarantee, and states "This establishes these fixtures' current mapping, not a universal IOSurface single-region promise."
+
+### Retained lifetime and completion
+
+The three Apple sources support the rule in **both** directions: writes must finish "before you commit a command buffer that references it. Otherwise, the GPU may begin reading the buffer instance while the CPU is still writing to it"; and "After the command buffer completes … Metal performs any necessary steps to make sure the CPU can see them", with `waitUntilCompleted` blocking until GPU work and completion handlers finish. That properly supersedes `buffer.rs:55–58`'s `dmb ish` prescription, which establishes neither GPU completion nor Rust alias exclusion. Documentation-only, with signature and behavior unchanged, and scoped away from Metal 4 / managed / private / ANE.
+
+The fixture discipline closes a real hole: `Commands::drop` releases without waiting, so submit-without-wait leaves work in flight while owners may drop. The plan requires "After submit, wait comes before every assertion, error return or owner drop, **even on GPU failure**" — the "even on GPU failure" clause closes the `?` early-return path. `STATUS_COMPLETED = 4` and `error()` both exist in `command.rs`, so the status/error assertions are implementable. Declaration-order drop (Blocks declared before Buffers/Commands) gives the needed reverse-order teardown.
+
+ANE is handled honestly: `run_direct` is already unsafe and synchronous, and the plan records the existing private-API success-implies-completion assumption as **inherited and flagged** rather than laundering it into a proof.
+
+### Meaningful compiler and native tests
+
+The four error codes are the right ones, and both NLL precautions are necessary rather than decorative: without the surrounding `unsafe`, E0133 would win and the intended E0596/E0499/E0502 would never be emitted; without using both borrows afterward, NLL would end the first borrow before the second begins and the test would silently compile. Nightly-pinned `--doc` is required because stable rustdoc ignores the `EXXXX` in `compile_fail,EXXXX`; `BlockPlan`'s existing `compile_fail,E0451` / `E0599` establish the pattern and the parent receipt the methodology. Compile-negative cases taking arguments means no hardware is needed.
+
+The `warm` test is the strongest native oracle in the plan: bytes outside the stride offsets unchanged, only those offsets zeroed, `used`/`free` preserved. That fails on a stride change, an off-by-one in the tail write, an accidental whole-buffer memset, or a cursor mutation. I verified `warm`'s bounds hold as described — for `i < total/page`, `i*page < total`; the tail write runs only when `total % page != 0`, where `pages*page < total`.
+
+The plan also correctly keeps endpoint-only raw tests endpoint-only, so no 256 MiB memset is introduced: `block_large` and `large_extent_equality_and_initialized_endpoints` form no typed view, and `native_alignment_extent_and_raw_row_boundaries` already writes every actual byte `0xA5` before its three read views — the one existing test whose precondition already holds, preserved rather than rewritten.
+
+### Source compatibility and external consumers
+
+I checked all five causal claims against pinned source and all five are right:
+
+- **xena** — `as_u64_mut(&mut self)`/`as_bytes_mut(&mut self)` over an owned field: `unsafe` alone compiles, but the whole 544 KB view is formed before stage-1 fill. `xena-gpu::run(&self, block: &Block)` wraps a **shared** Block while the GPU writes. Classified exactly that way.
+- **erga** — `ZeroCopyBuf::as_bytes_mut(&self)` and `RTable::build_parallel(&self)` both reach `self.block.as_bytes_mut()`; receiver redesign, not annotation. Both structs declare `buffer` before `block` (favourable drop order), which research notes does not establish init/exclusion/completion.
+- **bita** — `mine_range(&self) → self.hits_block.as_bytes_mut()`; receiver redesign. The struct declares `hits_block: Block` **before** `hits_buf: ArBuffer`, so the Block releases first — the unfavourable order research flags. `mine_range_async` returns a `GpuFuture` after the `&self` borrow ends, so ownership and completion are decoupled.
+- **mir** — non-Apple `gpu.rs` calls `block.alloc_size()`, absent from this `Block`; a pre-existing compile blocker, plus the dependent baseline's pre-existing `E0599 Gpu::sync` on the Apple arm.
+- **bbg** — `rs/Cargo.toml:30–34` declares the `backend-unimem` cfg for linting with neither feature nor dependency wired, so no executed-feature claim is possible.
+
+The causal table separating "change-caused compiler obligation" from "independent existing safety/build gap", plus "No external unsafe annotation is accepted as proof or applied by this task", is the correct discipline: adding `unsafe` to erga/bita would make them compile while leaving them unsound, which is worse than a red build.
+
+semver treatment is appropriately sceptical: the parent Block receipt records that semver-checks **missed** four raw-FFI breaks that compiler probes caught, so "retain source compiler witnesses if the tool misses receivers" is well-founded; and "Do not claim a tag comparison when it fails to resolve historical dependencies" anticipates the nebu receipt's observed v0.2.0 failure.
+
+### Bounded scope
+
+Production touches only `unimem/src/{block,tape}.rs` and `aruminium/src/device.rs`, documentation-only in `grid.rs`/`buffer.rs`. No dependency versions, no FFI-module signatures (the `getpagesize`/`mach_vm_region_recurse` declarations are test-local), no specs/ structure change, no LICENSE, no AMX encodings, no manifests/locks/versions. I independently confirmed the two named-but-excluded Grid defects are genuine: `Cell<'a>` is not parameterized by `CELL_SIZE`/`CELLS`, so a cell from `Grid<64, 100>` can be `give`n to `Grid<64, 2>`, after which safe `take` computes `base.add(99 * 64)` and safe `Cell::address()` hands out the out-of-bounds pointer; and `Grid::new` multiplies `CELL_SIZE * CELLS` unchecked. Both are pre-existing safe-code defects, correctly identified and correctly left out of this unit. `Buffer::write(&self, |&mut [u8]|)` likewise aliases under concurrent calls — named, pre-existing, excluded, and explicitly not made sound by assertion.
+
+---
+
+## Non-blocking findings for the CODE stage
+
+1. **`missing_safety_doc` is a floor, not a ceiling.** The lint checks for the presence of a `# Safety` heading, not its content. Exit 0 on that gate does not establish that any of the eight sections states the applicable duties. CODE review must read all eight against the contract text in plan §Exact API and safety boundary.
+2. **Removing `#[allow(clippy::mut_from_ref)]` is not gate-enforced.** No default lint fires on a redundant `#[allow]`, so the strict gate would pass with the allowance left in place. It is a stated step-2 verification item; confirm it in the diff.
+3. **Example/bench/probe/experiment bodies are absent from the pack.** They are represented by per-file SHA256, line count, explicit zero counts and the complete lexical-match list — which is the auditable cross-check, since any occurrence of the seven requalified names in any of the 157 files would appear there. The residual risk is a hard E0133/E0596 caught by three already-listed gates (`test --workspace`, `build --release --workspace`, the example runs). A stated evidence limitation, not a defect.
+4. **`tests/support/import_memory.rs` placement.** Auto-discovery covers `tests/*.rs` direct children only, so the support file is not a target and must be included from `integration.rs` as planned. If it ever moves to `tests/import_memory.rs` it becomes a target with no `#[test]`.
+5. **"no new *unexplained* finding" on the `--tests -W` gate is slightly soft.** Mandatory per-difference inspection and duplicate-count preservation compensate; consider recording any new finding explicitly in the receipt rather than resolving it as explained in prose.
+6. **Restate the region query's TOCTOU bound in the audit receipt**, so no later reader mistakes `mach_vm_region_recurse` success for a persistent guarantee. The plan already bounds it; the receipt should carry the same sentence.
+7. **roundtrip.rs budget is tight.** Base 450; six migrated tests gaining init plus `unsafe` projects to roughly 470–486. The pre-authorized escape hatch (move the four Block typed-view tests to `block_access.rs`) should be used rather than crowding the 500-line cap.
+8. **`aruminium/tests/integration.rs` remains 1078 lines**, over the 500-line cap. Correctly disclosed as pre-existing and as a narrow migration. Do not let the migration grow it materially without a separate split task.
+
+---
+
+## Explicit non-certifications
+
+- **No global safety claim.** unimem/aruminium/rane are not certified sound. Left open and named as **pre-existing** defects: `Grid::give`/`take` foreign-index arithmetic, `Grid::new` unchecked multiply, `Tape::take`/`clear` retention and argument arithmetic, `Buffer::as_bytes`/`read`/`write`/`contents_ptr` aliasing and in-flight reads, and the ANE `evaluateWithQoS:…` completion assumption.
+- **No all-green rings.** Parent `fmt` (exit 1, aruminium benchmark formatting), workspace `-D warnings` (exit 101, four observed acpu diagnostics with possible masking) and workspace `-W warnings` (exit 101, 36 E0433 in benchmark targets) stay red and attributed. The dependent baseline is exact-parent only; mir `E0599 Gpu::sync` / missing `alloc_size`, bbg's unwired backend, evy's resolver failure, and the unavailable nika/trisha/cyb closures are pre-existing or incomplete-setup observations, and its bounded/filtered test runs are not full-workspace passes.
+- **No release authorization.** Implementation, review/fix and ordinary source merges only. No version bump, release, tag, pin, crates.io publish or `make ship`.
+- **No Kadek row6 closure** and no decided compatibility verdict. The unsafe/receiver breaks in unimem/aruminium and their re-exports are intentional and reach all pinned path consumers; the merge decision rests on the per-consumer causal split, not on an undifferentiated red list.
+- **No candidate gate result.** No candidate overlay exists; `block_access.rs` and `support/import_memory.rs` are planned new tests, not omitted implementations.
+
+Fresh different-vendor **CODE** review and an audit receipt remain required after implementation.

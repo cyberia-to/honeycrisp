@@ -1,0 +1,7 @@
+{
+  "staged_source": "/tmp/unimem-native-audit-staging.5L4dJx",
+  "extracted": "/tmp/unimem-native-audit-check.SgKd0b",
+  "native_archive_sha256": "ef8b4352c9020c2022dc985d2426d30844a590dac61b658df29e80d77baeed9e",
+  "both_payload_manifests_verified": true,
+  "note": "Raw logs retain their original whitespace inside archive; no diagnostic bytes normalized"
+}

@@ -140,7 +140,14 @@ No public lock/unlock API. Lock is internal implementation detail.
 
 ### Thread safety
 
-Block is Send + Sync. After creation, all fields are immutable (ref, va, size, id never change). The lock is held for the entire lifetime — no mutable state, no data races. Multiple threads can read VA concurrently.
+Block is Send + Sync as an owning mapping. Its six byte/u16/f32 views are unsafe;
+mutable views require `&mut Block`. Initialize the entire returned extent, including
+padding, before forming any view, even for len/pointer inspection. Byte views
+cover `size()`; typed views cover `floor(size()/sizeof(T))*sizeof(T)` bytes.
+Exclude overlapping CPU/raw/device writes for shared borrows and all conflicting
+access for mutable borrows, across threads and retained imports. Establish prior
+device completion and visibility before CPU access. The creation-time lock lasts
+until drop; Block performs no lock/unlock or synchronization around typed access.
 
 ### Operations
 
@@ -153,23 +160,16 @@ Block is Send + Sync. After creation, all fields are immutable (ref, va, size, i
 | handle | — | IOSurfaceRef | inline, 0ns | raw handle for ANE (rane) / GPU (Metal) integration |
 | drop | — | — | ~5us | IOSurfaceUnlock + CFRelease |
 
-### Measured performance (from experiment)
-
-| Size | Alloc | Write throughput | Read throughput |
-|------|-------|-----------------|----------------|
-| 4 KB | 18 us | 22.8 GB/s | 22.8 GB/s |
-| 1 MB | 15 us | 23.6 GB/s | 23.5 GB/s |
-| 16 MB | 17 us | 23.6 GB/s | 18.9 GB/s |
-| 256 MB | 20 us | 23.1 GB/s | 19.5 GB/s |
-
-Throughput measured with volatile u64, single thread, no SIMD. With NEON/AMX: 60-70+ GB/s expected.
+Historical experiment claims and their provenance limits are preserved in the
+[access audit](../../audit/2026-10-10-unimem-block-access/README.md#historical-iosurface-claims).
 
 ### Invariants
 
 - Allocation is lazy — kernel reserves VA space, pages backed on first touch
 - First-touch page fault: ~1000-1200ns per 16KB page
-- All IOSurfaces map as single contiguous VM region
-- Block is Send + Sync (immutable after creation, lock held for lifetime)
+- Raw Metal import requires a per-mapping proof of runtime VM-page alignment and
+  complete actual-extent containment within one VM region.
+- Block is Send + Sync; typed CPU access obeys the unsafe borrow contract above.
 - Drop sequence: IOSurfaceUnlock → CFRelease — no leaks
 - open(0) returns error (ZeroSize)
 - Size/alignment failures and returned native null/lock errors return `MemError`.
@@ -200,7 +200,9 @@ Atomic bump pointer over Block. Allocation = compare-exchange loop with alignmen
 
 ### Thread safety
 
-Tape is Send + Sync. Block is immutable (Send + Sync). Cursor is atomic. Multiple threads can take concurrently via compare_exchange loop.
+Tape is Send + Sync with an atomic cursor. Raw takes retain no borrow or
+initialization proof. Unsafe `warm(&mut self)` requires exclusive access to its
+writes; safe `start_warm` operates on a fresh, unpublished Tape.
 
 ### Alloc algorithm
 
@@ -237,7 +239,10 @@ compare_exchange chosen over fetch_add because:
 
 - Take is lock-free — compare_exchange_weak, no mutex, no syscall
 - Alignment: must be power of 2. Minimum 1, recommended 64 for AMX SIMD
-- Apple Silicon kernel pages are 16KB (not 4KB)
+- Warm writes one zero byte at offsets 0,16384,… below total, independently of
+  runtime VM page size. It preserves the cursor and leaves other bytes unchanged.
+  Callers exclude conflicting CPU/raw/device access and live values invalidated
+  by those writes; warming does not initialize the whole allocation.
 - start(0) returns error (ZeroSize)
 - no_std compatible core logic (only depends on atomic ops + pointer arithmetic)
 - Clear does NOT zero memory — caller responsible if needed
@@ -457,7 +462,6 @@ DART IOVA:       [0x1000] [0x2000] [0x3000] [0x4000]  contiguous for device
 
 | Finding | Source |
 |---------|--------|
-| IOSurface: pinned, contiguous VM region, ~20us alloc, ~23 GB/s write | experiments/iosurface_probe |
 | Hypervisor: hv_vm_map does NOT improve host access latency (~10ns unchanged) | experiments/hyp_probe |
 | Hypervisor: minimum 16KB pages on Apple Silicon | experiments/hyp_probe |
 | Hypervisor: GPU/ANE cannot see guest IPA — useless for hardware sharing | audit |

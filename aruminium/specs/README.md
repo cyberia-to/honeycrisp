@@ -44,7 +44,7 @@ source  ->  compile  ->  pipeline  ->  encode  ->  commit  ->  complete
 | buffer_private | `(&self, bytes) -> Result<Buffer>` | allocate private buffer (GPU-only) |
 | buffer_with_data | `(&self, &[u8]) -> Result<Buffer>` | shared buffer with initial data |
 | buffer_wrap | `unsafe (&self, *mut c_void, usize) -> Result<Buffer>` | zero-copy wrap of caller-owned page-aligned memory |
-| wrap | `(&self, &Block) -> Result<Buffer>` | zero-copy wrap of a `unimem::Block` |
+| wrap | `unsafe (&self, &Block) -> Result<Buffer>` | zero-copy wrap of a `unimem::Block` |
 | compile | `(&self, &str) -> Result<ShaderLib>` | compile MSL source |
 | pipeline | `(&self, &Shader) -> Result<Pipeline>` | create compute pipeline |
 | texture | `(&self, desc) -> Result<Texture>` | create texture from descriptor (unsafe) |
@@ -52,6 +52,15 @@ source  ->  compile  ->  pipeline  ->  encode  ->  commit  ->  complete
 | event | `(&self) -> Result<Event>` | create event |
 | shared_event | `(&self) -> Result<SharedEvent>` | create shared event |
 | as_raw | `(&self) -> ObjcId` | raw MTLDevice |
+
+Both import methods require the actual pointer and size to be runtime VM-page
+aligned and the complete backing extent to lie within one VM region. Pass the
+actual extent unchanged; Block creation alone does not establish import compatibility.
+Keep backing alive through Buffer lifetime and all encoded/in-flight uses.
+Initialize every byte exposed by CPU views and exclude conflicting CPU/raw/device
+aliases and Rust references. With shared MTLCommandBuffer storage, finish CPU
+writes before commit; wait for completion and check success before CPU readback.
+Import retains no backing owner and performs no wait.
 
 ### apple mapping
 

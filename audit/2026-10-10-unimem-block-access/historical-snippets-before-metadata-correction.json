@@ -1,0 +1,6 @@
+{
+  "source": "7b148906263da5ea8aabc5ddb0e2e44ff2288ecc:unimem/specs/README.md",
+  "source_sha256": "82f12c6ec24a7ee6802ffbf15e43c33957d8e7f7b3a673159de5b8aa6b5960df",
+  "table_verbatim": "### Measured performance (from experiment)\n\n| Size | Alloc | Write throughput | Read throughput |\n|------|-------|-----------------|----------------|\n| 4 KB | 18 us | 22.8 GB/s | 22.8 GB/s |\n| 1 MB | 15 us | 23.6 GB/s | 23.5 GB/s |\n| 16 MB | 17 us | 23.6 GB/s | 18.9 GB/s |\n| 256 MB | 20 us | 23.1 GB/s | 19.5 GB/s |\n\nThroughput measured with volatile u64, single thread, no SIMD. With NEON/AMX: 60-70+ GB/s expected.\n\n",
+  "row_verbatim": "| IOSurface: pinned, contiguous VM region, ~20us alloc, ~23 GB/s write | experiments/iosurface_probe |"
+}
