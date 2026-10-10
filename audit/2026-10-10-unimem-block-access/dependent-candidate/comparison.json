@@ -1,0 +1,2748 @@
+[
+  {
+    "repo": "mir",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/mir/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/mir/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: cannot update the lock file /private/tmp/unimem-dependent-baseline.cX82Mt/scenarios/mir/source/mir/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: cannot update the lock file /private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/mir/source/mir/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "erga",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: cannot update the lock file /private/tmp/unimem-dependent-baseline.cX82Mt/scenarios/erga/source/erga/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: cannot update the lock file /private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga/source/erga/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "xena",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/xena/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/xena/metadata-default.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/honeycrisp/unimem/Cargo.toml"
+      },
+      {
+        "name": "xena-bench",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/xena/crates/xena-bench/Cargo.toml"
+      },
+      {
+        "name": "xena-gpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/xena/crates/xena-gpu/Cargo.toml"
+      },
+      {
+        "name": "xena-hash",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/xena/crates/xena-hash/Cargo.toml"
+      },
+      {
+        "name": "xena-reference",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/xena/source/xena/reference/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "bita",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: cannot create the lock file /private/tmp/unimem-dependent-baseline.cX82Mt/scenarios/bita/source/bita/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: cannot create the lock file /private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita/source/bita/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "glia",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/glia/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/glia/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: cannot create the lock file /private/tmp/unimem-dependent-baseline.cX82Mt/scenarios/glia/source/glia/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: cannot create the lock file /private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia/source/glia/Cargo.lock because --locked was passed to prevent this"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "zoya",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/zoya/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/zoya/metadata-default.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "progpow",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/zoya/crates/progpow/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/honeycrisp/unimem/Cargo.toml"
+      },
+      {
+        "name": "worker",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/zoya/crates/worker/Cargo.toml"
+      },
+      {
+        "name": "zoya",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/zoya/source/zoya/crates/zoya/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "evy",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/evy/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/evy/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: failed to select a version for `bbg`."
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: failed to select a version for `bbg`."
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "trisha",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/trisha/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/trisha/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: failed to load source for dependency `tasm-lib`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: failed to load source for dependency `tasm-lib`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "cyb",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/cyb/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/cyb/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: failed to load manifest for workspace member `/private/tmp/unimem-dependent-baseline.cX82Mt/scenarios/cyb/source/cyb/core`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: failed to load manifest for workspace member `/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/cyb/source/cyb/core`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "nika",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/nika/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/nika/metadata-default.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: failed to load source for dependency `chaff`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error: failed to load source for dependency `chaff`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "perla",
+    "label": "metadata-after-fetch",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/perla/metadata-after-fetch.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/perla/metadata-after-fetch.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "perla-gpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-gpu/Cargo.toml"
+      },
+      {
+        "name": "perla-honeycrisp",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-honeycrisp/Cargo.toml"
+      },
+      {
+        "name": "perla-miner",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-miner/Cargo.toml"
+      },
+      {
+        "name": "perla-pow",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-pow/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "perla",
+    "label": "metadata-gpu",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline",
+      "--features",
+      "perla-pow/gpu"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/perla/metadata-gpu.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/perla/metadata-gpu.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "perla-gpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-gpu/Cargo.toml"
+      },
+      {
+        "name": "perla-honeycrisp",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-honeycrisp/Cargo.toml"
+      },
+      {
+        "name": "perla-miner",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-miner/Cargo.toml"
+      },
+      {
+        "name": "perla-pow",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/perla/crates/perla-pow/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/perla/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "bita-localresolved",
+    "label": "metadata-default",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita-localresolved/metadata-default.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita-localresolved/metadata-default.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "rbtc-consensus",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-consensus/Cargo.toml"
+      },
+      {
+        "name": "rbtc-crypto",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-crypto/Cargo.toml"
+      },
+      {
+        "name": "rbtc-hash5",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-hash5/Cargo.toml"
+      },
+      {
+        "name": "rbtc-mempool",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-mempool/Cargo.toml"
+      },
+      {
+        "name": "rbtc-miner",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-miner/Cargo.toml"
+      },
+      {
+        "name": "rbtc-net",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-net/Cargo.toml"
+      },
+      {
+        "name": "rbtc-node",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-node/Cargo.toml"
+      },
+      {
+        "name": "rbtc-primitives",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-primitives/Cargo.toml"
+      },
+      {
+        "name": "rbtc-psbt",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-psbt/Cargo.toml"
+      },
+      {
+        "name": "rbtc-script",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-script/Cargo.toml"
+      },
+      {
+        "name": "rbtc-storage",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-storage/Cargo.toml"
+      },
+      {
+        "name": "rbtc-sync",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-sync/Cargo.toml"
+      },
+      {
+        "name": "rbtc-wallet",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-wallet/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "bita-localresolved",
+    "label": "metadata-metal",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline",
+      "--features",
+      "rbtc-hash5/metal-gpu"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita-localresolved/metadata-metal.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita-localresolved/metadata-metal.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "rbtc-consensus",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-consensus/Cargo.toml"
+      },
+      {
+        "name": "rbtc-crypto",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-crypto/Cargo.toml"
+      },
+      {
+        "name": "rbtc-hash5",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-hash5/Cargo.toml"
+      },
+      {
+        "name": "rbtc-mempool",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-mempool/Cargo.toml"
+      },
+      {
+        "name": "rbtc-miner",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-miner/Cargo.toml"
+      },
+      {
+        "name": "rbtc-net",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-net/Cargo.toml"
+      },
+      {
+        "name": "rbtc-node",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-node/Cargo.toml"
+      },
+      {
+        "name": "rbtc-primitives",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-primitives/Cargo.toml"
+      },
+      {
+        "name": "rbtc-psbt",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-psbt/Cargo.toml"
+      },
+      {
+        "name": "rbtc-script",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-script/Cargo.toml"
+      },
+      {
+        "name": "rbtc-storage",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-storage/Cargo.toml"
+      },
+      {
+        "name": "rbtc-sync",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-sync/Cargo.toml"
+      },
+      {
+        "name": "rbtc-wallet",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/bita/crates/rbtc-wallet/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/bita-localresolved/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "perla",
+    "label": "check-workspace-gpu",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--features",
+      "perla-pow/gpu",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/perla/check-workspace-gpu.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/perla/check-workspace-gpu.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "zoya",
+    "label": "check-workspace",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/zoya/check-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/zoya/check-workspace.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "xena",
+    "label": "check-workspace",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/xena/check-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/xena/check-workspace.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error[E0608]: cannot index into a value of type `()`",
+        "error[E0608]: cannot index into a value of type `()`",
+        "error: could not compile `xena-bench` (bin \"xena-gpu-debug\") due to 2 previous errors"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings (run `cargo fix --lib -p xena-hash` to apply 2 suggestions)",
+        "warning: `xena-hash` (lib test) generated 2 warnings (2 duplicates)",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9",
+        "   --> crates/xena-bench/src/gpudebug.rs:192:35",
+        "   --> crates/xena-bench/src/gpudebug.rs:195:39"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error: could not compile `xena-hash` (lib) due to 2 previous errors; 2 warnings emitted"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/scratchpad.rs:34:21",
+        "  --> crates/xena-hash/src/scratchpad.rs:42:21",
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "glia-localresolved",
+    "label": "metadata-after-fetch",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/glia-localresolved/metadata-after-fetch.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/glia-localresolved/metadata-after-fetch.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia-localresolved/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia-localresolved/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "import",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia-localresolved/source/glia/import/Cargo.toml"
+      },
+      {
+        "name": "run",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia-localresolved/source/glia/run/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/glia-localresolved/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "bita-localresolved",
+    "label": "check-workspace-metal",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--features",
+      "rbtc-hash5/metal-gpu",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita-localresolved/check-workspace-metal.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita-localresolved/check-workspace-metal.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `k256::ecdsa::signature::hazmat::PrehashSigner`",
+        "warning: `rbtc-crypto` (lib) generated 1 warning (run `cargo fix --lib -p rbtc-crypto` to apply 1 suggestion)",
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: function `echo512_full` is never used",
+        "warning: `rbtc-hash5` (lib) generated 7 warnings (run `cargo fix --lib -p rbtc-hash5` to apply 2 suggestions)",
+        "warning: unused import: `nbits_to_target`",
+        "warning: `rbtc-consensus` (lib) generated 1 warning (run `cargo fix --lib -p rbtc-consensus` to apply 1 suggestion)",
+        "warning: unused import: `k256::elliptic_curve::sec1::ToEncodedPoint`",
+        "warning: unused import: `PrimeField`",
+        "warning: `rbtc-wallet` (lib) generated 2 warnings (run `cargo fix --lib -p rbtc-wallet` to apply 1 suggestion)",
+        "warning: unused import: `Write`",
+        "warning: unused variable: `n`",
+        "warning: field `fee_rate` is never read",
+        "warning: `rbtc-mempool` (lib) generated 3 warnings (run `cargo fix --lib -p rbtc-mempool` to apply 2 suggestions)",
+        "warning: unused import: `Ipv4Addr`",
+        "warning: unused import: `debug`",
+        "warning: unused import: `Read`",
+        "warning: field `requested_at` is never read",
+        "warning: constant `MAX_CANDIDATE_ADDRS` is never used",
+        "warning: field `chain_sync` is never read",
+        "warning: function `socket_addr_to_ip_bytes` is never used",
+        "warning: `rbtc-net` (lib) generated 7 warnings (run `cargo fix --lib -p rbtc-net` to apply 2 suggestions)",
+        "warning: unused import: `network::Network`",
+        "warning: `rbtc-node` (bin \"fix_chain_state\" test) generated 1 warning (run `cargo fix --bin \"fix_chain_state\" -p rbtc-node --tests` to apply 1 suggestion)",
+        "warning: `rbtc-node` (bin \"fix_chain_state\") generated 1 warning (1 duplicate)",
+        "warning: unused import: `UtxoStats`",
+        "warning: unused import: `signature::hazmat::PrehashSigner`",
+        "warning: unused import: `Hrp`",
+        "warning: unused variable: `hash1`",
+        "warning: variable does not need to be mutable",
+        "warning: unused variable: `state`",
+        "warning: methods `get`, `last_checkpoint_height`, and `is_empty` are never used",
+        "warning: method `subscribe_validation_events` is never used",
+        "warning: field `cookie_path` is never read",
+        "warning: methods `cookie_path` and `delete_cookie` are never used",
+        "warning: variants `Expiry`, `SizeLimit`, `Reorg`, `Conflict`, and `Replaced` are never constructed",
+        "warning: fields `block` and `height` are never read",
+        "warning: fields `block` and `height` are never read",
+        "warning: field `txid` is never read",
+        "warning: fields `txid` and `reason` are never read",
+        "warning: fields `hash`, `height`, and `is_ibd` are never read",
+        "warning: field `best_hash` is never read",
+        "warning: methods `subscribe` and `receiver_count` are never used",
+        "warning: trait `ValidationInterface` is never used",
+        "warning: struct `ValidationSignals` is never constructed",
+        "warning: multiple associated items are never used",
+        "warning: `rbtc-node` (bin \"rbtc\") generated 18 warnings (run `cargo fix --bin \"rbtc\" -p rbtc-node` to apply 3 suggestions)",
+        "warning: unused variable: `db`",
+        "warning: unused import: `debug`",
+        "warning: method `subscribe_validation_events` is never used",
+        "warning: field `block` is never read",
+        "warning: field `hash` is never read",
+        "warning: `rbtc-node` (bin \"rbtc\" test) generated 10 warnings (3 duplicates) (run `cargo fix --bin \"rbtc\" -p rbtc-node --tests` to apply 4 suggestions)",
+        "warning: unused variable: `new`",
+        "warning: variable does not need to be mutable",
+        "warning: `rbtc-miner` (lib test) generated 1 warning (run `cargo fix --lib -p rbtc-miner --tests` to apply 1 suggestion)",
+        "warning: `rbtc-net` (lib test) generated 7 warnings (5 duplicates) (run `cargo fix --lib -p rbtc-net --tests` to apply 2 suggestions)",
+        "warning: unused import: `crate::types::ProprietaryKey`",
+        "warning: unused import: `PrimeField`",
+        "warning: unused variable: `lh_a`",
+        "warning: variable does not need to be mutable",
+        "warning: unused variable: `tx`",
+        "warning: variable does not need to be mutable",
+        "warning: `rbtc-psbt` (lib test) generated 5 warnings (run `cargo fix --lib -p rbtc-psbt --tests` to apply 5 suggestions)",
+        "warning: unused variable: `recv_spk`",
+        "warning: unused import: `rbtc_consensus::blockfilter::compute_filter_header`",
+        "warning: unused import: `rbtc_primitives::hash::Hash256`",
+        "warning: unused variable: `start`",
+        "warning: unused variable: `stop_height`",
+        "warning: unused variable: `k0`",
+        "warning: unused variable: `k1`",
+        "warning: unused variable: `m`",
+        "warning: field `network` is never read",
+        "warning: `rbtc-sync` (lib) generated 8 warnings (run `cargo fix --lib -p rbtc-sync` to apply 7 suggestions)",
+        "warning: `rbtc-wallet` (lib test) generated 2 warnings (run `cargo fix --lib -p rbtc-wallet --tests` to apply 1 suggestion)",
+        "warning: `rbtc-sync` (lib test) generated 8 warnings (8 duplicates)",
+        "warning: variable does not need to be mutable",
+        "warning: `rbtc-script` (lib test) generated 1 warning (run `cargo fix --lib -p rbtc-script --tests` to apply 1 suggestion)",
+        "warning: `rbtc-mempool` (lib test) generated 3 warnings (3 duplicates)",
+        "warning: unused import: `std::f64::consts::PI`",
+        "warning: `rbtc-consensus` (lib test) generated 1 warning (1 duplicate)",
+        "warning: `rbtc-hash5` (lib test) generated 7 warnings (6 duplicates) (run `cargo fix --lib -p rbtc-hash5 --tests` to apply 1 suggestion)",
+        "warning: unused import: `k256::ecdsa::signature::hazmat::PrehashSigner`",
+        "warning: variable does not need to be mutable",
+        "warning: `rbtc-crypto` (lib test) generated 3 warnings (1 duplicate) (run `cargo fix --lib -p rbtc-crypto --tests` to apply 1 suggestion)"
+      ],
+      "sites": [
+        "   --> crates/rbtc-crypto/src/sig.rs:184:9",
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5",
+        "   --> crates/rbtc-hash5/src/echo.rs:713:8",
+        " --> crates/rbtc-consensus/src/block_verify.rs:6:13",
+        " --> crates/rbtc-wallet/src/multisig.rs:3:5",
+        " --> crates/rbtc-wallet/src/address.rs:5:50",
+        "  --> crates/rbtc-mempool/src/persist.rs:16:27",
+        "   --> crates/rbtc-mempool/src/fee_estimator.rs:211:13",
+        "   --> crates/rbtc-mempool/src/fee_estimator.rs:185:5",
+        "  --> crates/rbtc-net/src/addrman.rs:11:24",
+        "  --> crates/rbtc-net/src/peer.rs:10:15",
+        " --> crates/rbtc-net/src/anchors.rs:8:15",
+        "  --> crates/rbtc-net/src/block_download.rs:35:5",
+        "  --> crates/rbtc-net/src/peer_manager.rs:31:7",
+        "   --> crates/rbtc-net/src/peer_manager.rs:431:5",
+        "    --> crates/rbtc-net/src/peer_manager.rs:1924:4",
+        " --> crates/rbtc-node/src/bin/fix_chain_state.rs:5:55",
+        "  --> crates/rbtc-node/src/rpc.rs:43:83",
+        "    --> crates/rbtc-node/src/rpc.rs:2537:23",
+        "    --> crates/rbtc-node/src/rpc.rs:3078:32",
+        "   --> crates/rbtc-node/src/headers_sync.rs:418:13",
+        "   --> crates/rbtc-node/src/headers_sync.rs:448:13",
+        "   --> crates/rbtc-node/src/headers_sync.rs:448:13",
+        "  --> crates/rbtc-node/src/checkpoints.rs:52:12",
+        "   --> crates/rbtc-node/src/node.rs:188:12",
+        "  --> crates/rbtc-node/src/rpc_auth.rs:44:5",
+        "  --> crates/rbtc-node/src/rpc_auth.rs:54:12",
+        "  --> crates/rbtc-node/src/validation_interface.rs:34:5",
+        "  --> crates/rbtc-node/src/validation_interface.rs:72:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:77:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:82:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:86:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:91:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:97:9",
+        "   --> crates/rbtc-node/src/validation_interface.rs:134:12",
+        "   --> crates/rbtc-node/src/validation_interface.rs:169:11",
+        "   --> crates/rbtc-node/src/validation_interface.rs:197:12",
+        "   --> crates/rbtc-node/src/validation_interface.rs:203:12",
+        "    --> crates/rbtc-node/src/node.rs:4802:13",
+        "  --> crates/rbtc-net/src/peer.rs:10:15",
+        "   --> crates/rbtc-node/src/node.rs:188:12",
+        "  --> crates/rbtc-node/src/validation_interface.rs:77:9",
+        "  --> crates/rbtc-node/src/validation_interface.rs:91:9",
+        "    --> crates/rbtc-net/src/addrman.rs:1003:14",
+        "   --> crates/rbtc-miner/src/gbt.rs:962:17",
+        "    --> crates/rbtc-psbt/src/serialize.rs:1623:13",
+        " --> crates/rbtc-wallet/src/address.rs:5:50",
+        "    --> crates/rbtc-psbt/src/serialize.rs:1639:13",
+        "    --> crates/rbtc-psbt/src/serialize.rs:1676:13",
+        "    --> crates/rbtc-psbt/src/serialize.rs:1795:13",
+        "    --> crates/rbtc-psbt/src/serialize.rs:1948:13",
+        "    --> crates/rbtc-wallet/src/wallet.rs:7252:13",
+        "  --> crates/rbtc-sync/src/filter_header_chain.rs:16:5",
+        "   --> crates/rbtc-sync/src/filter_header_chain.rs:178:9",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:173:27",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:311:13",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:400:43",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:400:52",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:400:61",
+        "   --> crates/rbtc-sync/src/cbf_manager.rs:103:5",
+        "    --> crates/rbtc-script/src/engine.rs:2666:13",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:427:13",
+        "   --> crates/rbtc-crypto/src/sig.rs:233:9",
+        "   --> crates/rbtc-crypto/src/muhash.rs:835:13"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_pp[_]` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_f32` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `header_block` as mutable, as it is not declared as mutable",
+        "error: could not compile `rbtc-hash5` (lib) due to 18 previous errors; 6 warnings emitted"
+      ],
+      "warnings": [
+        "warning: unused import: `k256::ecdsa::signature::hazmat::PrehashSigner`",
+        "warning: `rbtc-crypto` (lib) generated 1 warning (run `cargo fix --lib -p rbtc-crypto` to apply 1 suggestion)",
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: `rbtc-hash5` (lib) generated 6 warnings",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "   --> crates/rbtc-crypto/src/sig.rs:184:9",
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:88:24",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:92:29",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:93:29",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:286:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:311:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:341:26",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:345:25",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:359:17",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "glia-localresolved",
+    "label": "check-workspace",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/glia-localresolved/check-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/glia-localresolved/check-workspace.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error[E0063]: missing field `has_attn_bias` in initializer of `TransformerConfig`",
+        "error: could not compile `run` (test \"tier5_graph_ir\") due to 1 previous error; 1 warning emitted"
+      ],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)",
+        "warning: unused import: `SampleMethod`",
+        "warning: `run` (test \"tier5_graph_ir\") generated 1 warning",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9",
+        "   --> run/tests/tier5_graph_ir.rs:164:29",
+        "  --> run/tests/tier5_graph_ir.rs:22:5"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0063]: missing field `has_attn_bias` in initializer of `TransformerConfig`",
+        "error: could not compile `run` (test \"tier5_graph_ir\") due to 1 previous error; 1 warning emitted"
+      ],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)",
+        "warning: unused variable: `eps_rel`",
+        "warning: `run` (test \"tier3_goldens\") generated 1 warning (run `cargo fix --test \"tier3_goldens\" -p run` to apply 1 suggestion)",
+        "warning: variable does not need to be mutable",
+        "warning: function `quick` is never used",
+        "warning: function `ollama` is never used",
+        "warning: `run` (bin \"mr\") generated 3 warnings (run `cargo fix --bin \"mr\" -p run` to apply 1 suggestion)",
+        "warning: unused import: `std::path::Path`",
+        "warning: `run` (test \"tier0_import\") generated 1 warning (run `cargo fix --test \"tier0_import\" -p run` to apply 1 suggestion)",
+        "warning: unused import: `DType`",
+        "warning: `run` (test \"tier1_ops\") generated 1 warning (run `cargo fix --test \"tier1_ops\" -p run` to apply 1 suggestion)",
+        "warning: `run` (bin \"mr\" test) generated 3 warnings (3 duplicates)",
+        "warning: unused import: `SampleMethod`",
+        "warning: `run` (test \"tier5_graph_ir\") generated 1 warning",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9",
+        "  --> run/tests/tier3_goldens.rs:94:13",
+        "   --> run/cli/cmd/bench.rs:103:13",
+        "   --> run/cli/cmd/bench.rs:126:8",
+        "   --> run/cli/cmd/bench.rs:130:8",
+        "  --> run/tests/tier0_import.rs:10:5",
+        " --> run/tests/tier1_ops.rs:9:20",
+        "   --> run/tests/tier5_graph_ir.rs:164:29",
+        "  --> run/tests/tier5_graph_ir.rs:22:5"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "zoya",
+    "label": "test-workspace-release",
+    "args": [
+      "test",
+      "--workspace",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/zoya/test-workspace-release.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/zoya/test-workspace-release.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "candidate_tests": [
+      "test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "local_packages": []
+  },
+  {
+    "repo": "xena",
+    "label": "check-hash-reference",
+    "args": [
+      "check",
+      "-p",
+      "xena-hash",
+      "-p",
+      "xena-reference",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/xena/check-hash-reference.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/xena/check-hash-reference.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings (run `cargo fix --lib -p xena-hash` to apply 2 suggestions)",
+        "warning: `xena-hash` (lib test) generated 2 warnings (2 duplicates)"
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error: could not compile `xena-hash` (lib) due to 2 previous errors; 2 warnings emitted",
+        "error: could not compile `xena-hash` (lib test) due to 2 previous errors; 2 warnings emitted"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings",
+        "warning: build failed, waiting for other jobs to finish...",
+        "warning: `xena-hash` (lib test) generated 2 warnings (2 duplicates)"
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/scratchpad.rs:34:21",
+        "  --> crates/xena-hash/src/scratchpad.rs:42:21",
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "perla",
+    "label": "test-workspace-gpu-bounded",
+    "args": [
+      "test",
+      "--workspace",
+      "--features",
+      "perla-pow/gpu",
+      "--locked",
+      "--offline",
+      "--",
+      "--skip",
+      "bench_gpu_tile"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/perla/test-workspace-gpu-bounded.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/perla/test-workspace-gpu-bounded.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.24s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.53s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "candidate_tests": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.17s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.66s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "local_packages": []
+  },
+  {
+    "repo": "xena",
+    "label": "test-hash-reference",
+    "args": [
+      "test",
+      "-p",
+      "xena-hash",
+      "-p",
+      "xena-reference",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/xena/test-hash-reference.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/xena/test-hash-reference.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings (run `cargo fix --lib -p xena-hash` to apply 2 suggestions)",
+        "warning: `xena-hash` (lib test) generated 2 warnings (2 duplicates)"
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error: could not compile `xena-hash` (lib) due to 2 previous errors; 2 warnings emitted"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: variable does not need to be mutable",
+        "warning: `xena-hash` (lib) generated 2 warnings",
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> crates/xena-hash/src/scratchpad.rs:34:21",
+        "  --> crates/xena-hash/src/scratchpad.rs:42:21",
+        "  --> crates/xena-hash/src/v3_quad.rs:31:9",
+        "  --> crates/xena-hash/src/v3_quad.rs:32:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "bita-localresolved",
+    "label": "test-hash5-metal-bounded",
+    "args": [
+      "test",
+      "-p",
+      "rbtc-hash5",
+      "--features",
+      "metal-gpu",
+      "--locked",
+      "--offline",
+      "--",
+      "--skip",
+      "throughput",
+      "--skip",
+      "qhash_lc_bench"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita-localresolved/test-hash5-metal-bounded.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita-localresolved/test-hash5-metal-bounded.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: unused import: `std::f64::consts::PI`",
+        "warning: function `echo512_full` is never used",
+        "warning: `rbtc-hash5` (lib) generated 7 warnings (run `cargo fix --lib -p rbtc-hash5` to apply 2 suggestions)",
+        "warning: `rbtc-hash5` (lib test) generated 7 warnings (6 duplicates) (run `cargo fix --lib -p rbtc-hash5 --tests` to apply 1 suggestion)"
+      ],
+      "sites": [
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:427:13",
+        "   --> crates/rbtc-hash5/src/echo.rs:713:8"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_pp[_]` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_f32` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `header_block` as mutable, as it is not declared as mutable",
+        "error: could not compile `rbtc-hash5` (lib) due to 18 previous errors; 6 warnings emitted",
+        "error: could not compile `rbtc-hash5` (lib test) due to 18 previous errors; 7 warnings emitted"
+      ],
+      "warnings": [
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: unused import: `std::f64::consts::PI`",
+        "warning: `rbtc-hash5` (lib) generated 6 warnings",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: build failed, waiting for other jobs to finish...",
+        "warning: `rbtc-hash5` (lib test) generated 7 warnings (6 duplicates)",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols"
+      ],
+      "sites": [
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:88:24",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:92:29",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:93:29",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:427:13",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:286:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:311:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:341:26",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:345:25",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:359:17",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 62 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 1.57s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "glia-localresolved",
+    "label": "check-libraries",
+    "args": [
+      "check",
+      "--workspace",
+      "--lib",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/glia-localresolved/check-libraries.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/glia-localresolved/check-libraries.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)"
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)"
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "glia-localresolved",
+    "label": "test-libraries",
+    "args": [
+      "test",
+      "--workspace",
+      "--lib",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/glia-localresolved/test-libraries.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/glia-localresolved/test-libraries.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)",
+        "warning: `run` (lib test) generated 45 warnings (45 duplicates)"
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused import: `crate::backend::honeycrisp::device::HoneycrispDevice`",
+        "warning: unused import: `crate::backend::BackendError`",
+        "warning: unused variable: `pipe_q`",
+        "warning: unused variable: `n_blk_inter_sz`",
+        "warning: unused variable: `pipe_q_dual`",
+        "warning: unused variable: `pipe_q_gus`",
+        "warning: unused variable: `pipe_q_opt`",
+        "warning: unused variable: `pipe_q_dual_opt`",
+        "warning: unused variable: `pipe_q_gus_opt`",
+        "warning: unused variable: `pipe_qk_rope`",
+        "warning: unused variable: `pipe_q8_large2_res`",
+        "warning: unused variable: `pipe_q8_large8_res`",
+        "warning: unused variable: `pipe_q8_mbx16_res`",
+        "warning: unused variable: `pipe_q8_large4t_res`",
+        "warning: unused variable: `pipe_q8_large8t_res`",
+        "warning: unused variable: `pipe_q8_large16t_res`",
+        "warning: unused variable: `pipe_q8_gus_nrm_mb64_r4`",
+        "warning: variable does not need to be mutable",
+        "warning: function `dbg_stats` is never used",
+        "warning: function `matmul_f32_scalar` is never used",
+        "warning: field `device` is never read",
+        "warning: fields `pipe_qk_norm_rope` and `transposed_down_w` are never read",
+        "warning: field `0` is never read",
+        "warning: function `transpose_q8_blocks` is never used",
+        "warning: methods `get_or_transpose_down_w` and `upload_tensor` are never used",
+        "warning: field `down_w_t` is never read",
+        "warning: field `queue` is never read",
+        "warning: constant `MAX_SEQ_SHARED` is never used",
+        "warning: function `dispatch_silu_mul` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `LANES` is never used",
+        "warning: constant `SCALE_MIN_HELPER` is never used",
+        "warning: function `tg_count` is never used",
+        "warning: function `tg_size` is never used",
+        "warning: constant `BLOCK_BYTES` is never used",
+        "warning: function `msl_nrm` is never used",
+        "warning: function `msl_dual_nrm` is never used",
+        "warning: function `msl_gus_nrm` is never used",
+        "warning: constant `MSL_TEMPLATE` is never used",
+        "warning: function `msl_for` is never used",
+        "warning: function `dispatch` is never used",
+        "warning: hiding a lifetime that's elided elsewhere is confusing",
+        "warning: `run` (lib) generated 46 warnings (run `cargo fix --lib -p run` to apply 20 suggestions)",
+        "warning: `run` (lib test) generated 45 warnings (45 duplicates)"
+      ],
+      "sites": [
+        "  --> run/backend/honeycrisp/kernels/attention.rs:22:5",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:23:5",
+        "    --> run/backend/honeycrisp/mod.rs:1846:13",
+        "    --> run/backend/honeycrisp/mod.rs:1888:13",
+        "    --> run/backend/honeycrisp/mod.rs:2048:13",
+        "    --> run/backend/honeycrisp/mod.rs:2102:13",
+        "    --> run/backend/honeycrisp/mod.rs:2106:13",
+        "    --> run/backend/honeycrisp/mod.rs:2111:13",
+        "    --> run/backend/honeycrisp/mod.rs:2115:13",
+        "    --> run/backend/honeycrisp/mod.rs:2119:13",
+        "    --> run/backend/honeycrisp/mod.rs:2146:13",
+        "    --> run/backend/honeycrisp/mod.rs:2155:13",
+        "    --> run/backend/honeycrisp/mod.rs:2157:13",
+        "    --> run/backend/honeycrisp/mod.rs:2158:13",
+        "    --> run/backend/honeycrisp/mod.rs:2159:13",
+        "    --> run/backend/honeycrisp/mod.rs:2160:13",
+        "    --> run/backend/honeycrisp/mod.rs:2161:13",
+        "    --> run/backend/honeycrisp/mod.rs:2170:13",
+        "   --> run/tokenizer/loader.rs:219:9",
+        "   --> run/arch/decoder/forward.rs:507:4",
+        "  --> run/backend/cpu/matmul.rs:90:8",
+        "  --> run/backend/wgpu/mod.rs:29:5",
+        "   --> run/backend/honeycrisp/mod.rs:156:5",
+        "   --> run/backend/honeycrisp/mod.rs:237:24",
+        "   --> run/backend/honeycrisp/mod.rs:245:4",
+        "   --> run/backend/honeycrisp/mod.rs:560:8",
+        "    --> run/backend/honeycrisp/mod.rs:2036:13",
+        "  --> run/backend/honeycrisp/device.rs:11:9",
+        "  --> run/backend/honeycrisp/kernels/attention.rs:25:11",
+        "  --> run/backend/honeycrisp/kernels/elementwise.rs:89:8",
+        "  --> run/backend/honeycrisp/kernels/q4_matmul.rs:19:11",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:180:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:268:8",
+        "   --> run/backend/honeycrisp/kernels/q4_matmul.rs:658:8",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:17:11",
+        "  --> run/backend/honeycrisp/kernels/q4k_matmul.rs:80:7",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:453:8",
+        "   --> run/backend/honeycrisp/kernels/q4k_matmul.rs:458:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:19:11",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:94:8",
+        "  --> run/backend/honeycrisp/kernels/q8_matmul.rs:96:8",
+        "   --> run/backend/honeycrisp/kernels/q8_matmul.rs:644:8",
+        "  --> run/backend/honeycrisp/kernels/rope.rs:14:7",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:226:8",
+        "   --> run/backend/honeycrisp/kernels/rope.rs:271:8",
+        "   --> run/backend/honeycrisp/mod.rs:420:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 89 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s"
+    ],
+    "candidate_tests": [
+      "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 89 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s"
+    ],
+    "local_packages": []
+  },
+  {
+    "repo": "mir-localresolved",
+    "label": "check-workspace",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/mir-localresolved/check-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/mir-localresolved/check-workspace.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error[E0599]: no method named `sync` found for reference `&Gpu` in the current scope",
+        "error: could not compile `mir` (lib) due to 1 previous error",
+        "error: could not compile `mir` (lib test) due to 1 previous error"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> src/gpu.rs:32:21"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0599]: no method named `sync` found for reference `&Gpu` in the current scope",
+        "error: could not compile `mir` (lib) due to 1 previous error",
+        "error: could not compile `mir` (lib test) due to 1 previous error"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> src/gpu.rs:32:21"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "erga-localresolved",
+    "label": "metadata-after-fetch",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga-localresolved/metadata-after-fetch.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga-localresolved/metadata-after-fetch.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "autolykos",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/autolykos/Cargo.toml"
+      },
+      {
+        "name": "blake-bench",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/blake-bench/Cargo.toml"
+      },
+      {
+        "name": "erga-app",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/app/Cargo.toml"
+      },
+      {
+        "name": "erga-cli",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/cli/Cargo.toml"
+      },
+      {
+        "name": "erga-miner",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/miner/Cargo.toml"
+      },
+      {
+        "name": "erga-pool",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/pool/Cargo.toml"
+      },
+      {
+        "name": "erga-wallet",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/wallet/Cargo.toml"
+      },
+      {
+        "name": "mine-bench",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/mine-bench/Cargo.toml"
+      },
+      {
+        "name": "rtable-bench",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/erga/rs/rtable-bench/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/erga-localresolved/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "mir-localresolved",
+    "label": "metadata-bevy-after-fetch",
+    "args": [
+      "metadata",
+      "--format-version",
+      "1",
+      "--locked",
+      "--offline",
+      "--features",
+      "bevy-plugin"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/mir-localresolved/metadata-bevy-after-fetch.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/mir-localresolved/metadata-bevy-after-fetch.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": [
+      {
+        "name": "acpu",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/mir-localresolved/source/honeycrisp/acpu/Cargo.toml"
+      },
+      {
+        "name": "aruminium",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/mir-localresolved/source/honeycrisp/aruminium/Cargo.toml"
+      },
+      {
+        "name": "mir",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/mir-localresolved/source/mir/Cargo.toml"
+      },
+      {
+        "name": "unimem",
+        "manifest": "/private/tmp/unimem-dependent-candidate.DU0t4L/scenarios/mir-localresolved/source/honeycrisp/unimem/Cargo.toml"
+      }
+    ]
+  },
+  {
+    "repo": "erga-localresolved",
+    "label": "check-workspace",
+    "args": [
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga-localresolved/check-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga-localresolved/check-workspace.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error: could not compile `blake-bench` (lib) due to 4 previous errors"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> rs/blake-bench/src/lib.rs:99:22",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:114:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "mir-localresolved",
+    "label": "check-bevy",
+    "args": [
+      "check",
+      "--all-targets",
+      "--features",
+      "bevy-plugin",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/mir-localresolved/check-bevy.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/mir-localresolved/check-bevy.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error[E0599]: no method named `sync` found for reference `&Gpu` in the current scope",
+        "error: could not compile `mir` (lib) due to 1 previous error; 1 warning emitted",
+        "error: could not compile `mir` (lib test) due to 1 previous error; 1 warning emitted"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: `mir` (lib) generated 1 warning",
+        "warning: build failed, waiting for other jobs to finish...",
+        "warning: `mir` (lib test) generated 1 warning (1 duplicate)"
+      ],
+      "sites": [
+        "  --> src/gpu.rs:32:21",
+        "   --> src/bevy/world.rs:177:9"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0599]: no method named `sync` found for reference `&Gpu` in the current scope",
+        "error: could not compile `mir` (lib) due to 1 previous error; 1 warning emitted",
+        "error: could not compile `mir` (lib test) due to 1 previous error; 1 warning emitted"
+      ],
+      "warnings": [
+        "warning: variable does not need to be mutable",
+        "warning: `mir` (lib) generated 1 warning",
+        "warning: build failed, waiting for other jobs to finish...",
+        "warning: `mir` (lib test) generated 1 warning (1 duplicate)"
+      ],
+      "sites": [
+        "  --> src/gpu.rs:32:21",
+        "   --> src/bevy/world.rs:177:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "erga-localresolved",
+    "label": "test-workspace",
+    "args": [
+      "test",
+      "--workspace",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga-localresolved/test-workspace.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga-localresolved/test-workspace.json",
+    "parent_exit": 101,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [
+        "error: test failed, to rerun pass `-p erga-app --lib`"
+      ],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error: could not compile `blake-bench` (lib) due to 4 previous errors"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> rs/blake-bench/src/lib.rs:99:22",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:114:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.16s",
+      "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "erga-localresolved",
+    "label": "build-release-bootstrap",
+    "args": [
+      "build",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga-localresolved/build-release-bootstrap.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga-localresolved/build-release-bootstrap.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error: could not compile `blake-bench` (lib) due to 4 previous errors"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> rs/blake-bench/src/lib.rs:99:22",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:114:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "perla",
+    "label": "test-gpu-observed",
+    "args": [
+      "test",
+      "-p",
+      "perla-gpu",
+      "--locked",
+      "--offline",
+      "tests::gpu_matches_cpu_jackpot",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/perla/test-gpu-observed.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/perla/test-gpu-observed.json",
+    "parent_exit": 0,
+    "candidate_exit": 0,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.05s"
+    ],
+    "candidate_tests": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.07s"
+    ],
+    "local_packages": []
+  },
+  {
+    "repo": "bita-localresolved",
+    "label": "test-gpu-observed",
+    "args": [
+      "test",
+      "-p",
+      "rbtc-hash5",
+      "--features",
+      "metal-gpu",
+      "--locked",
+      "--offline",
+      "metal::mining::tests::gpu_exps_match_cpu",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/bita-localresolved/test-gpu-observed.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/bita-localresolved/test-gpu-observed.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `std::f64::consts::PI`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: `rbtc-hash5` (lib test) generated 7 warnings (run `cargo fix --lib -p rbtc-hash5 --tests` to apply 3 suggestions)"
+      ],
+      "sites": [
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:427:13",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5"
+      ],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.hits_pp[_]` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_f32` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `header_block` as mutable, as it is not declared as mutable",
+        "error: could not compile `rbtc-hash5` (lib test) due to 18 previous errors; 7 warnings emitted"
+      ],
+      "warnings": [
+        "warning: unused import: `std::env`",
+        "warning: `rbtc-hash5` (build script) generated 1 warning",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: unused import: `std::ffi::c_void`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `neon`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unexpected `cfg` condition value: `amx`",
+        "warning: unused import: `std::f64::consts::PI`",
+        "warning: unused import: `crate::qhash::N_STATES as _`",
+        "warning: `rbtc-hash5` (lib test) generated 7 warnings",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols",
+        "warning: rbtc-hash5@0.1.0: ranlib: warning: 'libhash5_ref.a(8b4d985356b2e0bc-aes_helper.o)' has no symbols"
+      ],
+      "sites": [
+        " --> crates/rbtc-hash5/build.rs:1:5",
+        " --> crates/rbtc-hash5/src/ffi.rs:5:5",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:125:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:131:48",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:139:44",
+        "   --> crates/rbtc-hash5/src/pipeline.rs:144:48",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:427:13",
+        "  --> crates/rbtc-hash5/src/qhash_lc_cpu.rs:17:5",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:88:24",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:92:29",
+        "  --> crates/rbtc-hash5/src/metal/mining.rs:93:29",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:130:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:170:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:210:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:252:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:286:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:311:21",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:341:26",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:345:25",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:359:17",
+        "   --> crates/rbtc-hash5/src/metal/mining.rs:340:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 69 filtered out; finished in 0.05s"
+    ],
+    "candidate_tests": [],
+    "local_packages": []
+  },
+  {
+    "repo": "erga-localresolved",
+    "label": "difftest-bootstrap",
+    "args": [
+      "run",
+      "-p",
+      "erga-cli",
+      "--bin",
+      "erga",
+      "--release",
+      "--locked",
+      "--offline",
+      "--",
+      "difftest"
+    ],
+    "baseline_receipt": "/tmp/unimem-dependent-baseline.cX82Mt/logs/erga-localresolved/difftest-bootstrap.json",
+    "candidate_receipt": "/private/tmp/unimem-dependent-candidate.DU0t4L/logs/erga-localresolved/difftest-bootstrap.json",
+    "parent_exit": 0,
+    "candidate_exit": 101,
+    "parent": {
+      "errors": [],
+      "warnings": [],
+      "sites": [],
+      "test_results": []
+    },
+    "candidate": {
+      "errors": [
+        "error[E0133]: call to unsafe function `Gpu::wrap` is unsafe and requires unsafe function or block",
+        "error[E0133]: call to unsafe function `Block::as_bytes_mut` is unsafe and requires unsafe function or block",
+        "error[E0596]: cannot borrow `self.block` as mutable, as it is behind a `&` reference",
+        "error[E0133]: call to unsafe function `Block::as_bytes` is unsafe and requires unsafe function or block",
+        "error: could not compile `blake-bench` (lib) due to 4 previous errors"
+      ],
+      "warnings": [
+        "warning: build failed, waiting for other jobs to finish..."
+      ],
+      "sites": [
+        "  --> rs/blake-bench/src/lib.rs:99:22",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:107:9",
+        "   --> rs/blake-bench/src/lib.rs:114:9"
+      ],
+      "test_results": []
+    },
+    "parent_tests": [],
+    "candidate_tests": [],
+    "local_packages": []
+  }
+]

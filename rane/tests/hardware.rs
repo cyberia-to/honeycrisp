@@ -161,12 +161,17 @@ fn run_direct_with_unimem_block() {
     model.load().unwrap();
 
     // Allocate via unimem::Block — shared with GPU/CPU
-    let input = Block::open(p.input_size()).unwrap();
+    let mut input = Block::open(p.input_size()).unwrap();
     let output = Block::open(p.output_size()).unwrap();
+    // SAFETY: Fresh unpublished owners; initialize complete actual extents.
+    unsafe {
+        input.address().write_bytes(0, input.size());
+        output.address().write_bytes(0, output.size());
+    }
 
-    // Fill via typed accessor
+    // SAFETY: Full input initialized; exclusive view ends before run_direct.
     let sp = seq + oc;
-    let d = input.as_u16_mut();
+    let d = unsafe { input.as_u16_mut() };
     for ch in 0..ic {
         for s in 0..seq {
             d[ch * sp + s] = f32_to_fp16(1.0);
@@ -176,13 +181,15 @@ fn run_direct_with_unimem_block() {
         }
     }
 
-    // run_direct with Block handles — zero copy
+    // SAFETY: Input borrow has ended, no other accesses, owners remain live.
+    // Retain the existing private-API assumption: success completes evaluation
+    // and makes output visible. This fixture establishes no public ANE guarantee.
     unsafe {
         model.run_direct(input.handle(), output.handle()).unwrap();
     }
 
-    // Read from Block directly
-    let out = output.as_u16();
+    // SAFETY: Full output initialized; successful synchronous call above finished.
+    let out = unsafe { output.as_u16() };
     let mut max_err: f32 = 0.0;
     for i in 0..oc * seq {
         let val = fp16_to_f32(out[i]);

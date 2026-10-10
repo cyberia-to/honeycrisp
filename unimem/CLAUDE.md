@@ -60,8 +60,9 @@ no special signing. no entitlements. no SIP changes.
 
 - IOSurface locked once at creation, unlocked at drop. address stable for lifetime.
 - Tape take is compare_exchange loop, not fetch_add (no space waste on overshoot).
-- Apple Silicon uses 16KB kernel pages, not 4KB.
-- Block is Send+Sync (immutable after creation). Tape is Send+Sync (atomic head).
+- Tape warm uses a fixed16KiB stride; native imports use the runtime VM page size.
+- Block is Send+Sync as an owning mapping; unsafe CPU views require full-extent
+  initialization and CPU/device exclusion. Tape is Send+Sync with an atomic head.
 - Grid Cell has lifetime tied to Grid — compile-time use-after-free prevention.
 - IOSurfaceRef from block.handle() is directly compatible with rane and aruminium.
 

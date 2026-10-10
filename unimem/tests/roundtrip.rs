@@ -276,8 +276,9 @@ fn tape_start_warm() {
 
 #[test]
 fn tape_warm_after_start() {
-    let tape = Tape::start(64 * 1024).unwrap();
-    tape.warm();
+    let mut tape = Tape::start(64 * 1024).unwrap();
+    // SAFETY: Fresh owner, no takes, references or device aliases yet.
+    unsafe { tape.warm() };
     let p = tape.take(512, 64).unwrap();
     assert!(!p.is_null());
 }
@@ -328,7 +329,9 @@ fn grid_address_spacing() {
 fn cell_bytes() {
     let grid: Grid<256, 1> = Grid::new().unwrap();
     let mut cell = grid.take().unwrap();
+    // SAFETY: This sole cell owns these 256 bytes; no other access or device use.
     unsafe {
+        cell.address().write_bytes(0, 256);
         let slice = cell.bytes(256);
         slice[0] = 0xDE;
         slice[255] = 0xAD;
@@ -367,44 +370,6 @@ fn cell_id_distinct() {
 fn block_handle() {
     let b = Block::open(4096).unwrap();
     assert!(!b.handle().is_null());
-}
-
-#[test]
-fn block_slice_lengths() {
-    let size = 4096;
-    let b = Block::open(size).unwrap();
-    let actual = b.size();
-    assert_eq!(b.as_bytes().len(), actual);
-    assert_eq!(b.as_bytes_mut().len(), actual);
-    assert_eq!(b.as_f32().len(), actual / 4);
-    assert_eq!(b.as_f32_mut().len(), actual / 4);
-    assert_eq!(b.as_u16().len(), actual / 2);
-    assert_eq!(b.as_u16_mut().len(), actual / 2);
-}
-
-#[test]
-fn block_slice_pointer() {
-    let b = Block::open(4096).unwrap();
-    assert_eq!(b.as_bytes().as_ptr(), b.address() as *const u8);
-    assert_eq!(b.as_f32().as_ptr(), b.address() as *const f32);
-    assert_eq!(b.as_u16().as_ptr(), b.address() as *const u16);
-}
-
-#[test]
-fn block_cross_view_f32_bytes() {
-    let b = Block::open(4096).unwrap();
-    let val = f32::from_bits(0x4048_f5c3); // Exact 3.14f32 byte-pattern fixture.
-    b.as_f32_mut()[0] = val;
-    let expected = val.to_ne_bytes();
-    assert_eq!(&b.as_bytes()[..4], &expected);
-}
-
-#[test]
-fn block_cross_view_u16_bytes() {
-    let b = Block::open(4096).unwrap();
-    b.as_u16_mut()[0] = 0xBEEF;
-    let expected = 0xBEEFu16.to_ne_bytes();
-    assert_eq!(&b.as_bytes()[..2], &expected);
 }
 
 #[test]

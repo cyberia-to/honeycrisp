@@ -1,0 +1,875 @@
+{
+  "verified_at": "2026-10-10T01:41:03.410129+00:00",
+  "original_brief_sha256": "3d0c596c859e563588a45df9d0067d9486d1cb4e990827cf9c4f7be3467e0a35",
+  "brief_sha256": "401074a4ce894a1405655942f11225e414a665f25e0016146bb0942a4646bedd",
+  "byte_exact_sections": 88,
+  "structurally_equal_json_sections": 8,
+  "sections": [
+    {
+      "name": "honeycrisp/.claude/tasks/unimem-block-access/research.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "a0fad47ecdd3014096295e5d82faaeb7f22c31977ed2b698b98d6702f2e898b6",
+      "packed_sha256": "a0fad47ecdd3014096295e5d82faaeb7f22c31977ed2b698b98d6702f2e898b6",
+      "original_bytes": 29000,
+      "packed_bytes": 29000,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/.claude/tasks/unimem-block-access/plan.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "009acda60798f2d819c011723ab98b6a49c049d7d5b90f9fafaaad74c17cd5b6",
+      "packed_sha256": "009acda60798f2d819c011723ab98b6a49c049d7d5b90f9fafaaad74c17cd5b6",
+      "original_bytes": 21738,
+      "packed_bytes": 21738,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/CLAUDE.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "c4d43568bbc1c3094cf325fd5e08dba94682f9b6d928d9f4fbeb7aae7b07522d",
+      "packed_sha256": "c4d43568bbc1c3094cf325fd5e08dba94682f9b6d928d9f4fbeb7aae7b07522d",
+      "original_bytes": 5926,
+      "packed_bytes": 5926,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "fc7b6015470f60ad323ad33f0c4f84c4f6c61b8bbf6bf4adfae40ae3ad6710d3",
+      "packed_sha256": "fc7b6015470f60ad323ad33f0c4f84c4f6c61b8bbf6bf4adfae40ae3ad6710d3",
+      "original_bytes": 1670,
+      "packed_bytes": 1670,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/Cargo.lock",
+      "transformation": "none; byte-exact",
+      "original_sha256": "b9da0c2f21698c93fccc17695d7c9b2581e824f93e46f305434edcb541b0b678",
+      "packed_sha256": "b9da0c2f21698c93fccc17695d7c9b2581e824f93e46f305434edcb541b0b678",
+      "original_bytes": 41387,
+      "packed_bytes": 41387,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "730574c6ca97eb04235fd13a5c345b434c895f6e64fa3187b306fb01470aac64",
+      "packed_sha256": "730574c6ca97eb04235fd13a5c345b434c895f6e64fa3187b306fb01470aac64",
+      "original_bytes": 314,
+      "packed_bytes": 314,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/CLAUDE.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1b94116a32897d7b7a22d2ea3dfbbf3fc4831ea30f6a5d505ba4f16dc0e001a9",
+      "packed_sha256": "1b94116a32897d7b7a22d2ea3dfbbf3fc4831ea30f6a5d505ba4f16dc0e001a9",
+      "original_bytes": 3296,
+      "packed_bytes": 3296,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "ca299c4338a62283ec5f7935841a117d21435c99ed42c309fd8c342e550384dc",
+      "packed_sha256": "ca299c4338a62283ec5f7935841a117d21435c99ed42c309fd8c342e550384dc",
+      "original_bytes": 862,
+      "packed_bytes": 862,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/block.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "57891b04ab5fb16f84cf2b3238d7890b5155ddf273d5012a6fcb45149da1d636",
+      "packed_sha256": "57891b04ab5fb16f84cf2b3238d7890b5155ddf273d5012a6fcb45149da1d636",
+      "original_bytes": 10717,
+      "packed_bytes": 10717,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/block/creation.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "41ba9db2a57ec1f9b6185e0b0fbe05bc4f13e6f16a6a7740534d9303b743d4bb",
+      "packed_sha256": "41ba9db2a57ec1f9b6185e0b0fbe05bc4f13e6f16a6a7740534d9303b743d4bb",
+      "original_bytes": 6378,
+      "packed_bytes": 6378,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/block/tests.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "6504079f13fc2cc166708a1aaba67632c209ef08938fe247310fb90129f31360",
+      "packed_sha256": "6504079f13fc2cc166708a1aaba67632c209ef08938fe247310fb90129f31360",
+      "original_bytes": 9795,
+      "packed_bytes": 9795,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/ffi.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5cfbfff217f40dc313820d04f3100f0b17c233480a231b696d1383aedd7e8539",
+      "packed_sha256": "5cfbfff217f40dc313820d04f3100f0b17c233480a231b696d1383aedd7e8539",
+      "original_bytes": 2766,
+      "packed_bytes": 2766,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/tape.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1949cce890be48a7831367416c12251ce6baeda87b9d8a6525f27fa3f642f617",
+      "packed_sha256": "1949cce890be48a7831367416c12251ce6baeda87b9d8a6525f27fa3f642f617",
+      "original_bytes": 4437,
+      "packed_bytes": 4437,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/grid.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "7c85bf4e370012b6c331d374c452a5caac2da1340ef3f76952b600a7bf18db0b",
+      "packed_sha256": "7c85bf4e370012b6c331d374c452a5caac2da1340ef3f76952b600a7bf18db0b",
+      "original_bytes": 2714,
+      "packed_bytes": 2714,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "49ce6ad52c8fb5aa6d1c4fc721faaef7807ea8491d52ae597b6b58dd5b012fe1",
+      "packed_sha256": "49ce6ad52c8fb5aa6d1c4fc721faaef7807ea8491d52ae597b6b58dd5b012fe1",
+      "original_bytes": 1673,
+      "packed_bytes": 1673,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/src/layout.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "2d2b2be920cc653af9668a0e61cc7239cc6eedf8eadf01f6c80d676d798f144c",
+      "packed_sha256": "2d2b2be920cc653af9668a0e61cc7239cc6eedf8eadf01f6c80d676d798f144c",
+      "original_bytes": 2938,
+      "packed_bytes": 2938,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/tests/roundtrip.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "d716e4cf2306bd9fe6e2efd368d9f5e139fba24582d9ddb394e83cae0ab6f8ef",
+      "packed_sha256": "d716e4cf2306bd9fe6e2efd368d9f5e139fba24582d9ddb394e83cae0ab6f8ef",
+      "original_bytes": 10308,
+      "packed_bytes": 10308,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/tests/block_creation.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "27a2fc51465ca74ca366031fd924759668c1bd150099c30d4957308a05bbff4a",
+      "packed_sha256": "27a2fc51465ca74ca366031fd924759668c1bd150099c30d4957308a05bbff4a",
+      "original_bytes": 5068,
+      "packed_bytes": 5068,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/specs/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5ad7306c094c2bff8794a888941f6e8109a90e94cb8c7a77d59d980966ced3ea",
+      "packed_sha256": "5ad7306c094c2bff8794a888941f6e8109a90e94cb8c7a77d59d980966ced3ea",
+      "original_bytes": 19893,
+      "packed_bytes": 19893,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/specs/api-sketch.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "6d30d2b2cada33b26838dcd634bcd3a6813aa2dc14cd03ac77e784977e85967a",
+      "packed_sha256": "6d30d2b2cada33b26838dcd634bcd3a6813aa2dc14cd03ac77e784977e85967a",
+      "original_bytes": 10620,
+      "packed_bytes": 10620,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/CLAUDE.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "7f8428e6ca6f28576c993f9d65f8dc3df7c3d90f04d19a73d20612e8f274104a",
+      "packed_sha256": "7f8428e6ca6f28576c993f9d65f8dc3df7c3d90f04d19a73d20612e8f274104a",
+      "original_bytes": 6097,
+      "packed_bytes": 6097,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "8081bfdc1185bbaf85a2aef1f0fc7e4697e90bb8e03cf399f2ad7df2a5b9e382",
+      "packed_sha256": "8081bfdc1185bbaf85a2aef1f0fc7e4697e90bb8e03cf399f2ad7df2a5b9e382",
+      "original_bytes": 955,
+      "packed_bytes": 955,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "0f89c25ef12b12c57a1f3f5c172dbdf47b1b7852ac5d8c3aeaab5083e5c1e31f",
+      "packed_sha256": "0f89c25ef12b12c57a1f3f5c172dbdf47b1b7852ac5d8c3aeaab5083e5c1e31f",
+      "original_bytes": 3923,
+      "packed_bytes": 3923,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/specs/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "ee483a214e4298c8e0fbc3734164baa3d649ff74eea26660811a2470ca833e99",
+      "packed_sha256": "ee483a214e4298c8e0fbc3734164baa3d649ff74eea26660811a2470ca833e99",
+      "original_bytes": 25553,
+      "packed_bytes": 25553,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/device.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1f17b0226e6d9d24609dec5df67221995a7b15ed94c120d7630630205f8ec379",
+      "packed_sha256": "1f17b0226e6d9d24609dec5df67221995a7b15ed94c120d7630630205f8ec379",
+      "original_bytes": 11794,
+      "packed_bytes": 11794,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/buffer.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "d7ff1c8c6001595f025ace0cd3045fbee43e33395139a866a6d1e3932f9aac54",
+      "packed_sha256": "d7ff1c8c6001595f025ace0cd3045fbee43e33395139a866a6d1e3932f9aac54",
+      "original_bytes": 5756,
+      "packed_bytes": 5756,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/command.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "163df9926cb612db2a2bc0ef112bbdb82e248d12ff158d50f0a7974cda2bdd97",
+      "packed_sha256": "163df9926cb612db2a2bc0ef112bbdb82e248d12ff158d50f0a7974cda2bdd97",
+      "original_bytes": 8489,
+      "packed_bytes": 8489,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/encoder.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "72e44617df3aa60bf79e4e36ca8b54705c84db9f9bc9799f2fa621802efe40c8",
+      "packed_sha256": "72e44617df3aa60bf79e4e36ca8b54705c84db9f9bc9799f2fa621802efe40c8",
+      "original_bytes": 4106,
+      "packed_bytes": 4106,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/dispatch.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5d6a2635e295c1405b10564165727a44f03df2defc4074eabe9c9da263430c3d",
+      "packed_sha256": "5d6a2635e295c1405b10564165727a44f03df2defc4074eabe9c9da263430c3d",
+      "original_bytes": 17032,
+      "packed_bytes": 17032,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/sync.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "3c8c0cf27996bd0ac3a91e38fb42d675c7f2ba63db2a43f7420449aee6f0d66b",
+      "packed_sha256": "3c8c0cf27996bd0ac3a91e38fb42d675c7f2ba63db2a43f7420449aee6f0d66b",
+      "original_bytes": 1634,
+      "packed_bytes": 1634,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5ba8481f6f1d85d878bb8c7a656f61d75a9d1f560a49983c26ae88e9116e2710",
+      "packed_sha256": "5ba8481f6f1d85d878bb8c7a656f61d75a9d1f560a49983c26ae88e9116e2710",
+      "original_bytes": 4168,
+      "packed_bytes": 4168,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/tests.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "bdf838a1cf492eb6036bb1b5853ad5de96eb45ef186632d300891fe2eae9c247",
+      "packed_sha256": "bdf838a1cf492eb6036bb1b5853ad5de96eb45ef186632d300891fe2eae9c247",
+      "original_bytes": 12621,
+      "packed_bytes": 12621,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/ffi/mod.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "34b7366052cb987ce98f0ec55e513b869c912c5459543fca60421a5f8a745693",
+      "packed_sha256": "34b7366052cb987ce98f0ec55e513b869c912c5459543fca60421a5f8a745693",
+      "original_bytes": 9560,
+      "packed_bytes": 9560,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/ffi/selectors.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "099657fcc337ae8b590d749c7eef307b518e32c7d3e6140702dae1326d876de2",
+      "packed_sha256": "099657fcc337ae8b590d749c7eef307b518e32c7d3e6140702dae1326d876de2",
+      "original_bytes": 9188,
+      "packed_bytes": 9188,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/src/ffi/trampoline.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "0843f3b36dd576f66b16533b1b1565296bf20900437b868f7174eee61687b6f4",
+      "packed_sha256": "0843f3b36dd576f66b16533b1b1565296bf20900437b868f7174eee61687b6f4",
+      "original_bytes": 6757,
+      "packed_bytes": 6757,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/tests/integration.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "a64b4dfd06e56175042ea69fe314eae75e6b880f4b0c5129126106de4712685a",
+      "packed_sha256": "a64b4dfd06e56175042ea69fe314eae75e6b880f4b0c5129126106de4712685a",
+      "original_bytes": 30499,
+      "packed_bytes": 30499,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/CLAUDE.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5f18a3021655fec1d8f787dcd6aa25384b6f84f479fed96e1f84cdc90115a2de",
+      "packed_sha256": "5f18a3021655fec1d8f787dcd6aa25384b6f84f479fed96e1f84cdc90115a2de",
+      "original_bytes": 6960,
+      "packed_bytes": 6960,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "25c47b2e66f6a69a069c481e6353deff850f7d9614482041ff8cd37aa96fa67f",
+      "packed_sha256": "25c47b2e66f6a69a069c481e6353deff850f7d9614482041ff8cd37aa96fa67f",
+      "original_bytes": 682,
+      "packed_bytes": 682,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/src/model.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "343adfa3254fa1b5fbc09414b5cb5b903e962d2cf8567843bb730d74b8d879aa",
+      "packed_sha256": "343adfa3254fa1b5fbc09414b5cb5b903e962d2cf8567843bb730d74b8d879aa",
+      "original_bytes": 14829,
+      "packed_bytes": 14829,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/src/surface.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5dbf422f9a75a50222fd861b54434ead57a083415d9da21784c62c82204a9b1c",
+      "packed_sha256": "5dbf422f9a75a50222fd861b54434ead57a083415d9da21784c62c82204a9b1c",
+      "original_bytes": 3979,
+      "packed_bytes": 3979,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/src/ffi.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "2c5a4493d1676b022bfe45d3d4110c3d1a7773fd8224b5573098369674925ff1",
+      "packed_sha256": "2c5a4493d1676b022bfe45d3d4110c3d1a7773fd8224b5573098369674925ff1",
+      "original_bytes": 7086,
+      "packed_bytes": 7086,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "4e842454eaea856035b5d5b4044070d9bd1196c23f8e0b56353d1f85ba0438ca",
+      "packed_sha256": "4e842454eaea856035b5d5b4044070d9bd1196c23f8e0b56353d1f85ba0438ca",
+      "original_bytes": 3665,
+      "packed_bytes": 3665,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/tests/hardware.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "c46214072cf4652f0dc4107fa3aa232582aaa44de21292b4816fa3b9b0cd01be",
+      "packed_sha256": "c46214072cf4652f0dc4107fa3aa232582aaa44de21292b4816fa3b9b0cd01be",
+      "original_bytes": 5974,
+      "packed_bytes": 5974,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/rane/src/probe/compile.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "747be3de3116042bf52c684b5fa52e9e749f85de70b42d737dba8367adaf82c2",
+      "packed_sha256": "747be3de3116042bf52c684b5fa52e9e749f85de70b42d737dba8367adaf82c2",
+      "original_bytes": 12911,
+      "packed_bytes": 12911,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/.claude/tasks/unimem-block-creation/research.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "0195bed31f822a525daa3c92e84fe6978e3a9a28bf8bd34ab7eed6556203a95b",
+      "packed_sha256": "0195bed31f822a525daa3c92e84fe6978e3a9a28bf8bd34ab7eed6556203a95b",
+      "original_bytes": 6412,
+      "packed_bytes": 6412,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/.claude/tasks/unimem-block-creation/plan.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "0f28ce65b59e89cd30a07ebdbf9be5367380aefd0d877c842fa30ef1e1428638",
+      "packed_sha256": "0f28ce65b59e89cd30a07ebdbf9be5367380aefd0d877c842fa30ef1e1428638",
+      "original_bytes": 11066,
+      "packed_bytes": 11066,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/audit/2026-10-09-unimem-block-creation/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "0fe8391aec4d8c5b0a3407037f09995ccf8b514ab9f6cff7cf64476fce9a2ac5",
+      "packed_sha256": "0fe8391aec4d8c5b0a3407037f09995ccf8b514ab9f6cff7cf64476fce9a2ac5",
+      "original_bytes": 7910,
+      "packed_bytes": 7910,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/audit/2026-10-09-nebu-package-identity/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "2a788de44e983e3a48865e0fa5c378c5cc073f1b15a0612024bed6d4082a662c",
+      "packed_sha256": "2a788de44e983e3a48865e0fa5c378c5cc073f1b15a0612024bed6d4082a662c",
+      "original_bytes": 6262,
+      "packed_bytes": 6262,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/unimem/tests/block_access.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "2e976fc0554fd38d1dee9cf77c8b654fdbf8740f717929163a2c73d292a38cb2",
+      "packed_sha256": "2e976fc0554fd38d1dee9cf77c8b654fdbf8740f717929163a2c73d292a38cb2",
+      "original_bytes": 4894,
+      "packed_bytes": 4894,
+      "verified": true
+    },
+    {
+      "name": "honeycrisp/aruminium/tests/support/import_memory.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "071de2f44aff8332ef418944841902eca57a1a116dd1774c6e9fac47571bec6e",
+      "packed_sha256": "071de2f44aff8332ef418944841902eca57a1a116dd1774c6e9fac47571bec6e",
+      "original_bytes": 2977,
+      "packed_bytes": 2977,
+      "verified": true
+    },
+    {
+      "name": "mir/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "a38609a8021d01c1d47c9da475e927e6afd65d17b165379854981c5b308d61f6",
+      "packed_sha256": "a38609a8021d01c1d47c9da475e927e6afd65d17b165379854981c5b308d61f6",
+      "original_bytes": 1312,
+      "packed_bytes": 1312,
+      "verified": true
+    },
+    {
+      "name": "mir/src/gpu.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "6b25a199768ef29c62722bb79e0822772b3ff0b283f26a1781330338446aa87b",
+      "packed_sha256": "6b25a199768ef29c62722bb79e0822772b3ff0b283f26a1781330338446aa87b",
+      "original_bytes": 41383,
+      "packed_bytes": 41383,
+      "verified": true
+    },
+    {
+      "name": "bbg/rs/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "7d4bf3d1b8d2b2795e3ba47f189d97d49d7debcdd0fd7d2d3879a5271c0cc591",
+      "packed_sha256": "7d4bf3d1b8d2b2795e3ba47f189d97d49d7debcdd0fd7d2d3879a5271c0cc591",
+      "original_bytes": 1340,
+      "packed_bytes": 1340,
+      "verified": true
+    },
+    {
+      "name": "bbg/rs/src/storage/unimem.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "db4106a40ec3d261d19d56f717d62fdeffcac3f0dd1626e523660e23b27a05d3",
+      "packed_sha256": "db4106a40ec3d261d19d56f717d62fdeffcac3f0dd1626e523660e23b27a05d3",
+      "original_bytes": 13187,
+      "packed_bytes": 13187,
+      "verified": true
+    },
+    {
+      "name": "erga/rs/blake-bench/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1bebab5b98210db84211e358d50fc7bf2d949fbc445717125c4b2ddd295812c2",
+      "packed_sha256": "1bebab5b98210db84211e358d50fc7bf2d949fbc445717125c4b2ddd295812c2",
+      "original_bytes": 307,
+      "packed_bytes": 307,
+      "verified": true
+    },
+    {
+      "name": "erga/rs/blake-bench/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "37f0448ba46ba49a998b474c5ca94b196816edabb9b2a18d084bfff56f7a6114",
+      "packed_sha256": "37f0448ba46ba49a998b474c5ca94b196816edabb9b2a18d084bfff56f7a6114",
+      "original_bytes": 7972,
+      "packed_bytes": 7972,
+      "verified": true
+    },
+    {
+      "name": "erga/rs/rtable-bench/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "37cdf7094839ce718747393a71a1290db7db59b95eedba3d24c7b1412b7c42cd",
+      "packed_sha256": "37cdf7094839ce718747393a71a1290db7db59b95eedba3d24c7b1412b7c42cd",
+      "original_bytes": 410,
+      "packed_bytes": 410,
+      "verified": true
+    },
+    {
+      "name": "erga/rs/rtable-bench/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "c44b3308329b233cde19ce5fc2ce1d3f51c6b7ae53b032240bb2c588f81dc322",
+      "packed_sha256": "c44b3308329b233cde19ce5fc2ce1d3f51c6b7ae53b032240bb2c588f81dc322",
+      "original_bytes": 7308,
+      "packed_bytes": 7308,
+      "verified": true
+    },
+    {
+      "name": "xena/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "a3f539b610872287c63426776cd003d68f1e8f0bd8fefefccb5c8a29e518bcf7",
+      "packed_sha256": "a3f539b610872287c63426776cd003d68f1e8f0bd8fefefccb5c8a29e518bcf7",
+      "original_bytes": 481,
+      "packed_bytes": 481,
+      "verified": true
+    },
+    {
+      "name": "xena/crates/xena-gpu/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "324e54f6522674d454ad330fddc23d6df6b2deb71f7f04e1ffd7f72ad3ed55e7",
+      "packed_sha256": "324e54f6522674d454ad330fddc23d6df6b2deb71f7f04e1ffd7f72ad3ed55e7",
+      "original_bytes": 211,
+      "packed_bytes": 211,
+      "verified": true
+    },
+    {
+      "name": "xena/crates/xena-gpu/src/lib.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "c93d8f6b20098210f97a63a18a8f4a718ae7da408647d29d2f0e259414380dc4",
+      "packed_sha256": "c93d8f6b20098210f97a63a18a8f4a718ae7da408647d29d2f0e259414380dc4",
+      "original_bytes": 1995,
+      "packed_bytes": 1995,
+      "verified": true
+    },
+    {
+      "name": "xena/crates/xena-hash/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "299ec5ddf85c282f41f50dce434c0369d580dd5f00f9e02f7372a4a7e839bb96",
+      "packed_sha256": "299ec5ddf85c282f41f50dce434c0369d580dd5f00f9e02f7372a4a7e839bb96",
+      "original_bytes": 304,
+      "packed_bytes": 304,
+      "verified": true
+    },
+    {
+      "name": "xena/crates/xena-hash/src/scratchpad.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "228f4170545c5fcd593da332831da0b1ccfe36045dc099e6a3abfe02e81a2bcc",
+      "packed_sha256": "228f4170545c5fcd593da332831da0b1ccfe36045dc099e6a3abfe02e81a2bcc",
+      "original_bytes": 1850,
+      "packed_bytes": 1850,
+      "verified": true
+    },
+    {
+      "name": "bita/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "5a17a8b3d7db8968681a083cdf8594f6fc11e509cdb0691fa26ce75d08bc3e68",
+      "packed_sha256": "5a17a8b3d7db8968681a083cdf8594f6fc11e509cdb0691fa26ce75d08bc3e68",
+      "original_bytes": 2612,
+      "packed_bytes": 2612,
+      "verified": true
+    },
+    {
+      "name": "bita/crates/rbtc-hash5/Cargo.toml",
+      "transformation": "none; byte-exact",
+      "original_sha256": "3489160ed60c5b6579ae9034eb26fb643261bc49379aabca8aaf8e28a8798805",
+      "packed_sha256": "3489160ed60c5b6579ae9034eb26fb643261bc49379aabca8aaf8e28a8798805",
+      "original_bytes": 728,
+      "packed_bytes": 728,
+      "verified": true
+    },
+    {
+      "name": "bita/crates/rbtc-hash5/src/metal/mining.rs",
+      "transformation": "none; byte-exact",
+      "original_sha256": "34978dcbda9d1c0f12f034a526a743f87ec0527b862114e4960f20738bbe4c74",
+      "packed_sha256": "34978dcbda9d1c0f12f034a526a743f87ec0527b862114e4960f20738bbe4c74",
+      "original_bytes": 25781,
+      "packed_bytes": 25781,
+      "verified": true
+    },
+    {
+      "name": "primary/metal-no-copy.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "200dcc85aec1f505126f4e231bbaa7a31dd240677d6ed88ebaccdfb30111c8b0",
+      "packed_sha256": "200dcc85aec1f505126f4e231bbaa7a31dd240677d6ed88ebaccdfb30111c8b0",
+      "original_bytes": 2115,
+      "packed_bytes": 2115,
+      "verified": true
+    },
+    {
+      "name": "primary/iosurface-base.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "82a1f0cd97a30f0c5658d12f7c1e53613cc983528e75459833db519cf1499aca",
+      "packed_sha256": "82a1f0cd97a30f0c5658d12f7c1e53613cc983528e75459833db519cf1499aca",
+      "original_bytes": 1002,
+      "packed_bytes": 1002,
+      "verified": true
+    },
+    {
+      "name": "primary/iosurface-size.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "b44ba5314ececacd22fadd2db139d1ef4af8d04a4b9c08c68512f4f1fdd2938e",
+      "packed_sha256": "b44ba5314ececacd22fadd2db139d1ef4af8d04a4b9c08c68512f4f1fdd2938e",
+      "original_bytes": 969,
+      "packed_bytes": 969,
+      "verified": true
+    },
+    {
+      "name": "primary/review/acquisition.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "c1016aa1c0d51f99bd0dfcc19cbeb4899fd9848965e7f7a1c841a257e2e877da",
+      "packed_sha256": "c1016aa1c0d51f99bd0dfcc19cbeb4899fd9848965e7f7a1c841a257e2e877da",
+      "original_bytes": 827,
+      "packed_bytes": 827,
+      "verified": true
+    },
+    {
+      "name": "primary/review/getpagesize.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "13565a463468ae96f73a4174dc87fd5c4f476ceacd79b32982deb08414a5663a",
+      "packed_sha256": "13565a463468ae96f73a4174dc87fd5c4f476ceacd79b32982deb08414a5663a",
+      "original_bytes": 1258,
+      "packed_bytes": 1258,
+      "verified": true
+    },
+    {
+      "name": "primary/review/sdk-abi.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "abba63bf614f6ebb508a16be87055099267cba2ab4a5838f0fc3827e6bff6049",
+      "packed_sha256": "abba63bf614f6ebb508a16be87055099267cba2ab4a5838f0fc3827e6bff6049",
+      "original_bytes": 10045,
+      "packed_bytes": 10045,
+      "verified": true
+    },
+    {
+      "name": "primary/review/vm-map-region-recurse.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "f82dfc1b5a8ada56e6c93915f86e9089f30110779ae2164b4456da6d146292fe",
+      "packed_sha256": "f82dfc1b5a8ada56e6c93915f86e9089f30110779ae2164b4456da6d146292fe",
+      "original_bytes": 17843,
+      "packed_bytes": 17843,
+      "verified": true
+    },
+    {
+      "name": "primary/review/metal-shared-ordering.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "4b8cd7605236c6fc16b54c18c8fab9f61d9b858a045010ea3633d10f0f828b29",
+      "packed_sha256": "4b8cd7605236c6fc16b54c18c8fab9f61d9b858a045010ea3633d10f0f828b29",
+      "original_bytes": 10565,
+      "packed_bytes": 10565,
+      "verified": true
+    },
+    {
+      "name": "primary/metal-wait.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "cd7b4d3ea040143755c09fa0d87c665460fe5a583e657c18b880b48e3f039b21",
+      "packed_sha256": "cd7b4d3ea040143755c09fa0d87c665460fe5a583e657c18b880b48e3f039b21",
+      "original_bytes": 949,
+      "packed_bytes": 949,
+      "verified": true
+    },
+    {
+      "name": "primary/sources-v2.json",
+      "transformation": "none; byte-exact",
+      "original_sha256": "a265bca90aacda9f9124db9a6cb8b3e74442f20bdf1eb3c7ec71bbc71e297958",
+      "packed_sha256": "a265bca90aacda9f9124db9a6cb8b3e74442f20bdf1eb3c7ec71bbc71e297958",
+      "original_bytes": 2030,
+      "packed_bytes": 2030,
+      "verified": true
+    },
+    {
+      "name": "primary/review/caller-inventory.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "df5d3e584cef639f4a607c5dfc21ae50241d99a1227eb9c0121dbc9b94319442",
+      "packed_sha256": "df5d3e584cef639f4a607c5dfc21ae50241d99a1227eb9c0121dbc9b94319442",
+      "original_bytes": 22357,
+      "packed_bytes": 22357,
+      "verified": true
+    },
+    {
+      "name": "primary/review/caller-inventory.nu",
+      "transformation": "none; byte-exact",
+      "original_sha256": "da1d79cc50f7a5666b1bc272f70d8f42bd3dee0e6e1e702b83ae23b1a53405e6",
+      "packed_sha256": "da1d79cc50f7a5666b1bc272f70d8f42bd3dee0e6e1e702b83ae23b1a53405e6",
+      "original_bytes": 3666,
+      "packed_bytes": 3666,
+      "verified": true
+    },
+    {
+      "name": "primary/review/start-warm-v3.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "2893570f9c00dc8f8f7fca7915292a2731da5512bc2674c243d37c0ae9f85adf",
+      "packed_sha256": "2893570f9c00dc8f8f7fca7915292a2731da5512bc2674c243d37c0ae9f85adf",
+      "original_bytes": 4123,
+      "packed_bytes": 4123,
+      "verified": true
+    },
+    {
+      "name": "primary/review/parent-gates-v3.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "7eab25e3494c55a5bac5e1c53c1d90a7d336edfd2aefc8962219314833d5fbe1",
+      "packed_sha256": "7eab25e3494c55a5bac5e1c53c1d90a7d336edfd2aefc8962219314833d5fbe1",
+      "original_bytes": 7961,
+      "packed_bytes": 7961,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-plan-v3-review.txt",
+      "transformation": "none; byte-exact",
+      "original_sha256": "fa12bb60e1acaf8fb1984228c78165e176abc15465b8f4e25c1c752ed6e894a8",
+      "packed_sha256": "fa12bb60e1acaf8fb1984228c78165e176abc15465b8f4e25c1c752ed6e894a8",
+      "original_bytes": 24139,
+      "packed_bytes": 24139,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-source-v1.sha256",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1ead683ed4e75cfb0c2edd196e6e18e979f3ca83634e69c3bcdd2bfe72e1b1be",
+      "packed_sha256": "1ead683ed4e75cfb0c2edd196e6e18e979f3ca83634e69c3bcdd2bfe72e1b1be",
+      "original_bytes": 1456,
+      "packed_bytes": 1456,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-source-v1.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "aa4cfa29471b1c4a826118dcbe1832053ce5b125aa18dbef87ea868a6c68b5e5",
+      "packed_sha256": "88aa1f40a07f2f699283f338d4aef154377a791d11e65e1bf64be31ee6c338b2",
+      "original_bytes": 3150,
+      "packed_bytes": 2570,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-source-v1.diff",
+      "transformation": "none; byte-exact",
+      "original_sha256": "b2e20cc4ced5284215390d1e8d9c3579da260c64ee8c4cd9f72c8e0884adaba5",
+      "packed_sha256": "b2e20cc4ced5284215390d1e8d9c3579da260c64ee8c4cd9f72c8e0884adaba5",
+      "original_bytes": 41934,
+      "packed_bytes": 41934,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-historical-snippets.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "53a92d8f982789ce00f905b8889a0ea1c1482fe6fcf01014eac62681d90db941",
+      "packed_sha256": "332ac58041d759e66dcab6d00803e0f521c05cec14ee8a1946669025ed96dcc9",
+      "original_bytes": 1189,
+      "packed_bytes": 1160,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-code-audit-historical-section.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "ee079682c383d911184dce74070602da6213804655faa73e7297862804002413",
+      "packed_sha256": "ee079682c383d911184dce74070602da6213804655faa73e7297862804002413",
+      "original_bytes": 1201,
+      "packed_bytes": 1201,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-code-audit-historical-extraction.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "92de62f02ec885b3397b9680c8cd8d43301dc5c3e105cbfa63595e4c5ffdc5c6",
+      "packed_sha256": "0a396cd9f8882f2edc1b39ae6ef396374e1da125a9aeae2978a041a9716fc52d",
+      "original_bytes": 353,
+      "packed_bytes": 336,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-validation-6eQqO1/candidate-summary.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "1d9d104c79c04b61b37a021e61dab9a771e48ca52b683ba6bb761eddf5bf711b",
+      "packed_sha256": "1d9d104c79c04b61b37a021e61dab9a771e48ca52b683ba6bb761eddf5bf711b",
+      "original_bytes": 8215,
+      "packed_bytes": 8215,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-block-access-validation-6eQqO1/parent-baseline/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "cc33c40bcdd2365b8f0b46f76c4b661c42262bcc03a921d91649ff953757be66",
+      "packed_sha256": "cc33c40bcdd2365b8f0b46f76c4b661c42262bcc03a921d91649ff953757be66",
+      "original_bytes": 6362,
+      "packed_bytes": 6362,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-baseline.cX82Mt/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "49d502aa5ee94670c224aea38aad39d5f3d4bd41c48491ca042d293191e325d6",
+      "packed_sha256": "49d502aa5ee94670c224aea38aad39d5f3d4bd41c48491ca042d293191e325d6",
+      "original_bytes": 9017,
+      "packed_bytes": 9017,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/README.md",
+      "transformation": "none; byte-exact",
+      "original_sha256": "bec182afb0c04e18583b25f6e42c5553b22c04acc5b4e7ddf58c097c13aaba79",
+      "packed_sha256": "bec182afb0c04e18583b25f6e42c5553b22c04acc5b4e7ddf58c097c13aaba79",
+      "original_bytes": 6446,
+      "packed_bytes": 6446,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/comparison.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "edbb9c5b23134f41d7c32f6dca44c18f2661d9253d01a8594f29fb5a2a55ec6e",
+      "packed_sha256": "49d4fd31e4023103d549dadf8d9b331c2ffe8afc39e8fdfc3480ba224b5e2b30",
+      "original_bytes": 124025,
+      "packed_bytes": 102784,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/verification.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "dc1527fbbe12fa7c0553d82ae2e309a8138bf22d0b610566a9414718916db595",
+      "packed_sha256": "3fdde73ae2b250b3ab37ce4e180acd5b86fa4fca388954f7ad6b21914bbffe49",
+      "original_bytes": 365,
+      "packed_bytes": 328,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/scenarios.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "6d6486201b04cbf7bc6e7a1c54b2f18da9418dab1a79270b1d1a17ec1ccf2523",
+      "packed_sha256": "b0998a9571324c1449b020d556ac39151b9eb6f52cbaf8375d93edbeb1e5f0bc",
+      "original_bytes": 63849,
+      "packed_bytes": 46362,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/selected-commands.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "77e883fd1a3d5d4618db335584628b26f00d935336ee31247285fbf554c503f1",
+      "packed_sha256": "abfc6ff7baf11873346601784c54a70108f0e160ab96654afb28019e00147cb2",
+      "original_bytes": 16360,
+      "packed_bytes": 13045,
+      "verified": true
+    },
+    {
+      "name": "/tmp/unimem-dependent-candidate.DU0t4L/overlay.json",
+      "transformation": "JSON compact serialization; structural equality required",
+      "original_sha256": "f90b902c6121e90b219dc87295a2e45e1c86b6973e8e091955bdebd328eb691c",
+      "packed_sha256": "587ec9f985c2db76fff7dd35321abe221cae2b68f0662ffbba7e31372584dc25",
+      "original_bytes": 2829,
+      "packed_bytes": 2303,
+      "verified": true
+    }
+  ],
+  "no_content_omitted": true,
+  "reviewer_invoked": true
+}

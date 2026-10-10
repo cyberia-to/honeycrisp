@@ -87,7 +87,10 @@ impl<'a> Cell<'a> {
     /// Cell contents as a mutable byte slice.
     ///
     /// # Safety
-    /// `len` must be <= CELL_SIZE. Caller must ensure exclusive access.
+    /// `len` must be <= CELL_SIZE and all returned bytes must be initialized.
+    /// Exclude every conflicting CPU/raw/device access for the slice lifetime,
+    /// including other threads and retained imports. Establish prior device
+    /// completion and visibility before access.
     #[inline]
     pub unsafe fn bytes(&mut self, len: usize) -> &mut [u8] {
         std::slice::from_raw_parts_mut(self.ptr, len)

@@ -49,9 +49,12 @@ fn native_alignment_extent_and_raw_row_boundaries() {
             assert_eq!(IOSurfaceGetPixelFormat(block.handle()), 0);
             block.address().write_bytes(0xA5, block.size());
         }
-        assert_eq!(block.as_bytes(), vec![0xA5; allocation]);
-        assert_eq!(block.as_f32().len(), allocation / 4);
-        assert_eq!(block.as_u16().len(), allocation / 2);
+        // SAFETY: Entire actual backing initialized above; no writers or imports.
+        unsafe {
+            assert_eq!(block.as_bytes(), vec![0xA5; allocation]);
+            assert_eq!(block.as_f32().len(), allocation / 4);
+            assert_eq!(block.as_u16().len(), allocation / 2);
+        }
     }
 }
 

@@ -30,19 +30,34 @@ impl Tape {
         })
     }
 
-    /// Start a tape and warm all pages (touch every 16KB page).
-    /// Pays page fault cost upfront — all subsequent access is fast.
+    /// Start a tape and touch one byte at a fixed 16 KiB stride.
     pub fn start_warm(size: usize) -> Result<Self, MemError> {
-        let tape = Self::start(size)?;
-        tape.warm();
+        let mut tape = Self::start(size)?;
+        // SAFETY: Fresh unpublished owner; no takes, references or device aliases.
+        unsafe { tape.warm() };
         Ok(tape)
     }
 
-    /// Touch every page to force physical backing.
+    /// Zero offsets 0,16384,... below total; preserve other bytes and the cursor.
+    /// This fixed stride is independent of runtime VM page size and does not
+    /// initialize the whole allocation.
+    ///
+    /// # Safety
+    /// Exclude conflicting references, raw-pointer users and device access during
+    /// these writes, including across threads or retained imports. No live typed
+    /// value may be invalidated by the overwritten bytes. Establish prior device
+    /// completion and visibility before writing.
+    ///
+    /// ```compile_fail,E0133
+    /// fn warm(tape: &mut unimem::Tape) { tape.warm(); }
+    /// ```
+    /// ```compile_fail,E0596
+    /// fn shared(tape: &unimem::Tape) { unsafe { tape.warm() }; }
+    /// ```
     #[mutants::skip]
-    pub fn warm(&self) {
+    pub unsafe fn warm(&mut self) {
         let ptr = self.block.address();
-        let page = 16384; // Apple Silicon 16KB pages
+        let page = 16384; // Fixed warming stride, not a queried VM page size.
         let pages = self.total / page;
         unsafe {
             for i in 0..pages {

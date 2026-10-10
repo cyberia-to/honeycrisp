@@ -52,9 +52,13 @@ impl Buffer {
     ///
     /// # Safety
     /// - The buffer must be in shared storage mode (`is_shared()` true).
-    /// - Aliased reads/writes from CPU and GPU must obey IOSurface
-    ///   coherency rules: a `dmb ish` after CPU writes that the GPU will
-    ///   read in the same step.
+    /// - Initialize all bytes before constructing a Rust view; retain backing
+    ///   through all pointer/import uses and exclude conflicting CPU/raw/device
+    ///   accesses for each borrow, including other threads and retained aliases.
+    /// - For shared MTLCommandBuffer storage, finish CPU writes before committing
+    ///   commands that reference them. Exclude conflicting CPU access until GPU
+    ///   completion; wait and check success before CPU readback. A CPU barrier
+    ///   alone supplies neither device completion nor legal Rust aliasing.
     #[inline(always)]
     pub fn contents_ptr(&self) -> *mut u8 {
         self.ptr as *mut u8

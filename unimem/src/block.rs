@@ -113,7 +113,8 @@ pub struct Block {
     id: u32,
 }
 
-// Immutable after creation. Lock held for lifetime. No mutable state.
+// The owning mapping can move/share. CPU views require initialization and
+// CPU/raw/device exclusion; the creation-time lock adds no per-access operation.
 unsafe impl Send for Block {}
 unsafe impl Sync for Block {}
 
@@ -174,45 +175,118 @@ impl Block {
     }
 
     // ── Typed slice accessors ──
-    // Zero-cost views over the same physical memory.
-    // Caller is responsible for ensuring the data is valid for the requested type.
+    // Zero-cost views over the owned mapping; creation does not initialize it.
 
-    /// View as byte slice.
+    /// View all `size()` bytes, including native padding.
+    ///
+    /// # Safety
+    /// Initialize the entire returned extent before forming this view, even to
+    /// inspect its length or pointer. Exclude overlapping CPU/raw/device writes
+    /// for the borrow's lifetime, including from other threads or retained imports.
+    /// Establish prior device completion and visibility before CPU access.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &unimem::Block) { let _ = block.as_bytes(); }
+    /// ```
     #[inline(always)]
-    pub fn as_bytes(&self) -> &[u8] {
+    pub unsafe fn as_bytes(&self) -> &[u8] {
         unsafe { std::slice::from_raw_parts(self.va.as_ptr(), self.size) }
     }
 
-    /// View as mutable byte slice.
+    /// View all `size()` bytes mutably, including native padding.
+    ///
+    /// # Safety
+    /// Initialize the entire returned extent before forming this view, even to
+    /// inspect its length or pointer. Exclude every conflicting CPU/raw/device
+    /// access for the borrow's lifetime, including other threads/retained imports.
+    /// Establish prior device completion and visibility before CPU access.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &mut unimem::Block) { let _ = block.as_bytes_mut(); }
+    /// ```
+    /// ```compile_fail,E0596
+    /// fn shared(block: &unimem::Block) { let _ = unsafe { block.as_bytes_mut() }; }
+    /// ```
+    /// ```compile_fail,E0499
+    /// fn aliases(block: &mut unimem::Block) {
+    ///     let a = unsafe { block.as_bytes_mut() };
+    ///     let b = unsafe { block.as_bytes_mut() };
+    ///     a[0] = b[0];
+    /// }
+    /// ```
+    /// ```compile_fail,E0502
+    /// fn aliases(block: &mut unimem::Block) {
+    ///     let a = unsafe { block.as_bytes() };
+    ///     let b = unsafe { block.as_bytes_mut() };
+    ///     b[0] = a[0];
+    /// }
+    /// ```
     #[inline(always)]
-    #[allow(clippy::mut_from_ref)]
-    pub fn as_bytes_mut(&self) -> &mut [u8] {
+    pub unsafe fn as_bytes_mut(&mut self) -> &mut [u8] {
         unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr(), self.size) }
     }
 
     /// View as f32 slice. Length = size / 4.
+    ///
+    /// # Safety
+    /// Initialize all `size()/4*4` returned bytes, including padding, before
+    /// forming this view, even for length/pointer inspection. Exclude overlapping
+    /// CPU/raw/device writes throughout the borrow, across threads and retained
+    /// imports. Establish prior device completion and visibility before access.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &unimem::Block) { let _ = block.as_f32(); }
+    /// ```
     #[inline(always)]
-    pub fn as_f32(&self) -> &[f32] {
+    pub unsafe fn as_f32(&self) -> &[f32] {
         unsafe { std::slice::from_raw_parts(self.va.as_ptr() as *const f32, self.size / 4) }
     }
 
     /// View as mutable f32 slice. Length = size / 4.
+    ///
+    /// # Safety
+    /// Initialize all `size()/4*4` returned bytes, including padding, before
+    /// forming this view, even for length/pointer inspection. Exclude every
+    /// conflicting CPU/raw/device access throughout the borrow, across threads
+    /// and retained imports. Establish prior device completion and visibility.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &mut unimem::Block) { let _ = block.as_f32_mut(); }
+    /// ```
     #[inline(always)]
-    #[allow(clippy::mut_from_ref)]
-    pub fn as_f32_mut(&self) -> &mut [f32] {
+    pub unsafe fn as_f32_mut(&mut self) -> &mut [f32] {
         unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr() as *mut f32, self.size / 4) }
     }
 
     /// View as u16 slice (fp16). Length = size / 2.
+    ///
+    /// # Safety
+    /// Initialize all `size()/2*2` returned bytes, including padding, before
+    /// forming this view, even for length/pointer inspection. Exclude overlapping
+    /// CPU/raw/device writes throughout the borrow, across threads and retained
+    /// imports. Establish prior device completion and visibility before access.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &unimem::Block) { let _ = block.as_u16(); }
+    /// ```
     #[inline(always)]
-    pub fn as_u16(&self) -> &[u16] {
+    pub unsafe fn as_u16(&self) -> &[u16] {
         unsafe { std::slice::from_raw_parts(self.va.as_ptr() as *const u16, self.size / 2) }
     }
 
     /// View as mutable u16 slice (fp16). Length = size / 2.
+    ///
+    /// # Safety
+    /// Initialize all `size()/2*2` returned bytes, including padding, before
+    /// forming this view, even for length/pointer inspection. Exclude every
+    /// conflicting CPU/raw/device access throughout the borrow, across threads
+    /// and retained imports. Establish prior device completion and visibility.
+    ///
+    /// ```compile_fail,E0133
+    /// fn view(block: &mut unimem::Block) { let _ = block.as_u16_mut(); }
+    /// ```
     #[inline(always)]
-    #[allow(clippy::mut_from_ref)]
-    pub fn as_u16_mut(&self) -> &mut [u16] {
+    pub unsafe fn as_u16_mut(&mut self) -> &mut [u16] {
         unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr() as *mut u16, self.size / 2) }
     }
 }

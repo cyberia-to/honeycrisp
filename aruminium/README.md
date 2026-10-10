@@ -65,10 +65,13 @@ GPU buffers can wrap `unimem::Block` — IOSurface-backed pinned memory shared w
 ```rust,ignore
 use aruminium::{Gpu, Block};
 
-let block = Block::open(n * 4)?;
+// Caller supplies initialized backing whose actual address/size are runtime
+// VM-page aligned and contained in one VM region, with no conflicting aliases.
+let block: Block = compatible_backing;
 let gpu = Gpu::open()?;
-let buf = gpu.wrap(&block)?;  // MTLBuffer over same physical pages
-// GPU reads/writes block's memory directly — zero copies
+let buf = unsafe { gpu.wrap(&block)? };
+// Finish CPU writes before commit; wait for GPU completion before CPU readback.
+// Keep block alive through buf and every encoded/in-flight use.
 ```
 
 one allocation. three devices. no copies.

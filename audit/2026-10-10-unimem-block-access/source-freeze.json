@@ -1,0 +1,91 @@
+{
+  "recorded_at": "2026-10-10T01:22:19.258991+00:00",
+  "base": "7b148906263da5ea8aabc5ddb0e2e44ff2288ecc",
+  "files": [
+    {
+      "path": "unimem/src/block.rs",
+      "sha256": "57891b04ab5fb16f84cf2b3238d7890b5155ddf273d5012a6fcb45149da1d636",
+      "lines": 299
+    },
+    {
+      "path": "unimem/src/tape.rs",
+      "sha256": "1949cce890be48a7831367416c12251ce6baeda87b9d8a6525f27fa3f642f617",
+      "lines": 145
+    },
+    {
+      "path": "unimem/src/grid.rs",
+      "sha256": "7c85bf4e370012b6c331d374c452a5caac2da1340ef3f76952b600a7bf18db0b",
+      "lines": 104
+    },
+    {
+      "path": "aruminium/src/device.rs",
+      "sha256": "1f17b0226e6d9d24609dec5df67221995a7b15ed94c120d7630630205f8ec379",
+      "lines": 315
+    },
+    {
+      "path": "aruminium/src/buffer.rs",
+      "sha256": "d7ff1c8c6001595f025ace0cd3045fbee43e33395139a866a6d1e3932f9aac54",
+      "lines": 167
+    },
+    {
+      "path": "unimem/tests/roundtrip.rs",
+      "sha256": "d716e4cf2306bd9fe6e2efd368d9f5e139fba24582d9ddb394e83cae0ab6f8ef",
+      "lines": 415
+    },
+    {
+      "path": "unimem/tests/block_creation.rs",
+      "sha256": "27a2fc51465ca74ca366031fd924759668c1bd150099c30d4957308a05bbff4a",
+      "lines": 146
+    },
+    {
+      "path": "unimem/tests/block_access.rs",
+      "sha256": "2e976fc0554fd38d1dee9cf77c8b654fdbf8740f717929163a2c73d292a38cb2",
+      "lines": 130
+    },
+    {
+      "path": "aruminium/tests/integration.rs",
+      "sha256": "a64b4dfd06e56175042ea69fe314eae75e6b880f4b0c5129126106de4712685a",
+      "lines": 1086
+    },
+    {
+      "path": "aruminium/tests/support/import_memory.rs",
+      "sha256": "071de2f44aff8332ef418944841902eca57a1a116dd1774c6e9fac47571bec6e",
+      "lines": 90
+    },
+    {
+      "path": "rane/tests/hardware.rs",
+      "sha256": "c46214072cf4652f0dc4107fa3aa232582aaa44de21292b4816fa3b9b0cd01be",
+      "lines": 203
+    },
+    {
+      "path": "unimem/specs/README.md",
+      "sha256": "5ad7306c094c2bff8794a888941f6e8109a90e94cb8c7a77d59d980966ced3ea",
+      "lines": 506
+    },
+    {
+      "path": "unimem/specs/api-sketch.md",
+      "sha256": "6d30d2b2cada33b26838dcd634bcd3a6813aa2dc14cd03ac77e784977e85967a",
+      "lines": 359
+    },
+    {
+      "path": "unimem/CLAUDE.md",
+      "sha256": "1b94116a32897d7b7a22d2ea3dfbbf3fc4831ea30f6a5d505ba4f16dc0e001a9",
+      "lines": 89
+    },
+    {
+      "path": "aruminium/specs/README.md",
+      "sha256": "ee483a214e4298c8e0fbc3734164baa3d649ff74eea26660811a2470ca833e99",
+      "lines": 596
+    },
+    {
+      "path": "aruminium/README.md",
+      "sha256": "0f89c25ef12b12c57a1f3f5c172dbdf47b1b7852ac5d8c3aeaab5083e5c1e31f",
+      "lines": 145
+    }
+  ],
+  "manifest_sha256": "1ead683ed4e75cfb0c2edd196e6e18e979f3ca83634e69c3bcdd2bfe72e1b1be",
+  "historical_snippets_json_sha256": "053e2ef5fe3754dc7e6c9c571037b1be9363b1ec625e24d6d94e0f0a03306564",
+  "historical_table_sha256": "a0135fd8e6a4f557382034671e43fa2858404ea9e276a606ac7fdaeef6f22a4d",
+  "historical_row_sha256": "89bc04b0851e9685af77e32279cd96797b788606f049b874a69d5308ab561160",
+  "gates_status": "Owned-file pinned rustfmt and git diff --check passed; candidate Cargo gates not run yet."
+}

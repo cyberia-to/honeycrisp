@@ -1,7 +1,10 @@
 //! Integration tests — full GPU pipeline: compile → dispatch → verify
 
-use aruminium::{autorelease_pool, Batch, Block, Commands, Dispatch, Gpu, GpuError};
+use aruminium::{autorelease_pool, Batch, Commands, Dispatch, Gpu, GpuError};
 use std::ffi::c_void;
+
+#[path = "support/import_memory.rs"]
+mod import_memory;
 
 #[test]
 fn vecadd_1024() -> Result<(), GpuError> {
@@ -380,20 +383,17 @@ fn gpu_recommended_max_working_set_size() -> Result<(), GpuError> {
 #[test]
 fn gpu_buffer_wrap() -> Result<(), GpuError> {
     let dev = Gpu::open()?;
-    let page_size = 16384usize; // Apple Silicon page size
-    let layout = std::alloc::Layout::from_size_align(page_size, page_size).unwrap();
-    let ptr = unsafe { std::alloc::alloc(layout) };
-    assert!(!ptr.is_null(), "page-aligned alloc failed");
+    let mut block = import_memory::initialized_block(1);
 
-    // Write pattern into the memory
-    let slice = unsafe { std::slice::from_raw_parts_mut(ptr as *mut f32, page_size / 4) };
-    for (i, v) in slice.iter_mut().enumerate() {
+    // SAFETY: Full actual extent initialized; this view ends before import.
+    for (i, v) in unsafe { block.as_f32_mut() }.iter_mut().enumerate() {
         *v = i as f32;
     }
 
-    // Wrap as Metal buffer — zero copy
-    let buf = unsafe { dev.buffer_wrap(ptr as *mut c_void, page_size)? };
-    assert_eq!(buf.size(), page_size);
+    // SAFETY: Runtime page/leaf-region preflight passed; initialized fresh owner
+    // precedes this buffer and stays live until it drops. No device work/aliases.
+    let buf = unsafe { dev.buffer_wrap(block.address().cast(), block.size())? };
+    assert_eq!(buf.size(), block.size());
 
     // Read back and verify — should see same data (zero copy)
     buf.read_f32(|d| {
@@ -402,8 +402,6 @@ fn gpu_buffer_wrap() -> Result<(), GpuError> {
         }
     });
 
-    drop(buf);
-    unsafe { std::alloc::dealloc(ptr, layout) };
     Ok(())
 }
 
@@ -979,22 +977,30 @@ fn wrap_block_vecadd() -> Result<(), GpuError> {
 
     let n = 256;
 
-    // Allocate via unimem::Block — shared with CPU/ANE
-    let block_a = Block::open(n * 4).unwrap();
-    let block_b = Block::open(n * 4).unwrap();
-    let block_c = Block::open(n * 4).unwrap();
+    // Full actual extents initialized; runtime page/leaf-region checks passed.
+    let mut block_a = import_memory::initialized_block(n * 4);
+    let mut block_b = import_memory::initialized_block(n * 4);
+    let block_c = import_memory::initialized_block(n * 4);
 
-    for (i, v) in block_a.as_f32_mut().iter_mut().enumerate() {
+    // SAFETY: Exclusive CPU access before imports; each view ends with its loop.
+    for (i, v) in unsafe { block_a.as_f32_mut() }.iter_mut().enumerate() {
         *v = i as f32;
     }
-    for v in block_b.as_f32_mut().iter_mut() {
+    // SAFETY: Same full initialization/exclusion proof for B.
+    for v in unsafe { block_b.as_f32_mut() }.iter_mut() {
         *v = 10.0;
     }
 
-    // Wrap blocks as Metal buffers — zero copy
-    let buf_a = device.wrap(&block_a)?;
-    let buf_b = device.wrap(&block_b)?;
-    let buf_c = device.wrap(&block_c)?;
+    // SAFETY: Preflighted actual mappings, no remaining CPU views or remapping.
+    // Owners precede all imports/commands; writes finish before commit and wait
+    // follows submit before any assertion/return/drop, including GPU failure.
+    let (buf_a, buf_b, buf_c) = unsafe {
+        (
+            device.wrap(&block_a)?,
+            device.wrap(&block_b)?,
+            device.wrap(&block_c)?,
+        )
+    };
 
     let cmd = queue.commands()?;
     let enc = cmd.encoder()?;
@@ -1006,11 +1012,13 @@ fn wrap_block_vecadd() -> Result<(), GpuError> {
     enc.finish();
     cmd.submit();
     cmd.wait();
+    assert_eq!(cmd.status(), Commands::STATUS_COMPLETED);
+    assert!(cmd.error().is_none());
 
-    // Read result from Block directly — same physical memory
-    for i in 0..n {
+    // SAFETY: GPU completed successfully; actual backing was fully initialized.
+    let result = unsafe { block_c.as_f32() };
+    for (i, &actual) in result[..n].iter().enumerate() {
         let expected = i as f32 + 10.0;
-        let actual = block_c.as_f32()[i];
         assert!(
             (actual - expected).abs() < 1e-6,
             "wrap_block: c[{}]={}, expected {}",
