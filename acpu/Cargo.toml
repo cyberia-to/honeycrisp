@@ -16,6 +16,8 @@ unimem.workspace = true
 
 [dev-dependencies]
 nebu.workspace = true
+# differential test against the canonical permutation (tests/hemera_differential.rs)
+hemera = { package = "cyber-hemera", version = "0.4", path = "../../hemera/rs" }
 
 [lib]
 name = "acpu"

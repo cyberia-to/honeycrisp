@@ -1,50 +1,85 @@
 //! Poseidon2 permutation for Goldilocks t=16 — fully inlined, zero call overhead.
 //!
-//! Hemera parameters: R_F=8 (4+4), R_P=16, full S-box=x^7, partial S-box=x^(-1).
-//! State stays in the register file for the entire permutation.
+//! hemera 0.4 parameters (profile 15): R_F = 12 (6 + 6), R_P = 48, S-box x⁷ in
+//! every round, external layer M_E = circ(2·M4, M4, M4, M4) with the Poseidon2
+//! reference M4 = [[5,7,1,3],[4,6,1,1],[1,3,5,7],[1,1,4,6]], internal layer
+//! M_I = 1 + diag(d). State stays in the register file for the entire
+//! permutation.
+//!
+//! Round constants and the internal diagonal are caller-supplied so the kernel
+//! stays dependency-free; `tests/hemera_differential.rs` pins it bit for bit
+//! to `cyber-hemera` with hemera's own constants (receipt:
+//! hemera/audit/profile-0.4-2026-10.md).
 
 use super::goldilocks::*;
 
-/// Apply the Hemera Poseidon2 permutation in-place.
+/// Full rounds, half before and half after the partial rounds.
+pub const ROUNDS_F: usize = 12;
+/// Partial rounds.
+pub const ROUNDS_P: usize = 48;
+/// Rounds in total.
+pub const ROUNDS_TOTAL: usize = ROUNDS_F + ROUNDS_P; // 60
+/// External round constants: one per state element per full round.
+pub const NUM_EXTERNAL: usize = ROUNDS_F * 16; // 192
+/// Round constants in total: external rows first, then one per partial round.
+pub const NUM_CONSTANTS: usize = NUM_EXTERNAL + ROUNDS_P; // 240
+
+/// Apply the hemera 0.4 Poseidon2 permutation in-place.
 ///
-/// `state`: 16 Goldilocks field elements.
-/// `rc`: 144 round constants (128 external + 16 internal).
-/// `diag`: 16 diagonal elements for internal MDS matrix.
+/// `state`: 16 Goldilocks field elements, canonical (`< P`). The output is
+/// canonical.
+/// `rc`: 240 round constants — 192 external (round-major, initial full
+/// rounds then terminal full rounds) followed by 48 internal.
+/// `diag`: the 16-element diagonal `d` of the internal matrix `1 + diag(d)`.
 #[inline(never)]
-pub fn poseidon2_permute(state: &mut [u64; 16], rc: &[u64; 144], diag: &[u64; 16]) {
+pub fn poseidon2_permute(state: &mut [u64; 16], rc: &[u64; NUM_CONSTANTS], diag: &[u64; 16]) {
     let mut ci = 0usize;
 
-    // Initial external MDS (pre-mixing)
+    // Initial external layer (pre-mixing)
     mds_external(state);
 
-    // 4 initial full rounds
-    for _ in 0..4 {
+    // 6 initial full rounds
+    for _ in 0..ROUNDS_F / 2 {
         add_rc_full(state, rc, ci);
         ci += 16;
         sbox7_full(state);
         mds_external(state);
     }
 
-    // 16 partial rounds: add_rc(state[0]) + inv(state[0]) + internal_mds
-    for r in 0..16 {
-        state[0] = gl_add(state[0], rc[128 + r]);
-        state[0] = gl_inv(state[0]);
+    // 48 partial rounds: add_rc(state[0]) + state[0]^7 + internal layer
+    for r in 0..ROUNDS_P {
+        state[0] = gl_add(state[0], rc[NUM_EXTERNAL + r]);
+        state[0] = gl_pow7(state[0]);
         mds_internal(state, diag);
     }
 
-    // 4 terminal full rounds
-    for _ in 0..4 {
+    // 6 terminal full rounds
+    for _ in 0..ROUNDS_F / 2 {
         add_rc_full(state, rc, ci);
         ci += 16;
         sbox7_full(state);
         mds_external(state);
+    }
+
+    for s in state.iter_mut() {
+        *s = canonical(*s);
+    }
+}
+
+/// Reduce a representative below 2^64 into `[0, P)`.
+#[inline(always)]
+fn canonical(x: u64) -> u64 {
+    if x >= P {
+        x - P
+    } else {
+        x
     }
 }
 
 // ── round components ─────────────────────────────────────────────────────
 
 #[inline(always)]
-fn add_rc_full(state: &mut [u64; 16], rc: &[u64; 144], offset: usize) {
+fn add_rc_full(state: &mut [u64; 16], rc: &[u64; NUM_CONSTANTS], offset: usize) {
     for i in 0..16 {
         state[i] = gl_add(state[i], rc[offset + i]);
     }
@@ -75,16 +110,10 @@ fn sbox7_full(state: &mut [u64; 16]) {
     }
 }
 
-/// External MDS: circ-of-4×4. No field multiplications — only adds and doubles.
+/// External layer M_E = circ(2·M4, M4, M4, M4). No field multiplications —
+/// only adds and doubles.
 ///
-/// M4 = circ(2,3,1,1):
-/// ```text
-/// [2 3 1 1]
-/// [1 2 3 1]
-/// [1 1 2 3]
-/// [3 1 1 2]
-/// ```
-/// Applied to 4 chunks of 4, then column sums added.
+/// Applied as M4 on each 4-element chunk, then the column sums added back.
 #[inline(always)]
 fn mds_external(state: &mut [u64; 16]) {
     // Apply M4 to each 4-element chunk
@@ -106,23 +135,32 @@ fn mds_external(state: &mut [u64; 16]) {
     }
 }
 
-/// M4 = circ(2,3,1,1) — pure additions and doubles.
+/// The Poseidon2 reference M4 (paper Appendix B, Horizen Labs):
+/// ```text
+/// [5 7 1 3]
+/// [4 6 1 1]
+/// [1 3 5 7]
+/// [1 1 4 6]
+/// ```
+/// Eight additions and four doublings — the paper's schedule, the same one
+/// hemera's `field::apply_mat4` uses.
 #[inline(always)]
 fn apply_m4(x: &mut [u64]) {
-    let t01 = gl_add(x[0], x[1]);
-    let t23 = gl_add(x[2], x[3]);
-    let t0123 = gl_add(t01, t23);
-    let t01123 = gl_add(t0123, x[1]);
-    let t01233 = gl_add(t0123, x[3]);
-    let x0d = gl_add(x[0], x[0]); // double
-    let x2d = gl_add(x[2], x[2]);
-    x[3] = gl_add(t01233, x0d);
-    x[1] = gl_add(t01123, x2d);
-    x[0] = gl_add(t01123, t01);
-    x[2] = gl_add(t01233, t23);
+    let t0 = gl_add(x[0], x[1]);
+    let t1 = gl_add(x[2], x[3]);
+    let t2 = gl_add(gl_add(x[1], x[1]), t1);
+    let t3 = gl_add(gl_add(x[3], x[3]), t0);
+    let t4 = gl_add(gl_add(gl_add(t1, t1), gl_add(t1, t1)), t3);
+    let t5 = gl_add(gl_add(gl_add(t0, t0), gl_add(t0, t0)), t2);
+    let t6 = gl_add(t3, t5);
+    let t7 = gl_add(t2, t4);
+    x[0] = t6;
+    x[1] = t5;
+    x[2] = t7;
+    x[3] = t4;
 }
 
-/// Internal MDS: M_I = 1 + diag(d).
+/// Internal layer: M_I = 1 + diag(d), with 1 the all-ones matrix.
 /// `state'[i] = d[i] * state[i] + sum(state)`.
 #[inline(always)]
 fn mds_internal(state: &mut [u64; 16], diag: &[u64; 16]) {
@@ -141,20 +179,20 @@ fn mds_internal(state: &mut [u64; 16], diag: &[u64; 16]) {
 mod tests {
     use super::*;
 
-    fn test_rc() -> [u64; 144] {
-        let mut rc = [0u64; 144];
-        for i in 0..144 {
-            rc[i] = (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15);
-        }
-        rc
+    fn test_rc() -> [u64; NUM_CONSTANTS] {
+        core::array::from_fn(|i| canonical((i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15)))
     }
 
     fn test_diag() -> [u64; 16] {
-        let mut d = [0u64; 16];
-        for i in 0..16 {
-            d[i] = (i as u64 + 2).wrapping_mul(0x517CC1B727220A95);
-        }
-        d
+        core::array::from_fn(|i| canonical((i as u64 + 2).wrapping_mul(0x517CC1B727220A95)))
+    }
+
+    #[test]
+    fn round_shape_is_hemera_0_4() {
+        assert_eq!(ROUNDS_F, 12);
+        assert_eq!(ROUNDS_P, 48);
+        assert_eq!(ROUNDS_TOTAL, 60);
+        assert_eq!(NUM_CONSTANTS, 240);
     }
 
     #[test]
@@ -174,6 +212,15 @@ mod tests {
         poseidon2_permute(&mut s1, &rc, &diag);
         poseidon2_permute(&mut s2, &rc, &diag);
         assert_eq!(s1, s2);
+    }
+
+    #[test]
+    fn permute_output_is_canonical() {
+        let rc = test_rc();
+        let diag = test_diag();
+        let mut s: [u64; 16] = [P - 1; 16];
+        poseidon2_permute(&mut s, &rc, &diag);
+        assert!(s.iter().all(|&x| x < P));
     }
 
     #[test]

@@ -1,27 +1,32 @@
-//! Binary Merkle tree hashing using Poseidon2 permutation.
+//! Binary Merkle tree hashing using the Poseidon2 permutation.
 //!
 //! hash_node: compress two 32-byte children into one 32-byte parent.
-//! hash_leaves: build a complete binary Merkle tree from leaf data.
+//! merkle_root: build a complete binary Merkle tree from leaf digests.
+//!
+//! The compression is the bare permutation on `left ‖ right ‖ 0⁸`: the
+//! capacity is zero, no domain flags. hemera's tree mode (`hemera::tree`)
+//! sets flags in the capacity, so these roots are permutation-equal to
+//! hemera's kernel and differ from `hemera::tree::hash_node` by design —
+//! `tests/hemera_differential.rs` pins both facts.
 
 use super::goldilocks::*;
-use super::permute::poseidon2_permute;
+use super::permute::{poseidon2_permute, NUM_CONSTANTS};
 
 /// Hash two 32-byte children into a 32-byte parent.
 ///
 /// Absorbs left (4 elements) and right (4 elements) into the rate portion
 /// of the sponge state, permutes, and squeezes 4 elements.
 #[inline]
-pub fn hash_node(left: &[u64; 4], right: &[u64; 4], rc: &[u64; 144], diag: &[u64; 16]) -> [u64; 4] {
+pub fn hash_node(
+    left: &[u64; 4],
+    right: &[u64; 4],
+    rc: &[u64; NUM_CONSTANTS],
+    diag: &[u64; 16],
+) -> [u64; 4] {
     let mut state = [0u64; 16];
     // Absorb: left into state[0..4], right into state[4..8]
-    state[0] = left[0];
-    state[1] = left[1];
-    state[2] = left[2];
-    state[3] = left[3];
-    state[4] = right[0];
-    state[5] = right[1];
-    state[6] = right[2];
-    state[7] = right[3];
+    state[..4].copy_from_slice(left);
+    state[4..8].copy_from_slice(right);
 
     poseidon2_permute(&mut state, rc, diag);
 
@@ -34,7 +39,7 @@ pub fn hash_node(left: &[u64; 4], right: &[u64; 4], rc: &[u64; 144], diag: &[u64
 /// Returns the root hash.
 ///
 /// `n` must be a power of 2.
-pub fn merkle_root(leaves: &[[u64; 4]], rc: &[u64; 144], diag: &[u64; 16]) -> [u64; 4] {
+pub fn merkle_root(leaves: &[[u64; 4]], rc: &[u64; NUM_CONSTANTS], diag: &[u64; 16]) -> [u64; 4] {
     let n = leaves.len();
     assert!(n > 0 && n.is_power_of_two());
 
@@ -100,20 +105,20 @@ pub fn batch_inv(input: &[u64], output: &mut [u64]) {
 mod tests {
     use super::*;
 
-    fn test_rc() -> [u64; 144] {
-        core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15))
-    }
-
-    fn test_diag() -> [u64; 16] {
-        core::array::from_fn(|i| (i as u64 + 2).wrapping_mul(0x517CC1B727220A95))
-    }
-
     fn canonicalize(x: u64) -> u64 {
         if x >= P {
             x - P
         } else {
             x
         }
+    }
+
+    fn test_rc() -> [u64; NUM_CONSTANTS] {
+        core::array::from_fn(|i| canonicalize((i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15)))
+    }
+
+    fn test_diag() -> [u64; 16] {
+        core::array::from_fn(|i| canonicalize((i as u64 + 2).wrapping_mul(0x517CC1B727220A95)))
     }
 
     #[test]
