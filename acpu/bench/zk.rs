@@ -19,7 +19,7 @@ fn main() {
     println!("Goldilocks p = 2^64 - 2^32 + 1");
     println!();
 
-    let mut score = Score::new();
+    let score = Score::new();
     let a: Vec<u64> = (0..N)
         .map(|i| (i as u64).wrapping_mul(0x9E3779B97F4A7C15) | 1)
         .collect();

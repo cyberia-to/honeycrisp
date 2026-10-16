@@ -1,0 +1,67 @@
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: unused import: `std::time::Instant`
+ --> acpu/bench/integer.rs:7:5
+  |
+7 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `-D unused-imports` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:62:42
+   |
+62 |     let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
+   |                                          ^                   ^
+   |
+   = note: `-D unused-parens` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_parens)]`
+help: remove these parentheses
+   |
+62 -     let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
+62 +     let i32_a: Vec<i32> = (0..N).map(|i| i as i32 * 7 - 2000).collect();
+   |
+
+error: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:63:42
+   |
+63 |     let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
+   |                                          ^                  ^
+   |
+help: remove these parentheses
+   |
+63 -     let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
+63 +     let i32_b: Vec<i32> = (0..N).map(|i| i as i32 * 3 + 500).collect();
+   |
+
+error: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:66:42
+   |
+66 |     let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+66 -     let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
+66 +     let i16_a: Vec<i16> = (0..N).map(|i| i as i16 * 5 - 2000).collect();
+   |
+
+error: unnecessary parentheses around closure body
+  --> acpu/bench/integer.rs:67:42
+   |
+67 |     let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
+   |                                          ^                   ^
+   |
+help: remove these parentheses
+   |
+67 -     let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
+67 +     let i16_b: Vec<i16> = (0..N).map(|i| i as i16 * 3 + 1000).collect();
+   |
+
+error: could not compile `acpu` (example "bench_integer") due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...

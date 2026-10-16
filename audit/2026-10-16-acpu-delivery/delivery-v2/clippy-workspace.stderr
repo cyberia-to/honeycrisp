@@ -1,0 +1,24 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling libc v0.2.185
+   Compiling syn v2.0.117
+   Compiling crossbeam-utils v0.8.21
+   Compiling cfg_aliases v0.2.1
+    Checking bitflags v2.11.0
+    Checking crossbeam-queue v0.3.12
+   Compiling mutants v0.0.3
+    Checking unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+error[E0514]: found crate `crossbeam_queue` compiled by an incompatible version of rustc
+ --> unimem/src/grid.rs:4:5
+  |
+4 | use crossbeam_queue::SegQueue;
+  |     ^^^^^^^^^^^^^^^
+  |
+  = note: the following crate versions were found:
+          crate `crossbeam_queue` compiled by rustc 1.95.0 (59807616e 2026-04-14): /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/deps/libcrossbeam_queue-bd4114745e53a7b1.rmeta
+  = help: please recompile that crate using this compiler (rustc 1.98.0 (88d9e12ae 2026-08-18)) (consider running `cargo clean` first)
+
+For more information about this error, try `rustc --explain E0514`.
+error: could not compile `unimem` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

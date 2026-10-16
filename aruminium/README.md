@@ -124,7 +124,7 @@ aruminium::cast_f16_f32(&mut [f32], &[u16])  // bulk NEON
 ```text
 cargo build --release
 cargo run --example vecadd
-cargo run --example matmul
+cargo run --example aruminium_matmul
 cargo run --release -p metal-benches --bin bench
 ```
 

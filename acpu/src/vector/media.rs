@@ -383,7 +383,7 @@ mod tests {
     #[test]
     fn test_rgb_to_yuv_known() {
         let mut yuv = vec![0u8; 48];
-        rgb_to_yuv(&mut yuv, &vec![0u8; 48]);
+        rgb_to_yuv(&mut yuv, &[0u8; 48]);
         for i in 0..16 {
             assert_eq!((yuv[i * 3], yuv[i * 3 + 1], yuv[i * 3 + 2]), (16, 128, 128));
         }
@@ -414,8 +414,8 @@ mod tests {
         let mut out = vec![0u8; 3];
         rgb_to_yuv(&mut yuv, &[128, 128, 128]);
         yuv_to_rgb(&mut out, &yuv);
-        for c in 0..3 {
-            assert!((128i32 - out[c] as i32).abs() <= 2, "ch {}: {}", c, out[c]);
+        for (c, &value) in out.iter().enumerate() {
+            assert!((128i32 - value as i32).abs() <= 2, "ch {c}: {value}");
         }
     }
 
@@ -464,7 +464,7 @@ mod tests {
     #[test]
     fn test_resize_downsample() {
         let mut dst = vec![0.0f32; 4];
-        resize_bilinear_f32(&mut dst, &vec![7.5f32; 16], 4, 4, 2, 2);
+        resize_bilinear_f32(&mut dst, &[7.5f32; 16], 4, 4, 2, 2);
         assert!(dst.iter().all(|&v| (v - 7.5).abs() < 1e-4));
     }
 }

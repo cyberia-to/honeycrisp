@@ -1,0 +1,9 @@
+{
+  "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "sdk_version": "26.4.1",
+  "header": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/Headers/vDSP.h",
+  "header_sha256": "8cdbe0b8d48d3a3e7d9790df5e75f4d5b8f2f1e7cef55c9968c801624985c6ba",
+  "declarations": "extern void vDSP_vadd(\n    const float *__A,\n    vDSP_Stride  __IA,\n    const float *__B,\n    vDSP_Stride  __IB,\n    float       *__C,\n    vDSP_Stride  __IC,\n    vDSP_Length  __N)",
+  "typedefs": "typedef unsigned long vDSP_Length;\n#if defined __arm64__ && !defined __LP64__\ntypedef long long     vDSP_Stride;\n#else\ntypedef long          vDSP_Stride;\n#endif\n",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.0.123.102)\nTarget: arm64-apple-darwin25.4.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin"
+}

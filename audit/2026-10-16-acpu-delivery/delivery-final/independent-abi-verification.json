@@ -1,0 +1,68 @@
+{
+  "verified": true,
+  "source_sha256": "5faaae626d09eab9d2b4c989a77defd27889ba6cc5a589d06cc296d07c42cddd",
+  "recorded": "2026-10-16T22:54:34.660709+00:00",
+  "inventories": [
+    {
+      "name": "honeycrisp",
+      "head": "c5177c56e4551c9896a2869c3b23d0c7bac9a6f9",
+      "files": 250
+    },
+    {
+      "name": "strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb",
+      "files": 243
+    }
+  ],
+  "sdk_header_sha256": "8cdbe0b8d48d3a3e7d9790df5e75f4d5b8f2f1e7cef55c9968c801624985c6ba",
+  "receipts": [
+    {
+      "name": "sdk-abi-build",
+      "command": [
+        "xcrun",
+        "clang",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "audit/2026-10-16-acpu-delivery/vdsp-abi/header-control.c",
+        "-framework",
+        "Accelerate",
+        "-o",
+        "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/vdsp-header-control"
+      ],
+      "exit_code": 0,
+      "tests": null
+    },
+    {
+      "name": "sdk-abi-run",
+      "command": [
+        "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/vdsp-header-control"
+      ],
+      "exit_code": 0,
+      "tests": null
+    },
+    {
+      "name": "rust-abi-build-linked",
+      "command": [
+        "rustc",
+        "--edition=2021",
+        "-Dwarnings",
+        "-l",
+        "framework=Accelerate",
+        "audit/2026-10-16-acpu-delivery/vdsp-abi/rust-control.rs",
+        "-o",
+        "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/vdsp-rust-control"
+      ],
+      "exit_code": 0,
+      "tests": null
+    },
+    {
+      "name": "rust-abi-run",
+      "command": [
+        "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/vdsp-rust-control"
+      ],
+      "exit_code": 0,
+      "tests": null
+    }
+  ]
+}

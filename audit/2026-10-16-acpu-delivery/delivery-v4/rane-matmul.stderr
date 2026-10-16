@@ -1,0 +1,3 @@
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+     Running `/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/rane_matmul`

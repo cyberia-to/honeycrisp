@@ -2,8 +2,9 @@
 //!
 //! CSR matvec: y = A·x where A is sparse CSR. For the bostrom graph (avg
 //! degree ~1.85) most rows are 1–3 entries — AMX offers no advantage here.
-//! NEON prefetch hides gather latency from the scattered x[col_idx[j]] loads.
+//! NEON prefetch hides gather latency from the scattered `x[col_idx[j]]` loads.
 
+mod admission;
 pub mod chebyshev;
 
 #[cfg(target_arch = "aarch64")]
@@ -11,36 +12,30 @@ use core::arch::aarch64::*;
 
 /// y += A·x  (accumulate into y).
 ///
-/// A in CSR format: row i spans col_idx[row_ptr[i]..row_ptr[i+1]]
+/// A in CSR format: row i spans `col_idx[row_ptr[i]..row_ptr[i+1]]`.
 /// with corresponding weights values[...].
+///
+/// # Panics
+/// Panics before changing y unless row_ptr is nonempty, starts at zero,
+/// is nondecreasing and ends at the common column/value count; y has one
+/// entry per row; and every column is less than x.len(). Empty rows,
+/// rectangular matrices, unsorted columns and duplicate columns are valid.
 pub fn csr_matvec(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
-    let n = row_ptr.len().saturating_sub(1);
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(col_idx.len(), values.len());
-    inner(row_ptr, col_idx, values, x, y, n, false);
+    admission::Csr::new(row_ptr, col_idx, values, x.len()).accumulate(x, y);
 }
 
 /// y = A·x  (set; zeroes y first).
+///
+/// # Panics
+/// Uses the same preconditions as [`csr_matvec`], checked before zeroing y.
 pub fn csr_matvec_set(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32]) {
-    let n = row_ptr.len().saturating_sub(1);
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(col_idx.len(), values.len());
-    y.fill(0.0);
-    inner(row_ptr, col_idx, values, x, y, n, true);
+    admission::Csr::new(row_ptr, col_idx, values, x.len()).set(x, y);
 }
 
 // ── inner dispatch ────────────────────────────────────────────────────────────
 
 #[cfg(target_arch = "aarch64")]
-fn inner(
-    row_ptr: &[u32],
-    col_idx: &[u32],
-    values: &[f32],
-    x: &[f32],
-    y: &mut [f32],
-    n: usize,
-    _set: bool,
-) {
+fn inner(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32], n: usize) {
     // Software prefetch distance: fetch 8 entries ahead.
     const PF: usize = 8;
 
@@ -58,8 +53,8 @@ fn inner(
             let mut acc = 0.0f32;
 
             // Prefetch the x entries we'll need for this row.
-            for pf in 0..len.min(PF) {
-                let ptr = x.as_ptr().add(cols[pf] as usize);
+            for &column in cols.iter().take(PF) {
+                let ptr = x.as_ptr().add(column as usize);
                 // PRFM PLDL1KEEP — bring into L1 dcache.
                 core::arch::asm!(
                     "prfm pldl1keep, [{ptr}]",
@@ -107,15 +102,7 @@ fn inner(
 }
 
 #[cfg(not(target_arch = "aarch64"))]
-fn inner(
-    row_ptr: &[u32],
-    col_idx: &[u32],
-    values: &[f32],
-    x: &[f32],
-    y: &mut [f32],
-    n: usize,
-    _set: bool,
-) {
+fn inner(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f32], n: usize) {
     for i in 0..n {
         let s = row_ptr[i] as usize;
         let e = row_ptr[i + 1] as usize;
@@ -202,8 +189,8 @@ mod tests {
             expected0
         );
         // y[i] = x[0] = 0 for i in 1..n
-        for i in 1..n {
-            assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);
+        for (i, value) in y.iter().enumerate().skip(1) {
+            assert!(value.abs() < 1e-5, "y[{i}]={value}");
         }
     }
 }

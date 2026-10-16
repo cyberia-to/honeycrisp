@@ -9,7 +9,7 @@ use core::arch::aarch64::*;
 // rsqrt: fast inverse square root via FRSQRTE + 1 Newton-Raphson step
 // ---------------------------------------------------------------------------
 
-/// In-place fast inverse square root: x[i] = 1/sqrt(x[i]).
+/// In-place fast inverse square root: `x[i] = 1/sqrt(x[i])`.
 /// Uses NEON FRSQRTE + one Newton-Raphson refinement step.
 pub fn rsqrt(x: &mut [f32]) {
     let len = x.len();
@@ -58,7 +58,7 @@ pub fn rsqrt(x: &mut [f32]) {
     }
 }
 
-/// Fast inverse square root into separate buffer: dst[i] = 1/sqrt(src[i]).
+/// Fast inverse square root into separate buffer: `dst[i] = 1/sqrt(src[i])`.
 /// Panics if lengths differ.
 pub fn rsqrt_to(src: &[f32], dst: &mut [f32]) {
     assert_eq!(src.len(), dst.len(), "rsqrt_to: length mismatch");
@@ -113,7 +113,7 @@ pub fn rsqrt_to(src: &[f32], dst: &mut [f32]) {
 // recip: fast reciprocal via FRECPE + 1 Newton-Raphson step
 // ---------------------------------------------------------------------------
 
-/// In-place fast reciprocal: x[i] = 1/x[i].
+/// In-place fast reciprocal: `x[i] = 1/x[i]`.
 /// Uses NEON FRECPE + one Newton-Raphson refinement step.
 pub fn recip(x: &mut [f32]) {
     let len = x.len();
@@ -285,7 +285,7 @@ pub fn clamp_to(src: &[f32], dst: &mut [f32], lo: f32, hi: f32) {
 // lerp: linear interpolation dst = a + t*(b - a)
 // ---------------------------------------------------------------------------
 
-/// Linear interpolation: dst[i] = a[i] + t * (b[i] - a[i]).
+/// Linear interpolation: `dst[i] = a[i] + t * (b[i] - a[i])`.
 /// Panics if lengths differ.
 pub fn lerp(dst: &mut [f32], a: &[f32], b: &[f32], t: f32) {
     assert_eq!(a.len(), b.len(), "lerp: a/b length mismatch");

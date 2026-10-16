@@ -56,41 +56,6 @@ impl Snapshot {
         s
     }
 
-    fn diff(&self, other: &Snapshot) -> Vec<String> {
-        let mut diffs = Vec::new();
-        for r in 0..8 {
-            for i in 0..16 {
-                if self.x[r][i] != other.x[r][i] {
-                    diffs.push(format!(
-                        "X[{}][{}]: {:08x}→{:08x}",
-                        r, i, other.x[r][i], self.x[r][i]
-                    ));
-                }
-            }
-        }
-        for r in 0..8 {
-            for i in 0..16 {
-                if self.y[r][i] != other.y[r][i] {
-                    diffs.push(format!(
-                        "Y[{}][{}]: {:08x}→{:08x}",
-                        r, i, other.y[r][i], self.y[r][i]
-                    ));
-                }
-            }
-        }
-        for r in 0..64 {
-            for i in 0..16 {
-                if self.z[r][i] != other.z[r][i] {
-                    diffs.push(format!(
-                        "Z[{}][{}]: {:08x}→{:08x}",
-                        r, i, other.z[r][i], self.z[r][i]
-                    ));
-                }
-            }
-        }
-        diffs
-    }
-
     fn changed_regs(&self, other: &Snapshot) -> (bool, bool, bool) {
         let mut x_changed = false;
         let mut y_changed = false;

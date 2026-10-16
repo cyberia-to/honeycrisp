@@ -3,7 +3,7 @@
 //! Compiles a 64×64 matmul on ANE, runs with identity matrix,
 //! verifies output matches input.
 //!
-//! Run: cargo run --example matmul
+//! Run: cargo run --example rane_matmul
 
 use rane::mil;
 use rane::{f32_to_fp16, fp16_to_f32, Buffer, Program};

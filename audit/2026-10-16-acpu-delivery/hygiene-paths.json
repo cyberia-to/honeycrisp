@@ -1,0 +1,13 @@
+[
+  "acpu/examples/trace64.rs",
+  "acpu/src/crypto/mod.rs",
+  "acpu/src/field/goldilocks.rs",
+  "acpu/src/field/permute.rs",
+  "acpu/src/gemm/mod.rs",
+  "acpu/src/numeric/bf16.rs",
+  "acpu/src/sparse/chebyshev.rs",
+  "acpu/src/sparse/mod.rs",
+  "acpu/src/vector/integer.rs",
+  "acpu/src/vector/media.rs",
+  "aruminium/benches/objc2.rs"
+]

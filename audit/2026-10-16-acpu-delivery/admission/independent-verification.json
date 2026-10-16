@@ -1,0 +1,65 @@
+{
+  "source_sha256": "47bffad98aa5a820aab3bf02d2d19d375bcc0ba76e07d24268b35d39b9426250",
+  "recorded": "2026-10-16T22:41:42.110922+00:00",
+  "verified": true,
+  "inventories": [
+    {
+      "name": "honeycrisp",
+      "head": "70dfb1f55e4cb2570d5a78a497be5828a203087b",
+      "files": 250
+    },
+    {
+      "name": "strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb",
+      "files": 243
+    }
+  ],
+  "gates": [
+    {
+      "name": "debug",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "release",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 101
+    }
+  ]
+}

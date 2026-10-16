@@ -98,7 +98,7 @@ impl Default for FmaOp {
 // Convenience constructors for common GEMM patterns
 // ---------------------------------------------------------------------------
 
-/// First rank-1 update: Z[tile] = X[xr] × Y[yr] (no accumulate).
+/// First rank-1 update: `Z[tile] = X[xr] × Y[yr]` (no accumulate).
 #[inline]
 pub const fn fma_first(xr: XRow, yr: YRow, tile: u8) -> u64 {
     FmaOp::new()
@@ -109,7 +109,7 @@ pub const fn fma_first(xr: XRow, yr: YRow, tile: u8) -> u64 {
         .build()
 }
 
-/// Subsequent rank-1 update: Z[tile] += X[xr] × Y[yr].
+/// Subsequent rank-1 update: `Z[tile] += X[xr] × Y[yr]`.
 #[inline]
 pub const fn fma_acc(xr: XRow, yr: YRow, tile: u8) -> u64 {
     FmaOp::new().x(xr).y(yr).z_tile(tile).build()

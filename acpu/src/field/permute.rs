@@ -143,16 +143,16 @@ mod tests {
 
     fn test_rc() -> [u64; 144] {
         let mut rc = [0u64; 144];
-        for i in 0..144 {
-            rc[i] = (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15);
+        for (i, value) in rc.iter_mut().enumerate() {
+            *value = (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15);
         }
         rc
     }
 
     fn test_diag() -> [u64; 16] {
         let mut d = [0u64; 16];
-        for i in 0..16 {
-            d[i] = (i as u64 + 2).wrapping_mul(0x517CC1B727220A95);
+        for (i, value) in d.iter_mut().enumerate() {
+            *value = (i as u64 + 2).wrapping_mul(0x517CC1B727220A95);
         }
         d
     }

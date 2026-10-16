@@ -1,0 +1,424 @@
+{
+  "verified": true,
+  "source_sha256": "45468f4172e1592f6c9fec7ce56a1af5553aa7ec93b714836b18775138d08352",
+  "manifests": [
+    {
+      "path": "sources.json",
+      "source_sha256": "9659c09eb4071c55d11e71e3e96f09b24ef74b42e8ace73006facc5be9293a34"
+    },
+    {
+      "path": "build-diagnostic/sources.json",
+      "source_sha256": "d5bed7bce4d15d3e949945d77ff50c23d3d762456aa0cd088d26d96c6c3aa67e"
+    },
+    {
+      "path": "hygiene-final/sources.json",
+      "source_sha256": "ac57dbcd9259edbce11e34ea77cf88947d086cd543623830880d271f3f2dc097"
+    },
+    {
+      "path": "hygiene-candidate2/sources.json",
+      "source_sha256": "f9c89052e05fcc4ffb20f4bf71542ab34b86c6b0a7a753d394ddc68c0e8c33dd"
+    },
+    {
+      "path": "admission/sources.json",
+      "source_sha256": "47bffad98aa5a820aab3bf02d2d19d375bcc0ba76e07d24268b35d39b9426250"
+    },
+    {
+      "path": "hygiene/sources.json",
+      "source_sha256": "8170deedd8f1524dd6272a4592c692d9f39d585072940a97f373cb01235ff8a5"
+    },
+    {
+      "path": "delivery-final/sources.json",
+      "source_sha256": "5faaae626d09eab9d2b4c989a77defd27889ba6cc5a589d06cc296d07c42cddd"
+    },
+    {
+      "path": "delivery-v4/sources.json",
+      "source_sha256": "45468f4172e1592f6c9fec7ce56a1af5553aa7ec93b714836b18775138d08352"
+    },
+    {
+      "path": "delivery-v3/sources.json",
+      "source_sha256": "0453b62f57181602a3404961fedccb36b64c579b3c222b41a7274745bfb8239d"
+    },
+    {
+      "path": "delivery-v2/sources.json",
+      "source_sha256": "0453b62f57181602a3404961fedccb36b64c579b3c222b41a7274745bfb8239d"
+    }
+  ],
+  "historical_receipts": [
+    {
+      "path": "build-diagnostic/compile-all-supported.json",
+      "exit_code": 101
+    },
+    {
+      "path": "build-diagnostic/compile-all.json",
+      "exit_code": 1
+    },
+    {
+      "path": "hygiene-final/tests-workspace.json",
+      "exit_code": 101
+    },
+    {
+      "path": "hygiene-final/fmt.json",
+      "exit_code": 0
+    },
+    {
+      "path": "hygiene-final/clippy-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "hygiene-final/clippy-acpu.json",
+      "exit_code": 0
+    },
+    {
+      "path": "matmul.json",
+      "exit_code": 0
+    },
+    {
+      "path": "tests.json",
+      "exit_code": 101
+    },
+    {
+      "path": "clippy.json",
+      "exit_code": 101
+    },
+    {
+      "path": "hygiene-candidate2/tests-workspace.json",
+      "exit_code": 101
+    },
+    {
+      "path": "fmt.json",
+      "exit_code": 1
+    },
+    {
+      "path": "admission/clippy.json",
+      "exit_code": 101
+    },
+    {
+      "path": "admission/debug.json",
+      "exit_code": 0
+    },
+    {
+      "path": "admission/release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "admission/literal-build.json",
+      "exit_code": 0
+    },
+    {
+      "path": "admission/literal-run.json",
+      "exit_code": 0
+    },
+    {
+      "path": "hygiene/clippy-acpu.json",
+      "exit_code": 101
+    },
+    {
+      "path": "release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/sdk-abi-build.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/rust-abi-build-linked.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/tests-workspace.json",
+      "exit_code": 101
+    },
+    {
+      "path": "delivery-final/sdk-abi-run.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/fmt.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/clippy-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/clippy-acpu.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/rust-abi-run.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-final/rust-abi-build.json",
+      "exit_code": 1
+    },
+    {
+      "path": "delivery-final/rust-abi-build-v2.json",
+      "exit_code": 1
+    },
+    {
+      "path": "input-release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "input-debug.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/matmul.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/check-all-targets.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/tests-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/fmt.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/build-release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/docs-acpu.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/aruminium-matmul.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/tests-acpu-release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/clippy-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/rane-matmul.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v4/clippy-acpu.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/matmul.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/tests-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/fmt.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/build-release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/docs-acpu.json",
+      "exit_code": 101
+    },
+    {
+      "path": "delivery-v3/tests-acpu-release.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/clippy-workspace.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v3/clippy-acpu.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v2/fmt.json",
+      "exit_code": 0
+    },
+    {
+      "path": "delivery-v2/clippy-workspace.json",
+      "exit_code": 101
+    }
+  ],
+  "final_gates": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "clippy-workspace",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "clippy-acpu",
+      "command": [
+        "cargo",
+        "clippy",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "tests-workspace",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": 356,
+      "ignored": 5
+    },
+    {
+      "name": "build-release",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "tests-acpu-release",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": 187,
+      "ignored": 1
+    },
+    {
+      "name": "matmul",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "acpu",
+        "--example",
+        "matmul",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "docs-acpu",
+      "command": [
+        "cargo",
+        "doc",
+        "-p",
+        "acpu",
+        "--no-deps",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "aruminium-matmul",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aruminium",
+        "--example",
+        "aruminium_matmul",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "rane-matmul",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "rane",
+        "--example",
+        "rane_matmul",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    },
+    {
+      "name": "check-all-targets",
+      "command": [
+        "cargo",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--keep-going",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "passed": null,
+      "ignored": null
+    }
+  ]
+}

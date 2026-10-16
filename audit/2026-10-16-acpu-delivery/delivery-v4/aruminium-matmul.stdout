@@ -1,0 +1,2 @@
+Device: Apple M4 Max
+PASS: 64x64x64 matmul verified (max_err=0.00e0)

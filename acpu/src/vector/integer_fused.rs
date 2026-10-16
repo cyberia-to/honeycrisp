@@ -6,7 +6,7 @@
 #[cfg(target_arch = "aarch64")]
 use core::arch::aarch64::*;
 
-/// Sum of absolute differences: sum(|a[i] - b[i]|).
+/// Sum of absolute differences: `sum(|a[i] - b[i]|)`.
 /// Single pass — reads both arrays once, no intermediate storage.
 /// Uses UABD + UADALP chain (unsigned absolute difference + pairwise add long).
 pub fn sad_u8(a: &[u8], b: &[u8]) -> u64 {
@@ -57,7 +57,7 @@ pub fn sad_u8(a: &[u8], b: &[u8]) -> u64 {
     }
 }
 
-/// Sum of squared differences: sum((a[i] - b[i])²) for i32 slices.
+/// Sum of squared differences: `sum((a[i] - b[i])²)` for i32 slices.
 /// Single pass — no intermediate array. Widens to i64 to avoid overflow.
 pub fn ssd_i32(a: &[i32], b: &[i32]) -> i64 {
     assert_eq!(a.len(), b.len(), "ssd_i32: length mismatch");
@@ -108,7 +108,7 @@ pub fn ssd_i32(a: &[i32], b: &[i32]) -> i64 {
     }
 }
 
-/// Scale and accumulate: acc[i] += a[i] * scale.
+/// Scale and accumulate: `acc[i] += a[i] * scale`.
 /// Single pass with widening: i16 × i16 → i32 accumulated.
 pub fn scale_acc_i16(acc: &mut [i32], a: &[i16], scale: i16) {
     let len = acc.len().min(a.len());
@@ -147,7 +147,7 @@ pub fn scale_acc_i16(acc: &mut [i32], a: &[i16], scale: i16) {
     }
 }
 
-/// Fused sum of absolute values: sum(|x[i]|) for i8.
+/// Fused sum of absolute values: `sum(|x[i]|)` for i8.
 /// Combines abs + widen + accumulate in one pass.
 pub fn sum_abs_i8(x: &[i8]) -> u64 {
     let len = x.len();

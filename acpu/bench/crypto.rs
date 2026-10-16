@@ -4,7 +4,6 @@
 #[path = "common.rs"]
 mod common;
 use common::*;
-use std::time::Instant;
 
 #[link(name = "System", kind = "dylib")]
 extern "C" {

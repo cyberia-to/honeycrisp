@@ -280,7 +280,7 @@ pub fn macc_i16(acc: &mut [i32], a: &[i16], b: &[i16]) {
 
 // ── i32 elementwise ─────────────────────────────────────────────────────────
 
-/// Elementwise i32 add: dst[i] = a[i] + b[i]. 16-wide.
+/// Elementwise i32 add: `dst[i] = a[i] + b[i]`. 16-wide.
 pub fn add_i32(dst: &mut [i32], a: &[i32], b: &[i32]) {
     let len = dst.len().min(a.len()).min(b.len());
     let mut i = 0;
@@ -311,7 +311,7 @@ pub fn add_i32(dst: &mut [i32], a: &[i32], b: &[i32]) {
     }
 }
 
-/// Elementwise i32 multiply: dst[i] = a[i] * b[i]. 32-wide.
+/// Elementwise i32 multiply: `dst[i] = a[i] * b[i]`. 32-wide.
 pub fn mul_i32(dst: &mut [i32], a: &[i32], b: &[i32]) {
     let len = dst.len().min(a.len()).min(b.len());
     let mut i = 0;
@@ -408,7 +408,7 @@ mod tests {
 
     #[test]
     fn test_sum_i32() {
-        let v: Vec<i32> = (0..4096).map(|i| (i % 100) as i32 - 50).collect();
+        let v: Vec<i32> = (0..4096).map(|i| (i % 100) - 50).collect();
         let expected: i64 = v.iter().map(|&x| x as i64).sum();
         assert_eq!(sum_i32(&v), expected);
     }

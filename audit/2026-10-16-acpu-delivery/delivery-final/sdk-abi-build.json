@@ -1,0 +1,40 @@
+{
+  "command": [
+    "xcrun",
+    "clang",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "audit/2026-10-16-acpu-delivery/vdsp-abi/header-control.c",
+    "-framework",
+    "Accelerate",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/vdsp-header-control"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "source_sha256": "5faaae626d09eab9d2b4c989a77defd27889ba6cc5a589d06cc296d07c42cddd",
+  "source_before_after": "equal",
+  "started": "2026-10-16T22:51:17.412574+00:00",
+  "finished": "2026-10-16T22:51:18.125126+00:00",
+  "exit_code": 0,
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "rustc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+  "rustdoc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+  "target": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "rustflags": "-Dwarnings",
+  "rustdocflags": "-Dwarnings",
+  "jobs": "2",
+  "extra_inputs": [
+    {
+      "path": "audit/2026-10-16-acpu-delivery/vdsp-abi/header-control.c",
+      "sha256": "e8b37cb42b972f822157a0194535d8056e3c37d7b165f75d18ec221eda0eb496"
+    },
+    {
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/Headers/vDSP.h",
+      "sha256": "8cdbe0b8d48d3a3e7d9790df5e75f4d5b8f2f1e7cef55c9968c801624985c6ba"
+    }
+  ],
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

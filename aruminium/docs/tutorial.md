@@ -230,6 +230,6 @@ fn main() -> Result<(), GpuError> {
 
 ## next steps
 
-- see `examples/matmul.rs` for 2D dispatch with struct parameters
+- see `examples/aruminium_matmul.rs` for 2D dispatch with struct parameters
 - see `docs/guide.md` for Dispatch, batch encoding, pipelining
 - see `docs/explanations.md` for why the architecture works this way

@@ -39,7 +39,7 @@ skip for trivial tasks.
 cargo fmt --all                           # format
 cargo clippy --workspace -- -W warnings   # lint
 cargo build --release --workspace         # build all
-cargo run --example matmul                # verify ANE access
+cargo run --example rane_matmul                # verify ANE access
 ```
 
 every commit: format clean, clippy clean, builds, examples run.
@@ -103,7 +103,7 @@ src/                  core library (zero deps)
   weights.rs          checkpoint I/O, LayerWeights, KVCache
   mil/                MIL program builder → ANE bytecode
   ops/                CPU kernels (rmsnorm, rope, attention, loss, adam)
-examples/             runnable demos (matmul, infer, train, bench)
+examples/             runnable demos (rane_matmul, infer, train, bench)
 tools/                separate crate with heavy deps (convert_hf, tokenize, chat)
 specs/                specification (source of truth)
   api.md              API spec — concepts, lifecycle, apple mapping

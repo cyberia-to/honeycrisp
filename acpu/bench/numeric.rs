@@ -7,10 +7,7 @@ use common::*;
 
 #[link(name = "Accelerate", kind = "framework")]
 extern "C" {
-    // vDSP element-wise multiply (used as baseline for complex)
-    fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
     fn vDSP_vsub(b: *const f32, ib: i64, a: *const f32, ia: i64, c: *mut f32, ic: i64, n: u64);
-    fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
 }
 
 const N: usize = 4096;

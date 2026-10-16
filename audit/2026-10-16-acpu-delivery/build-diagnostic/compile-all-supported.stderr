@@ -1,0 +1,479 @@
+    Checking crossbeam-utils v0.8.21
+    Checking num-traits v0.2.19
+    Checking crossbeam-queue v0.3.12
+    Checking half v2.7.1
+    Checking unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Checking once_cell v1.21.4
+    Checking serde_core v1.0.228
+    Checking aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+    Checking rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+    Checking crossbeam-epoch v0.9.18
+   Compiling serde_derive v1.0.228
+    Checking either v1.15.0
+    Checking crossbeam-deque v0.8.6
+    Checking zmij v1.0.21
+    Checking itoa v1.0.18
+    Checking ciborium-io v0.2.2
+    Checking clap_lex v1.1.0
+    Checking anstyle v1.0.14
+    Checking plotters-backend v0.3.7
+    Checking regex-syntax v0.8.10
+    Checking memchr v2.8.0
+    Checking serde_json v1.0.149
+    Checking serde v1.0.228
+    Checking regex-automata v0.4.14
+    Checking naga v28.0.0
+    Checking plotters-svg v0.3.7
+    Checking clap_builder v4.6.0
+    Checking ciborium-ll v0.2.2
+    Checking rayon-core v1.13.0
+    Checking itertools v0.10.5
+    Checking cast v0.3.0
+    Checking same-file v1.0.6
+    Checking walkdir v2.5.0
+    Checking criterion-plot v0.5.0
+    Checking rayon v1.12.0
+    Checking wgpu-hal v28.0.1
+    Checking ciborium v0.2.2
+    Checking clap v4.6.0
+    Checking plotters v0.3.7
+    Checking regex v1.12.3
+    Checking tinytemplate v1.2.1
+    Checking is-terminal v0.4.17
+    Checking oorandom v11.1.5
+    Checking anes v0.1.6
+    Checking wgpu-core-deps-apple v28.0.0
+    Checking wgpu-core v28.0.1
+    Checking criterion v0.5.1
+    Checking rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches)
+    Checking honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+    Checking wgpu v28.0.0
+error[E0433]: too many leading `super` keywords
+ --> aruminium/benches/aruminium.rs:7:5
+  |
+7 | use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC, TRIANGLE as TRIANGLE_SRC};
+  |     ^^^^^ there are too many leading `super` keywords
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `aruminium` (bench "aruminium") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:31:20
+   |
+31 |     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
+   |                    ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:32:19
+   |
+32 |         backends: wgpu::Backends::METAL,
+   |                   ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:36:27
+   |
+36 |         power_preference: wgpu::PowerPreference::HighPerformance,
+   |                           ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:43:52
+   |
+43 |         pollster::block_on(adapter.request_device(&wgpu::DeviceDescriptor::default())).unwrap();
+   |                                                    ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:47:17
+   |
+47 |         source: wgpu::ShaderSource::Wgsl(Cow::Borrowed(WGSL_TRIANGLE)),
+   |                 ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:59:20
+   |
+59 |         primitive: wgpu::PrimitiveState::default(),
+   |                    ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:61:22
+   |
+61 |         multisample: wgpu::MultisampleState::default(),
+   |                      ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:66:25
+   |
+66 |                 format: wgpu::TextureFormat::Bgra8Unorm,
+   |                         ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:68:29
+   |
+68 |                 write_mask: wgpu::ColorWrites::ALL,
+   |                             ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:85:20
+   |
+85 |         dimension: wgpu::TextureDimension::D2,
+   |                    ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:86:17
+   |
+86 |         format: wgpu::TextureFormat::Bgra8Unorm,
+   |                 ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:87:16
+   |
+87 |         usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+   |                ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:112:27
+    |
+112 |                     load: wgpu::LoadOp::Clear(wgpu::Color::BLACK),
+    |                           ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:112:47
+    |
+112 |                     load: wgpu::LoadOp::Clear(wgpu::Color::BLACK),
+    |                                               ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:113:28
+    |
+113 |                     store: wgpu::StoreOp::Store,
+    |                            ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:128:15
+    |
+128 |         .poll(wgpu::PollType::Wait {
+    |               ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `pollster` in this scope
+  --> aruminium/benches/wgpu_bench.rs:35:19
+   |
+35 |     let adapter = pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions {
+   |                   ^^^^^^^^ use of unresolved module or unlinked crate `pollster`
+   |
+   = help: if you wanted to use a crate named `pollster`, use `cargo add pollster` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `pollster` in this scope
+  --> aruminium/benches/wgpu_bench.rs:43:9
+   |
+43 |         pollster::block_on(adapter.request_device(&wgpu::DeviceDescriptor::default())).unwrap();
+   |         ^^^^^^^^ use of unresolved module or unlinked crate `pollster`
+   |
+   = help: if you wanted to use a crate named `pollster`, use `cargo add pollster` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:24:13
+   |
+24 |     device: wgpu::Device,
+   |             ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:25:12
+   |
+25 |     queue: wgpu::Queue,
+   |            ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:26:15
+   |
+26 |     pipeline: wgpu::RenderPipeline,
+   |               ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:27:19
+   |
+27 |     texture_view: wgpu::TextureView,
+   |                   ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:31:41
+   |
+31 |     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
+   |                                         ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:111:22
+    |
+111 |                 ops: wgpu::Operations {
+    |                      ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:35:64
+   |
+35 |     let adapter = pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions {
+   |                                                                ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:107:39
+    |
+107 |             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+    |                                       ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:45:46
+   |
+45 |     let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+   |                                              ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:50:51
+   |
+50 |     let pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+   |                                                   ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:53:17
+   |
+53 |         vertex: wgpu::VertexState {
+   |                 ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:62:24
+   |
+62 |         fragment: Some(wgpu::FragmentState {
+   |                        ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:65:29
+   |
+65 |             targets: &[Some(wgpu::ColorTargetState {
+   |                             ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:76:42
+   |
+76 |     let texture = device.create_texture(&wgpu::TextureDescriptor {
+   |                                          ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+  --> aruminium/benches/wgpu_bench.rs:78:15
+   |
+78 |         size: wgpu::Extent3d {
+   |               ^^^^ use of unresolved module or unlinked crate `wgpu`
+   |
+   = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:103:34
+    |
+103 |         .create_command_encoder(&wgpu::CommandEncoderDescriptor { label: None });
+    |                                  ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `wgpu` in this scope
+   --> aruminium/benches/wgpu_bench.rs:105:52
+    |
+105 |         let mut rpass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+    |                                                    ^^^^ use of unresolved module or unlinked crate `wgpu`
+    |
+    = help: if you wanted to use a crate named `wgpu`, use `cargo add wgpu` to add it to your `Cargo.toml`
+
+error: could not compile `aruminium` (bench "wgpu_bench") due to 35 previous errors
+error[E0432]: unresolved import `metal`
+ --> aruminium/benches/metal_rs.rs:4:5
+  |
+4 | use metal::*;
+  |     ^^^^^ use of unresolved module or unlinked crate `metal`
+  |
+  = help: if you wanted to use a crate named `metal`, use `cargo add metal` to add it to your `Cargo.toml`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `aruminium` (bench "metal_rs") due to 1 previous error
+error[E0433]: cannot find module or crate `objc2` in this scope
+ --> aruminium/benches/objc2.rs:1:5
+  |
+1 | use objc2::rc::Retained;
+  |     ^^^^^ use of unresolved module or unlinked crate `objc2`
+  |
+help: to make use of source file aruminium/benches/objc2.rs, use `mod objc2` in this file to declare the module
+ --> aruminium/benches/compare.rs:6:1
+  |
+6 + mod objc2;
+  |
+
+error[E0433]: cannot find module or crate `objc2` in this scope
+ --> aruminium/benches/objc2.rs:2:5
+  |
+2 | use objc2::runtime::ProtocolObject;
+  |     ^^^^^ use of unresolved module or unlinked crate `objc2`
+  |
+help: to make use of source file aruminium/benches/objc2.rs, use `mod objc2` in this file to declare the module
+ --> aruminium/benches/compare.rs:6:1
+  |
+6 + mod objc2;
+  |
+
+error[E0432]: unresolved import `objc2_metal`
+ --> aruminium/benches/objc2.rs:4:5
+  |
+4 | use objc2_metal::*;
+  |     ^^^^^^^^^^^ use of unresolved module or unlinked crate `objc2_metal`
+  |
+  = help: if you wanted to use a crate named `objc2_metal`, use `cargo add objc2_metal` to add it to your `Cargo.toml`
+
+error[E0432]: unresolved import `objc2_foundation`
+ --> aruminium/benches/objc2.rs:3:5
+  |
+3 | use objc2_foundation::NSString;
+  |     ^^^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `objc2_foundation`
+  |
+  = help: if you wanted to use a crate named `objc2_foundation`, use `cargo add objc2_foundation` to add it to your `Cargo.toml`
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `aruminium` (bench "compare") due to 4 previous errors
+    Checking metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+error[E0433]: too many leading `super` keywords
+ --> aruminium/benches/objc2.rs:7:5
+  |
+7 | use super::shaders::{NOOP as NOOP_SRC, SAXPY as SAXPY_SRC, TRIANGLE as TRIANGLE_SRC};
+  |     ^^^^^ there are too many leading `super` keywords
+
+error[E0433]: cannot find module or crate `objc2` in this scope
+ --> aruminium/benches/objc2.rs:1:5
+  |
+1 | use objc2::rc::Retained;
+  |     ^^^^^ use of unresolved module or unlinked crate `objc2`
+  |
+help: to make use of source file aruminium/benches/objc2.rs, use `mod objc2` in this file to declare the module
+  |
+1 + mod objc2;
+  |
+
+error[E0433]: cannot find module or crate `objc2` in this scope
+ --> aruminium/benches/objc2.rs:2:5
+  |
+2 | use objc2::runtime::ProtocolObject;
+  |     ^^^^^ use of unresolved module or unlinked crate `objc2`
+  |
+help: to make use of source file aruminium/benches/objc2.rs, use `mod objc2` in this file to declare the module
+  |
+1 + mod objc2;
+  |
+
+error: could not compile `aruminium` (bench "objc2") due to 5 previous errors
+error: could not compile `aruminium` (bench "compare_render") due to 1 previous error
+error: method `diff` is never used
+  --> acpu/examples/amx_reverse.rs:59:8
+   |
+28 | impl Snapshot {
+   | ------------- method in this implementation
+...
+59 |     fn diff(&self, other: &Snapshot) -> Vec<String> {
+   |        ^^^^
+   |
+   = note: `-D dead-code` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+
+error: could not compile `acpu` (example "amx_reverse") due to 1 previous error
+error: unused import: `std::time::Instant`
+ --> acpu/bench/summary.rs:8:5
+  |
+8 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `-D unused-imports` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: variable does not need to be mutable
+    --> acpu/bench/summary.rs:2054:9
+     |
+2054 |     let mut pmull_a = 0xDEADBEEFCAFEBABEu64;
+     |         ----^^^^^^^
+     |         |
+     |         help: remove this `mut`
+     |
+     = note: `-D unused-mut` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(unused_mut)]`
+
+error: could not compile `acpu` (example "bench_summary") due to 2 previous errors
+error: unused variable: `fma_first`
+  --> acpu/examples/pair_test.rs:10:13
+   |
+10 |         let fma_first: u64 = 1 << 27; // skip_z, X[0], Y[0], tile 0
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fma_first`
+   |
+   = note: `-D unused-variables` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_variables)]`
+
+error: could not compile `acpu` (example "pair_test") due to 1 previous error
+error: unused import: `std::time::Instant`
+ --> acpu/bench/crypto.rs:7:5
+  |
+7 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `-D unused-imports` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: could not compile `acpu` (example "bench_crypto") due to 1 previous error

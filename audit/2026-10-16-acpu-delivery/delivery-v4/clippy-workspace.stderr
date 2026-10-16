@@ -1,0 +1,7 @@
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Checking aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+    Checking rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+    Checking rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches)
+    Checking metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+    Checking honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.09s

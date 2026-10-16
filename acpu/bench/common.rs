@@ -179,59 +179,59 @@ extern "C" {
     pub fn vvtanhf(result: *mut f32, src: *const f32, n: *const i32);
 
     // vDSP
-    pub fn vDSP_sve(a: *const f32, stride: i32, result: *mut f32, n: u64);
-    pub fn vDSP_svesq(a: *const f32, stride: i32, result: *mut f32, n: u64);
-    pub fn vDSP_maxv(a: *const f32, stride: i32, result: *mut f32, n: u64);
-    pub fn vDSP_minv(a: *const f32, stride: i32, result: *mut f32, n: u64);
-    pub fn vDSP_vneg(a: *const f32, stride_a: i32, c: *mut f32, stride_c: i32, n: u64);
+    pub fn vDSP_sve(a: *const f32, stride: i64, result: *mut f32, n: u64);
+    pub fn vDSP_svesq(a: *const f32, stride: i64, result: *mut f32, n: u64);
+    pub fn vDSP_maxv(a: *const f32, stride: i64, result: *mut f32, n: u64);
+    pub fn vDSP_minv(a: *const f32, stride: i64, result: *mut f32, n: u64);
+    pub fn vDSP_vneg(a: *const f32, stride_a: i64, c: *mut f32, stride_c: i64, n: u64);
     pub fn vDSP_vadd(
         a: *const f32,
-        stride_a: i32,
+        stride_a: i64,
         b: *const f32,
-        stride_b: i32,
+        stride_b: i64,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
     pub fn vDSP_vmul(
         a: *const f32,
-        stride_a: i32,
+        stride_a: i64,
         b: *const f32,
-        stride_b: i32,
+        stride_b: i64,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
     pub fn vDSP_vsadd(
         a: *const f32,
-        stride_a: i32,
+        stride_a: i64,
         b: *const f32,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
     pub fn vDSP_vsmul(
         a: *const f32,
-        stride_a: i32,
+        stride_a: i64,
         b: *const f32,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
     pub fn vDSP_vsdiv(
         a: *const f32,
-        stride_a: i32,
+        stride_a: i64,
         b: *const f32,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
     pub fn vDSP_svdiv(
         a: *const f32,
         b: *const f32,
-        stride_b: i32,
+        stride_b: i64,
         c: *mut f32,
-        stride_c: i32,
+        stride_c: i64,
         n: u64,
     );
 }

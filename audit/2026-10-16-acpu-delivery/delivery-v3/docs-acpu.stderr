@@ -1,0 +1,372 @@
+    Checking unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+ Documenting acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: unresolved link to `i`
+   --> acpu/src/field/goldilocks.rs:156:31
+    |
+156 | /// Batch field multiply: dst[i] = a[i] * b[i] mod p.
+    |                               ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+    = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+
+error: unresolved link to `i`
+   --> acpu/src/field/goldilocks.rs:156:38
+    |
+156 | /// Batch field multiply: dst[i] = a[i] * b[i] mod p.
+    |                                      ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/field/goldilocks.rs:156:45
+    |
+156 | /// Batch field multiply: dst[i] = a[i] * b[i] mod p.
+    |                                             ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `n`
+  --> acpu/src/gemm/matvec.rs:10:31
+   |
+10 | /// Matrix-vector multiply: c[n] += a[k] * b[k][n], row-major B.
+   |                               ^ no item named `n` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `k`
+  --> acpu/src/gemm/matvec.rs:10:39
+   |
+10 | /// Matrix-vector multiply: c[n] += a[k] * b[k][n], row-major B.
+   |                                       ^ no item named `k` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `n`
+  --> acpu/src/gemm/matvec.rs:10:49
+   |
+10 | /// Matrix-vector multiply: c[n] += a[k] * b[k][n], row-major B.
+   |                                                 ^ no item named `n` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `tile`
+   --> acpu/src/matrix/fma.rs:101:28
+    |
+101 | /// First rank-1 update: Z[tile] = X[xr] × Y[yr] (no accumulate).
+    |                            ^^^^ no item named `tile` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `xr`
+   --> acpu/src/matrix/fma.rs:101:38
+    |
+101 | /// First rank-1 update: Z[tile] = X[xr] × Y[yr] (no accumulate).
+    |                                      ^^ no item named `xr` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `yr`
+   --> acpu/src/matrix/fma.rs:101:46
+    |
+101 | /// First rank-1 update: Z[tile] = X[xr] × Y[yr] (no accumulate).
+    |                                              ^^ no item named `yr` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `tile`
+   --> acpu/src/matrix/fma.rs:112:33
+    |
+112 | /// Subsequent rank-1 update: Z[tile] += X[xr] × Y[yr].
+    |                                 ^^^^ no item named `tile` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `xr`
+   --> acpu/src/matrix/fma.rs:112:44
+    |
+112 | /// Subsequent rank-1 update: Z[tile] += X[xr] × Y[yr].
+    |                                            ^^ no item named `xr` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `yr`
+   --> acpu/src/matrix/fma.rs:112:52
+    |
+112 | /// Subsequent rank-1 update: Z[tile] += X[xr] × Y[yr].
+    |                                                    ^^ no item named `yr` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `p`
+   --> acpu/src/matrix/tile.rs:821:57
+    |
+821 | /// `a_pair`: interleaved A pack — for column p: strip0[p] at offset p*128,
+    |                                                         ^ no item named `p` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `p`
+   --> acpu/src/matrix/tile.rs:822:14
+    |
+822 | ///   strip1[p] at p*128+64. Must be 128-byte aligned.
+    |              ^ no item named `p` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `0`
+   --> acpu/src/matrix/tile.rs:824:36
+    |
+824 | ///   Pair LDX loads cols 0:16 → X[0], cols 16:32 → X[1].
+    |                                    ^ no item named `0` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `1`
+   --> acpu/src/matrix/tile.rs:824:55
+    |
+824 | ///   Pair LDX loads cols 0:16 → X[0], cols 16:32 → X[1].
+    |                                                       ^ no item named `1` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `p`
+  --> acpu/src/matrix/tile_f16.rs:73:36
+   |
+73 | /// Computes: Z[32×32] += sum_p( A[p] ⊗ B[p] )
+   |                                    ^ no item named `p` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `p`
+  --> acpu/src/matrix/tile_f16.rs:73:43
+   |
+73 | /// Computes: Z[32×32] += sum_p( A[p] ⊗ B[p] )
+   |                                           ^ no item named `p` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `CpuError::AmxSetFailed`
+  --> acpu/src/matrix/mod.rs:41:19
+   |
+41 |     /// Returns [`CpuError::AmxSetFailed`] if the current hardware does
+   |                   ^^^^^^^^^^^^^^^^^^^^^^ no item named `CpuError` in scope
+
+error: unresolved link to `j`
+ --> acpu/src/sparse/mod.rs:5:69
+  |
+5 | //! NEON prefetch hides gather latency from the scattered x[col_idx[j]] loads.
+  |                                                                     ^ no item named `j` in scope
+  |
+  = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `j`
+  --> acpu/src/sparse/chebyshev.rs:21:58
+   |
+21 | /// In Miller's method we compute un-normalized ratios f[j] ∝ I_j(τ) by
+   |                                                          ^ no item named `j` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/sparse/mod.rs:15:50
+   |
+15 | /// A in CSR format: row i spans col_idx[row_ptr[i]..row_ptr[i+1]]
+   |                                                  ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:283:30
+    |
+283 | /// Elementwise i32 add: dst[i] = a[i] + b[i]. 16-wide.
+    |                              ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:283:37
+    |
+283 | /// Elementwise i32 add: dst[i] = a[i] + b[i]. 16-wide.
+    |                                     ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:283:44
+    |
+283 | /// Elementwise i32 add: dst[i] = a[i] + b[i]. 16-wide.
+    |                                            ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:314:35
+    |
+314 | /// Elementwise i32 multiply: dst[i] = a[i] * b[i]. 32-wide.
+    |                                   ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:314:42
+    |
+314 | /// Elementwise i32 multiply: dst[i] = a[i] * b[i]. 32-wide.
+    |                                          ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer.rs:314:49
+    |
+314 | /// Elementwise i32 multiply: dst[i] = a[i] * b[i]. 32-wide.
+    |                                                 ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+ --> acpu/src/vector/integer_fused.rs:9:41
+  |
+9 | /// Sum of absolute differences: sum(|a[i] - b[i]|).
+  |                                         ^ no item named `i` in scope
+  |
+  = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+ --> acpu/src/vector/integer_fused.rs:9:48
+  |
+9 | /// Sum of absolute differences: sum(|a[i] - b[i]|).
+  |                                                ^ no item named `i` in scope
+  |
+  = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/integer_fused.rs:60:40
+   |
+60 | /// Sum of squared differences: sum((a[i] - b[i])²) for i32 slices.
+   |                                        ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/integer_fused.rs:60:47
+   |
+60 | /// Sum of squared differences: sum((a[i] - b[i])²) for i32 slices.
+   |                                               ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer_fused.rs:111:31
+    |
+111 | /// Scale and accumulate: acc[i] += a[i] * scale.
+    |                               ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer_fused.rs:111:39
+    |
+111 | /// Scale and accumulate: acc[i] += a[i] * scale.
+    |                                       ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/integer_fused.rs:150:42
+    |
+150 | /// Fused sum of absolute values: sum(|x[i]|) for i8.
+    |                                          ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/render.rs:12:42
+   |
+12 | /// In-place fast inverse square root: x[i] = 1/sqrt(x[i]).
+   |                                          ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/render.rs:12:56
+   |
+12 | /// In-place fast inverse square root: x[i] = 1/sqrt(x[i]).
+   |                                                        ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/render.rs:61:56
+   |
+61 | /// Fast inverse square root into separate buffer: dst[i] = 1/sqrt(src[i]).
+   |                                                        ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+  --> acpu/src/vector/render.rs:61:72
+   |
+61 | /// Fast inverse square root into separate buffer: dst[i] = 1/sqrt(src[i]).
+   |                                                                        ^ no item named `i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:116:33
+    |
+116 | /// In-place fast reciprocal: x[i] = 1/x[i].
+    |                                 ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:116:42
+    |
+116 | /// In-place fast reciprocal: x[i] = 1/x[i].
+    |                                          ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:288:31
+    |
+288 | /// Linear interpolation: dst[i] = a[i] + t * (b[i] - a[i]).
+    |                               ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:288:38
+    |
+288 | /// Linear interpolation: dst[i] = a[i] + t * (b[i] - a[i]).
+    |                                      ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:288:50
+    |
+288 | /// Linear interpolation: dst[i] = a[i] + t * (b[i] - a[i]).
+    |                                                  ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `i`
+   --> acpu/src/vector/render.rs:288:57
+    |
+288 | /// Linear interpolation: dst[i] = a[i] + t * (b[i] - a[i]).
+    |                                                         ^ no item named `i` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `2*i`
+  --> acpu/src/vector/rope.rs:16:11
+   |
+16 | ///   out[2*i]   = x0 * cos(theta) - x1 * sin(theta)
+   |           ^^^ no item named `2*i` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: could not document `acpu`

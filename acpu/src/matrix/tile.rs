@@ -818,10 +818,10 @@ pub unsafe fn microkernel_32x32_gebp(
 /// 2×2 Z tile layout. AMX pair loads (bit 62): 128 bytes → 2 registers.
 /// **6 ops per k-step**: 1 LDX(pair) + 1 LDY(pair) + 4 FMA.
 ///
-/// `a_pair`: interleaved A pack — for column p: strip0[p] at offset p*128,
-///   strip1[p] at p*128+64. Must be 128-byte aligned.
+/// `a_pair`: interleaved A pack — for column p: `strip0[p]` at offset p*128,
+///   `strip1[p]` at p*128+64. Must be 128-byte aligned.
 /// `b0`: B row-major (columns 0:32 contiguous). Must be 64-byte aligned.
-///   Pair LDX loads cols 0:16 → X[0], cols 16:32 → X[1].
+///   Pair LDX loads cols 0:16 → `X[0]`, cols 16:32 → `X[1]`.
 /// `bs`: B row stride in bytes.
 ///
 /// # Safety

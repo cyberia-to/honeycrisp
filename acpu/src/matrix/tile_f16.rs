@@ -70,7 +70,7 @@ pub unsafe fn store_c_f16(c: *mut u16, ldc: usize, tile: u8) {
 /// a_panel: packed fp16 [k × 32] (each k-step = 64 bytes = 32 fp16)
 /// b_panel: packed fp16 [k × 32] (each k-step = 64 bytes = 32 fp16)
 ///
-/// Computes: Z[32×32] += sum_p( A[p] ⊗ B[p] )
+/// Computes: `Z[32×32] += sum_p( A[p] ⊗ B[p] )`
 ///
 /// # Safety
 /// AMX must be active. Panels must be 64-byte aligned with `k*64` readable bytes.

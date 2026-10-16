@@ -1,0 +1,6 @@
+{
+  "base": "c5177c56e4551c9896a2869c3b23d0c7bac9a6f9",
+  "source_sha256": "5faaae626d09eab9d2b4c989a77defd27889ba6cc5a589d06cc296d07c42cddd",
+  "patch": "independent-delivery.patch",
+  "patch_sha256": "6292e4a032e068048fcd1544adc5bad18bc61fe7d73f11188c5310c838341066"
+}
