@@ -2,7 +2,9 @@
 
 The [admission repair](admission/README.md) is committed as `c5177c5`; the
 [final hygiene/tooling gates](delivery-v4/README.md) pass on their recorded source.
-Chebyshev numerical scaling remains open before the version proposal.
+The [bounded scaled coefficient repair](numeric-implementation/README.md) now
+passes its eight source-bound gates. The version proposal and owner publication
+remain separate from these source repairs.
 
 The sections below preserve the original soundness and gate findings before
 repair. Baseline:
@@ -19,8 +21,9 @@ pinned rustup 1.95.0, warnings denied, external target, stream hashes and unchan
 before/after inputs. All raw output is retained beside its receipt.
 The saved `verification.json` records the original seven receipt/stream pairs,
 probe inputs and unchanged baseline compiler files. Its original `verify.nu`
-intentionally compares that historical source. Use `verify-delivery.nu` for
-the final tree and preserved historical evidence; red outcomes stay red.
+intentionally compares that historical source. `verify-delivery.nu` checks the
+historical hygiene epoch; `numeric-implementation/verify.nu` checks the current
+numerical epoch. Preserved red outcomes stay red.
 
 | Receipt | Result on the stated source |
 |---|---|
@@ -91,6 +94,6 @@ allocations; that architecture statement needs reconciliation, not concealed
 allocation claims. These findings are distinct from Nox's already measured
 valid-input NTT/multilinear package contract.
 
-Remaining order: reviewed numerical-domain/scaling repair, its owning gates,
-then the acpu-only version proposal. Neither version editing nor owner-only
-merge/tag/publication has occurred.
+The original next step was numerical-domain/scaling repair and its owning gates;
+follow the current result linked above. The acpu-only version proposal remains
+separate. No version editing, tag or publication occurred in these repair units.

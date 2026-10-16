@@ -1,0 +1,13 @@
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: manual implementation of `.is_multiple_of()`
+   --> acpu/tests/chebyshev_coefficients.rs:304:19
+    |
+304 |         } else if order % 2 == 0 {
+    |                   ^^^^^^^^^^^^^^ help: replace with: `order.is_multiple_of(2)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: could not compile `acpu` (test "chebyshev_coefficients") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

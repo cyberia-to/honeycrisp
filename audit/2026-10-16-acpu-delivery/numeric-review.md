@@ -117,3 +117,85 @@ Raised work at tau1e10 and output-cap controls pass; the default extreme-time
 refusal remains explicit. Far-tiny series underflow must be described as a
 numerical estimate or justified below the absolute allowance, not as a claim
 that the mathematical coefficient is exactly zero.
+
+## Final production CODE verdict
+
+APPROVE the scoped coefficient implementation. Independent Codex review by
+`/root/xtask_code_review`; no vendor certification or council claim. Reviewed
+context is `475dd6d22c4d179aeb0d3a480303d3af4ff6a42c` plus the frozen delta,
+with complete owner/Strata input digest
+`bf7125964da4ffae87f6f419de482c4295e0975af7f5764018c5a1e11608371c`
+in `numeric-implementation/final/sources.json`. No unresolved source blocker.
+
+| Reviewed input | SHA256 |
+|---|---|
+| acpu/src/sparse/coefficients.rs | 8d645955bb4d05bb357fc7bdcc1e3470f36990bcd14677b405acd23f9330b832 |
+| acpu/src/sparse/chebyshev.rs | 1ba456138b4795f1a75f84dd822bf871adbb0b14120459fa67b46015bf639f9a |
+| acpu/src/sparse/mod.rs | feb8ae43b2a0abfaf0b9050d658abc2ed051ac1b486acabdc57e2eddb8a3a243 |
+| acpu/specs/README.md | 856baef47e18951b6be4dfe6b3eb62853c2c3974c7b266c0c9065dcc383cfd9c |
+| acpu/tests/chebyshev_coefficients.rs | 4c38c6e65796747890cae86ae42d93af60b6ac731fae218f44342a0c4ce77e9c |
+| acpu/tests/chebyshev_coefficients/reference.rs | 6fc22944c2ff0701d89c148314ec6f8e26bf88ef415b89d6d7670c53768d2c52 |
+| acpu/tests/chebyshev_coefficients/independent.tsv | ee45c184ea38b4b479e6ad0ddb7a34eb51a692f8a30693067840aea41b5db469 |
+| acpu/tests/chebyshev_independent.rs | ddd1e0cf070c927d67a167022844afef1595b59c925a8e45b41d93a6c0e9646c |
+
+I independently enumerated and rehashed all 255 owner and 243 Strata inputs,
+including current tracked/untracked inventory equality and both recorded HEADs.
+The sibling remains `56aedb2d12b3126c601eb333419136d403614dbb`.
+`nu audit/2026-10-16-acpu-delivery/numeric-implementation/verify.nu REPO`
+then passed its source, stream, historical-bridge and unchanged-kernel checks.
+I read the retained raw gate output rather than inferring success from source.
+No Cargo gate was rerun by this reviewer.
+
+All eight final receipts bind that same digest and exit0: fmt, strict workspace
+Clippy, strict acpu library/tests Clippy, workspace tests, release workspace
+build, release acpu tests, actual acpu matmul and strict acpu rustdoc. Their exact
+commands/tool paths are in `numeric-implementation/final/*.json`: rustc/Cargo
+1.95.0, warning-denying Rust/Rustdoc flags. Raw workspace tests report 365 passed
+and 5 ignored; release acpu tests report 196 passed and 1 ignored. Both include
+the seven coefficient tests and two root-authored independent controls. The
+actual 64x64 AMX matmul control reports maximum error0. This is a functional
+control, not a coefficient throughput benchmark.
+
+The original strict-Clippy exit101 is retained in `numeric-implementation/first`.
+Its first-to-final source bridge changes only the coefficient test file: two
+parity expressions and additional impossible-layout/work-priority witnesses.
+I inspected that exact diff; production and reference values are unchanged.
+I also compared the complete `bessel_i` and `chebyshev_matvec` function spans
+against `git show 475dd6d:acpu/src/sparse/chebyshev.rs`: both are byte-identical.
+
+I independently compared parsed binary f64 values and integer orders of every
+TSV row to the root oracle `numeric-reference/resolved.stdout` (SHA256
+`9b0f038bd81179df5b60581dbc1c50bf03afbbdfe976332820173d1ca26b93e4`).
+The 149 rows match exactly after selecting resolved references through tau1e6.
+The ten f32::MAX oracle pairs are intentionally excluded from success fixtures
+because the default engine refuses their work; the unresolved tau1000/order320
+value remains absent. My first selection mistakenly included those ten extreme
+pairs and failed only its row-count check; correcting that reviewer selection
+required no fixture or source change.
+
+All twelve quality passes were considered. The accepted floating numerical
+contract claims measured accuracy, with no cross-platform bit identity or
+directed-rounding proof. There is no new unsafe, FFI, global state or crypto
+path. Count/depth/work arithmetic is checked; the known minimum pass cost is
+admitted before fallible allocation, and every refinement consumes the same
+finite budget. Two output-bounded buffers are released on every error; no
+allocation grows with recurrence depth. Typed errors and explicit default
+wrapper panics match the canonical contract. Existing CSR checks precede
+coefficient admission, which precedes all matvec output/scratch writes.
+The private module is cohesive, below 500 lines, and adds no dependency or
+parallel production algorithm. Resource tests exercise exact/one-less work,
+both layout/work precedence paths, maximum nonzero output and raised limits.
+Independent series/integral and analytic two-, three- and four-element heat
+controls distinguish coefficient error from polynomial truncation. Root's
+refusal witness preserves NaN payload and signed-zero bits in all mutable arrays.
+
+The requested nonzero maximum-order prototype control also passed in
+`numeric-prototype/limits.json`: 65536 outputs at tau1, 131073 charged steps,
+and the raised 65537-output prefix control. Its numerical-zero screen
+`underflow-final.json` reports 649 far-tiny series estimates with floating
+log upper bounds below -744.72, versus half-f32-subnormal log -103.97; this is
+explicitly a numerical screen, not a certified interval proof. Production
+tests now retain the maximum-order control. The remaining limits are deliberate:
+coefficient work excludes matvec work and allocator latency, old unscaled
+`bessel_i` limitations remain, and arbitrary raised budgets carry no global
+accuracy guarantee beyond the documented convergence criterion.

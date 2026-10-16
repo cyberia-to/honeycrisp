@@ -6,6 +6,7 @@
 
 mod admission;
 pub mod chebyshev;
+mod coefficients;
 
 #[cfg(target_arch = "aarch64")]
 use core::arch::aarch64::*;

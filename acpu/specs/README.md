@@ -552,8 +552,35 @@ columns and duplicate columns are valid. Floating-point values are unrestricted.
 all equal in length to the row count. These shape/partition/index conditions
 are checked in all builds before allocation, pointer arithmetic or mutation;
 failure panics and preserves caller outputs and scratch. CSR admission is reused
-through the Chebyshev recurrence. Coefficient accuracy is a separate numerical
-contract; input admission does not constrain tau or truncation order.
+through the Chebyshev recurrence. Coefficients are admitted before any scratch
+or output write under the default limits below; refusal panics before mutation.
+
+`sparse::chebyshev::try_chebyshev_coeffs(tau, order, ChebyshevLimits)` returns
+K+1 f32 coefficients: c[0]=exp(-tau)I_0(tau),
+c[k]=2(-1)^k exp(-tau)I_k(tau) for k>0. Time is finite and nonnegative;
+negative zero is zero, order zero is valid, and zero time gives `[1,0,...]`.
+`ChebyshevError` distinguishes InvalidTime, OrderOverflow, OutputLimit,
+WorkLimit, Allocation (including vector-layout overflow), and Convergence.
+The output count is checked before allocating; all reservations are fallible.
+
+`ChebyshevLimits` caps output count (`max_coefficients`) and coefficient work
+(`max_steps`). `DEFAULT_CHEBYSHEV_LIMITS` and `Default` select 65,536 coefficients
+and 1,000,000 steps. A step is one tail estimate, one backward index evaluating
+both terminal sequences, or one output-coefficient evaluation. Every refinement
+is charged; zero time charges one step per output. Initialization separately
+touches at most 2K+1 slots. Requested heap storage is 16K+4(K+1) bytes; allocator
+rounding/bookkeeping is additional. Matvec work is outside this coefficient
+budget. `chebyshev_coeffs` uses these named defaults and panics on any refusal;
+callers override budgets through the checked entry point.
+
+The scaled coefficient engine uses two terminal ratios (zero/one), positive
+normalization and an estimated omitted-tail threshold of 2^-40. It accepts an
+estimated endpoint width at most `2^-25*upper + 2^-152`, refining depth within
+the work budget otherwise. Floating-point estimates provide a convergence
+criterion, not a certified global error bound. Caller-selected K truncation
+error and normalized-Laplacian assumptions remain separate from coefficient
+evaluation. The public unscaled `bessel_i` retains its existing recurrence,
+overflow and accuracy limitations.
 
 `bit_reverse_permute` and `ntt_forward` require a nonzero power-of-two length
 and panic before mutation otherwise. `multilinear_eval` requires exactly
