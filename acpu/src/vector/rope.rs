@@ -12,9 +12,11 @@ use core::arch::aarch64::*;
 /// `pos` is the token position.
 ///
 /// For each pair (x0, x1) with frequency f:
+/// ```text
 ///   theta = pos * f
 ///   out[2*i]   = x0 * cos(theta) - x1 * sin(theta)
 ///   out[2*i+1] = x0 * sin(theta) + x1 * cos(theta)
+/// ```
 pub fn rotate(out: &mut [f32], x: &[f32], freqs: &[f32], pos: usize) {
     let dim = x.len();
     assert!(dim.is_multiple_of(2), "rotate: dimension must be even");

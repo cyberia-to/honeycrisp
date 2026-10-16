@@ -2,7 +2,7 @@
 //!
 //! CSR matvec: y = A·x where A is sparse CSR. For the bostrom graph (avg
 //! degree ~1.85) most rows are 1–3 entries — AMX offers no advantage here.
-//! NEON prefetch hides gather latency from the scattered x[col_idx[j]] loads.
+//! NEON prefetch hides gather latency from the scattered `x[col_idx[j]]` loads.
 
 mod admission;
 pub mod chebyshev;
@@ -12,7 +12,7 @@ use core::arch::aarch64::*;
 
 /// y += A·x  (accumulate into y).
 ///
-/// A in CSR format: row i spans col_idx[row_ptr[i]..row_ptr[i+1]]
+/// A in CSR format: row i spans `col_idx[row_ptr[i]..row_ptr[i+1]]`.
 /// with corresponding weights values[...].
 ///
 /// # Panics
@@ -53,8 +53,8 @@ fn inner(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f
             let mut acc = 0.0f32;
 
             // Prefetch the x entries we'll need for this row.
-            for pf in 0..len.min(PF) {
-                let ptr = x.as_ptr().add(cols[pf] as usize);
+            for &column in cols.iter().take(PF) {
+                let ptr = x.as_ptr().add(column as usize);
                 // PRFM PLDL1KEEP — bring into L1 dcache.
                 core::arch::asm!(
                     "prfm pldl1keep, [{ptr}]",
@@ -189,8 +189,8 @@ mod tests {
             expected0
         );
         // y[i] = x[0] = 0 for i in 1..n
-        for i in 1..n {
-            assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);
+        for (i, value) in y.iter().enumerate().skip(1) {
+            assert!(value.abs() < 1e-5, "y[{i}]={value}");
         }
     }
 }

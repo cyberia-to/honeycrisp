@@ -1,5 +1,6 @@
 [package]
 name = "aruminium"
+autobenches = false # benches/ is the separate metal-benches workspace package.
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -29,8 +30,8 @@ name = "vecadd"
 path = "examples/vecadd.rs"
 
 [[example]]
-name = "matmul"
-path = "examples/matmul.rs"
+name = "aruminium_matmul"
+path = "examples/aruminium_matmul.rs"
 
 [[example]]
 name = "triangle"

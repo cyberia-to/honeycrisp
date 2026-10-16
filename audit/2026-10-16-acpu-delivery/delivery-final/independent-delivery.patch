@@ -1,0 +1,1032 @@
+diff --git a/acpu/bench/common.rs b/acpu/bench/common.rs
+index f7ea3ef35208b6804eaaa6d3340e679dd450c203..c4dd470ea77de79580eb923057d193a29e24ad08 100644
+--- a/acpu/bench/common.rs
++++ b/acpu/bench/common.rs
+@@ -179,59 +179,59 @@ extern "C" {
+     pub fn vvtanhf(result: *mut f32, src: *const f32, n: *const i32);
+ 
+     // vDSP
+-    pub fn vDSP_sve(a: *const f32, stride: i32, result: *mut f32, n: u64);
+-    pub fn vDSP_svesq(a: *const f32, stride: i32, result: *mut f32, n: u64);
+-    pub fn vDSP_maxv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+-    pub fn vDSP_minv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+-    pub fn vDSP_vneg(a: *const f32, stride_a: i32, c: *mut f32, stride_c: i32, n: u64);
++    pub fn vDSP_sve(a: *const f32, stride: i64, result: *mut f32, n: u64);
++    pub fn vDSP_svesq(a: *const f32, stride: i64, result: *mut f32, n: u64);
++    pub fn vDSP_maxv(a: *const f32, stride: i64, result: *mut f32, n: u64);
++    pub fn vDSP_minv(a: *const f32, stride: i64, result: *mut f32, n: u64);
++    pub fn vDSP_vneg(a: *const f32, stride_a: i64, c: *mut f32, stride_c: i64, n: u64);
+     pub fn vDSP_vadd(
+         a: *const f32,
+-        stride_a: i32,
++        stride_a: i64,
+         b: *const f32,
+-        stride_b: i32,
++        stride_b: i64,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+     pub fn vDSP_vmul(
+         a: *const f32,
+-        stride_a: i32,
++        stride_a: i64,
+         b: *const f32,
+-        stride_b: i32,
++        stride_b: i64,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+     pub fn vDSP_vsadd(
+         a: *const f32,
+-        stride_a: i32,
++        stride_a: i64,
+         b: *const f32,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+     pub fn vDSP_vsmul(
+         a: *const f32,
+-        stride_a: i32,
++        stride_a: i64,
+         b: *const f32,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+     pub fn vDSP_vsdiv(
+         a: *const f32,
+-        stride_a: i32,
++        stride_a: i64,
+         b: *const f32,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+     pub fn vDSP_svdiv(
+         a: *const f32,
+         b: *const f32,
+-        stride_b: i32,
++        stride_b: i64,
+         c: *mut f32,
+-        stride_c: i32,
++        stride_c: i64,
+         n: u64,
+     );
+ }
+diff --git a/acpu/bench/integer.rs b/acpu/bench/integer.rs
+index 1adf8131a998eab5b45137197c9720fbdc8d7e99..af1868bca0dbc18c3fa97995498f869931dc0ce2 100644
+--- a/acpu/bench/integer.rs
++++ b/acpu/bench/integer.rs
+@@ -4,7 +4,6 @@
+ #[path = "common.rs"]
+ mod common;
+ use common::*;
+-use std::time::Instant;
+ 
+ const N: usize = 4096;
+ 
+@@ -59,12 +58,12 @@ fn main() {
+     let mut score = Score::vs("scalar");
+ 
+     // ── test data ───────────────────────────────────────────────────────
+-    let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
+-    let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
++    let i32_a: Vec<i32> = (0..N).map(|i| i as i32 * 7 - 2000).collect();
++    let i32_b: Vec<i32> = (0..N).map(|i| i as i32 * 3 + 500).collect();
+     let i8_a: Vec<i8> = (0..N).map(|i| ((i * 7) % 255) as i8).collect();
+     let i8_b: Vec<i8> = (0..N).map(|i| ((i * 13) % 255) as i8).collect();
+-    let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
+-    let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
++    let i16_a: Vec<i16> = (0..N).map(|i| i as i16 * 5 - 2000).collect();
++    let i16_b: Vec<i16> = (0..N).map(|i| i as i16 * 3 + 1000).collect();
+     let mut dst_i32 = vec![0i32; N];
+     let mut acc_i32 = vec![0i32; N];
+ 
+diff --git a/acpu/bench/numeric.rs b/acpu/bench/numeric.rs
+index faf0f8db0d1ef613bfea63272203e6d279155af4..b1f83c4a6fc80c091170a0fb57e7ec8a09948730 100644
+--- a/acpu/bench/numeric.rs
++++ b/acpu/bench/numeric.rs
+@@ -7,10 +7,7 @@ use common::*;
+ 
+ #[link(name = "Accelerate", kind = "framework")]
+ extern "C" {
+-    // vDSP element-wise multiply (used as baseline for complex)
+-    fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+     fn vDSP_vsub(b: *const f32, ib: i64, a: *const f32, ia: i64, c: *mut f32, ic: i64, n: u64);
+-    fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+ }
+ 
+ const N: usize = 4096;
+diff --git a/acpu/bench/zk.rs b/acpu/bench/zk.rs
+index 2ee00e0ac9ec9c1d5e899d1b151c8e657d6ad935..4dc11759dd36aa87f0de9646524963bd3d9a43b6 100644
+--- a/acpu/bench/zk.rs
++++ b/acpu/bench/zk.rs
+@@ -19,7 +19,7 @@ fn main() {
+     println!("Goldilocks p = 2^64 - 2^32 + 1");
+     println!();
+ 
+-    let mut score = Score::new();
++    let score = Score::new();
+     let a: Vec<u64> = (0..N)
+         .map(|i| (i as u64).wrapping_mul(0x9E3779B97F4A7C15) | 1)
+         .collect();
+diff --git a/acpu/examples/trace64.rs b/acpu/examples/trace64.rs
+index a521f778420a95d928449df630ef8d1f68afea2b..29e340e75a60845cabcea738872cc8dbdb836fa5 100644
+--- a/acpu/examples/trace64.rs
++++ b/acpu/examples/trace64.rs
+@@ -286,7 +286,6 @@ fn main() {
+             }
+ 
+             // Direct B loads with stride=N*4, no packing
+-            let b_stride = N * 4; // bytes
+             for p in 0..N {
+                 // LDY: packed A column
+                 amx_op::<OP_LDY>(ap.add(p * 64) as u64);
+diff --git a/acpu/src/crypto/mod.rs b/acpu/src/crypto/mod.rs
+index 0aefa1e6e925b6c4dffb3d65527721abdea33093..e1e7a34ef5a85a072b87253c691704b1de1404b6 100644
+--- a/acpu/src/crypto/mod.rs
++++ b/acpu/src/crypto/mod.rs
+@@ -359,7 +359,7 @@ mod tests {
+     fn aes128_key_expand(key: &[u8; 16]) -> Vec<[u8; 16]> {
+         let rcon: [u8; 10] = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+ 
+-        let mut w = vec![0u32; 44];
++        let mut w = [0u32; 44];
+         for i in 0..4 {
+             w[i] = u32::from_be_bytes([key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]]);
+         }
+diff --git a/acpu/src/field/goldilocks.rs b/acpu/src/field/goldilocks.rs
+index 6530221102873f54a808f363b9a31a5a9600f4e4..d783521b3b052197bdda9cd066a4d6b181eac9a8 100644
+--- a/acpu/src/field/goldilocks.rs
++++ b/acpu/src/field/goldilocks.rs
+@@ -296,12 +296,12 @@ mod tests {
+     #[test]
+     fn test_pow7_x16() {
+         let mut state = [0u64; 16];
+-        for i in 0..16 {
+-            state[i] = (i as u64 + 1) * 3;
++        for (i, value) in state.iter_mut().enumerate() {
++            *value = (i as u64 + 1) * 3;
+         }
+         let mut expected = state;
+-        for i in 0..16 {
+-            expected[i] = gl_pow7(expected[i]);
++        for value in &mut expected {
++            *value = gl_pow7(*value);
+         }
+         gl_pow7_x16(&mut state);
+         assert_eq!(state, expected);
+diff --git a/acpu/src/field/permute.rs b/acpu/src/field/permute.rs
+index dbc95f30078ee0132d26a0b2d842e67271bc6088..c1a75c1ffb3f5b4ecba4959f6b6386fc6aaab8fa 100644
+--- a/acpu/src/field/permute.rs
++++ b/acpu/src/field/permute.rs
+@@ -143,16 +143,16 @@ mod tests {
+ 
+     fn test_rc() -> [u64; 144] {
+         let mut rc = [0u64; 144];
+-        for i in 0..144 {
+-            rc[i] = (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15);
++        for (i, value) in rc.iter_mut().enumerate() {
++            *value = (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15);
+         }
+         rc
+     }
+ 
+     fn test_diag() -> [u64; 16] {
+         let mut d = [0u64; 16];
+-        for i in 0..16 {
+-            d[i] = (i as u64 + 2).wrapping_mul(0x517CC1B727220A95);
++        for (i, value) in d.iter_mut().enumerate() {
++            *value = (i as u64 + 2).wrapping_mul(0x517CC1B727220A95);
+         }
+         d
+     }
+diff --git a/acpu/src/gemm/mod.rs b/acpu/src/gemm/mod.rs
+index 8faa0977d671b8642501974b8aac2ae48ce9ae7e..ccf8665816f78f08e41d1ff9e6cd1da451dd5adf 100644
+--- a/acpu/src/gemm/mod.rs
++++ b/acpu/src/gemm/mod.rs
+@@ -1091,7 +1091,6 @@ fn pack_b_32(b: &[f32], ldb: usize, pc: usize, jc: usize, kc: usize, nc: usize,
+ /// Odd/rem A × 32-wide B → two 16×16 kernels per B strip.
+ #[cfg(target_arch = "aarch64")]
+ #[allow(clippy::too_many_arguments)]
+-#[allow(clippy::too_many_arguments)]
+ pub(super) fn gebp_kernel(
+     a_pack: &[f32],
+     b_pack: &[f32],
+diff --git a/acpu/src/numeric/bf16.rs b/acpu/src/numeric/bf16.rs
+index 4fcc3e443cc6308e6c6f1e7c34f9c39b786aedb8..1ed610c815c980e7b839e65cb39782d4172c8541 100644
+--- a/acpu/src/numeric/bf16.rs
++++ b/acpu/src/numeric/bf16.rs
+@@ -164,7 +164,7 @@ mod tests {
+             0.0f32,
+             1.0,
+             -1.0,
+-            3.14,
++            f32::from_bits(0x4048_f5c3), // original decimal 3.14 test input
+             -100.0,
+             f32::INFINITY,
+             f32::NEG_INFINITY,
+diff --git a/acpu/src/sparse/chebyshev.rs b/acpu/src/sparse/chebyshev.rs
+index 163e4377b61f2e378f070aea32645210a9187e4c..ac618510b0d9de1a338bf5811c3ddc35e81ea62a 100644
+--- a/acpu/src/sparse/chebyshev.rs
++++ b/acpu/src/sparse/chebyshev.rs
+@@ -183,7 +183,8 @@ pub fn chebyshev_matvec(
+     csr.set(&az, t1);
+     // Step 3: t1[i] = −d_inv_sqrt[i] * t1[i]
+     for i in 0..n {
+-        t1[i] = -d_inv_sqrt[i] * t1[i];
++        let scaled = -d_inv_sqrt[i] * t1[i];
++        t1[i] = scaled;
+     }
+ 
+     // Accumulate y = c_0 T_0 + c_1 T_1
+@@ -204,8 +205,7 @@ pub fn chebyshev_matvec(
+     //
+     // (k starts at 2, so k==2 is even: T_0 in t0, T_1 in t1 → write T_2 into t0)
+ 
+-    for k in 2..=order {
+-        let ck = coeffs[k];
++    for (k, &ck) in coeffs.iter().enumerate().skip(2) {
+         if k % 2 == 0 {
+             // T_{k-2} in t0, T_{k-1} in t1. Compute T_k into t0.
+             // az = D^{-½} t1
+@@ -259,7 +259,7 @@ mod tests {
+         assert!((bessel_i(0, 0.0) - 1.0).abs() < 1e-5, "I_0(0)");
+         // I_0(1) ≈ 1.2660658777520082
+         assert!(
+-            (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
++            (bessel_i(0, 1.0) - 1.266_066).abs() < 1e-4,
+             "I_0(1) = {}",
+             bessel_i(0, 1.0)
+         );
+diff --git a/acpu/src/sparse/mod.rs b/acpu/src/sparse/mod.rs
+index 15118d9e41947b651062c82c6c1acde40ce6b704..a12b1692ae2f74b8dc6e8cf2a1dd01a243feda5d 100644
+--- a/acpu/src/sparse/mod.rs
++++ b/acpu/src/sparse/mod.rs
+@@ -53,8 +53,8 @@ fn inner(row_ptr: &[u32], col_idx: &[u32], values: &[f32], x: &[f32], y: &mut [f
+             let mut acc = 0.0f32;
+ 
+             // Prefetch the x entries we'll need for this row.
+-            for pf in 0..len.min(PF) {
+-                let ptr = x.as_ptr().add(cols[pf] as usize);
++            for &column in cols.iter().take(PF) {
++                let ptr = x.as_ptr().add(column as usize);
+                 // PRFM PLDL1KEEP — bring into L1 dcache.
+                 core::arch::asm!(
+                     "prfm pldl1keep, [{ptr}]",
+@@ -189,8 +189,8 @@ mod tests {
+             expected0
+         );
+         // y[i] = x[0] = 0 for i in 1..n
+-        for i in 1..n {
+-            assert!(y[i].abs() < 1e-5, "y[{i}]={}", y[i]);
++        for (i, value) in y.iter().enumerate().skip(1) {
++            assert!(value.abs() < 1e-5, "y[{i}]={value}");
+         }
+     }
+ }
+diff --git a/acpu/src/vector/integer.rs b/acpu/src/vector/integer.rs
+index 471b177add6f60b6f96a5820719c642825bb4080..984c833713665f91c414da4ada7aa8e139588f77 100644
+--- a/acpu/src/vector/integer.rs
++++ b/acpu/src/vector/integer.rs
+@@ -408,7 +408,7 @@ mod tests {
+ 
+     #[test]
+     fn test_sum_i32() {
+-        let v: Vec<i32> = (0..4096).map(|i| (i % 100) as i32 - 50).collect();
++        let v: Vec<i32> = (0..4096).map(|i| (i % 100) - 50).collect();
+         let expected: i64 = v.iter().map(|&x| x as i64).sum();
+         assert_eq!(sum_i32(&v), expected);
+     }
+diff --git a/acpu/src/vector/media.rs b/acpu/src/vector/media.rs
+index 1958b249ce18366b8c7e5b4db0cc5701bfd20484..4be53b26845fa95f8ae22c895f1f71c60bd31de6 100644
+--- a/acpu/src/vector/media.rs
++++ b/acpu/src/vector/media.rs
+@@ -383,7 +383,7 @@ mod tests {
+     #[test]
+     fn test_rgb_to_yuv_known() {
+         let mut yuv = vec![0u8; 48];
+-        rgb_to_yuv(&mut yuv, &vec![0u8; 48]);
++        rgb_to_yuv(&mut yuv, &[0u8; 48]);
+         for i in 0..16 {
+             assert_eq!((yuv[i * 3], yuv[i * 3 + 1], yuv[i * 3 + 2]), (16, 128, 128));
+         }
+@@ -414,8 +414,8 @@ mod tests {
+         let mut out = vec![0u8; 3];
+         rgb_to_yuv(&mut yuv, &[128, 128, 128]);
+         yuv_to_rgb(&mut out, &yuv);
+-        for c in 0..3 {
+-            assert!((128i32 - out[c] as i32).abs() <= 2, "ch {}: {}", c, out[c]);
++        for (c, &value) in out.iter().enumerate() {
++            assert!((128i32 - value as i32).abs() <= 2, "ch {c}: {value}");
+         }
+     }
+ 
+@@ -464,7 +464,7 @@ mod tests {
+     #[test]
+     fn test_resize_downsample() {
+         let mut dst = vec![0.0f32; 4];
+-        resize_bilinear_f32(&mut dst, &vec![7.5f32; 16], 4, 4, 2, 2);
++        resize_bilinear_f32(&mut dst, &[7.5f32; 16], 4, 4, 2, 2);
+         assert!(dst.iter().all(|&v| (v - 7.5).abs() < 1e-4));
+     }
+ }
+diff --git a/acpu/tests/input_admission.rs b/acpu/tests/input_admission.rs
+index 816cb2f19db37ffb75b35dbd98f5ad31399f1451..55cc9566e305884d9ed0ee8e91b1a5e035daa1ba 100644
+--- a/acpu/tests/input_admission.rs
++++ b/acpu/tests/input_admission.rs
+@@ -16,12 +16,13 @@ fn rejects(message: &str, f: impl FnOnce()) {
+ }
+ 
+ type Matvec = fn(&[u32], &[u32], &[f32], &[f32], &mut [f32]);
++type CsrCase<'a> = (&'a [u32], &'a [u32], &'a [f32], usize, &'a str);
+ 
+ #[test]
+ fn csr_rejects_every_malformed_shape_before_output_mutation() {
+     // Partition, count, pointer, scalar-tail and late-row failures. Every case
+     // runs through both public entry points, including the zeroing variant.
+-    let cases: &[(&[u32], &[u32], &[f32], usize, &str)] = &[
++    let cases: &[CsrCase<'_>] = &[
+         (&[], &[], &[], 0, "row_ptr must be nonempty"),
+         (&[1, 1], &[0], &[2.0], 1, "row_ptr must start at zero"),
+         (&[0, 2, 1], &[0], &[2.0], 2, "row_ptr must be nondecreasing"),
+diff --git a/acpu/tests/integration.rs b/acpu/tests/integration.rs
+index 369a37f0a5120ebf70b47b083a9c9dca92e17117..6643af14964bb2917fad1788346cf8dae5ca809e 100644
+--- a/acpu/tests/integration.rs
++++ b/acpu/tests/integration.rs
+@@ -97,7 +97,14 @@ fn fp16_bulk_1024() {
+ 
+ #[test]
+ fn bf16_roundtrip() {
+-    for &v in &[0.0f32, 1.0, -1.0, 3.14, -100.0, 256.0] {
++    for &v in &[
++        0.0f32,
++        1.0,
++        -1.0,
++        f32::from_bits(0x4048_f5c3), // original decimal 3.14 test input
++        -100.0,
++        256.0,
++    ] {
+         let back = bf16_mod::bf16_to_f32(bf16_mod::f32_to_bf16(v));
+         if v == 0.0 {
+             assert_eq!(back, 0.0);
+@@ -294,7 +301,7 @@ fn softmax_equal() {
+ fn rmsnorm_unit_weight() {
+     let x = vec![1.0f32, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0];
+     let mut out = vec![0.0f32; 8];
+-    softmax::normalize(&mut out, &x, &vec![1.0; 8], 1e-5);
++    softmax::normalize(&mut out, &x, &[1.0; 8], 1e-5);
+     let rms2: f32 = out.iter().map(|v| v * v).sum::<f32>() / 8.0;
+     assert!((rms2 - 1.0).abs() < 1e-3);
+ }
+@@ -302,7 +309,7 @@ fn rmsnorm_unit_weight() {
+ #[test]
+ fn rmsnorm_scaling() {
+     let mut out = vec![0.0f32; 16];
+-    softmax::normalize(&mut out, &vec![2.0; 16], &vec![3.0; 16], 1e-5);
++    softmax::normalize(&mut out, &[2.0; 16], &[3.0; 16], 1e-5);
+     for &v in &out {
+         assert!((v - 3.0).abs() < 1e-3);
+     }
+@@ -362,7 +369,7 @@ fn sgemm_vs_naive() {
+     const S: usize = 4;
+     let a: Vec<f32> = (0..S * S).map(|i| (i % 5) as f32 * 0.3).collect();
+     let b: Vec<f32> = (0..S * S).map(|i| (i % 7) as f32 * 0.2).collect();
+-    let mut c_ref = vec![0.0f32; S * S];
++    let mut c_ref = [0.0f32; S * S];
+     for i in 0..S {
+         for j in 0..S {
+             let mut acc = 0.0f32;
+@@ -654,8 +661,8 @@ fn amx_fma32_outer_product() {
+             amx_op::<OP_LDZ>((zero_buf as u64) | ((row as u64) << 56));
+         }
+ 
+-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
++        amx_op::<OP_LDX>(x_buf as u64);
++        amx_op::<OP_LDY>(y_buf as u64);
+ 
+         let op = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 0);
+         amx_op::<OP_FMA32>(op);
+diff --git a/aruminium/CLAUDE.md b/aruminium/CLAUDE.md
+index ad0f195d8258949ec164a34bf7e0ac9592d3243d..c90c19089763529116c7358480ca527a77a6f915 100644
+--- a/aruminium/CLAUDE.md
++++ b/aruminium/CLAUDE.md
+@@ -100,7 +100,7 @@ src/                  core library (zero deps)
+   sync.rs             Fence, Event, SharedEvent
+   texture.rs          Texture
+   probe.rs            metal_probe binary — 5-level capability probe
+-examples/             runnable demos (vecadd, matmul)
++examples/             runnable demos (vecadd, aruminium_matmul)
+ benches/              separate crate with heavy deps (bench, compare)
+ docs/                 documentation (tutorial, guide, explanations)
+ specs/                specification (source of truth)
+diff --git a/aruminium/Cargo.toml b/aruminium/Cargo.toml
+index eda3c739c89ff7e49b4f3bde6a63517a4463acf6..8e63cad540e50b6a7f88550c0ec8b2bc1fc0fb44 100644
+--- a/aruminium/Cargo.toml
++++ b/aruminium/Cargo.toml
+@@ -29,8 +29,8 @@ name = "vecadd"
+ path = "examples/vecadd.rs"
+ 
+ [[example]]
+-name = "matmul"
+-path = "examples/matmul.rs"
++name = "aruminium_matmul"
++path = "examples/aruminium_matmul.rs"
+ 
+ [[example]]
+ name = "triangle"
+diff --git a/aruminium/README.md b/aruminium/README.md
+index aa4c65d5c39554ef26195d1b46b38557ebdc2a2a..1fc0a56e8350cccda659e7282166a20f872b942a 100644
+--- a/aruminium/README.md
++++ b/aruminium/README.md
+@@ -124,7 +124,7 @@ aruminium::cast_f16_f32(&mut [f32], &[u16])  // bulk NEON
+ ```text
+ cargo build --release
+ cargo run --example vecadd
+-cargo run --example matmul
++cargo run --example aruminium_matmul
+ cargo run --release -p metal-benches --bin bench
+ ```
+ 
+diff --git a/aruminium/benches/objc2.rs b/aruminium/benches/objc2.rs
+index 2578d185599e59a0e457744c084883d96d86fbad..155dbd68d6709c5622a770e27c67b3f9884893a4 100644
+--- a/aruminium/benches/objc2.rs
++++ b/aruminium/benches/objc2.rs
+@@ -300,8 +300,12 @@ pub fn render_pass_overhead(iters: usize) -> f64 {
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+@@ -371,8 +375,12 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
+     let queue = dev.newCommandQueue().unwrap();
+     let src = NSString::from_str(TRIANGLE_SRC);
+     let lib = dev.newLibraryWithSource_options_error(&src, None).unwrap();
+-    let vfn = lib.newFunctionWithName(&NSString::from_str("vmain")).unwrap();
+-    let ffn = lib.newFunctionWithName(&NSString::from_str("fmain")).unwrap();
++    let vfn = lib
++        .newFunctionWithName(&NSString::from_str("vmain"))
++        .unwrap();
++    let ffn = lib
++        .newFunctionWithName(&NSString::from_str("fmain"))
++        .unwrap();
+ 
+     let pipe_desc = MTLRenderPipelineDescriptor::new();
+     pipe_desc.setVertexFunction(Some(&*vfn));
+@@ -418,9 +426,7 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+@@ -433,9 +439,7 @@ pub fn render_batch_encode(n_draws: usize, iters: usize) -> f64 {
+         let enc = cmd.renderCommandEncoderWithDescriptor(&rpass).unwrap();
+         enc.setRenderPipelineState(&rpipeline);
+         for _ in 0..n_draws {
+-            unsafe {
+-                enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0)
+-            };
++            unsafe { enc.drawPrimitives_vertexStart_vertexCount(MTLPrimitiveType::Triangle, 0, 0) };
+         }
+         enc.endEncoding();
+         cmd.commit();
+diff --git a/aruminium/docs/tutorial.md b/aruminium/docs/tutorial.md
+index 04004dd58b188da22ad0e18084b539477ae2cd00..146b5250a82f596c06fb3d23b90dbf118b4d66db 100644
+--- a/aruminium/docs/tutorial.md
++++ b/aruminium/docs/tutorial.md
+@@ -230,6 +230,6 @@ fn main() -> Result<(), GpuError> {
+ 
+ ## next steps
+ 
+-- see `examples/matmul.rs` for 2D dispatch with struct parameters
++- see `examples/aruminium_matmul.rs` for 2D dispatch with struct parameters
+ - see `docs/guide.md` for Dispatch, batch encoding, pipelining
+ - see `docs/explanations.md` for why the architecture works this way
+diff --git a/aruminium/examples/README.md b/aruminium/examples/README.md
+index 97319c9016587581b57e77691920cc478226f7d9..b7378a7c19f9ef0b9d64d78ff9e9230bd783fa1f 100644
+--- a/aruminium/examples/README.md
++++ b/aruminium/examples/README.md
+@@ -4,10 +4,10 @@ runnable demos. each one is self-contained and shows a real GPU workflow.
+ 
+ ```bash
+ cargo run --example vecadd
+-cargo run --example matmul
++cargo run --example aruminium_matmul
+ ```
+ 
+ | file | what it does |
+ |------|-------------|
+ | `vecadd.rs` | vector addition on GPU — simplest possible compute dispatch |
+-| `matmul.rs` | matrix multiplication — tiled compute with shared memory |
++| `aruminium_matmul.rs` | matrix multiplication — tiled compute with shared memory |
+diff --git a/aruminium/examples/matmul.rs b/aruminium/examples/matmul.rs
+deleted file mode 100644
+index b08d98fa0217fb27e6957465854b9ed6ab0087e6..0000000000000000000000000000000000000000
+--- a/aruminium/examples/matmul.rs
++++ /dev/null
+@@ -1,111 +0,0 @@
+-//! Matrix multiplication on Metal GPU — compute example
+-
+-use aruminium::{Gpu, GpuError};
+-
+-fn main() -> Result<(), GpuError> {
+-    let device = Gpu::open()?;
+-    println!("Device: {}", device.name());
+-
+-    let queue = device.new_command_queue()?;
+-
+-    // Naive matmul kernel: C[M,N] = A[M,K] * B[K,N]
+-    let source = r#"
+-        #include <metal_stdlib>
+-        using namespace metal;
+-
+-        struct MatmulParams {
+-            uint M;
+-            uint N;
+-            uint K;
+-        };
+-
+-        kernel void matmul(device const float *A [[buffer(0)]],
+-                           device const float *B [[buffer(1)]],
+-                           device float *C       [[buffer(2)]],
+-                           constant MatmulParams &params [[buffer(3)]],
+-                           uint2 gid [[thread_position_in_grid]]) {
+-            uint row = gid.y;
+-            uint col = gid.x;
+-            if (row >= params.M || col >= params.N) return;
+-
+-            float sum = 0.0;
+-            for (uint k = 0; k < params.K; k++) {
+-                sum += A[row * params.K + k] * B[k * params.N + col];
+-            }
+-            C[row * params.N + col] = sum;
+-        }
+-    "#;
+-
+-    let lib = device.compile(source)?;
+-    let func = lib.function("matmul")?;
+-    let pipeline = device.pipeline(&func)?;
+-
+-    let m = 64usize;
+-    let n = 64usize;
+-    let k = 64usize;
+-
+-    let buf_a = device.buffer(m * k * 4)?;
+-    let buf_b = device.buffer(k * n * 4)?;
+-    let buf_c = device.buffer(m * n * 4)?;
+-
+-    // A = identity, B = all ones => C should be all ones
+-    buf_a.write_f32(|d| {
+-        for i in 0..m {
+-            for j in 0..k {
+-                d[i * k + j] = if i == j { 1.0 } else { 0.0 };
+-            }
+-        }
+-    });
+-    buf_b.write_f32(|d| {
+-        for i in 0..d.len() {
+-            d[i] = 1.0;
+-        }
+-    });
+-
+-    #[repr(C)]
+-    struct MatmulParams {
+-        m: u32,
+-        n: u32,
+-        k: u32,
+-    }
+-    let params = MatmulParams {
+-        m: m as u32,
+-        n: n as u32,
+-        k: k as u32,
+-    };
+-    let params_bytes = unsafe {
+-        std::slice::from_raw_parts(
+-            &params as *const MatmulParams as *const u8,
+-            std::mem::size_of::<MatmulParams>(),
+-        )
+-    };
+-
+-    let cmd = queue.commands()?;
+-    let enc = cmd.encoder()?;
+-    enc.bind(&pipeline);
+-    enc.bind_buffer(&buf_a, 0, 0);
+-    enc.bind_buffer(&buf_b, 0, 1);
+-    enc.bind_buffer(&buf_c, 0, 2);
+-    enc.push(params_bytes, 3);
+-    enc.launch((n, m, 1), (16, 16, 1));
+-    enc.finish();
+-    cmd.submit();
+-    cmd.wait();
+-
+-    buf_c.read_f32(|d| {
+-        let mut max_err: f32 = 0.0;
+-        for i in 0..m * n {
+-            max_err = max_err.max((d[i] - 1.0).abs());
+-        }
+-        if max_err < 1e-5 {
+-            println!(
+-                "PASS: {}x{}x{} matmul verified (max_err={:.2e})",
+-                m, n, k, max_err
+-            );
+-        } else {
+-            println!("FAIL: max_err = {:.6}", max_err);
+-        }
+-    });
+-
+-    Ok(())
+-}
+diff --git a/rane/CLAUDE.md b/rane/CLAUDE.md
+index 5bd1739ec033c1baa4dca40cb39df40136ae4f39..cb6b4a2419afe390accee24d281bd6ae01512ee4 100644
+--- a/rane/CLAUDE.md
++++ b/rane/CLAUDE.md
+@@ -39,7 +39,7 @@ skip for trivial tasks.
+ cargo fmt --all                           # format
+ cargo clippy --workspace -- -W warnings   # lint
+ cargo build --release --workspace         # build all
+-cargo run --example matmul                # verify ANE access
++cargo run --example rane_matmul                # verify ANE access
+ ```
+ 
+ every commit: format clean, clippy clean, builds, examples run.
+@@ -103,7 +103,7 @@ src/                  core library (zero deps)
+   weights.rs          checkpoint I/O, LayerWeights, KVCache
+   mil/                MIL program builder → ANE bytecode
+   ops/                CPU kernels (rmsnorm, rope, attention, loss, adam)
+-examples/             runnable demos (matmul, infer, train, bench)
++examples/             runnable demos (rane_matmul, infer, train, bench)
+ tools/                separate crate with heavy deps (convert_hf, tokenize, chat)
+ specs/                specification (source of truth)
+   api.md              API spec — concepts, lifecycle, apple mapping
+diff --git a/rane/Cargo.toml b/rane/Cargo.toml
+index ff8e4913aa75a86be5d0f92b74ad855545268c42..f8e8f84f1cdb00380d79f46d70b25ddd7a10aad8 100644
+--- a/rane/Cargo.toml
++++ b/rane/Cargo.toml
+@@ -24,5 +24,5 @@ name = "rane_probe"
+ path = "src/probe/main.rs"
+ 
+ [[example]]
+-name = "matmul"
+-path = "examples/matmul.rs"
++name = "rane_matmul"
++path = "examples/rane_matmul.rs"
+diff --git a/rane/README.md b/rane/README.md
+index e5808f42577234dfe4fe91823a438820c9b6c42b..f74e010781a1e06a554738af513b81fdd27eeb75 100644
+--- a/rane/README.md
++++ b/rane/README.md
+@@ -130,7 +130,7 @@ rane::cast_f16_f32(&mut [f32], &[u16])  // bulk NEON
+ 
+ ```bash
+ cargo build --release
+-cargo run --example matmul
++cargo run --example rane_matmul
+ cargo test --test integration -- --test-threads=1
+ cargo run --release -p rane-benches --bin bench
+ cargo run --release -p rane-benches --bin compare
+@@ -149,7 +149,7 @@ src/                    rane crate — zero deps, system frameworks only
+   mil/mod.rs            MIL program builder (matmul, header, footer)
+   probe/                rane_probe — 7-level reverse engineering tool
+ examples/
+-  matmul.rs             64x64 matmul on ANE hardware
++  rane_matmul.rs             64x64 matmul on ANE hardware
+ benches/                separate crate with bench + compare binaries
+ tests/
+   integration.rs        13 tests: surface, fp16, MIL, model lifecycle
+diff --git a/rane/examples/matmul.rs b/rane/examples/matmul.rs
+deleted file mode 100644
+index add39ec1fe8fcb6c4dc0897829216d2bdd04245e..0000000000000000000000000000000000000000
+--- a/rane/examples/matmul.rs
++++ /dev/null
+@@ -1,93 +0,0 @@
+-//! Minimal ANE matmul demo — pure Rust, zero dependencies
+-//!
+-//! Compiles a 64×64 matmul on ANE, runs with identity matrix,
+-//! verifies output matches input.
+-//!
+-//! Run: cargo run --example matmul
+-
+-use rane::mil;
+-use rane::{f32_to_fp16, fp16_to_f32, Buffer, Program};
+-
+-fn main() -> Result<(), Box<dyn std::error::Error>> {
+-    println!("ANE Matmul — Pure Rust\n");
+-
+-    // Build MIL program: y = x @ W
+-    // Input: [1, 64, 1, 128] fp16 (64 activations + 64 weights per channel)
+-    // Output: [1, 64, 1, 64] fp16
+-    let ic = 64;
+-    let oc = 64;
+-    let seq = 64;
+-    let program = mil::matmul(ic, oc, seq);
+-    let (in_ch, in_sp) = program.input_shape();
+-    let (out_ch, out_sp) = program.output_shape();
+-    println!("  MIL: matmul({ic}x{oc}, seq={seq})");
+-    println!(
+-        "  Input:  [1, {in_ch}, 1, {in_sp}] fp16 ({} KB)",
+-        program.input_size() / 1024
+-    );
+-    println!(
+-        "  Output: [1, {out_ch}, 1, {out_sp}] fp16 ({} KB)\n",
+-        program.output_size() / 1024
+-    );
+-
+-    // Compile
+-    print!("  Compiling...");
+-    let mut model = Program::compile(&program, &[])?;
+-    println!(" OK");
+-
+-    // Load into ANE
+-    print!("  Loading...");
+-    model.load()?;
+-    println!(" OK");
+-
+-    // Prepare I/O surfaces
+-    let input = Buffer::new(program.input_size())?;
+-    let output = Buffer::new(program.output_size())?;
+-
+-    // Fill input: activations = 1.0, weights = identity matrix
+-    input.write(|data| {
+-        for ch in 0..ic {
+-            for s in 0..seq {
+-                data[ch * in_sp + s] = f32_to_fp16(1.0);
+-            }
+-            for o in 0..oc {
+-                data[ch * in_sp + seq + o] = if ch == o { f32_to_fp16(1.0) } else { 0 };
+-            }
+-        }
+-    });
+-    println!("  Input: all 1.0 activations, identity weight matrix");
+-
+-    // Run on ANE
+-    print!("  Evaluating on ANE...");
+-    model.run(&input, &output)?;
+-    println!(" OK\n");
+-
+-    // Read output
+-    output.read(|data| {
+-        print!("  Output[0..8] = [");
+-        for i in 0..8 {
+-            if i > 0 {
+-                print!(", ");
+-            }
+-            print!("{:.1}", fp16_to_f32(data[i]));
+-        }
+-        println!("]");
+-
+-        // Verify: identity matmul should give all 1.0 (each output = sum of row × identity col = 1.0)
+-        // Actually: [SEQ,IC] @ [IC,OC] with identity → output = ones × I = ones
+-        // But the matmul is (seq=64) @ (ic=64,oc=64), so each output is dot(ones_64, identity_col) = 1.0
+-        let all_ones = data[..out_ch * out_sp]
+-            .iter()
+-            .all(|&v| fp16_to_f32(v) == 1.0);
+-        if all_ones {
+-            println!("\n  VERIFIED: all {} output values = 1.0", out_ch * out_sp);
+-            println!("  Pure Rust → MIL → ANE bytecode → ANE hardware → correct result");
+-        } else {
+-            let nonzero: Vec<_> = data[..8].iter().map(|&v| fp16_to_f32(v)).collect();
+-            println!("\n  Output values: {:?}", nonzero);
+-        }
+-    });
+-
+-    // Cleanup is automatic (Drop)
+-    Ok(())
+-}
+diff --git a/aruminium/examples/aruminium_matmul.rs b/aruminium/examples/aruminium_matmul.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b08d98fa0217fb27e6957465854b9ed6ab0087e6
+--- /dev/null
++++ b/aruminium/examples/aruminium_matmul.rs
+@@ -0,0 +1,111 @@
++//! Matrix multiplication on Metal GPU — compute example
++
++use aruminium::{Gpu, GpuError};
++
++fn main() -> Result<(), GpuError> {
++    let device = Gpu::open()?;
++    println!("Device: {}", device.name());
++
++    let queue = device.new_command_queue()?;
++
++    // Naive matmul kernel: C[M,N] = A[M,K] * B[K,N]
++    let source = r#"
++        #include <metal_stdlib>
++        using namespace metal;
++
++        struct MatmulParams {
++            uint M;
++            uint N;
++            uint K;
++        };
++
++        kernel void matmul(device const float *A [[buffer(0)]],
++                           device const float *B [[buffer(1)]],
++                           device float *C       [[buffer(2)]],
++                           constant MatmulParams &params [[buffer(3)]],
++                           uint2 gid [[thread_position_in_grid]]) {
++            uint row = gid.y;
++            uint col = gid.x;
++            if (row >= params.M || col >= params.N) return;
++
++            float sum = 0.0;
++            for (uint k = 0; k < params.K; k++) {
++                sum += A[row * params.K + k] * B[k * params.N + col];
++            }
++            C[row * params.N + col] = sum;
++        }
++    "#;
++
++    let lib = device.compile(source)?;
++    let func = lib.function("matmul")?;
++    let pipeline = device.pipeline(&func)?;
++
++    let m = 64usize;
++    let n = 64usize;
++    let k = 64usize;
++
++    let buf_a = device.buffer(m * k * 4)?;
++    let buf_b = device.buffer(k * n * 4)?;
++    let buf_c = device.buffer(m * n * 4)?;
++
++    // A = identity, B = all ones => C should be all ones
++    buf_a.write_f32(|d| {
++        for i in 0..m {
++            for j in 0..k {
++                d[i * k + j] = if i == j { 1.0 } else { 0.0 };
++            }
++        }
++    });
++    buf_b.write_f32(|d| {
++        for i in 0..d.len() {
++            d[i] = 1.0;
++        }
++    });
++
++    #[repr(C)]
++    struct MatmulParams {
++        m: u32,
++        n: u32,
++        k: u32,
++    }
++    let params = MatmulParams {
++        m: m as u32,
++        n: n as u32,
++        k: k as u32,
++    };
++    let params_bytes = unsafe {
++        std::slice::from_raw_parts(
++            &params as *const MatmulParams as *const u8,
++            std::mem::size_of::<MatmulParams>(),
++        )
++    };
++
++    let cmd = queue.commands()?;
++    let enc = cmd.encoder()?;
++    enc.bind(&pipeline);
++    enc.bind_buffer(&buf_a, 0, 0);
++    enc.bind_buffer(&buf_b, 0, 1);
++    enc.bind_buffer(&buf_c, 0, 2);
++    enc.push(params_bytes, 3);
++    enc.launch((n, m, 1), (16, 16, 1));
++    enc.finish();
++    cmd.submit();
++    cmd.wait();
++
++    buf_c.read_f32(|d| {
++        let mut max_err: f32 = 0.0;
++        for i in 0..m * n {
++            max_err = max_err.max((d[i] - 1.0).abs());
++        }
++        if max_err < 1e-5 {
++            println!(
++                "PASS: {}x{}x{} matmul verified (max_err={:.2e})",
++                m, n, k, max_err
++            );
++        } else {
++            println!("FAIL: max_err = {:.6}", max_err);
++        }
++    });
++
++    Ok(())
++}
+diff --git a/rane/examples/rane_matmul.rs b/rane/examples/rane_matmul.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..614578980c58fdf0522b19e1f6055eb45dbdbb8e
+--- /dev/null
++++ b/rane/examples/rane_matmul.rs
+@@ -0,0 +1,93 @@
++//! Minimal ANE matmul demo — pure Rust, zero dependencies
++//!
++//! Compiles a 64×64 matmul on ANE, runs with identity matrix,
++//! verifies output matches input.
++//!
++//! Run: cargo run --example rane_matmul
++
++use rane::mil;
++use rane::{f32_to_fp16, fp16_to_f32, Buffer, Program};
++
++fn main() -> Result<(), Box<dyn std::error::Error>> {
++    println!("ANE Matmul — Pure Rust\n");
++
++    // Build MIL program: y = x @ W
++    // Input: [1, 64, 1, 128] fp16 (64 activations + 64 weights per channel)
++    // Output: [1, 64, 1, 64] fp16
++    let ic = 64;
++    let oc = 64;
++    let seq = 64;
++    let program = mil::matmul(ic, oc, seq);
++    let (in_ch, in_sp) = program.input_shape();
++    let (out_ch, out_sp) = program.output_shape();
++    println!("  MIL: matmul({ic}x{oc}, seq={seq})");
++    println!(
++        "  Input:  [1, {in_ch}, 1, {in_sp}] fp16 ({} KB)",
++        program.input_size() / 1024
++    );
++    println!(
++        "  Output: [1, {out_ch}, 1, {out_sp}] fp16 ({} KB)\n",
++        program.output_size() / 1024
++    );
++
++    // Compile
++    print!("  Compiling...");
++    let mut model = Program::compile(&program, &[])?;
++    println!(" OK");
++
++    // Load into ANE
++    print!("  Loading...");
++    model.load()?;
++    println!(" OK");
++
++    // Prepare I/O surfaces
++    let input = Buffer::new(program.input_size())?;
++    let output = Buffer::new(program.output_size())?;
++
++    // Fill input: activations = 1.0, weights = identity matrix
++    input.write(|data| {
++        for ch in 0..ic {
++            for s in 0..seq {
++                data[ch * in_sp + s] = f32_to_fp16(1.0);
++            }
++            for o in 0..oc {
++                data[ch * in_sp + seq + o] = if ch == o { f32_to_fp16(1.0) } else { 0 };
++            }
++        }
++    });
++    println!("  Input: all 1.0 activations, identity weight matrix");
++
++    // Run on ANE
++    print!("  Evaluating on ANE...");
++    model.run(&input, &output)?;
++    println!(" OK\n");
++
++    // Read output
++    output.read(|data| {
++        print!("  Output[0..8] = [");
++        for i in 0..8 {
++            if i > 0 {
++                print!(", ");
++            }
++            print!("{:.1}", fp16_to_f32(data[i]));
++        }
++        println!("]");
++
++        // Verify: identity matmul should give all 1.0 (each output = sum of row × identity col = 1.0)
++        // Actually: [SEQ,IC] @ [IC,OC] with identity → output = ones × I = ones
++        // But the matmul is (seq=64) @ (ic=64,oc=64), so each output is dot(ones_64, identity_col) = 1.0
++        let all_ones = data[..out_ch * out_sp]
++            .iter()
++            .all(|&v| fp16_to_f32(v) == 1.0);
++        if all_ones {
++            println!("\n  VERIFIED: all {} output values = 1.0", out_ch * out_sp);
++            println!("  Pure Rust → MIL → ANE bytecode → ANE hardware → correct result");
++        } else {
++            let nonzero: Vec<_> = data[..8].iter().map(|&v| fp16_to_f32(v)).collect();
++            println!("\n  Output values: {:?}", nonzero);
++        }
++    });
++
++    // Cleanup is automatic (Drop)
++    Ok(())
++}

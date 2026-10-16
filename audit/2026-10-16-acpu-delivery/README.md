@@ -1,7 +1,11 @@
 # acpu delivery prerequisite gates — 2026-10-16
 
-Publication is blocked by a safe-API soundness defect and red upstream gates.
-This section records the unchanged baseline before repair. Base:
+The [admission repair](admission/README.md) is committed as `c5177c5`; the
+[final hygiene/tooling gates](delivery-v4/README.md) pass on their recorded source.
+Chebyshev numerical scaling remains open before the version proposal.
+
+The sections below preserve the original soundness and gate findings before
+repair. Baseline:
 `70dfb1f55e4cb2570d5a78a497be5828a203087b`; Strata:
 `56aedb2d12b3126c601eb333419136d403614dbb`; frozen input SHA256:
 `9659c09eb4071c55d11e71e3e96f09b24ef74b42e8ace73006facc5be9293a34`.
@@ -13,9 +17,10 @@ Root `CLAUDE.md:39–45` and `acpu/CLAUDE.md:34–40` name these checks.
 [check.nu](check.nu) takes the repository argument and captures actual argv,
 pinned rustup 1.95.0, warnings denied, external target, stream hashes and unchanged
 before/after inputs. All raw output is retained beside its receipt.
-`nu audit/2026-10-16-acpu-delivery/verify.nu <repository>` verifies the seven
-receipt/stream pairs, saved probe inputs and unchanged compiler files; the
-historical red outcomes are required, not reinterpreted as passes.
+The saved `verification.json` records the original seven receipt/stream pairs,
+probe inputs and unchanged baseline compiler files. Its original `verify.nu`
+intentionally compares that historical source. Use `verify-delivery.nu` for
+the final tree and preserved historical evidence; red outcomes stay red.
 
 | Receipt | Result on the stated source |
 |---|---|
@@ -86,7 +91,6 @@ allocations; that architecture statement needs reconciliation, not concealed
 allocation claims. These findings are distinct from Nox's already measured
 valid-input NTT/multilinear package contract.
 
-Next order: reviewed admission fix, separate numerical-domain/scaling repair,
-precise hygiene fixes, rerun all required gates, then the acpu-only version PR.
-The [admission repair](admission/README.md) has begun as a separate source epoch.
-Neither version editing nor owner-only merge/tag/publication has occurred.
+Remaining order: reviewed numerical-domain/scaling repair, its owning gates,
+then the acpu-only version proposal. Neither version editing nor owner-only
+merge/tag/publication has occurred.

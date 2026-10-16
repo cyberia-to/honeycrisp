@@ -1,0 +1,77 @@
+diff --git a/acpu/tests/input_admission.rs b/acpu/tests/input_admission.rs
+index 816cb2f..55cc956 100644
+--- a/acpu/tests/input_admission.rs
++++ b/acpu/tests/input_admission.rs
+@@ -16,12 +16,13 @@ fn rejects(message: &str, f: impl FnOnce()) {
+ }
+ 
+ type Matvec = fn(&[u32], &[u32], &[f32], &[f32], &mut [f32]);
++type CsrCase<'a> = (&'a [u32], &'a [u32], &'a [f32], usize, &'a str);
+ 
+ #[test]
+ fn csr_rejects_every_malformed_shape_before_output_mutation() {
+     // Partition, count, pointer, scalar-tail and late-row failures. Every case
+     // runs through both public entry points, including the zeroing variant.
+-    let cases: &[(&[u32], &[u32], &[f32], usize, &str)] = &[
++    let cases: &[CsrCase<'_>] = &[
+         (&[], &[], &[], 0, "row_ptr must be nonempty"),
+         (&[1, 1], &[0], &[2.0], 1, "row_ptr must start at zero"),
+         (&[0, 2, 1], &[0], &[2.0], 2, "row_ptr must be nondecreasing"),
+diff --git a/acpu/tests/integration.rs b/acpu/tests/integration.rs
+index 369a37f..6643af1 100644
+--- a/acpu/tests/integration.rs
++++ b/acpu/tests/integration.rs
+@@ -97,7 +97,14 @@ fn fp16_bulk_1024() {
+ 
+ #[test]
+ fn bf16_roundtrip() {
+-    for &v in &[0.0f32, 1.0, -1.0, 3.14, -100.0, 256.0] {
++    for &v in &[
++        0.0f32,
++        1.0,
++        -1.0,
++        f32::from_bits(0x4048_f5c3), // original decimal 3.14 test input
++        -100.0,
++        256.0,
++    ] {
+         let back = bf16_mod::bf16_to_f32(bf16_mod::f32_to_bf16(v));
+         if v == 0.0 {
+             assert_eq!(back, 0.0);
+@@ -294,7 +301,7 @@ fn softmax_equal() {
+ fn rmsnorm_unit_weight() {
+     let x = vec![1.0f32, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0];
+     let mut out = vec![0.0f32; 8];
+-    softmax::normalize(&mut out, &x, &vec![1.0; 8], 1e-5);
++    softmax::normalize(&mut out, &x, &[1.0; 8], 1e-5);
+     let rms2: f32 = out.iter().map(|v| v * v).sum::<f32>() / 8.0;
+     assert!((rms2 - 1.0).abs() < 1e-3);
+ }
+@@ -302,7 +309,7 @@ fn rmsnorm_unit_weight() {
+ #[test]
+ fn rmsnorm_scaling() {
+     let mut out = vec![0.0f32; 16];
+-    softmax::normalize(&mut out, &vec![2.0; 16], &vec![3.0; 16], 1e-5);
++    softmax::normalize(&mut out, &[2.0; 16], &[3.0; 16], 1e-5);
+     for &v in &out {
+         assert!((v - 3.0).abs() < 1e-3);
+     }
+@@ -362,7 +369,7 @@ fn sgemm_vs_naive() {
+     const S: usize = 4;
+     let a: Vec<f32> = (0..S * S).map(|i| (i % 5) as f32 * 0.3).collect();
+     let b: Vec<f32> = (0..S * S).map(|i| (i % 7) as f32 * 0.2).collect();
+-    let mut c_ref = vec![0.0f32; S * S];
++    let mut c_ref = [0.0f32; S * S];
+     for i in 0..S {
+         for j in 0..S {
+             let mut acc = 0.0f32;
+@@ -654,8 +661,8 @@ fn amx_fma32_outer_product() {
+             amx_op::<OP_LDZ>((zero_buf as u64) | ((row as u64) << 56));
+         }
+ 
+-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
++        amx_op::<OP_LDX>(x_buf as u64);
++        amx_op::<OP_LDY>(y_buf as u64);
+ 
+         let op = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 0);
+         amx_op::<OP_FMA32>(op);

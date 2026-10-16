@@ -1,0 +1,221 @@
+{
+  "command": [
+    "cargo",
+    "metadata",
+    "--no-deps",
+    "--format-version",
+    "1",
+    "--locked",
+    "--offline"
+  ],
+  "head": "c5177c56e4551c9896a2869c3b23d0c7bac9a6f9",
+  "verified_example_count": 40,
+  "only_renames": [
+    "rane/matmul-to-rane_matmul",
+    "aruminium/matmul-to-aruminium_matmul"
+  ],
+  "manifests": [
+    {
+      "path": "rane/Cargo.toml",
+      "sha256": "aa1d73438bca6b4e4b74143a3e3137f94e8ce539f89658016a00d461d1918bec"
+    },
+    {
+      "path": "aruminium/Cargo.toml",
+      "sha256": "41f1907fde130c7218ef34b56f4bf11212603c01a00386a468e4940c471b8679"
+    }
+  ],
+  "targets": [
+    {
+      "package": "honeycrisp",
+      "targets": []
+    },
+    {
+      "package": "acpu",
+      "targets": [
+        {
+          "name": "amx_opcode_scan",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_opcode_scan.rs"
+        },
+        {
+          "name": "amx_reverse",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_reverse.rs"
+        },
+        {
+          "name": "amx_smoke",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_smoke.rs"
+        },
+        {
+          "name": "bench_ai",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/ai.rs"
+        },
+        {
+          "name": "bench_amx",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/amx.rs"
+        },
+        {
+          "name": "bench_cores",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/cores.rs"
+        },
+        {
+          "name": "bench_crypto",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/crypto.rs"
+        },
+        {
+          "name": "bench_elementwise",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/elementwise.rs"
+        },
+        {
+          "name": "bench_integer",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/integer.rs"
+        },
+        {
+          "name": "bench_memory",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/memory.rs"
+        },
+        {
+          "name": "bench_numeric",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/numeric.rs"
+        },
+        {
+          "name": "bench_render",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/render.rs"
+        },
+        {
+          "name": "bench_sgemm",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/sgemm.rs"
+        },
+        {
+          "name": "bench_summary",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/summary.rs"
+        },
+        {
+          "name": "bench_zk",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/zk.rs"
+        },
+        {
+          "name": "decompose",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/decompose.rs"
+        },
+        {
+          "name": "diag_bench",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/diag_bench.rs"
+        },
+        {
+          "name": "exp_asm_test",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/exp_asm_test.rs"
+        },
+        {
+          "name": "matmul",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/matmul.rs"
+        },
+        {
+          "name": "neon_vs_amx",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/neon_vs_amx.rs"
+        },
+        {
+          "name": "overhead_test",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/overhead_test.rs"
+        },
+        {
+          "name": "pair_load_test",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/pair_load_test.rs"
+        },
+        {
+          "name": "pair_test",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/pair_test.rs"
+        },
+        {
+          "name": "phase_time",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/phase_time.rs"
+        },
+        {
+          "name": "profile64",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/profile64.rs"
+        },
+        {
+          "name": "profile_sgemm",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/profile_sgemm.rs"
+        },
+        {
+          "name": "sgemm_profile",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/sgemm_profile.rs"
+        },
+        {
+          "name": "single_vs_par",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/single_vs_par.rs"
+        },
+        {
+          "name": "test_hang",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/test_hang.rs"
+        },
+        {
+          "name": "thread_scale",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/thread_scale.rs"
+        },
+        {
+          "name": "trace64",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/trace64.rs"
+        },
+        {
+          "name": "trace_accel",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/trace_accel.rs"
+        }
+      ]
+    },
+    {
+      "package": "unimem",
+      "targets": [
+        {
+          "name": "ane_matmul",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/examples/ane_matmul.rs"
+        },
+        {
+          "name": "pipeline",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/examples/pipeline.rs"
+        }
+      ]
+    },
+    {
+      "package": "aruminium",
+      "targets": [
+        {
+          "name": "aruminium_matmul",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/aruminium_matmul.rs"
+        },
+        {
+          "name": "depth_cube",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/depth_cube.rs"
+        },
+        {
+          "name": "textured_quad",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/textured_quad.rs"
+        },
+        {
+          "name": "triangle",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/triangle.rs"
+        },
+        {
+          "name": "vecadd",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/vecadd.rs"
+        }
+      ]
+    },
+    {
+      "package": "rane",
+      "targets": [
+        {
+          "name": "rane_matmul",
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/examples/rane_matmul.rs"
+        }
+      ]
+    },
+    {
+      "package": "rane-benches",
+      "targets": []
+    },
+    {
+      "package": "metal-benches",
+      "targets": []
+    }
+  ]
+}

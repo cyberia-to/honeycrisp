@@ -164,7 +164,7 @@ mod tests {
             0.0f32,
             1.0,
             -1.0,
-            3.14,
+            f32::from_bits(0x4048_f5c3), // original decimal 3.14 test input
             -100.0,
             f32::INFINITY,
             f32::NEG_INFINITY,

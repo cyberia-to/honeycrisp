@@ -1,0 +1,63 @@
+   Compiling num-traits v0.2.19
+    Checking libm v0.2.16
+   Compiling zerocopy-derive v0.8.48
+    Checking core-foundation-sys v0.8.7
+    Checking log v0.4.29
+    Checking core-foundation v0.10.1
+    Checking malloc_buf v0.0.6
+   Compiling foreign-types-macros v0.2.3
+    Checking zerocopy v0.8.48
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.18
+    Checking hashbrown v0.17.1
+    Checking foldhash v0.2.0
+    Checking equivalent v1.0.2
+    Checking bit-vec v0.8.0
+    Checking objc2-encode v4.1.0
+    Checking smallvec v1.15.1
+    Checking unicode-width v0.2.2
+    Checking scopeguard v1.2.0
+    Checking foreign-types-shared v0.3.1
+    Checking foreign-types v0.5.0
+    Checking half v2.7.1
+    Checking lock_api v0.4.14
+    Checking codespan-reporting v0.12.0
+    Checking parking_lot_core v0.9.12
+    Checking objc2 v0.6.4
+    Checking bit-set v0.8.0
+    Checking indexmap v2.14.0
+    Checking hashbrown v0.16.1
+    Checking thiserror v2.0.18
+    Checking bytemuck v1.25.0
+    Checking objc v0.2.7
+    Checking core-graphics-types v0.2.0
+    Checking rustc-hash v1.1.0
+    Checking arrayvec v0.7.6
+    Checking once_cell v1.21.4
+    Checking block v0.1.6
+    Checking hexf-parse v0.2.1
+    Checking unicode-ident v1.0.24
+    Checking wgpu-types v28.0.0
+    Checking naga v28.0.0
+    Checking metal v0.33.0
+    Checking parking_lot v0.12.5
+    Checking profiling v1.0.18
+    Checking raw-window-handle v0.6.2
+    Checking block2 v0.6.2
+    Checking objc2-core-foundation v0.3.2
+    Checking wgpu-hal v28.0.1
+    Checking aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+    Checking objc2-foundation v0.3.2
+    Checking wgpu-core-deps-apple v28.0.0
+    Checking wgpu-core v28.0.1
+    Checking dispatch2 v0.3.1
+    Checking rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+    Checking static_assertions v1.1.0
+    Checking wgpu v28.0.0
+    Checking pollster v0.4.0
+    Checking honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+    Checking rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches)
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Checking objc2-metal v0.3.2
+    Checking metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.59s

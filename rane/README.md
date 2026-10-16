@@ -130,7 +130,7 @@ rane::cast_f16_f32(&mut [f32], &[u16])  // bulk NEON
 
 ```bash
 cargo build --release
-cargo run --example matmul
+cargo run --example rane_matmul
 cargo test --test integration -- --test-threads=1
 cargo run --release -p rane-benches --bin bench
 cargo run --release -p rane-benches --bin compare
@@ -149,7 +149,7 @@ src/                    rane crate — zero deps, system frameworks only
   mil/mod.rs            MIL program builder (matmul, header, footer)
   probe/                rane_probe — 7-level reverse engineering tool
 examples/
-  matmul.rs             64x64 matmul on ANE hardware
+  rane_matmul.rs             64x64 matmul on ANE hardware
 benches/                separate crate with bench + compare binaries
 tests/
   integration.rs        13 tests: surface, fp16, MIL, model lifecycle

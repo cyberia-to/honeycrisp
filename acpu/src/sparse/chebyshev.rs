@@ -18,7 +18,7 @@ use super::admission::Csr;
 /// Modified Bessel function I_k(τ) via Miller's backward recurrence.
 ///
 /// Uses the identity: I_0(τ) + 2 * Σ_{j=1}^∞ I_j(τ) = exp(τ).
-/// In Miller's method we compute un-normalized ratios f[j] ∝ I_j(τ) by
+/// In Miller's method we compute un-normalized ratios `f[j] ∝ I_j(τ)` by
 /// backward recurrence from k_max, then normalize so the above sum holds.
 pub fn bessel_i(k: usize, tau: f32) -> f32 {
     if tau == 0.0 {
@@ -183,7 +183,8 @@ pub fn chebyshev_matvec(
     csr.set(&az, t1);
     // Step 3: t1[i] = −d_inv_sqrt[i] * t1[i]
     for i in 0..n {
-        t1[i] = -d_inv_sqrt[i] * t1[i];
+        let scaled = -d_inv_sqrt[i] * t1[i];
+        t1[i] = scaled;
     }
 
     // Accumulate y = c_0 T_0 + c_1 T_1
@@ -204,8 +205,7 @@ pub fn chebyshev_matvec(
     //
     // (k starts at 2, so k==2 is even: T_0 in t0, T_1 in t1 → write T_2 into t0)
 
-    for k in 2..=order {
-        let ck = coeffs[k];
+    for (k, &ck) in coeffs.iter().enumerate().skip(2) {
         if k % 2 == 0 {
             // T_{k-2} in t0, T_{k-1} in t1. Compute T_k into t0.
             // az = D^{-½} t1
@@ -259,7 +259,7 @@ mod tests {
         assert!((bessel_i(0, 0.0) - 1.0).abs() < 1e-5, "I_0(0)");
         // I_0(1) ≈ 1.2660658777520082
         assert!(
-            (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
+            (bessel_i(0, 1.0) - 1.266_066).abs() < 1e-4,
             "I_0(1) = {}",
             bessel_i(0, 1.0)
         );

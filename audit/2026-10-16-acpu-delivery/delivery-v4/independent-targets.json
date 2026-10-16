@@ -1,0 +1,176 @@
+{
+  "verified": true,
+  "command": [
+    "cargo",
+    "metadata",
+    "--no-deps",
+    "--format-version",
+    1,
+    "--locked",
+    "--offline"
+  ],
+  "recorded": "2026-10-16T23:03:49.058497+00:00",
+  "changes": [
+    {
+      "package": "honeycrisp",
+      "retained": 1,
+      "removed": [],
+      "added": []
+    },
+    {
+      "package": "acpu",
+      "retained": 36,
+      "removed": [],
+      "added": []
+    },
+    {
+      "package": "unimem",
+      "retained": 8,
+      "removed": [],
+      "added": []
+    },
+    {
+      "package": "aruminium",
+      "retained": 8,
+      "removed": [
+        {
+          "name": "aruminium",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/aruminium.rs"
+        },
+        {
+          "name": "bench",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/bench.rs"
+        },
+        {
+          "name": "compare",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare.rs"
+        },
+        {
+          "name": "compare_render",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare_render.rs"
+        },
+        {
+          "name": "metal_rs",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/metal_rs.rs"
+        },
+        {
+          "name": "objc2",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/objc2.rs"
+        },
+        {
+          "name": "shaders",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/shaders.rs"
+        },
+        {
+          "name": "wgpu_bench",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/wgpu_bench.rs"
+        }
+      ],
+      "added": []
+    },
+    {
+      "package": "rane",
+      "retained": 5,
+      "removed": [
+        {
+          "name": "bench",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/bench.rs"
+        },
+        {
+          "name": "compare",
+          "kind": [
+            "bench"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/compare.rs"
+        }
+      ],
+      "added": []
+    },
+    {
+      "package": "rane-benches",
+      "retained": 2,
+      "removed": [],
+      "added": []
+    },
+    {
+      "package": "metal-benches",
+      "retained": 3,
+      "removed": [],
+      "added": []
+    }
+  ],
+  "standalone": [
+    {
+      "name": "rane-benches",
+      "targets": [
+        {
+          "name": "bench",
+          "kind": [
+            "bin"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/bench.rs"
+        },
+        {
+          "name": "compare",
+          "kind": [
+            "bin"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/compare.rs"
+        }
+      ]
+    },
+    {
+      "name": "metal-benches",
+      "targets": [
+        {
+          "name": "bench",
+          "kind": [
+            "bin"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/bench.rs"
+        },
+        {
+          "name": "compare",
+          "kind": [
+            "bin"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare.rs"
+        },
+        {
+          "name": "compare_render",
+          "kind": [
+            "bin"
+          ],
+          "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare_render.rs"
+        }
+      ]
+    }
+  ]
+}

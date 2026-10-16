@@ -100,7 +100,7 @@ src/                  core library (zero deps)
   sync.rs             Fence, Event, SharedEvent
   texture.rs          Texture
   probe.rs            metal_probe binary — 5-level capability probe
-examples/             runnable demos (vecadd, matmul)
+examples/             runnable demos (vecadd, aruminium_matmul)
 benches/              separate crate with heavy deps (bench, compare)
 docs/                 documentation (tutorial, guide, explanations)
 specs/                specification (source of truth)

@@ -1,0 +1,15 @@
+ANE Matmul — Pure Rust
+
+  MIL: matmul(64x64, seq=64)
+  Input:  [1, 64, 1, 128] fp16 (16 KB)
+  Output: [1, 64, 1, 64] fp16 (8 KB)
+
+  Compiling... OK
+  Loading... OK
+  Input: all 1.0 activations, identity weight matrix
+  Evaluating on ANE... OK
+
+  Output[0..8] = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+  VERIFIED: all 4096 output values = 1.0
+  Pure Rust → MIL → ANE bytecode → ANE hardware → correct result

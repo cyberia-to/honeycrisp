@@ -5,7 +5,6 @@
 #[path = "common.rs"]
 mod common;
 use common::*;
-use std::time::Instant;
 
 // ── Pure Rust Goldilocks (nebu cross-platform baseline, no acpu asm) ──
 mod gl_pure {
@@ -2051,7 +2050,7 @@ fn main() {
 
     // PMULL (hardware vs scalar carry-less multiply)
     let pmull_iters = 1_000_000u64;
-    let mut pmull_a = 0xDEADBEEFCAFEBABEu64;
+    let pmull_a = 0xDEADBEEFCAFEBABEu64;
     let pmull_b = 0x1234567890ABCDEFu64;
     let t_a = best_of(
         || {

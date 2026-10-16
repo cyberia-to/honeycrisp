@@ -1,0 +1,40 @@
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+   Compiling rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches)
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+error: variable does not need to be mutable
+  --> acpu/bench/zk.rs:22:9
+   |
+22 |     let mut score = Score::new();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `-D unused-mut` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unused_mut)]`
+
+error: could not compile `acpu` (example "bench_zk") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

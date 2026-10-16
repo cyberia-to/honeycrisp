@@ -1091,7 +1091,6 @@ fn pack_b_32(b: &[f32], ldb: usize, pc: usize, jc: usize, kc: usize, nc: usize, 
 /// Odd/rem A × 32-wide B → two 16×16 kernels per B strip.
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::too_many_arguments)]
-#[allow(clippy::too_many_arguments)]
 pub(super) fn gebp_kernel(
     a_pack: &[f32],
     b_pack: &[f32],

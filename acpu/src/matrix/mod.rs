@@ -36,11 +36,9 @@ pub struct Matrix {
 impl Matrix {
     /// Activate the AMX coprocessor on the current thread.
     ///
-    /// # Errors
-    ///
-    /// Returns [`CpuError::AmxSetFailed`] if the current hardware does
-    /// not support AMX (non-Apple-Silicon or virtualised without AMX
-    /// passthrough).
+    /// The current implementation returns `Ok` after executing AMX_SET.
+    /// The caller must establish AMX availability with the hardware probe first;
+    /// unsupported hardware can trap instead of returning an error.
     ///
     /// # Safety
     ///

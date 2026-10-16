@@ -1,0 +1,478 @@
+[
+  {
+    "name": "honeycrisp",
+    "targets": [
+      {
+        "name": "honeycrisp",
+        "kind": [
+          "lib"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/src/lib.rs"
+      }
+    ]
+  },
+  {
+    "name": "acpu",
+    "targets": [
+      {
+        "name": "acpu",
+        "kind": [
+          "lib"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/lib.rs"
+      },
+      {
+        "name": "acpu_probe",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/probe/main.rs"
+      },
+      {
+        "name": "amx_opcode_scan",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_opcode_scan.rs"
+      },
+      {
+        "name": "amx_reverse",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_reverse.rs"
+      },
+      {
+        "name": "amx_smoke",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/amx_smoke.rs"
+      },
+      {
+        "name": "bench_ai",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/ai.rs"
+      },
+      {
+        "name": "bench_amx",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/amx.rs"
+      },
+      {
+        "name": "bench_cores",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/cores.rs"
+      },
+      {
+        "name": "bench_crypto",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/crypto.rs"
+      },
+      {
+        "name": "bench_elementwise",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/elementwise.rs"
+      },
+      {
+        "name": "bench_integer",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/integer.rs"
+      },
+      {
+        "name": "bench_memory",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/memory.rs"
+      },
+      {
+        "name": "bench_numeric",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/numeric.rs"
+      },
+      {
+        "name": "bench_render",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/render.rs"
+      },
+      {
+        "name": "bench_sgemm",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/sgemm.rs"
+      },
+      {
+        "name": "bench_summary",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/summary.rs"
+      },
+      {
+        "name": "bench_zk",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/bench/zk.rs"
+      },
+      {
+        "name": "decompose",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/decompose.rs"
+      },
+      {
+        "name": "diag_bench",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/diag_bench.rs"
+      },
+      {
+        "name": "exp_asm_test",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/exp_asm_test.rs"
+      },
+      {
+        "name": "matmul",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/matmul.rs"
+      },
+      {
+        "name": "neon_vs_amx",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/neon_vs_amx.rs"
+      },
+      {
+        "name": "overhead_test",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/overhead_test.rs"
+      },
+      {
+        "name": "pair_load_test",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/pair_load_test.rs"
+      },
+      {
+        "name": "pair_test",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/pair_test.rs"
+      },
+      {
+        "name": "phase_time",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/phase_time.rs"
+      },
+      {
+        "name": "profile64",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/profile64.rs"
+      },
+      {
+        "name": "profile_sgemm",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/profile_sgemm.rs"
+      },
+      {
+        "name": "sgemm_profile",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/sgemm_profile.rs"
+      },
+      {
+        "name": "single_vs_par",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/single_vs_par.rs"
+      },
+      {
+        "name": "test_hang",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/test_hang.rs"
+      },
+      {
+        "name": "thread_scale",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/thread_scale.rs"
+      },
+      {
+        "name": "trace64",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/trace64.rs"
+      },
+      {
+        "name": "trace_accel",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/examples/trace_accel.rs"
+      },
+      {
+        "name": "input_admission",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/tests/input_admission.rs"
+      },
+      {
+        "name": "integration",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/tests/integration.rs"
+      }
+    ]
+  },
+  {
+    "name": "unimem",
+    "targets": [
+      {
+        "name": "unimem",
+        "kind": [
+          "lib"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/src/lib.rs"
+      },
+      {
+        "name": "ane_matmul",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/examples/ane_matmul.rs"
+      },
+      {
+        "name": "pipeline",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/examples/pipeline.rs"
+      },
+      {
+        "name": "block_access",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/tests/block_access.rs"
+      },
+      {
+        "name": "block_creation",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/tests/block_creation.rs"
+      },
+      {
+        "name": "roundtrip",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/tests/roundtrip.rs"
+      },
+      {
+        "name": "alloc",
+        "kind": [
+          "bench"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/benches/alloc.rs"
+      },
+      {
+        "name": "bandwidth",
+        "kind": [
+          "bench"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem/benches/bandwidth.rs"
+      }
+    ]
+  },
+  {
+    "name": "aruminium",
+    "targets": [
+      {
+        "name": "aruminium",
+        "kind": [
+          "lib"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/src/lib.rs"
+      },
+      {
+        "name": "metal_probe",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/src/probe.rs"
+      },
+      {
+        "name": "aruminium_matmul",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/aruminium_matmul.rs"
+      },
+      {
+        "name": "depth_cube",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/depth_cube.rs"
+      },
+      {
+        "name": "textured_quad",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/textured_quad.rs"
+      },
+      {
+        "name": "triangle",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/triangle.rs"
+      },
+      {
+        "name": "vecadd",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/examples/vecadd.rs"
+      },
+      {
+        "name": "integration",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/tests/integration.rs"
+      }
+    ]
+  },
+  {
+    "name": "rane",
+    "targets": [
+      {
+        "name": "rane",
+        "kind": [
+          "lib"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/src/lib.rs"
+      },
+      {
+        "name": "rane_probe",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/src/probe/main.rs"
+      },
+      {
+        "name": "rane_matmul",
+        "kind": [
+          "example"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/examples/rane_matmul.rs"
+      },
+      {
+        "name": "hardware",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/tests/hardware.rs"
+      },
+      {
+        "name": "integration",
+        "kind": [
+          "test"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/tests/integration.rs"
+      }
+    ]
+  },
+  {
+    "name": "rane-benches",
+    "targets": [
+      {
+        "name": "bench",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/bench.rs"
+      },
+      {
+        "name": "compare",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches/compare.rs"
+      }
+    ]
+  },
+  {
+    "name": "metal-benches",
+    "targets": [
+      {
+        "name": "bench",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/bench.rs"
+      },
+      {
+        "name": "compare",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare.rs"
+      },
+      {
+        "name": "compare_render",
+        "kind": [
+          "bin"
+        ],
+        "src_path": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches/compare_render.rs"
+      }
+    ]
+  }
+]

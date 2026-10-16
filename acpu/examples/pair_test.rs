@@ -7,7 +7,6 @@ fn main() {
         amx_set();
 
         const PAIR: u64 = 1u64 << 62;
-        let fma_first: u64 = 1 << 27; // skip_z, X[0], Y[0], tile 0
         let fma_x1: u64 = (1 << 27) | (64 << 10); // X[1], Y[0], tile 0
 
         #[repr(align(128))]

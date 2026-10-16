@@ -1,0 +1,76 @@
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: very complex type used. Consider factoring parts into `type` definitions
+  --> acpu/tests/input_admission.rs:24:16
+   |
+24 |     let cases: &[(&[u32], &[u32], &[f32], usize, &str)] = &[
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#type_complexity
+   = note: `-D clippy::type-complexity` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: could not compile `acpu` (test "input_admission") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> acpu/tests/integration.rs:100:36
+    |
+100 |     for &v in &[0.0f32, 1.0, -1.0, 3.14, -100.0, 256.0] {
+    |                                    ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+    = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: this operation has no effect
+   --> acpu/tests/integration.rs:657:26
+    |
+657 |         amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((x_buf as u64))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+    = note: `-D clippy::identity-op` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::identity_op)]`
+
+error: this operation has no effect
+   --> acpu/tests/integration.rs:658:26
+    |
+658 |         amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((y_buf as u64))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: useless use of `vec!`
+   --> acpu/tests/integration.rs:297:38
+    |
+297 |     softmax::normalize(&mut out, &x, &vec![1.0; 8], 1e-5);
+    |                                      ^^^^^^^^^^^^^ help: you can use a slice directly: `&[1.0; 8]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+    = note: `-D clippy::useless-vec` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::useless_vec)]`
+
+error: useless use of `vec!`
+   --> acpu/tests/integration.rs:305:34
+    |
+305 |     softmax::normalize(&mut out, &vec![2.0; 16], &vec![3.0; 16], 1e-5);
+    |                                  ^^^^^^^^^^^^^^ help: you can use a slice directly: `&[2.0; 16]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: useless use of `vec!`
+   --> acpu/tests/integration.rs:305:50
+    |
+305 |     softmax::normalize(&mut out, &vec![2.0; 16], &vec![3.0; 16], 1e-5);
+    |                                                  ^^^^^^^^^^^^^^ help: you can use a slice directly: `&[3.0; 16]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: useless use of `vec!`
+   --> acpu/tests/integration.rs:365:21
+    |
+365 |     let mut c_ref = vec![0.0f32; S * S];
+    |                     ^^^^^^^^^^^^^^^^^^^ help: you can use an array directly: `[0.0f32; S * S]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: could not compile `acpu` (test "integration") due to 7 previous errors

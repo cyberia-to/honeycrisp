@@ -16,12 +16,13 @@ fn rejects(message: &str, f: impl FnOnce()) {
 }
 
 type Matvec = fn(&[u32], &[u32], &[f32], &[f32], &mut [f32]);
+type CsrCase<'a> = (&'a [u32], &'a [u32], &'a [f32], usize, &'a str);
 
 #[test]
 fn csr_rejects_every_malformed_shape_before_output_mutation() {
     // Partition, count, pointer, scalar-tail and late-row failures. Every case
     // runs through both public entry points, including the zeroing variant.
-    let cases: &[(&[u32], &[u32], &[f32], usize, &str)] = &[
+    let cases: &[CsrCase<'_>] = &[
         (&[], &[], &[], 0, "row_ptr must be nonempty"),
         (&[1, 1], &[0], &[2.0], 1, "row_ptr must start at zero"),
         (&[0, 2, 1], &[0], &[2.0], 2, "row_ptr must be nondecreasing"),

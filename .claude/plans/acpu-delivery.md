@@ -96,6 +96,15 @@ domain and stable scaled evaluation with independent reference cases; do not
 invent a silent clamp or arbitrary tau cap. This numerical issue remains open
 after memory admission and is not repaired by the four existing Bessel examples.
 
+Admission is committed in `c5177c5` with its historical red Clippy gate retained.
+The separately reviewed hygiene unit now passes the required workspace gates,
+strict acpu docs/tests, all-target compilation and actual CPU/GPU/ANE matmul
+controls; exact receipts are in `audit/2026-10-16-acpu-delivery/delivery-v4/`.
+Its authorized scope extensions correct benchmark vDSP stride ABI, unique
+example names and parent-package automatic bench discovery, with independent
+SDK/metadata proofs. Versions, dependencies and numerical algorithms remain
+unchanged. Numerical scaling is the next distinct source unit.
+
 Only after reviewed source fixes and all owning gates: prepare the package-only
 acpu 0.2.1 version/lock/changelog proposal with owner approval for the explicit
 package-version exception. Full gate/source evidence follows that exact versioned

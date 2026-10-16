@@ -2,8 +2,12 @@
 
 Admission source remains frozen for independent review. The initial workspace
 reds and additional library/test Clippy red are retained before these edits.
-No versions, dependencies, numeric tolerances, FFI, AMX encodings or numerical
-algorithm changes belong to this unit.
+The initial scope covers formatting/lints without changing versions,
+dependencies, numeric tolerances, FFI, AMX encodings or numerical algorithms.
+Later explicit root authorizations extend delivery tooling to benchmark vDSP
+stride signatures, unique example targets and correct benchmark-package
+discovery; exact scope/proofs are retained in `delivery-v3/README.md`, with final
+source-bound gates in `delivery-v4/README.md`.
 
 Required-gate findings at admission closure `47bffad9…`:
 

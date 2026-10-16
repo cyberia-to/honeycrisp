@@ -7,7 +7,7 @@
 #[cfg(target_arch = "aarch64")]
 use core::arch::aarch64::*;
 
-/// Matrix-vector multiply: c[n] += a[k] * b[k][n], row-major B.
+/// Matrix-vector multiply: `c[n] += a[k] * b[k][n]`, row-major B.
 #[cfg(target_arch = "aarch64")]
 pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     debug_assert_eq!(a.len(), k);

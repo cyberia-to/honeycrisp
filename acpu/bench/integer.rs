@@ -4,7 +4,6 @@
 #[path = "common.rs"]
 mod common;
 use common::*;
-use std::time::Instant;
 
 const N: usize = 4096;
 
@@ -59,12 +58,12 @@ fn main() {
     let mut score = Score::vs("scalar");
 
     // ── test data ───────────────────────────────────────────────────────
-    let i32_a: Vec<i32> = (0..N).map(|i| (i as i32 * 7 - 2000)).collect();
-    let i32_b: Vec<i32> = (0..N).map(|i| (i as i32 * 3 + 500)).collect();
+    let i32_a: Vec<i32> = (0..N).map(|i| i as i32 * 7 - 2000).collect();
+    let i32_b: Vec<i32> = (0..N).map(|i| i as i32 * 3 + 500).collect();
     let i8_a: Vec<i8> = (0..N).map(|i| ((i * 7) % 255) as i8).collect();
     let i8_b: Vec<i8> = (0..N).map(|i| ((i * 13) % 255) as i8).collect();
-    let i16_a: Vec<i16> = (0..N).map(|i| (i as i16 * 5 - 2000)).collect();
-    let i16_b: Vec<i16> = (0..N).map(|i| (i as i16 * 3 + 1000)).collect();
+    let i16_a: Vec<i16> = (0..N).map(|i| i as i16 * 5 - 2000).collect();
+    let i16_b: Vec<i16> = (0..N).map(|i| i as i16 * 3 + 1000).collect();
     let mut dst_i32 = vec![0i32; N];
     let mut acc_i32 = vec![0i32; N];
 

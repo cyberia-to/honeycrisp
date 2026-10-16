@@ -1,0 +1,67 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: `vDSP_vmul` redeclared with a different signature
+   --> acpu/bench/numeric.rs:11:5
+    |
+ 11 |       fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:196:5
+    |
+196 | /     pub fn vDSP_vmul(
+197 | |         a: *const f32,
+198 | |         stride_a: i32,
+199 | |         b: *const f32,
+...   |
+203 | |         n: u64,
+204 | |     );
+    | |______- `vDSP_vmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+    = note: `-D clashing-extern-declarations` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clashing_extern_declarations)]`
+
+error: `vDSP_vadd` redeclared with a different signature
+   --> acpu/bench/numeric.rs:13:5
+    |
+ 13 |       fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:187:5
+    |
+187 | /     pub fn vDSP_vadd(
+188 | |         a: *const f32,
+189 | |         stride_a: i32,
+190 | |         b: *const f32,
+...   |
+194 | |         n: u64,
+195 | |     );
+    | |______- `vDSP_vadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+error: could not compile `acpu` (example "bench_numeric") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

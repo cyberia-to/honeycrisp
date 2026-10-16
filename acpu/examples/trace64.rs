@@ -286,7 +286,6 @@ fn main() {
             }
 
             // Direct B loads with stride=N*4, no packing
-            let b_stride = N * 4; // bytes
             for p in 0..N {
                 // LDY: packed A column
                 amx_op::<OP_LDY>(ap.add(p * 64) as u64);

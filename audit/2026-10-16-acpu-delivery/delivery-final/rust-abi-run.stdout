@@ -1,0 +1,1 @@
+shared Rust declarations: forward-add={11,22,33}, reverse-add={13,22,31}, reverse-mul={30,40,30}, reverse-sum=6

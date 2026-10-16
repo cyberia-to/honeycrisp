@@ -1,5 +1,6 @@
 [package]
 name = "rane"
+autobenches = false # benches/ is the separate rane-benches workspace package.
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -24,5 +25,5 @@ name = "rane_probe"
 path = "src/probe/main.rs"
 
 [[example]]
-name = "matmul"
-path = "examples/matmul.rs"
+name = "rane_matmul"
+path = "examples/rane_matmul.rs"

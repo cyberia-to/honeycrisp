@@ -1,0 +1,4 @@
+acpu::matmul_f32 64x64 x 64x64
+  elapsed:   148.709µs
+  max error: 0.00e0
+  result:    PASS

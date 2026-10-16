@@ -153,7 +153,7 @@ pub fn gl_inv(x: u64) -> u64 {
 
 // ── batched operations (interleaved for latency hiding) ──────────────────
 
-/// Batch field multiply: dst[i] = a[i] * b[i] mod p.
+/// Batch field multiply: `dst[i] = a[i] * b[i] mod p`.
 ///
 /// Hand-scheduled asm interleaves 4 independent mul+umulh chains
 /// to hide the 4-cycle multiply latency on M1 P-cores.
@@ -296,12 +296,12 @@ mod tests {
     #[test]
     fn test_pow7_x16() {
         let mut state = [0u64; 16];
-        for i in 0..16 {
-            state[i] = (i as u64 + 1) * 3;
+        for (i, value) in state.iter_mut().enumerate() {
+            *value = (i as u64 + 1) * 3;
         }
         let mut expected = state;
-        for i in 0..16 {
-            expected[i] = gl_pow7(expected[i]);
+        for value in &mut expected {
+            *value = gl_pow7(*value);
         }
         gl_pow7_x16(&mut state);
         assert_eq!(state, expected);
