@@ -1,0 +1,34 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "-O",
+    "-D",
+    "warnings",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/numeric-prototype/stress.rs",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-stress-stress"
+  ],
+  "run_command": [
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-stress-stress"
+  ],
+  "context_revision": "d5a78ed4865196241f6fd1e486fbb895fa59579a",
+  "tool": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "sources": [
+    {
+      "path": "stress.rs",
+      "sha256": "def0a50644b3aff43047ee3dd9d4160b2c1c3c7f493da0831167fd396b6d9143"
+    },
+    {
+      "path": "recurrence.rs",
+      "sha256": "3673c49f69c15256c7c15ca07e3791ebfcc81c83467ce70ebcb0ef73fd6ae1a3"
+    }
+  ],
+  "compile_exit": 0,
+  "build_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "run_exit": 0,
+  "stdout_sha256": "01aa72528c3e095b34922714ca4abbf470dcdc581bffe29ac6c50b35d08b9bbe",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_before_after": "equal"
+}

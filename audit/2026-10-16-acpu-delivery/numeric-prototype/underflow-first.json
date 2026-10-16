@@ -1,0 +1,11 @@
+{
+  "command": [
+    "nu",
+    "audit/2026-10-16-acpu-delivery/numeric-prototype/underflow.nu",
+    "."
+  ],
+  "exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "a784778888cc1b9bbaa9620800527e78c7cc458d468bd49bba8119cdd20876d1",
+  "probe_source_sha256": "e201cf12f73415538b3186393f86277d02764c490b0d5df9b1468fb74ee2cb27"
+}

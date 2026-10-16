@@ -1,0 +1,38 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "-O",
+    "-D",
+    "warnings",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/numeric-prototype/random.rs",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-random-random"
+  ],
+  "run_command": [
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-random-random"
+  ],
+  "context_revision": "d5a78ed4865196241f6fd1e486fbb895fa59579a",
+  "tool": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "sources": [
+    {
+      "path": "random.rs",
+      "sha256": "edd9997b56104ba601141296052f9882a533302a186b6884f5b3f807825b507e"
+    },
+    {
+      "path": "recurrence.rs",
+      "sha256": "3673c49f69c15256c7c15ca07e3791ebfcc81c83467ce70ebcb0ef73fd6ae1a3"
+    },
+    {
+      "path": "reference.rs",
+      "sha256": "6fc22944c2ff0701d89c148314ec6f8e26bf88ef415b89d6d7670c53768d2c52"
+    }
+  ],
+  "compile_exit": 0,
+  "build_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "run_exit": 0,
+  "stdout_sha256": "14e13ad7d8f6df871cfa0af90e5d8bd08b1ffff774300abc7cf02d9e022f01be",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_before_after": "equal"
+}

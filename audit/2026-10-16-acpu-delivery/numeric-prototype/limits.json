@@ -1,0 +1,34 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "-O",
+    "-D",
+    "warnings",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/numeric-prototype/limits.rs",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-limits-limits"
+  ],
+  "run_command": [
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-prototype/scaled-limits-limits"
+  ],
+  "context_revision": "d5a78ed4865196241f6fd1e486fbb895fa59579a",
+  "tool": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "sources": [
+    {
+      "path": "limits.rs",
+      "sha256": "626a41ea34d3ac45f89155bcc4ca59425d9a38e0e911ea8e904d4cd62e4f0396"
+    },
+    {
+      "path": "recurrence.rs",
+      "sha256": "3673c49f69c15256c7c15ca07e3791ebfcc81c83467ce70ebcb0ef73fd6ae1a3"
+    }
+  ],
+  "compile_exit": 0,
+  "build_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "run_exit": 0,
+  "stdout_sha256": "609bcf574ef4b4cc08517c20a41c4c7164793050e064d6526c7b419af1476bd7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_before_after": "equal"
+}
