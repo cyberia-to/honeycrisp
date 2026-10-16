@@ -8,7 +8,12 @@ def main [repo: string, receipts_json: string, destination: string] {
     }
     for input in $frozen.inputs {
         if (^git -C $input.root rev-parse HEAD | str trim) != $input.head {
-            error make {msg: $'revision changed: ($input.name)'}
+            # Integration may append commits; exact file/inventory checks below
+            # remain mandatory and the recorded revision must be an ancestor.
+            let ancestor = (do { ^git -C $input.root merge-base --is-ancestor $input.head HEAD } | complete)
+            if $ancestor.exit_code != 0 {
+                error make {msg: $'recorded revision is not an ancestor: ($input.name)'}
+            }
         }
         let paths = (^git -C $input.root ls-files --cached --others --exclude-standard | lines | where {|p|
             not ($p | str starts-with audit/) and not ($p | str starts-with .claude/)

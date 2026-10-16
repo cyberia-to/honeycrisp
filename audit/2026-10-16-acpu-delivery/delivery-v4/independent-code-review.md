@@ -57,3 +57,13 @@ checks; these are device-execution witnesses, not performance claims. An extra
 all-target compile is still running and is not included in these ten results.
 Complete current delivery patch SHA256:
 `917c95794981224827cb6237a9b23da01bdc0eccd75e51d813165c9777a1f05d`.
+
+## Post-commit all-target supplement
+
+The additional `cargo check --workspace --all-targets --keep-going --locked --offline` gate
+also passes on the same closure. `independent-all-targets-verification.json`
+checks its original raw streams, before/after identity and all current input
+hashes after source commit `e8899b951f6f20839073512abd78251ff345f628`.
+The checker now accepts an appended descendant commit only while enforcing
+the identical complete source inventory; historical receipts are unchanged.
+All eleven final gates are green. Source verdict remains APPROVE.
