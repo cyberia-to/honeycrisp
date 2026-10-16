@@ -69,6 +69,14 @@ layout.clear_talk()          // scratch + history
 
 ## build
 
+The default `std` feature preserves the queue's thread-yielding backoff. Set
+`default-features = false` for an Apple Silicon `no_std` consumer; Grid still
+requires an allocator, and queue contention uses its core spinning backoff.
+Cargo unifies features, so another consumer requesting `unimem/std` enables it
+for the shared dependency. Native framework and raw-memory safety requirements
+apply in both modes. Run `nu scripts/check-no-std.nu` from this crate to check an
+isolated consumer with its own panic handler; the check executes no driver code.
+
 ```bash
 cargo build --release
 cargo test

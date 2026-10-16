@@ -90,8 +90,8 @@ pub struct Stat {
     pub history_total: usize,
 }
 
-impl std::fmt::Display for Stat {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Display for Stat {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(
             f,
             "weights: {}/{} MB | scratch: {}/{} MB | history: {}/{} MB",

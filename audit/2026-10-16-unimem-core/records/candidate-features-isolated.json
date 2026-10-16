@@ -1,0 +1,44 @@
+{
+  "epoch": "candidate",
+  "parent": "9cbd48070a136e24711896c930670fcff8a147fc",
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp",
+  "started": "2026-10-16T18:20:55.579126+00:00",
+  "finished": "2026-10-16T18:20:55.637592+00:00",
+  "argv": [
+    "cargo",
+    "tree",
+    "--manifest-path",
+    "/tmp/unimem-core-resume-20261016/isolated-native/Cargo.toml",
+    "--locked",
+    "--offline",
+    "--edges=normal,build,features"
+  ],
+  "exit_code": 0,
+  "source_manifest": {
+    "bytes": 88909,
+    "sha256": "cf780b0c9abb169bbe2c68a8367db537d6a912962fd7a66721c4b93124beb23f"
+  },
+  "source_before_after": "equal",
+  "environment": {
+    "CARGO_HOME": "/tmp/unimem-core-research/cargo-home",
+    "CARGO_TARGET_DIR": "/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate",
+    "RUSTUP_TOOLCHAIN": "1.95.0",
+    "RUSTFLAGS": "-Dwarnings",
+    "RUSTDOCFLAGS": "-Dwarnings",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_NET_OFFLINE": "true"
+  },
+  "runner": {
+    "bytes": 3045,
+    "sha256": "fa075dffda7576b72c2111fab255927b11b23328ea4fd9ae61795af9e6f81395"
+  },
+  "stdout": {
+    "bytes": 403,
+    "sha256": "c7ce1cd760b5c27a3a4f1e7cd0240709bcf2abd27f8e86b84ae15ed0309aefff"
+  },
+  "stderr": {
+    "bytes": 52,
+    "sha256": "4c9eb667b06d15fae0587960059a48122a7acc60b10acd07c1b3eee2e2167a76"
+  }
+}

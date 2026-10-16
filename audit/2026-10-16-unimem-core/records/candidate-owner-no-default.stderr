@@ -1,0 +1,6 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.15s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/deps/unimem-138e36222b842a6c)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/deps/block_access-820012e3ac102108)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/deps/block_creation-3e91cbac51cde4af)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/deps/roundtrip-53043dc42d103899)
+   Doc-tests unimem

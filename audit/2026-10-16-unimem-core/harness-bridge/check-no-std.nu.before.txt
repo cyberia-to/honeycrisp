@@ -1,0 +1,40 @@
+# Compile a separate no_std binary; owning dev-dependencies can enable std again.
+# The inert allocator and native driver are never executed.
+def main [] {
+    let unimem = ($env.FILE_PWD | path join '..' | path expand)
+    let root = ($unimem | path dirname)
+    let fixtures = ($unimem | path join fixtures no-std)
+    let locked = (open --raw ($root | path join Cargo.lock) | from toml | get package)
+    let witness = (open --raw ($fixtures | path join Cargo.lock.txt) | from toml | get package)
+    for name in ['crossbeam-queue' 'crossbeam-utils' 'mutants'] {
+        let actual = ($locked | where name == $name | select name version source checksum)
+        let expected = ($witness | where name == $name | select name version source checksum)
+        if ($actual | length) != 1 or $actual != $expected {
+            error make {msg: $'no_std fixture dependency drift: ($name)'}
+        }
+    }
+    let version = (open ($root | path join Cargo.toml) | get workspace.package.version)
+    if ($witness | where name == unimem | get version) != [$version] {
+        error make {msg: 'no_std fixture unimem version drift'}
+    }
+    let deps = (open ($unimem | path join Cargo.toml) | get dependencies | columns | sort)
+    if $deps != ['crossbeam-queue' 'mutants'] {
+        error make {msg: 'no_std fixture normal dependency set drift'}
+    }
+    let temp = (^mktemp -d -t unimem-no-std | str trim)
+    let result = (try {
+        mkdir ($temp | path join src)
+        open --raw ($fixtures | path join Cargo.toml.txt)
+            | str replace '@UNIMEM_PATH@' ($unimem | to json --raw)
+            | save ($temp | path join Cargo.toml)
+        cp ($fixtures | path join Cargo.lock.txt) ($temp | path join Cargo.lock)
+        cp ($fixtures | path join consumer.rs) ($temp | path join src main.rs)
+        with-env {CARGO_TARGET_DIR: ($temp | path join target)} {
+            ^cargo check --locked --offline --manifest-path ($temp | path join Cargo.toml) | complete
+        }
+    } catch {|e| {stdout: '', stderr: $e.msg, exit_code: 1} })
+    rm -r $temp
+    print --no-newline $result.stdout
+    print --no-newline --stderr $result.stderr
+    exit $result.exit_code
+}

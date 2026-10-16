@@ -1,0 +1,37 @@
+use std/assert
+
+def main [repo: string] {
+    let repo = ($repo | path expand)
+    let nu_bin = (which nu | first | get path)
+    let created = (do { ^mktemp -d -t unimem-gate-control } | complete)
+    assert equal $created.exit_code 0
+    let root = ($created.stdout | str trim)
+    assert ($root != '' and ($root | path type) == dir)
+    let bin = ($root | path join bin)
+    let existing = ($root | path join existing)
+    mkdir $bin $existing
+    'keep-existing-content' | save ($existing | path join sentinel)
+    let fake = ($bin | path join mktemp)
+    [$'#!($nu_bin)' 'if $env.UNIMEM_TEMP_FAILURE_MODE == nonzero {'
+        '  print --no-newline $env.UNIMEM_GUARD_EXISTING' '  exit 7' '}' 'exit 0']
+        | str join (char nl) | save $fake
+    ^chmod +x $fake
+    assert equal $env.LAST_EXIT_CODE 0
+    let results = ([nonzero empty] | each {|mode|
+        let cwd = ($root | path join $mode)
+        mkdir $cwd
+        cd $cwd
+        let result = (with-env {
+            PATH: ([$bin] | append $env.PATH),
+            UNIMEM_TEMP_FAILURE_MODE: $mode, UNIMEM_GUARD_EXISTING: $existing
+        } { do { ^$nu_bin ($repo | path join unimem scripts check-no-std.nu) } | complete })
+        assert ($result.exit_code != 0)
+        assert ($result.stderr | str contains 'no_std temporary directory creation failed')
+        assert equal (open --raw ($existing | path join sentinel) | str trim) keep-existing-content
+        assert equal (ls --all $existing | length) 1
+        assert equal (ls --all $cwd | length) 0
+        {mode: $mode, result: $result, existing_directory_preserved: true, cwd_unchanged: true}
+    })
+    rm -r $root
+    {status: pass, controls: $results} | to json
+}

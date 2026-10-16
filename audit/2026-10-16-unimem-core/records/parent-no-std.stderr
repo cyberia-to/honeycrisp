@@ -1,0 +1,17 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem)
+    Checking unimem-core-consumer v0.0.0 (/var/folders/gc/64p7ymwx60144drqltvslckr0000gn/T/unimem-no-std.fJqivCNiYe)
+error[E0152]: found duplicate lang item `panic_impl`
+  --> src/main.rs:13:1
+   |
+13 | fn panic(_: &PanicInfo<'_>) -> ! { loop {} }
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: the lang item is first defined in crate `std` (which `unimem` depends on)
+   = note: first definition in `std` loaded from /opt/homebrew/Cellar/rust/1.95.0/lib/rustlib/aarch64-apple-darwin/lib/libstd-e9a90eca8f96ddd9.rmeta
+   = note: second definition in the local crate (`unimem_core_consumer`)
+
+For more information about this error, try `rustc --explain E0152`.
+error: could not compile `unimem-core-consumer` (bin "unimem-core-consumer") due to 1 previous error

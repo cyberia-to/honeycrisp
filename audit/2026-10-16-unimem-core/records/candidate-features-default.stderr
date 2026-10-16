@@ -1,0 +1,5 @@
+error: unexpected argument 'build' found
+
+Usage: cargo tree [OPTIONS]
+
+For more information, try '--help'.

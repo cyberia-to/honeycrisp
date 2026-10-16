@@ -1,6 +1,7 @@
 use super::*;
 use std::cell::RefCell;
 use std::collections::HashMap;
+use std::{thread_local, vec, vec::Vec};
 
 pub(super) const LOCK_ERROR: i32 = 0x1234;
 

@@ -11,6 +11,10 @@ categories = ["os::macos-apis", "hardware-support", "memory-management"]
 readme = "README.md"
 exclude = ["CLAUDE.md", "experiments/"]
 
+[features]
+default = ["std"]
+std = ["crossbeam-queue/std"]
+
 [dependencies]
 crossbeam-queue.workspace = true
 mutants.workspace = true

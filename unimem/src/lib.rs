@@ -3,6 +3,11 @@
 //! IOSurface-backed pinned buffers visible to every compute unit —
 //! CPU, GPU, AMX, ANE — through one allocation.
 
+#![no_std]
+
+#[cfg(test)]
+extern crate std;
+
 pub mod block;
 pub mod ffi;
 pub mod grid;
@@ -26,8 +31,8 @@ pub enum MemError {
     BlockAddressInvalid,
 }
 
-impl std::fmt::Display for MemError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Display for MemError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             MemError::ZeroSize => write!(f, "zero-size allocation"),
             MemError::SizeOverflow => write!(f, "allocation size exceeds integer or slice bounds"),
@@ -46,4 +51,4 @@ impl std::fmt::Display for MemError {
     }
 }
 
-impl std::error::Error for MemError {}
+impl core::error::Error for MemError {}

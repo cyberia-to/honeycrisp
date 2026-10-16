@@ -1,7 +1,7 @@
 use super::{checked_size, Block, BlockPlan};
 use crate::{ffi::*, MemError};
-use std::ffi::c_void;
-use std::ptr::{self, NonNull};
+use core::ffi::c_void;
+use core::ptr::{self, NonNull};
 
 #[cfg(test)]
 use super::tests::{self, Call, Event};
@@ -110,7 +110,7 @@ impl Surface {
     fn into_raw(self) -> IOSurfaceRef {
         let raw = self.raw();
         // Block takes both this owned reference and the successful lock.
-        std::mem::forget(self);
+        core::mem::forget(self);
         raw
     }
 }
@@ -166,7 +166,7 @@ pub(super) fn open(plan: &BlockPlan) -> Result<Block, MemError> {
     let base = tests::base(base);
     let va = NonNull::new(base).ok_or(MemError::BlockAddressInvalid)?;
     let address = base as usize;
-    let alignment = std::mem::align_of::<f32>().max(std::mem::align_of::<u16>());
+    let alignment = core::mem::align_of::<f32>().max(core::mem::align_of::<u16>());
     if !address.is_multiple_of(alignment) || address.checked_add(actual).is_none() {
         return Err(MemError::BlockAddressInvalid);
     }

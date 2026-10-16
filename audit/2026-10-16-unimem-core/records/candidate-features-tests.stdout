@@ -1,0 +1,257 @@
+unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem)
+├── mutants feature "default"
+│   └── mutants v0.0.3 (proc-macro)
+└── crossbeam-queue feature "alloc"
+    └── crossbeam-queue v0.3.12
+        └── crossbeam-utils v0.8.21
+[dev-dependencies]
+├── acpu feature "default"
+│   └── acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)
+│       └── unimem feature "default"
+│           ├── unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem) (*)
+│           └── unimem feature "std"
+│               ├── unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem) (*)
+│               └── crossbeam-queue feature "std"
+│                   ├── crossbeam-queue v0.3.12 (*)
+│                   ├── crossbeam-utils feature "std"
+│                   │   └── crossbeam-utils v0.8.21
+│                   └── crossbeam-queue feature "alloc" (*)
+├── aruminium feature "default"
+│   └── aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)
+│       ├── unimem feature "default" (*)
+│       ├── acpu feature "default" (*)
+│       └── mutants feature "default" (*)
+├── criterion feature "default"
+│   ├── criterion v0.5.1
+│   │   ├── anes feature "default"
+│   │   │   └── anes v0.1.6
+│   │   ├── cast feature "default"
+│   │   │   └── cast v0.3.0
+│   │   ├── ciborium feature "default"
+│   │   │   ├── ciborium v0.2.2
+│   │   │   │   ├── ciborium-io feature "alloc"
+│   │   │   │   │   └── ciborium-io v0.2.2
+│   │   │   │   ├── ciborium-io feature "default"
+│   │   │   │   │   └── ciborium-io v0.2.2
+│   │   │   │   ├── ciborium-ll feature "default"
+│   │   │   │   │   └── ciborium-ll v0.2.2
+│   │   │   │   │       ├── half v2.7.1
+│   │   │   │   │       │   ├── cfg-if feature "default"
+│   │   │   │   │       │   │   └── cfg-if v1.0.4
+│   │   │   │   │       │   ├── zerocopy feature "derive"
+│   │   │   │   │       │   │   ├── zerocopy v0.8.48
+│   │   │   │   │       │   │   │   └── zerocopy-derive feature "default"
+│   │   │   │   │       │   │   │       └── zerocopy-derive v0.8.48 (proc-macro)
+│   │   │   │   │       │   │   │           ├── proc-macro2 feature "default"
+│   │   │   │   │       │   │   │           │   ├── proc-macro2 v1.0.106
+│   │   │   │   │       │   │   │           │   │   └── unicode-ident feature "default"
+│   │   │   │   │       │   │   │           │   │       └── unicode-ident v1.0.24
+│   │   │   │   │       │   │   │           │   └── proc-macro2 feature "proc-macro"
+│   │   │   │   │       │   │   │           │       └── proc-macro2 v1.0.106 (*)
+│   │   │   │   │       │   │   │           ├── quote feature "default"
+│   │   │   │   │       │   │   │           │   ├── quote v1.0.45
+│   │   │   │   │       │   │   │           │   │   └── proc-macro2 v1.0.106 (*)
+│   │   │   │   │       │   │   │           │   └── quote feature "proc-macro"
+│   │   │   │   │       │   │   │           │       ├── quote v1.0.45 (*)
+│   │   │   │   │       │   │   │           │       └── proc-macro2 feature "proc-macro" (*)
+│   │   │   │   │       │   │   │           ├── syn feature "default"
+│   │   │   │   │       │   │   │           │   ├── syn v2.0.117
+│   │   │   │   │       │   │   │           │   │   ├── proc-macro2 v1.0.106 (*)
+│   │   │   │   │       │   │   │           │   │   ├── quote v1.0.45 (*)
+│   │   │   │   │       │   │   │           │   │   └── unicode-ident feature "default" (*)
+│   │   │   │   │       │   │   │           │   ├── syn feature "clone-impls"
+│   │   │   │   │       │   │   │           │   │   └── syn v2.0.117 (*)
+│   │   │   │   │       │   │   │           │   ├── syn feature "derive"
+│   │   │   │   │       │   │   │           │   │   └── syn v2.0.117 (*)
+│   │   │   │   │       │   │   │           │   ├── syn feature "parsing"
+│   │   │   │   │       │   │   │           │   │   └── syn v2.0.117 (*)
+│   │   │   │   │       │   │   │           │   ├── syn feature "printing"
+│   │   │   │   │       │   │   │           │   │   └── syn v2.0.117 (*)
+│   │   │   │   │       │   │   │           │   └── syn feature "proc-macro"
+│   │   │   │   │       │   │   │           │       ├── syn v2.0.117 (*)
+│   │   │   │   │       │   │   │           │       ├── proc-macro2 feature "proc-macro" (*)
+│   │   │   │   │       │   │   │           │       └── quote feature "proc-macro" (*)
+│   │   │   │   │       │   │   │           └── syn feature "full"
+│   │   │   │   │       │   │   │               └── syn v2.0.117 (*)
+│   │   │   │   │       │   │   └── zerocopy feature "zerocopy-derive"
+│   │   │   │   │       │   │       └── zerocopy v0.8.48 (*)
+│   │   │   │   │       │   └── zerocopy feature "simd"
+│   │   │   │   │       │       └── zerocopy v0.8.48 (*)
+│   │   │   │   │       └── ciborium-io feature "default" (*)
+│   │   │   │   ├── serde feature "alloc"
+│   │   │   │   │   ├── serde v1.0.228
+│   │   │   │   │   │   ├── serde_core feature "result"
+│   │   │   │   │   │   │   └── serde_core v1.0.228
+│   │   │   │   │   │   └── serde_derive feature "default"
+│   │   │   │   │   │       └── serde_derive v1.0.228 (proc-macro)
+│   │   │   │   │   │           ├── proc-macro2 feature "proc-macro" (*)
+│   │   │   │   │   │           ├── quote feature "proc-macro" (*)
+│   │   │   │   │   │           ├── syn feature "clone-impls" (*)
+│   │   │   │   │   │           ├── syn feature "derive" (*)
+│   │   │   │   │   │           ├── syn feature "parsing" (*)
+│   │   │   │   │   │           ├── syn feature "printing" (*)
+│   │   │   │   │   │           └── syn feature "proc-macro" (*)
+│   │   │   │   │   └── serde_core feature "alloc"
+│   │   │   │   │       └── serde_core v1.0.228
+│   │   │   │   └── serde feature "derive"
+│   │   │   │       ├── serde v1.0.228 (*)
+│   │   │   │       └── serde feature "serde_derive"
+│   │   │   │           └── serde v1.0.228 (*)
+│   │   │   └── ciborium feature "std"
+│   │   │       ├── ciborium v0.2.2 (*)
+│   │   │       ├── ciborium-io feature "std"
+│   │   │       │   ├── ciborium-io v0.2.2
+│   │   │       │   └── ciborium-io feature "alloc" (*)
+│   │   │       └── serde feature "std"
+│   │   │           ├── serde v1.0.228 (*)
+│   │   │           └── serde_core feature "std"
+│   │   │               └── serde_core v1.0.228
+│   │   ├── serde feature "default"
+│   │   │   ├── serde v1.0.228 (*)
+│   │   │   └── serde feature "std" (*)
+│   │   ├── serde_derive feature "default" (*)
+│   │   ├── clap feature "std"
+│   │   │   ├── clap v4.6.0
+│   │   │   │   └── clap_builder v4.6.0
+│   │   │   │       ├── anstyle feature "default"
+│   │   │   │       │   ├── anstyle v1.0.14
+│   │   │   │       │   └── anstyle feature "std"
+│   │   │   │       │       └── anstyle v1.0.14
+│   │   │   │       └── clap_lex feature "default"
+│   │   │   │           └── clap_lex v1.1.0
+│   │   │   └── clap_builder feature "std"
+│   │   │       ├── clap_builder v4.6.0 (*)
+│   │   │       └── anstyle feature "std" (*)
+│   │   ├── criterion-plot feature "default"
+│   │   │   └── criterion-plot v0.5.0
+│   │   │       ├── cast feature "default" (*)
+│   │   │       └── itertools feature "default"
+│   │   │           ├── itertools v0.10.5
+│   │   │           │   └── either v1.15.0
+│   │   │           └── itertools feature "use_std"
+│   │   │               ├── itertools v0.10.5 (*)
+│   │   │               ├── itertools feature "use_alloc"
+│   │   │               │   └── itertools v0.10.5 (*)
+│   │   │               └── either feature "use_std"
+│   │   │                   ├── either v1.15.0
+│   │   │                   └── either feature "std"
+│   │   │                       └── either v1.15.0
+│   │   ├── itertools feature "default" (*)
+│   │   ├── is-terminal feature "default"
+│   │   │   └── is-terminal v0.4.17
+│   │   │       └── libc feature "default"
+│   │   │           ├── libc v0.2.185
+│   │   │           └── libc feature "std"
+│   │   │               └── libc v0.2.185
+│   │   ├── num-traits feature "std"
+│   │   │   └── num-traits v0.2.19
+│   │   │       [build-dependencies]
+│   │   │       └── autocfg feature "default"
+│   │   │           └── autocfg v1.5.0
+│   │   ├── once_cell feature "default"
+│   │   │   ├── once_cell v1.21.4
+│   │   │   └── once_cell feature "std"
+│   │   │       ├── once_cell v1.21.4
+│   │   │       └── once_cell feature "alloc"
+│   │   │           ├── once_cell v1.21.4
+│   │   │           └── once_cell feature "race"
+│   │   │               └── once_cell v1.21.4
+│   │   ├── oorandom feature "default"
+│   │   │   └── oorandom v11.1.5
+│   │   ├── plotters feature "area_series"
+│   │   │   └── plotters v0.3.7
+│   │   │       ├── num-traits feature "default"
+│   │   │       │   ├── num-traits v0.2.19 (*)
+│   │   │       │   └── num-traits feature "std" (*)
+│   │   │       ├── plotters-backend feature "default"
+│   │   │       │   └── plotters-backend v0.3.7
+│   │   │       └── plotters-svg feature "default"
+│   │   │           └── plotters-svg v0.3.7
+│   │   │               └── plotters-backend feature "default" (*)
+│   │   ├── plotters feature "line_series"
+│   │   │   └── plotters v0.3.7 (*)
+│   │   ├── plotters feature "svg_backend"
+│   │   │   ├── plotters v0.3.7 (*)
+│   │   │   └── plotters feature "plotters-svg"
+│   │   │       └── plotters v0.3.7 (*)
+│   │   ├── rayon feature "default"
+│   │   │   └── rayon v1.12.0
+│   │   │       ├── either v1.15.0
+│   │   │       └── rayon-core feature "default"
+│   │   │           └── rayon-core v1.13.0
+│   │   │               ├── crossbeam-deque feature "default"
+│   │   │               │   ├── crossbeam-deque v0.8.6
+│   │   │               │   │   ├── crossbeam-epoch v0.9.18
+│   │   │               │   │   │   └── crossbeam-utils v0.8.21
+│   │   │               │   │   └── crossbeam-utils v0.8.21
+│   │   │               │   └── crossbeam-deque feature "std"
+│   │   │               │       ├── crossbeam-deque v0.8.6 (*)
+│   │   │               │       ├── crossbeam-epoch feature "std"
+│   │   │               │       │   ├── crossbeam-epoch v0.9.18 (*)
+│   │   │               │       │   ├── crossbeam-epoch feature "alloc"
+│   │   │               │       │   │   └── crossbeam-epoch v0.9.18 (*)
+│   │   │               │       │   └── crossbeam-utils feature "std" (*)
+│   │   │               │       └── crossbeam-utils feature "std" (*)
+│   │   │               └── crossbeam-utils feature "default"
+│   │   │                   ├── crossbeam-utils v0.8.21
+│   │   │                   └── crossbeam-utils feature "std" (*)
+│   │   ├── regex feature "std"
+│   │   │   ├── regex v1.12.3
+│   │   │   │   ├── regex-syntax v0.8.10
+│   │   │   │   ├── regex-automata feature "alloc"
+│   │   │   │   │   └── regex-automata v0.4.14
+│   │   │   │   │       └── regex-syntax v0.8.10
+│   │   │   │   ├── regex-automata feature "meta"
+│   │   │   │   │   ├── regex-automata v0.4.14 (*)
+│   │   │   │   │   ├── regex-automata feature "nfa-pikevm"
+│   │   │   │   │   │   ├── regex-automata v0.4.14 (*)
+│   │   │   │   │   │   └── regex-automata feature "nfa-thompson"
+│   │   │   │   │   │       ├── regex-automata v0.4.14 (*)
+│   │   │   │   │   │       └── regex-automata feature "alloc" (*)
+│   │   │   │   │   └── regex-automata feature "syntax"
+│   │   │   │   │       ├── regex-automata v0.4.14 (*)
+│   │   │   │   │       └── regex-automata feature "alloc" (*)
+│   │   │   │   ├── regex-automata feature "nfa-pikevm" (*)
+│   │   │   │   └── regex-automata feature "syntax" (*)
+│   │   │   ├── regex-automata feature "std"
+│   │   │   │   ├── regex-automata v0.4.14 (*)
+│   │   │   │   ├── regex-automata feature "alloc" (*)
+│   │   │   │   └── regex-syntax feature "std"
+│   │   │   │       └── regex-syntax v0.8.10
+│   │   │   └── regex-syntax feature "std" (*)
+│   │   ├── serde_json feature "default"
+│   │   │   ├── serde_json v1.0.149
+│   │   │   │   ├── memchr v2.8.0
+│   │   │   │   ├── serde_core v1.0.228
+│   │   │   │   ├── itoa feature "default"
+│   │   │   │   │   └── itoa v1.0.18
+│   │   │   │   └── zmij feature "default"
+│   │   │   │       └── zmij v1.0.21
+│   │   │   └── serde_json feature "std"
+│   │   │       ├── serde_json v1.0.149 (*)
+│   │   │       ├── serde_core feature "std" (*)
+│   │   │       └── memchr feature "std"
+│   │   │           ├── memchr v2.8.0
+│   │   │           └── memchr feature "alloc"
+│   │   │               └── memchr v2.8.0
+│   │   ├── tinytemplate feature "default"
+│   │   │   └── tinytemplate v1.2.1
+│   │   │       ├── serde feature "default" (*)
+│   │   │       └── serde_json feature "default" (*)
+│   │   └── walkdir feature "default"
+│   │       └── walkdir v2.5.0
+│   │           └── same-file feature "default"
+│   │               └── same-file v1.0.6
+│   ├── criterion feature "cargo_bench_support"
+│   │   └── criterion v0.5.1 (*)
+│   ├── criterion feature "plotters"
+│   │   └── criterion v0.5.1 (*)
+│   └── criterion feature "rayon"
+│       └── criterion v0.5.1 (*)
+├── criterion feature "html_reports"
+│   └── criterion v0.5.1 (*)
+├── libc feature "default" (*)
+└── rane feature "default"
+    └── rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane)
+        ├── unimem feature "default" (*)
+        └── acpu feature "default" (*)

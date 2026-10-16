@@ -1,0 +1,42 @@
+{
+  "epoch": "parent",
+  "parent": "9cbd48070a136e24711896c930670fcff8a147fc",
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp",
+  "started": "2026-10-16T18:17:58.491543+00:00",
+  "finished": "2026-10-16T18:17:58.784716+00:00",
+  "argv": [
+    "cargo",
+    "fmt",
+    "--all",
+    "--",
+    "--check"
+  ],
+  "exit_code": 1,
+  "source_manifest": {
+    "bytes": 88906,
+    "sha256": "952f4ac2974fa4d8b55217ce2d762baf066e586e934b9889e25cc6f336431b70"
+  },
+  "source_before_after": "equal",
+  "environment": {
+    "CARGO_HOME": null,
+    "CARGO_TARGET_DIR": null,
+    "RUSTUP_TOOLCHAIN": null,
+    "RUSTFLAGS": null,
+    "RUSTDOCFLAGS": null,
+    "CARGO_INCREMENTAL": null,
+    "CARGO_BUILD_JOBS": null,
+    "CARGO_NET_OFFLINE": null
+  },
+  "runner": {
+    "bytes": 3045,
+    "sha256": "fa075dffda7576b72c2111fab255927b11b23328ea4fd9ae61795af9e6f81395"
+  },
+  "stdout": {
+    "bytes": 5192,
+    "sha256": "3119e84bd3d0b491ec4d47f7e3f58f3ef2f9939dd2c674f5a272d4447dc935fb"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

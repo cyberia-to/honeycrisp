@@ -1,6 +1,6 @@
 use crate::block::Block;
 use crate::MemError;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use core::sync::atomic::{AtomicUsize, Ordering};
 
 /// Tape allocator over a pinned memory block.
 ///
@@ -61,10 +61,10 @@ impl Tape {
         let pages = self.total / page;
         unsafe {
             for i in 0..pages {
-                std::ptr::write_volatile(ptr.add(i * page), 0);
+                core::ptr::write_volatile(ptr.add(i * page), 0);
             }
             if !self.total.is_multiple_of(page) {
-                std::ptr::write_volatile(ptr.add(pages * page), 0);
+                core::ptr::write_volatile(ptr.add(pages * page), 0);
             }
         }
     }
@@ -100,7 +100,7 @@ impl Tape {
     /// Take space for one value of type T.
     #[inline]
     pub fn take_one<T>(&self) -> Option<*mut T> {
-        self.take(std::mem::size_of::<T>(), std::mem::align_of::<T>())
+        self.take(core::mem::size_of::<T>(), core::mem::align_of::<T>())
             .map(|p| p as *mut T)
     }
 

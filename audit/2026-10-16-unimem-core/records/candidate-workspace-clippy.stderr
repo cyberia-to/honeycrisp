@@ -1,0 +1,65 @@
+   Compiling cfg_aliases v0.2.1
+    Checking bitflags v2.11.0
+   Compiling libm v0.2.16
+   Compiling num-traits v0.2.19
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)
+error: duplicated attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+note: first defined here
+    --> acpu/src/gemm/mod.rs:1093:9
+     |
+1093 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: remove this attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#duplicated_attributes
+     = note: `-D clippy::duplicated-attributes` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::duplicated_attributes)]`
+
+error: manual implementation of an assign operation
+   --> acpu/src/sparse/chebyshev.rs:171:9
+    |
+171 |         t1[i] = -d_inv_sqrt[i] * t1[i];
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace it with: `t1[i] *= -d_inv_sqrt[i]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#assign_op_pattern
+    = note: `-D clippy::assign-op-pattern` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::assign_op_pattern)]`
+
+error: the loop variable `k` is used to index `coeffs`
+   --> acpu/src/sparse/chebyshev.rs:192:14
+    |
+192 |     for k in 2..=order {
+    |              ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+192 -     for k in 2..=order {
+192 +     for (k, <item>) in coeffs.iter().enumerate().take(order + 1).skip(2) {
+    |
+
+error: the loop variable `pf` is only used to index `cols`
+  --> acpu/src/sparse/mod.rs:61:23
+   |
+61 |             for pf in 0..len.min(PF) {
+   |                       ^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+   |
+61 -             for pf in 0..len.min(PF) {
+61 +             for <item> in cols.iter().take(len.min(PF)) {
+   |
+
+error: could not compile `acpu` (lib) due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
