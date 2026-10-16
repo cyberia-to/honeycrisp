@@ -1,0 +1,16 @@
+{
+  "task": "Prepare acpu registry delivery prerequisite for Kadek phase 1",
+  "owner": "honeycrisp",
+  "agent_session": "Codex /root/phase2_resume_audit under /root",
+  "branch": "chore/acpu-delivery",
+  "base": "70dfb1f55e4cb2570d5a78a497be5828a203087b",
+  "dependencies": [
+    {
+      "name": "strata",
+      "target": "/Users/master/cyber/strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "retention_reason": "Active upstream release prerequisite verification. No tag/publication or owner-only bump merge authorized for agents."
+}

@@ -1,0 +1,16 @@
+{
+  "task": "Bounded scaled Chebyshev coefficients: prototype, reviewed numerical contract and repair",
+  "owner": "honeycrisp",
+  "agent_session": "Codex /root/phase2_resume_audit under /root",
+  "branch": "fix/acpu-scaled-chebyshev",
+  "base": "d5a78ed4865196241f6fd1e486fbb895fa59579a",
+  "dependencies": [
+    {
+      "name": "strata",
+      "target": "/Users/master/cyber/strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "retention_reason": "Numerical source repair committed and pushed for ordinary PR integration; preserve audit evidence and sibling pin. Retain checkout until root merge and explicit next-task transition or clean removal. Owner alone merges bumps, tags and publishes."
+}

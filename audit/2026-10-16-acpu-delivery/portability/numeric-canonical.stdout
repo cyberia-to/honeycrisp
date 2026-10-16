@@ -1,0 +1,79 @@
+{
+  "source_sha256": "bf7125964da4ffae87f6f419de482c4295e0975af7f5764018c5a1e11608371c",
+  "inputs": [
+    {
+      "name": "honeycrisp",
+      "files": 255,
+      "recorded_head": "475dd6d22c4d179aeb0d3a480303d3af4ff6a42c"
+    },
+    {
+      "name": "strata",
+      "files": 243,
+      "recorded_head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "gates": [
+    {
+      "epoch": "first",
+      "name": "clippy-acpu",
+      "exit_code": 101
+    },
+    {
+      "epoch": "final",
+      "name": "fmt",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "clippy-workspace",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "clippy-acpu",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "tests-workspace",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "build-release",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "tests-acpu-release",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "matmul",
+      "exit_code": 0
+    },
+    {
+      "epoch": "final",
+      "name": "docs-acpu",
+      "exit_code": 0
+    }
+  ],
+  "current_inventory_exact": true,
+  "gate_commands_exact": true,
+  "strict_toolchain_verified": true,
+  "historical_bridge": [
+    "honeycrisp/acpu/tests/chebyshev_coefficients.rs"
+  ],
+  "unchanged_functions": [
+    {
+      "name": "bessel_i",
+      "body_sha256": "572bc214e15c10e5a55467cf164f7919e0319abbd4af42a3e2692db5af52d243"
+    },
+    {
+      "name": "chebyshev_matvec",
+      "body_sha256": "2bba3d23eb13d5262e12daf022705a77a8ff38b0e33e71033a9dcb5c1e8bd967"
+    }
+  ],
+  "retained_reference_rows": 149
+}

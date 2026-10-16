@@ -1,0 +1,17 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/verify-delivery.nu",
+    "/Users/master/cyber/honeycrisp"
+  ],
+  "source_revision": "c8450d0f008656a1260c094be7cb0a8f415daff6",
+  "target_revision": "c8450d0f008656a1260c094be7cb0a8f415daff6",
+  "probe_source_sha256": "4fcc24414323376c857515d41d6f7c25040f353b98c3a9cc409fa471cb00d88f",
+  "source_unchanged": true,
+  "started": "2026-10-16T23:37:16.434437+00:00",
+  "finished": "2026-10-16T23:37:16.490749+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "363fee4832660a753a23458ff0bb7e3e33b61107159ffc7387b04f5392cd8b0b"
+}

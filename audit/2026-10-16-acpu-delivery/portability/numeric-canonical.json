@@ -1,0 +1,17 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/cyber/honeycrisp/audit/2026-10-16-acpu-delivery/numeric-implementation/verify.nu",
+    "/Users/master/cyber/honeycrisp"
+  ],
+  "source_revision": "c8450d0f008656a1260c094be7cb0a8f415daff6",
+  "target_revision": "c8450d0f008656a1260c094be7cb0a8f415daff6",
+  "probe_source_sha256": "caac2dabde181dbfdb0b52bf242eac586e02800c9d10b6e79aea5af5d7628516",
+  "source_unchanged": true,
+  "started": "2026-10-16T23:37:16.213135+00:00",
+  "finished": "2026-10-16T23:37:16.427344+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "1e9969a69258ed0e4edc5af1b6fd954a88c1fc9599592dedbdb2f5a6b47103cf",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

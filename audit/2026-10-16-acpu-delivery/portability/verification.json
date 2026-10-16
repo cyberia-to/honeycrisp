@@ -1,0 +1,15 @@
+{
+  "verified": true,
+  "checks": [
+    {
+      "name": "numeric-canonical",
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "historical-refusal",
+      "exit_code": 1,
+      "expected_exit_code": 1
+    }
+  ]
+}
