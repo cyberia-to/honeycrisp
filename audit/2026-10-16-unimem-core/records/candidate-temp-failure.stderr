@@ -1,0 +1,13 @@
+Error: nu::parser::name_is_builtin_var
+
+  x `nu` used as variable name.
+   ,-[/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/audit/2026-10-16-unimem-core/check-temp-failure.nu:5:9]
+ 4 |     let repo = ($repo | path expand)
+ 5 |     let nu = (which nu | first | get path)
+   :         ^|
+   :          `-- already a builtin variable
+ 6 |     let created = (do { ^mktemp -d -t unimem-gate-control } | complete)
+   `----
+  help: 'nu' is the name of a builtin Nushell variable and cannot be used as a
+        variable name
+

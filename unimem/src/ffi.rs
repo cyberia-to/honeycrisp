@@ -5,7 +5,7 @@
     dead_code
 )]
 
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 pub type IOSurfaceRef = *mut c_void;
 pub type CFTypeRef = *const c_void;

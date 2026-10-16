@@ -1,6 +1,6 @@
 use crate::ffi::*;
 use crate::MemError;
-use std::ptr::NonNull;
+use core::ptr::NonNull;
 
 mod creation;
 #[cfg(test)]
@@ -190,7 +190,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_bytes(&self) -> &[u8] {
-        unsafe { std::slice::from_raw_parts(self.va.as_ptr(), self.size) }
+        unsafe { core::slice::from_raw_parts(self.va.as_ptr(), self.size) }
     }
 
     /// View all `size()` bytes mutably, including native padding.
@@ -223,7 +223,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_bytes_mut(&mut self) -> &mut [u8] {
-        unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr(), self.size) }
+        unsafe { core::slice::from_raw_parts_mut(self.va.as_ptr(), self.size) }
     }
 
     /// View as f32 slice. Length = size / 4.
@@ -239,7 +239,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_f32(&self) -> &[f32] {
-        unsafe { std::slice::from_raw_parts(self.va.as_ptr() as *const f32, self.size / 4) }
+        unsafe { core::slice::from_raw_parts(self.va.as_ptr() as *const f32, self.size / 4) }
     }
 
     /// View as mutable f32 slice. Length = size / 4.
@@ -255,7 +255,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_f32_mut(&mut self) -> &mut [f32] {
-        unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr() as *mut f32, self.size / 4) }
+        unsafe { core::slice::from_raw_parts_mut(self.va.as_ptr() as *mut f32, self.size / 4) }
     }
 
     /// View as u16 slice (fp16). Length = size / 2.
@@ -271,7 +271,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_u16(&self) -> &[u16] {
-        unsafe { std::slice::from_raw_parts(self.va.as_ptr() as *const u16, self.size / 2) }
+        unsafe { core::slice::from_raw_parts(self.va.as_ptr() as *const u16, self.size / 2) }
     }
 
     /// View as mutable u16 slice (fp16). Length = size / 2.
@@ -287,7 +287,7 @@ impl Block {
     /// ```
     #[inline(always)]
     pub unsafe fn as_u16_mut(&mut self) -> &mut [u16] {
-        unsafe { std::slice::from_raw_parts_mut(self.va.as_ptr() as *mut u16, self.size / 2) }
+        unsafe { core::slice::from_raw_parts_mut(self.va.as_ptr() as *mut u16, self.size / 2) }
     }
 }
 

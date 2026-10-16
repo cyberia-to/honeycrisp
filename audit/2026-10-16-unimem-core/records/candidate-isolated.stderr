@@ -1,0 +1,9 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem)
+   Compiling unimem-native-consumer v0.0.0 (/tmp/unimem-core-resume-20261016/isolated-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.77s
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate-isolated/debug/deps/block_access-a0f3c6dbe74be015)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate-isolated/debug/deps/block_creation-893a2cf5cb09bbfb)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/candidate-isolated/debug/deps/roundtrip-73e0d136eb1acb75)

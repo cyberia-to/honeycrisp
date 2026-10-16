@@ -52,7 +52,12 @@ cargo build
 cargo test
 cargo bench
 cargo run --example pipeline --release
+nu scripts/check-no-std.nu     # isolated no_std dependency check; compile only
 ```
+
+The no_std gate uses its checked-in lock template and caller Cargo/toolchain/cache.
+Owning tests can enable std through reverse dev-dependencies; the isolated
+own-panic-handler consumer detects that runtime dependency separately.
 
 no special signing. no entitlements. no SIP changes.
 

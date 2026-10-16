@@ -1,0 +1,315 @@
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/unimem-core/candidate/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling strata-core v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/strata/core)
+   Compiling unicode-ident v1.0.24
+   Compiling strata-ext v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/strata/ext)
+   Compiling strata-compute v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/strata/compute)
+   Compiling strata-proof v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/strata/proof)
+   Compiling proc-macro2 v1.0.106
+   Compiling strata-nebu v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/strata/nebu/rs)
+   Compiling num-traits v0.2.19
+   Compiling quote v1.0.45
+   Compiling syn v2.0.117
+   Compiling libm v0.2.16
+   Compiling bitflags v2.11.0
+   Compiling log v0.4.29
+   Compiling objc2 v0.6.4
+   Compiling zerocopy-derive v0.8.48
+   Compiling serde_derive v1.0.228
+   Compiling zerocopy v0.8.48
+   Compiling serde v1.0.228
+   Compiling thiserror v2.0.18
+   Compiling parking_lot_core v0.9.12
+   Compiling core-foundation-sys v0.8.7
+   Compiling paste v1.0.15
+   Compiling half v2.7.1
+   Compiling core-foundation v0.10.1
+   Compiling ciborium-ll v0.2.2
+   Compiling bytemuck_derive v1.10.2
+   Compiling foreign-types-macros v0.2.3
+   Compiling thiserror-impl v2.0.18
+   Compiling naga v28.0.0
+   Compiling malloc_buf v0.0.6
+   Compiling objc2-encode v4.1.0
+   Compiling smallvec v1.15.1
+   Compiling bit-vec v0.8.0
+   Compiling hashbrown v0.17.1
+   Compiling unicode-width v0.2.2
+   Compiling equivalent v1.0.2
+   Compiling scopeguard v1.2.0
+   Compiling foldhash v0.2.0
+   Compiling foreign-types-shared v0.3.1
+   Compiling foreign-types v0.5.0
+   Compiling hashbrown v0.16.1
+   Compiling indexmap v2.14.0
+   Compiling lock_api v0.4.14
+   Compiling codespan-reporting v0.12.0
+   Compiling bit-set v0.8.0
+   Compiling objc v0.2.7
+   Compiling bytemuck v1.25.0
+   Compiling ciborium v0.2.2
+   Compiling core-graphics-types v0.2.0
+   Compiling plotters v0.3.7
+   Compiling tinytemplate v1.2.1
+   Compiling wgpu-hal v28.0.1
+   Compiling rustc-hash v1.1.0
+   Compiling hexf-parse v0.2.1
+   Compiling arrayvec v0.7.6
+   Compiling block v0.1.6
+   Compiling metal v0.33.0
+   Compiling criterion v0.5.1
+   Compiling wgpu-types v28.0.0
+   Compiling parking_lot v0.12.5
+   Compiling raw-window-handle v0.6.2
+   Compiling profiling v1.0.18
+   Compiling wgpu-core v28.0.1
+   Compiling litrs v1.0.0
+   Compiling document-features v0.2.12
+   Compiling wgpu-core-deps-apple v28.0.0
+   Compiling block2 v0.6.2
+   Compiling objc2-core-foundation v0.3.2
+   Compiling wgpu v28.0.0
+   Compiling objc2-foundation v0.3.2
+   Compiling dispatch2 v0.3.1
+   Compiling static_assertions v1.1.0
+   Compiling objc2-metal v0.3.2
+   Compiling pollster v0.4.0
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp)
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane)
+   Compiling rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane/benches)
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium/benches)
+error: unused import: `std::time::Instant`
+ --> acpu/bench/summary.rs:8:5
+  |
+8 | use std::time::Instant;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `-D unused-imports` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: variable does not need to be mutable
+    --> acpu/bench/summary.rs:2054:9
+     |
+2054 |     let mut pmull_a = 0xDEADBEEFCAFEBABEu64;
+     |         ----^^^^^^^
+     |         |
+     |         help: remove this `mut`
+     |
+     = note: `-D unused-mut` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(unused_mut)]`
+
+error: `vDSP_sve` redeclared with a different signature
+   --> acpu/bench/summary.rs:154:5
+    |
+154 |     fn vDSP_sve(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:182:5
+    |
+182 |     pub fn vDSP_sve(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ---------------------------------------------------------------------- `vDSP_sve` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+    = note: `-D clashing-extern-declarations` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clashing_extern_declarations)]`
+
+error: `vDSP_svesq` redeclared with a different signature
+   --> acpu/bench/summary.rs:155:5
+    |
+155 |     fn vDSP_svesq(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:183:5
+    |
+183 |     pub fn vDSP_svesq(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ------------------------------------------------------------------------ `vDSP_svesq` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+error: `vDSP_maxv` redeclared with a different signature
+   --> acpu/bench/summary.rs:156:5
+    |
+156 |     fn vDSP_maxv(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:184:5
+    |
+184 |     pub fn vDSP_maxv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ----------------------------------------------------------------------- `vDSP_maxv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+error: `vDSP_minv` redeclared with a different signature
+   --> acpu/bench/summary.rs:157:5
+    |
+157 |     fn vDSP_minv(a: *const f32, ia: i64, c: *mut f32, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:185:5
+    |
+185 |     pub fn vDSP_minv(a: *const f32, stride: i32, result: *mut f32, n: u64);
+    |     ----------------------------------------------------------------------- `vDSP_minv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, u64)`
+
+error: `vDSP_vneg` redeclared with a different signature
+   --> acpu/bench/summary.rs:158:5
+    |
+158 |     fn vDSP_vneg(a: *const f32, ia: i64, c: *mut f32, ic: i64, n: u64);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:186:5
+    |
+186 |     pub fn vDSP_vneg(a: *const f32, stride_a: i32, c: *mut f32, stride_c: i32, n: u64);
+    |     ----------------------------------------------------------------------------------- `vDSP_vneg` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *mut f32, i64, u64)`
+
+error: `vDSP_vadd` redeclared with a different signature
+   --> acpu/bench/summary.rs:159:5
+    |
+159 |       fn vDSP_vadd(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:187:5
+    |
+187 | /     pub fn vDSP_vadd(
+188 | |         a: *const f32,
+189 | |         stride_a: i32,
+190 | |         b: *const f32,
+...   |
+194 | |         n: u64,
+195 | |     );
+    | |______- `vDSP_vadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+error: `vDSP_vmul` redeclared with a different signature
+   --> acpu/bench/summary.rs:160:5
+    |
+160 |       fn vDSP_vmul(a: *const f32, ia: i64, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:196:5
+    |
+196 | /     pub fn vDSP_vmul(
+197 | |         a: *const f32,
+198 | |         stride_a: i32,
+199 | |         b: *const f32,
+...   |
+203 | |         n: u64,
+204 | |     );
+    | |______- `vDSP_vmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, i64, *mut f32, i64, u64)`
+
+error: `vDSP_vsadd` redeclared with a different signature
+   --> acpu/bench/summary.rs:162:5
+    |
+162 |       fn vDSP_vsadd(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:205:5
+    |
+205 | /     pub fn vDSP_vsadd(
+206 | |         a: *const f32,
+207 | |         stride_a: i32,
+208 | |         b: *const f32,
+...   |
+211 | |         n: u64,
+212 | |     );
+    | |______- `vDSP_vsadd` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+error: `vDSP_vsmul` redeclared with a different signature
+   --> acpu/bench/summary.rs:163:5
+    |
+163 |       fn vDSP_vsmul(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:213:5
+    |
+213 | /     pub fn vDSP_vsmul(
+214 | |         a: *const f32,
+215 | |         stride_a: i32,
+216 | |         b: *const f32,
+...   |
+219 | |         n: u64,
+220 | |     );
+    | |______- `vDSP_vsmul` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+error: `vDSP_vsdiv` redeclared with a different signature
+   --> acpu/bench/summary.rs:164:5
+    |
+164 |       fn vDSP_vsdiv(a: *const f32, ia: i64, b: *const f32, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:221:5
+    |
+221 | /     pub fn vDSP_vsdiv(
+222 | |         a: *const f32,
+223 | |         stride_a: i32,
+224 | |         b: *const f32,
+...   |
+227 | |         n: u64,
+228 | |     );
+    | |______- `vDSP_vsdiv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, i32, *const f32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, i64, *const f32, *mut f32, i64, u64)`
+
+error: `vDSP_svdiv` redeclared with a different signature
+   --> acpu/bench/summary.rs:165:5
+    |
+165 |       fn vDSP_svdiv(a: *const f32, b: *const f32, ib: i64, c: *mut f32, ic: i64, n: u64);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this signature doesn't match the previous declaration
+    |
+   ::: acpu/bench/common.rs:229:5
+    |
+229 | /     pub fn vDSP_svdiv(
+230 | |         a: *const f32,
+231 | |         b: *const f32,
+232 | |         stride_b: i32,
+...   |
+235 | |         n: u64,
+236 | |     );
+    | |______- `vDSP_svdiv` previously declared here
+    |
+    = note: expected `unsafe extern "C" fn(*const f32, *const f32, i32, *mut f32, i32, u64)`
+               found `unsafe extern "C" fn(*const f32, *const f32, i64, *mut f32, i64, u64)`
+
+error: could not compile `acpu` (example "bench_summary") due to 13 previous errors
+warning: build failed, waiting for other jobs to finish...

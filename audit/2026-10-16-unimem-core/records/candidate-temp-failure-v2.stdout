@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "controls": [
+    {
+      "mode": "nonzero",
+      "result": {
+        "stdout": "",
+        "stderr": "Error: nu::shell::error\n\n  x no_std temporary directory creation failed:\n    ,-[/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem/scripts/check-no-std.nu:27:20]\n 26 |     if $created.exit_code != 0 or $temp == '' or not ($temp | path exists) or ($temp | path type) != dir {\n 27 |         error make {msg: $'no_std temporary directory creation failed: ($created.stderr | str trim)'}\n    :                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n 28 |     }\n    `----\n\n",
+        "exit_code": 1
+      },
+      "existing_directory_preserved": true,
+      "cwd_unchanged": true
+    },
+    {
+      "mode": "empty",
+      "result": {
+        "stdout": "",
+        "stderr": "Error: nu::shell::error\n\n  x no_std temporary directory creation failed:\n    ,-[/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem/scripts/check-no-std.nu:27:20]\n 26 |     if $created.exit_code != 0 or $temp == '' or not ($temp | path exists) or ($temp | path type) != dir {\n 27 |         error make {msg: $'no_std temporary directory creation failed: ($created.stderr | str trim)'}\n    :                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n 28 |     }\n    `----\n\n",
+        "exit_code": 1
+      },
+      "existing_directory_preserved": true,
+      "cwd_unchanged": true
+    }
+  ]
+}

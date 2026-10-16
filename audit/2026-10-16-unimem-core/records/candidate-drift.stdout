@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "expected_rejection": {
+    "stdout": "",
+    "stderr": "Error: nu::shell::error\n\n  x no_std fixture dependency drift: crossbeam-queue\n    ,-[/var/folders/gc/64p7ymwx60144drqltvslckr0000gn/T/unimem-fixture-drift.w411h3Eklx/unimem/scripts/check-no-std.nu:13:24]\n 12 |         if ($actual | length) != 1 or $actual != $expected {\n 13 |             error make {msg: $'no_std fixture dependency drift: ($name)'}\n    :                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n 14 |         }\n    `----\n\n",
+    "exit_code": 1
+  },
+  "workspace_changed": false
+}

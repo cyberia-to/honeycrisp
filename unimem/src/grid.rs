@@ -1,7 +1,7 @@
 use crate::tape::Tape;
 use crate::MemError;
+use core::marker::PhantomData;
 use crossbeam_queue::SegQueue;
-use std::marker::PhantomData;
 
 /// Grid of fixed-size cells over a pinned tape.
 ///
@@ -93,7 +93,7 @@ impl<'a> Cell<'a> {
     /// completion and visibility before access.
     #[inline]
     pub unsafe fn bytes(&mut self, len: usize) -> &mut [u8] {
-        std::slice::from_raw_parts_mut(self.ptr, len)
+        core::slice::from_raw_parts_mut(self.ptr, len)
     }
 
     /// Cell number.

@@ -1,0 +1,20 @@
+{
+  "root": "/tmp/unimem-core-resume-20261016/isolated-native",
+  "source": "/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp",
+  "manifest": "[package]\nname = \"unimem-native-consumer\"\nversion = \"0.0.0\"\nedition = \"2021\"\n[workspace]\n[dependencies]\nunimem = { path = \"/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem\", default-features = false }\n",
+  "lock_sha256": "a1e829bec482f9df9f17d7d81e5420d9be54dee60b2d3b933d394c48eb5cb51f",
+  "tests": [
+    {
+      "path": "unimem/tests/block_access.rs",
+      "sha256": "2e976fc0554fd38d1dee9cf77c8b654fdbf8740f717929163a2c73d292a38cb2"
+    },
+    {
+      "path": "unimem/tests/roundtrip.rs",
+      "sha256": "d716e4cf2306bd9fe6e2efd368d9f5e139fba24582d9ddb394e83cae0ab6f8ef"
+    },
+    {
+      "path": "unimem/tests/block_creation.rs",
+      "sha256": "27a2fc51465ca74ca366031fd924759668c1bd150099c30d4957308a05bbff4a"
+    }
+  ]
+}

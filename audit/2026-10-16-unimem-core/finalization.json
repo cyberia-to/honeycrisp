@@ -1,0 +1,252 @@
+{
+  "verified_at": "2026-10-16T18:29:28.399444+00:00",
+  "parent": "9cbd48070a136e24711896c930670fcff8a147fc",
+  "current_source_manifest": {
+    "bytes": 88912,
+    "sha256": "47669120c5b04d54493f5ca90755000f038803730ca2e9a1533b7b1d9e56a745"
+  },
+  "source_before_after_and_live": "equal",
+  "candidate_to_v2_delta": [
+    {
+      "repository": 0,
+      "path": "unimem/scripts/check-no-std.nu",
+      "final": {
+        "bytes": 2441,
+        "sha256": "e57d1e818a2283893774b2727d4e10511df4b76e9978a28eedcd77771c0391ce"
+      }
+    }
+  ],
+  "frozen_fixtures": "preserved",
+  "original_gate": {
+    "bytes": 2172,
+    "sha256": "12d37297970207f930f46030026a02f7325056333b1a9b4b627cf29b8f3ae9bf"
+  },
+  "parent_candidate_workspace_fmt_stdout": "equal",
+  "verified_records": [
+    {
+      "name": "candidate-clippy-core",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1329,
+        "sha256": "e6b13a139e024ddcd154f116ee4c4a649c191f98954871d6f34ceb996ef047b6"
+      }
+    },
+    {
+      "name": "candidate-clippy-default",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1300,
+        "sha256": "cefbbecc163deae1758dcd3005b924a4ca53a8e9b140751c1804d78bbf8d3715"
+      }
+    },
+    {
+      "name": "candidate-docs-core",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1294,
+        "sha256": "289c73a63bcf557480eeb479150f710f9d85a950c5f86af9863e8cc6cec5035e"
+      }
+    },
+    {
+      "name": "candidate-docs-default",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1265,
+        "sha256": "5f03a614011dd28384a83ffd3ce1c301966d512dbd12a0f31ca4fe2a860ae53e"
+      }
+    },
+    {
+      "name": "candidate-drift",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1300,
+        "sha256": "2a5aa005d465b155461f1cd0519a43be517a5eab8b62250c568924774ce9649e"
+      }
+    },
+    {
+      "name": "candidate-examples",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1286,
+        "sha256": "c0d70329842677532d11806fa0fca049617d917028fc70666ba3301fee52a27f"
+      }
+    },
+    {
+      "name": "candidate-features-default-v2",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1286,
+        "sha256": "9bff687b4419001a91499c0dab0469e4148d466652282bff519967a94acfae95"
+      }
+    },
+    {
+      "name": "candidate-features-default",
+      "exit_code": 1,
+      "receipt": {
+        "bytes": 1300,
+        "sha256": "c6bba72ceee28b69590efee382a1e165ea6bf0bb425a3d65716ffc577ad0e234"
+      }
+    },
+    {
+      "name": "candidate-features-isolated",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1353,
+        "sha256": "0961c465a7f0f20894ad2d7d17c6e9c420019f1d5fe89ef02e872e3bcde657b3"
+      }
+    },
+    {
+      "name": "candidate-features-std",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1344,
+        "sha256": "eda6788fcc1d878f09f0a44896158397e14e510ce0c9f0fb76ffae3928cf8371"
+      }
+    },
+    {
+      "name": "candidate-features-tests",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1321,
+        "sha256": "16bdcc26fbe9f029c4f7ec6ecc6dd0b82a0f71da5523fb9608a98a3bbdc362d6"
+      }
+    },
+    {
+      "name": "candidate-isolated",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1327,
+        "sha256": "87080b45c195cf279085b5a870237b898e9b0083671d591ecda231f3c6654765"
+      }
+    },
+    {
+      "name": "candidate-no-std-v2",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1218,
+        "sha256": "2f783995247c82a97340a64ee8c859e73316d158c13cf35457b689bd51a9e8a4"
+      }
+    },
+    {
+      "name": "candidate-no-std",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1215,
+        "sha256": "59b33fd0cb08854fd0f2720427e5b224190791a1f16b4c546932c33b0b89b419"
+      }
+    },
+    {
+      "name": "candidate-owner-default",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1253,
+        "sha256": "6ff67a7c26e48b96f91fd49293a70d7ffe7ac7e2f752ec979e71858da1a48b61"
+      }
+    },
+    {
+      "name": "candidate-owner-fmt",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1127,
+        "sha256": "487933371027a11d7ba2567b676cde363476a91c40e3b19449db875a85399a10"
+      }
+    },
+    {
+      "name": "candidate-owner-no-default",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1281,
+        "sha256": "f1a1e9931bd1c9642370a3ddeb85f6fb7263271328c6d6c161b50906e8055ec7"
+      }
+    },
+    {
+      "name": "candidate-temp-failure-v2",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1311,
+        "sha256": "70c6431007eb16fe142ff71199e33cd7ecbee8f473bfbb1b2e63975f8ca49f92"
+      }
+    },
+    {
+      "name": "candidate-temp-failure",
+      "exit_code": 1,
+      "receipt": {
+        "bytes": 1310,
+        "sha256": "e7275092dad7277d0ce62bbad410700d9afb5904dd435991d2e320830af84c56"
+      }
+    },
+    {
+      "name": "candidate-workspace-clippy",
+      "exit_code": 101,
+      "receipt": {
+        "bytes": 1285,
+        "sha256": "319dcf67f03a7048d21fb2e7f11a2561ed5ebfba3ff93341498d15c692ef0324"
+      }
+    },
+    {
+      "name": "candidate-workspace-fmt",
+      "exit_code": 1,
+      "receipt": {
+        "bytes": 1230,
+        "sha256": "c32f9e5334cd1ae70d4b679f08f5b5243d52e6de7b7356cc0d7d9ddb15e55645"
+      }
+    },
+    {
+      "name": "candidate-workspace-tests",
+      "exit_code": 101,
+      "receipt": {
+        "bytes": 1248,
+        "sha256": "06120bb8d50b82f81afc7f2309c79bf168396f359e1abd09236d3215bbd09451"
+      }
+    },
+    {
+      "name": "parent-fmt",
+      "exit_code": 1,
+      "receipt": {
+        "bytes": 1116,
+        "sha256": "296e0b6bfe6669db70db7587518ecb8bf75810f55a54273d40b72d306ffb6ef6"
+      }
+    },
+    {
+      "name": "parent-isolated",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1321,
+        "sha256": "2c7d903ce24ae266212bf9757f21b3e94bfbc2bfb21899ba82a5490f58e3b441"
+      }
+    },
+    {
+      "name": "parent-no-std",
+      "exit_code": 101,
+      "receipt": {
+        "bytes": 1211,
+        "sha256": "d2c7855e6bd6983451e52e6ce0a37b914b26eec783554755e917113201923c25"
+      }
+    },
+    {
+      "name": "parent-owner",
+      "exit_code": 0,
+      "receipt": {
+        "bytes": 1247,
+        "sha256": "7d206fe2a0c38f0c6f77d491d3d236061cd339599d1a854df965e7f74afa303e"
+      }
+    },
+    {
+      "name": "parent-workspace-clippy",
+      "exit_code": 101,
+      "receipt": {
+        "bytes": 1279,
+        "sha256": "499838610fe0b5d4f7bd349c257265ef9da8ea01e482fcaf059e0f1bec2cc398"
+      }
+    }
+  ],
+  "review": {
+    "bytes": 5697,
+    "sha256": "8ddcdbf9b72c1e4707a6a700d032adf6954b8b91cd459657e7e76b7428f35afd"
+  },
+  "guard_review": {
+    "bytes": 2094,
+    "sha256": "f4b946a488eb9213a2c1057a3869ab167807b92b857e36c1ab44d6b3f6579242"
+  },
+  "limitation": "Verification preserves actual red gates; no release, API JSON, benchmark or wider product completion claim."
+}

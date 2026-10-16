@@ -1,0 +1,22 @@
+[
+  {
+    "path": "unimem/scripts/check-no-std.nu",
+    "bytes": 2172,
+    "sha256": "12d37297970207f930f46030026a02f7325056333b1a9b4b627cf29b8f3ae9bf"
+  },
+  {
+    "path": "unimem/fixtures/no-std/Cargo.lock.txt",
+    "bytes": 922,
+    "sha256": "9b3453ff7a632620f0b0c3274eab3b597346d03eec0ff5023d4affe298d2a387"
+  },
+  {
+    "path": "unimem/fixtures/no-std/Cargo.toml.txt",
+    "bytes": 192,
+    "sha256": "050ef868b26b59c312fed776a1a416827a965c03d1dda3f54f91c44d2ee07544"
+  },
+  {
+    "path": "unimem/fixtures/no-std/consumer.rs",
+    "bytes": 546,
+    "sha256": "e11677d9d349c914b48854e8d0bb1a9a2b4d97c13c518fcf63f0301b606748d7"
+  }
+]

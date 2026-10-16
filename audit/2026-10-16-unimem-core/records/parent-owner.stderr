@@ -1,0 +1,60 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling crossbeam-utils v0.8.21
+   Compiling serde_core v1.0.228
+   Compiling syn v2.0.117
+   Compiling zerocopy v0.8.48
+   Compiling zerocopy-derive v0.8.48
+   Compiling autocfg v1.5.0
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling num-traits v0.2.19
+   Compiling serde_derive v1.0.228
+   Compiling crossbeam-queue v0.3.12
+   Compiling crossbeam-epoch v0.9.18
+   Compiling rayon-core v1.13.0
+   Compiling libc v0.2.185
+   Compiling cfg-if v1.0.4
+   Compiling either v1.15.0
+   Compiling mutants v0.0.3
+   Compiling serde_json v1.0.149
+   Compiling half v2.7.1
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/unimem)
+   Compiling crossbeam-deque v0.8.6
+   Compiling memchr v2.8.0
+   Compiling clap_lex v1.1.0
+   Compiling plotters-backend v0.3.7
+   Compiling anstyle v1.0.14
+   Compiling ciborium-io v0.2.2
+   Compiling itoa v1.0.18
+   Compiling regex-syntax v0.8.10
+   Compiling regex-automata v0.4.14
+   Compiling clap_builder v4.6.0
+   Compiling ciborium-ll v0.2.2
+   Compiling plotters-svg v0.3.7
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/acpu)
+   Compiling itertools v0.10.5
+   Compiling cast v0.3.0
+   Compiling same-file v1.0.6
+   Compiling walkdir v2.5.0
+   Compiling criterion-plot v0.5.0
+   Compiling is-terminal v0.4.17
+   Compiling rayon v1.12.0
+   Compiling plotters v0.3.7
+   Compiling ciborium v0.2.2
+   Compiling clap v4.6.0
+   Compiling regex v1.12.3
+   Compiling tinytemplate v1.2.1
+   Compiling once_cell v1.21.4
+   Compiling anes v0.1.6
+   Compiling oorandom v11.1.5
+   Compiling criterion v0.5.1
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/unimem-core/honeycrisp/rane)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.18s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/parent/debug/deps/unimem-44b0a01520416d42)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/parent/debug/deps/block_access-0ee7b8dbcf804a00)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/parent/debug/deps/block_creation-dc6738512c5e8bc0)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/unimem-core/parent/debug/deps/roundtrip-61b4fe21dbf7132c)
+   Doc-tests unimem
