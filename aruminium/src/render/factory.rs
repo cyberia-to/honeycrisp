@@ -26,6 +26,17 @@ impl Gpu {
         self.render_target_ms(width, height, format, 1)
     }
 
+    /// Color render target in **Shared** storage so the CPU can `get_bytes`
+    /// after the pass. Private targets cannot be read back on Apple Silicon.
+    pub fn render_target_shared(
+        &self,
+        width: u32,
+        height: u32,
+        format: NSUInteger,
+    ) -> Result<Texture, GpuError> {
+        self.color_target(width, height, format, 1, 0)
+    }
+
     /// Create a 2D color texture usable as a render target with the given
     /// MSAA sample count. `samples = 1` is the non-MSAA case.
     pub fn render_target_ms(
@@ -34,6 +45,17 @@ impl Gpu {
         height: u32,
         format: NSUInteger,
         samples: u32,
+    ) -> Result<Texture, GpuError> {
+        self.color_target(width, height, format, samples, 0x2)
+    }
+
+    fn color_target(
+        &self,
+        width: u32,
+        height: u32,
+        format: NSUInteger,
+        samples: u32,
+        storage: NSUInteger,
     ) -> Result<Texture, GpuError> {
         if width == 0 || height == 0 {
             return Err(GpuError::TextureCreationFailed(
@@ -47,6 +69,7 @@ impl Gpu {
                 height,
                 MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead,
                 samples,
+                storage,
             )?;
             let tex = self.texture(desc);
             release(desc);
@@ -84,6 +107,7 @@ impl Gpu {
                 height,
                 MTLTextureUsageRenderTarget,
                 samples,
+                0x2,
             )?;
             let tex = self.texture(desc);
             release(desc);
@@ -196,6 +220,7 @@ unsafe fn build_texture_descriptor(
     height: u32,
     usage: NSUInteger,
     samples: u32,
+    storage: NSUInteger,
 ) -> Result<ObjcId, GpuError> {
     let cls = objc_getClass(c"MTLTextureDescriptor".as_ptr()) as ObjcId;
     let desc = msg0(cls, sel_registerName(c"new".as_ptr()));
@@ -214,7 +239,7 @@ unsafe fn build_texture_descriptor(
     msg1_uint_void(desc, SEL_setWidth(), width as NSUInteger);
     msg1_uint_void(desc, SEL_setHeight(), height as NSUInteger);
     msg1_uint_void(desc, SEL_setUsage(), usage);
-    msg1_uint_void(desc, SEL_setStorageMode(), 0x2); // Private
+    msg1_uint_void(desc, SEL_setStorageMode(), storage);
     if samples > 1 {
         msg1_uint_void(desc, SEL_setSampleCount(), samples as NSUInteger);
     }

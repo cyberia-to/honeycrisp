@@ -18,7 +18,7 @@ pub fn complex_mul_acc(acc: &mut [f32], a: &[f32], b: &[f32]) {
 
     let mut i = 0;
 
-    #[cfg(target_arch = "aarch64")]
+    #[cfg(all(target_arch = "aarch64", target_feature = "fcma"))]
     {
         // FCMLA processes 2 complex pairs (4 f32) per instruction.
         // Two FCMLA ops (rotate 0° and 90°) compute full complex mul-acc.

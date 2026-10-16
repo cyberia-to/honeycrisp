@@ -262,6 +262,15 @@ impl DepthStencil {
             write_enabled: false,
         }
     }
+
+    /// Depth-test against already-drawn surfaces, leave the buffer alone.
+    /// Additive edges sit *behind* opaque impostors this way.
+    pub fn less_no_write() -> Self {
+        Self {
+            compare: CompareFunction::Less,
+            write_enabled: false,
+        }
+    }
 }
 
 /// A compiled depth/stencil state. Wraps `id<MTLDepthStencilState>`.

@@ -8,7 +8,7 @@
 /// On aarch64 this emits scalar `fcvt s, h` via inline asm.
 #[inline(always)]
 pub fn fp16_to_f32(v: u16) -> f32 {
-    #[cfg(target_arch = "aarch64")]
+    #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
     {
         let result: u32;
         unsafe {
@@ -23,7 +23,7 @@ pub fn fp16_to_f32(v: u16) -> f32 {
         }
         f32::from_bits(result)
     }
-    #[cfg(not(target_arch = "aarch64"))]
+    #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
     {
         fp16_to_f32_soft(v)
     }
@@ -34,7 +34,7 @@ pub fn fp16_to_f32(v: u16) -> f32 {
 /// On aarch64 this emits scalar `fcvt h, s` via inline asm.
 #[inline(always)]
 pub fn f32_to_fp16(v: f32) -> u16 {
-    #[cfg(target_arch = "aarch64")]
+    #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
     {
         let result: u32;
         unsafe {
@@ -49,7 +49,7 @@ pub fn f32_to_fp16(v: f32) -> u16 {
         }
         result as u16
     }
-    #[cfg(not(target_arch = "aarch64"))]
+    #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
     {
         f32_to_fp16_soft(v)
     }
@@ -62,7 +62,7 @@ pub fn f32_to_fp16(v: f32) -> u16 {
 pub fn cast_f16_f32(dst: &mut [f32], src: &[u16]) {
     let n = dst.len().min(src.len());
 
-    #[cfg(target_arch = "aarch64")]
+    #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
     {
         let mut i = 0;
 
@@ -118,7 +118,7 @@ pub fn cast_f16_f32(dst: &mut [f32], src: &[u16]) {
         }
     }
 
-    #[cfg(not(target_arch = "aarch64"))]
+    #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
     {
         for i in 0..n {
             dst[i] = fp16_to_f32_soft(src[i]);
@@ -133,7 +133,7 @@ pub fn cast_f16_f32(dst: &mut [f32], src: &[u16]) {
 pub fn cast_f32_f16(dst: &mut [u16], src: &[f32]) {
     let n = dst.len().min(src.len());
 
-    #[cfg(target_arch = "aarch64")]
+    #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
     {
         let mut i = 0;
 
@@ -188,7 +188,7 @@ pub fn cast_f32_f16(dst: &mut [u16], src: &[f32]) {
         }
     }
 
-    #[cfg(not(target_arch = "aarch64"))]
+    #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
     {
         for i in 0..n {
             dst[i] = f32_to_fp16_soft(src[i]);

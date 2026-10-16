@@ -17,36 +17,52 @@ pub struct Gpu {
 impl Gpu {
     /// Get the system default Metal device.
     ///
-    /// Falls back to first device from MTLCopyAllDevices if
-    /// MTLCreateSystemDefaultDevice returns nil (headless/no display session).
+    /// On macOS, falls back to the first device from `MTLCopyAllDevices` if
+    /// `MTLCreateSystemDefaultDevice` returns nil (headless / no display).
+    /// iOS has one GPU; that fallback API does not exist there.
     #[mutants::skip] // fallback path makes delete-! equivalent
     pub fn open() -> Result<Self, GpuError> {
         let raw = unsafe { MTLCreateSystemDefaultDevice() };
         if !raw.is_null() {
             return Ok(Gpu { raw });
         }
-        // Fallback: MTLCopyAllDevices works even without active display session
-        let devices = Self::all()?;
-        devices.into_iter().next().ok_or(GpuError::DeviceNotFound)
+        #[cfg(target_os = "macos")]
+        {
+            let devices = Self::all()?;
+            return devices.into_iter().next().ok_or(GpuError::DeviceNotFound);
+        }
+        #[cfg(not(target_os = "macos"))]
+        Err(GpuError::DeviceNotFound)
     }
 
     /// Get all available Metal devices.
     pub fn all() -> Result<Vec<Self>, GpuError> {
-        let arr = unsafe { MTLCopyAllDevices() };
-        if arr.is_null() {
-            return Err(GpuError::DeviceNotFound);
-        }
-        let count = unsafe { msg0_usize(arr, SEL_count()) };
-        let mut devices = Vec::with_capacity(count);
-        for i in 0..count {
-            let dev = unsafe { msg1::<NSUInteger>(arr, SEL_objectAtIndex(), i) };
-            if !dev.is_null() {
-                unsafe { retain(dev) };
-                devices.push(Gpu { raw: dev });
+        #[cfg(target_os = "macos")]
+        {
+            let arr = unsafe { MTLCopyAllDevices() };
+            if arr.is_null() {
+                return Err(GpuError::DeviceNotFound);
             }
+            let count = unsafe { msg0_usize(arr, SEL_count()) };
+            let mut devices = Vec::with_capacity(count);
+            for i in 0..count {
+                let dev = unsafe { msg1::<NSUInteger>(arr, SEL_objectAtIndex(), i) };
+                if !dev.is_null() {
+                    unsafe { retain(dev) };
+                    devices.push(Gpu { raw: dev });
+                }
+            }
+            unsafe { release(arr) };
+            return Ok(devices);
         }
-        unsafe { release(arr) };
-        Ok(devices)
+        #[cfg(not(target_os = "macos"))]
+        {
+            let raw = unsafe { MTLCreateSystemDefaultDevice() };
+            if raw.is_null() {
+                return Err(GpuError::DeviceNotFound);
+            }
+            Ok(vec![Gpu { raw }])
+        }
     }
 
     /// Device name (e.g. "Apple M1 Pro").

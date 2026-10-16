@@ -135,19 +135,28 @@ pub unsafe fn accumulate_tile_f16_to_f32(c: *mut f32, ldc: usize) {
         let src = tmp.as_ptr().add(j * 32);
         let mut i = 0;
         while i + 8 <= 32 {
-            // fcvtl/fcvtl2: convert 8 fp16 → 2×4 f32, add to C
-            core::arch::asm!(
-                "ldr q0, [{src}]",          // 8 × fp16
-                "fcvtl v1.4s, v0.4h",       // low 4 → f32
-                "fcvtl2 v2.4s, v0.8h",      // high 4 → f32
-                "ldp q3, q4, [{dst}]",      // 8 × f32 from C
-                "fadd v3.4s, v3.4s, v1.4s",
-                "fadd v4.4s, v4.4s, v2.4s",
-                "stp q3, q4, [{dst}]",      // store back
-                src = in(reg) src.add(i),
-                dst = in(reg) dst.add(i),
-                out("v0") _, out("v1") _, out("v2") _, out("v3") _, out("v4") _,
-            );
+            #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
+            {
+                // fcvtl/fcvtl2: convert 8 fp16 → 2×4 f32, add to C
+                core::arch::asm!(
+                    "ldr q0, [{src}]",          // 8 × fp16
+                    "fcvtl v1.4s, v0.4h",       // low 4 → f32
+                    "fcvtl2 v2.4s, v0.8h",      // high 4 → f32
+                    "ldp q3, q4, [{dst}]",      // 8 × f32 from C
+                    "fadd v3.4s, v3.4s, v1.4s",
+                    "fadd v4.4s, v4.4s, v2.4s",
+                    "stp q3, q4, [{dst}]",      // store back
+                    src = in(reg) src.add(i),
+                    dst = in(reg) dst.add(i),
+                    out("v0") _, out("v1") _, out("v2") _, out("v3") _, out("v4") _,
+                );
+            }
+            #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
+            {
+                for k in 0..8 {
+                    *dst.add(i + k) += crate::numeric::fp16::fp16_to_f32(*src.add(i + k));
+                }
+            }
             i += 8;
         }
     }
@@ -167,15 +176,24 @@ pub unsafe fn store_tile_f16_to_f32(c: *mut f32, ldc: usize) {
         let src = tmp.as_ptr().add(j * 32);
         let mut i = 0;
         while i + 8 <= 32 {
-            core::arch::asm!(
-                "ldr q0, [{src}]",
-                "fcvtl v1.4s, v0.4h",
-                "fcvtl2 v2.4s, v0.8h",
-                "stp q1, q2, [{dst}]",
-                src = in(reg) src.add(i),
-                dst = in(reg) dst.add(i),
-                out("v0") _, out("v1") _, out("v2") _,
-            );
+            #[cfg(all(target_arch = "aarch64", target_feature = "fp16"))]
+            {
+                core::arch::asm!(
+                    "ldr q0, [{src}]",
+                    "fcvtl v1.4s, v0.4h",
+                    "fcvtl2 v2.4s, v0.8h",
+                    "stp q1, q2, [{dst}]",
+                    src = in(reg) src.add(i),
+                    dst = in(reg) dst.add(i),
+                    out("v0") _, out("v1") _, out("v2") _,
+                );
+            }
+            #[cfg(not(all(target_arch = "aarch64", target_feature = "fp16")))]
+            {
+                for k in 0..8 {
+                    *dst.add(i + k) = crate::numeric::fp16::fp16_to_f32(*src.add(i + k));
+                }
+            }
             i += 8;
         }
     }

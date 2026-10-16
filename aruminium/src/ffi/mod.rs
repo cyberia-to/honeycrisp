@@ -198,6 +198,8 @@ pub const kCFStringEncodingUTF8: u32 = 0x08000100;
 #[link(name = "Metal", kind = "framework")]
 extern "C" {
     pub fn MTLCreateSystemDefaultDevice() -> ObjcId;
+    /// macOS only — iOS has a single system GPU and no `MTLCopyAllDevices`.
+    #[cfg(target_os = "macos")]
     pub fn MTLCopyAllDevices() -> ObjcId;
 }
 
