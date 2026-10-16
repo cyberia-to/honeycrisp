@@ -74,7 +74,9 @@ fn run_one(k: usize, lo: i32, hi: i32, label: &str) -> Result<(), Box<dyn std::e
         a_vals[kk] = gen(kk as u32);
         b_vals[kk] = gen((kk as u32) + 0x1000);
     }
-    let scalar_ref: i64 = (0..ic).map(|kk| (a_vals[kk] as i64) * (b_vals[kk] as i64)).sum();
+    let scalar_ref: i64 = (0..ic)
+        .map(|kk| (a_vals[kk] as i64) * (b_vals[kk] as i64))
+        .sum();
 
     input.write(|data| {
         let sp = seq + oc;
@@ -108,10 +110,15 @@ fn run_one(k: usize, lo: i32, hi: i32, label: &str) -> Result<(), Box<dyn std::e
     let fp16_ref = f32_to_fp16(scalar_ref as f32);
     let exact_fp16 = fp16_ref == f32_to_fp16(ane_val);
     let oor = scalar_ref.unsigned_abs() > 65504;
-    let status = if exact_int { "INT-EXACT " }
-                 else if exact_fp16 { "FP16-EXACT" }
-                 else if oor { "OOR-fp16  " }
-                 else { "MISMATCH  " };
+    let status = if exact_int {
+        "INT-EXACT "
+    } else if exact_fp16 {
+        "FP16-EXACT"
+    } else if oor {
+        "OOR-fp16  "
+    } else {
+        "MISMATCH  "
+    };
     let label_pad = format!("  {label}");
     println!(
         "{label_pad:<32}ref={scalar_ref:>8}  ane={ane_val:>11.2}  err={err:>9.2}  {status}{}",

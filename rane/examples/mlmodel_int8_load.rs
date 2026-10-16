@@ -22,14 +22,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Load CoreML.framework
     let cml_path = CString::new("/System/Library/Frameworks/CoreML.framework/CoreML").unwrap();
-    unsafe { dlopen(cml_path.as_ptr(), RTLD_NOW | 0x8); }
+    unsafe {
+        dlopen(cml_path.as_ptr(), RTLD_NOW | 0x8);
+    }
 
     unsafe {
         type AllocFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
         type InitBytesFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const u8, usize, u64) -> ObjcId;
         type UrlFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId) -> ObjcId;
         type DictInitFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
-        type ModelWithUrlConfigFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
+        type ModelWithUrlConfigFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
         type SetComputeUnitsFn = unsafe extern "C" fn(ObjcId, ObjcSel, i64);
         type GetComputeUnitsFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> i64;
 
@@ -37,7 +40,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let initf: InitBytesFn = std::mem::transmute(objc_msgSend as *const c_void);
         let urlf: UrlFn = std::mem::transmute(objc_msgSend as *const c_void);
         let dict_init_f: DictInitFn = std::mem::transmute(objc_msgSend as *const c_void);
-        let model_url_cfg: ModelWithUrlConfigFn = std::mem::transmute(objc_msgSend as *const c_void);
+        let model_url_cfg: ModelWithUrlConfigFn =
+            std::mem::transmute(objc_msgSend as *const c_void);
         let set_cu: SetComputeUnitsFn = std::mem::transmute(objc_msgSend as *const c_void);
         let get_cu: GetComputeUnitsFn = std::mem::transmute(objc_msgSend as *const c_void);
 
@@ -59,8 +63,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         let make_nsstr = |s: &str| -> ObjcId {
             let raw = allocf(cls_str as ObjcId, sel("alloc"));
-            initf(raw, sel("initWithBytes:length:encoding:"),
-                  s.as_ptr(), s.len(), NSUTF8_ENCODING)
+            initf(
+                raw,
+                sel("initWithBytes:length:encoding:"),
+                s.as_ptr(),
+                s.len(),
+                NSUTF8_ENCODING,
+            )
         };
         let make_url = |path: &str| -> ObjcId {
             let ns = make_nsstr(path);
@@ -70,10 +79,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Try loading at each compute target
         let model_url = make_url(FS_INT8);
         for (label, cu_val) in &[
-            ("ALL (auto)",      MLCOMPUTE_UNITS_ALL),
-            ("CPU_AND_ANE",     MLCOMPUTE_UNITS_CPU_AND_ANE),
-            ("CPU_ONLY",        MLCOMPUTE_UNITS_CPU_ONLY),
-            ("CPU_AND_GPU",     MLCOMPUTE_UNITS_CPU_AND_GPU),
+            ("ALL (auto)", MLCOMPUTE_UNITS_ALL),
+            ("CPU_AND_ANE", MLCOMPUTE_UNITS_CPU_AND_ANE),
+            ("CPU_ONLY", MLCOMPUTE_UNITS_CPU_ONLY),
+            ("CPU_AND_GPU", MLCOMPUTE_UNITS_CPU_AND_GPU),
         ] {
             println!("\n--- compute={} ({}) ---", label, cu_val);
             let cfg_raw = allocf(cls_config as ObjcId, sel("alloc"));
@@ -87,7 +96,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let model = model_url_cfg(
                 cls_model as ObjcId,
                 sel("modelWithContentsOfURL:configuration:error:"),
-                model_url, cfg, &mut err);
+                model_url,
+                cfg,
+                &mut err,
+            );
             let dt = t0.elapsed();
 
             if !model.is_null() {
@@ -114,10 +126,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 unsafe fn nsstring_to_str(obj: ObjcId) -> String {
-    if obj.is_null() { return "(null)".to_string(); }
+    if obj.is_null() {
+        return "(null)".to_string();
+    }
     type Utf8Fn = unsafe extern "C" fn(ObjcId, ObjcSel) -> *const std::ffi::c_char;
     let uf: Utf8Fn = std::mem::transmute(objc_msgSend as *const c_void);
     let p = uf(obj, sel("UTF8String"));
-    if p.is_null() { return "(null utf8)".to_string(); }
+    if p.is_null() {
+        return "(null utf8)".to_string();
+    }
     CStr::from_ptr(p).to_string_lossy().into_owned()
 }

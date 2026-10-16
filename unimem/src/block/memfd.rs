@@ -54,7 +54,12 @@ impl Block {
                 libc::close(fd);
                 return Err(MemError::BlockLockFailed(errno));
             }
-            Ok(Block { fd, va: NonNull::new_unchecked(va as *mut u8), size, alloc })
+            Ok(Block {
+                fd,
+                va: NonNull::new_unchecked(va as *mut u8),
+                size,
+                alloc,
+            })
         }
     }
 

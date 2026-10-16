@@ -25,20 +25,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Outputs: spatial_embed [1, 512, 768], hidden [1, 768], text [1, 512]\n");
 
     unsafe {
-        dlopen(CString::new("/System/Library/Frameworks/CoreML.framework/CoreML").unwrap().as_ptr(), RTLD_NOW | 0x8);
+        dlopen(
+            CString::new("/System/Library/Frameworks/CoreML.framework/CoreML")
+                .unwrap()
+                .as_ptr(),
+            RTLD_NOW | 0x8,
+        );
 
         type AllocFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
         type InitBytesFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const u8, usize, u64) -> ObjcId;
         type UrlFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId) -> ObjcId;
         type DictInitFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
-        type ModelUrlCfgFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
+        type ModelUrlCfgFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
         type SetCuFn = unsafe extern "C" fn(ObjcId, ObjcSel, i64);
         type PredFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, *mut ObjcId) -> ObjcId;
         type MaInitFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, i64, *mut ObjcId) -> ObjcId;
         type ArrFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, u64) -> ObjcId;
         type NumLLFn = unsafe extern "C" fn(ObjcId, ObjcSel, i64) -> ObjcId;
         type DataPtrFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> *mut c_void;
-        type DictWithFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, *const ObjcId, u64) -> ObjcId;
+        type DictWithFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, *const ObjcId, u64) -> ObjcId;
         type FpDictInitFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, *mut ObjcId) -> ObjcId;
 
         let allocf: AllocFn = std::mem::transmute(objc_msgSend as *const c_void);
@@ -67,35 +74,61 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         let make_nsstr = |s: &str| -> ObjcId {
             let raw = allocf(cls_str as ObjcId, sel("alloc"));
-            initf(raw, sel("initWithBytes:length:encoding:"), s.as_ptr(), s.len(), NSUTF8_ENCODING)
+            initf(
+                raw,
+                sel("initWithBytes:length:encoding:"),
+                s.as_ptr(),
+                s.len(),
+                NSUTF8_ENCODING,
+            )
         };
-        let make_url = |p: &str| -> ObjcId {
-            urlf(cls_url as ObjcId, sel("fileURLWithPath:"), make_nsstr(p))
-        };
-        let make_num = |v: i64| -> ObjcId {
-            num_init(cls_num as ObjcId, sel("numberWithLongLong:"), v)
-        };
+        let make_url =
+            |p: &str| -> ObjcId { urlf(cls_url as ObjcId, sel("fileURLWithPath:"), make_nsstr(p)) };
+        let make_num =
+            |v: i64| -> ObjcId { num_init(cls_num as ObjcId, sel("numberWithLongLong:"), v) };
 
         // Build input MLMultiArray: token_embed [1, 512, 256] fp16 (main_ctx_512 function)
         let shape_objs = [make_num(1), make_num(512), make_num(256)];
-        let shape = arr_with(cls_arr as ObjcId, sel("arrayWithObjects:count:"), shape_objs.as_ptr(), 3);
+        let shape = arr_with(
+            cls_arr as ObjcId,
+            sel("arrayWithObjects:count:"),
+            shape_objs.as_ptr(),
+            3,
+        );
         let mut e: ObjcId = std::ptr::null_mut();
-        let token_embed = ma_init(allocf(cls_ma as ObjcId, sel("alloc")), sel("initWithShape:dataType:error:"),
-                                  shape, MLAT_FLOAT16, &mut e);
+        let token_embed = ma_init(
+            allocf(cls_ma as ObjcId, sel("alloc")),
+            sel("initWithShape:dataType:error:"),
+            shape,
+            MLAT_FLOAT16,
+            &mut e,
+        );
         let dp = data_ptr(token_embed, sel("dataPointer"));
         let buf = std::slice::from_raw_parts_mut(dp as *mut u16, 512 * 256);
         // Fill with small fp16 values (~0.1 random)
         let mut s: u64 = 0x1234567890abcdef;
         for x in buf.iter_mut() {
-            s = s.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+            s = s
+                .wrapping_mul(6364136223846793005)
+                .wrapping_add(1442695040888963407);
             *x = (((s >> 48) as u16) & 0x33FF) | 0x3000;
         }
 
         // indices: [1] fp16 = 0
         let one_shape = [make_num(1)];
-        let oshape = arr_with(cls_arr as ObjcId, sel("arrayWithObjects:count:"), one_shape.as_ptr(), 1);
-        let indices = ma_init(allocf(cls_ma as ObjcId, sel("alloc")), sel("initWithShape:dataType:error:"),
-                              oshape, MLAT_FLOAT16, &mut e);
+        let oshape = arr_with(
+            cls_arr as ObjcId,
+            sel("arrayWithObjects:count:"),
+            one_shape.as_ptr(),
+            1,
+        );
+        let indices = ma_init(
+            allocf(cls_ma as ObjcId, sel("alloc")),
+            sel("initWithShape:dataType:error:"),
+            oshape,
+            MLAT_FLOAT16,
+            &mut e,
+        );
         let ip = data_ptr(indices, sel("dataPointer"));
         *(ip as *mut u16) = 0x3000; // ~0.1
 
@@ -104,10 +137,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let key2 = make_nsstr("indices");
         let objs = [token_embed, indices];
         let keys = [key1, key2];
-        let in_dict = dict_with(cls_dict as ObjcId, sel("dictionaryWithObjects:forKeys:count:"),
-                                objs.as_ptr(), keys.as_ptr(), 2);
+        let in_dict = dict_with(
+            cls_dict as ObjcId,
+            sel("dictionaryWithObjects:forKeys:count:"),
+            objs.as_ptr(),
+            keys.as_ptr(),
+            2,
+        );
         let mut fe: ObjcId = std::ptr::null_mut();
-        let fp_in = fp_dict(allocf(cls_fp as ObjcId, sel("alloc")), sel("initWithDictionary:error:"), in_dict, &mut fe);
+        let fp_in = fp_dict(
+            allocf(cls_fp as ObjcId, sel("alloc")),
+            sel("initWithDictionary:error:"),
+            in_dict,
+            &mut fe,
+        );
         if fp_in.is_null() {
             println!("FP init failed: {}", nserror_string(fe).unwrap_or_default());
             return Ok(());
@@ -132,8 +175,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             let mut me: ObjcId = std::ptr::null_mut();
             let t_load = std::time::Instant::now();
-            let model = model_uc(cls_model as ObjcId, sel("modelWithContentsOfURL:configuration:error:"),
-                                  model_url, cfg, &mut me);
+            let model = model_uc(
+                cls_model as ObjcId,
+                sel("modelWithContentsOfURL:configuration:error:"),
+                model_url,
+                cfg,
+                &mut me,
+            );
             let load_dt = t_load.elapsed();
             if model.is_null() {
                 let s = nserror_string(me).unwrap_or_default();
@@ -144,7 +192,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             // Warmup
             let mut warmup_err: ObjcId = std::ptr::null_mut();
-            let warm = predf(model, sel("predictionFromFeatures:error:"), fp_in, &mut warmup_err);
+            let warm = predf(
+                model,
+                sel("predictionFromFeatures:error:"),
+                fp_in,
+                &mut warmup_err,
+            );
             if warm.is_null() {
                 let s = nserror_string(warmup_err).unwrap_or_default();
                 let head = if s.len() > 200 { &s[..200] } else { &s[..] };
@@ -157,7 +210,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let t = std::time::Instant::now();
             for _ in 0..n_iter {
                 let mut perr: ObjcId = std::ptr::null_mut();
-                let _ = predf(model, sel("predictionFromFeatures:error:"), fp_in, &mut perr);
+                let _ = predf(
+                    model,
+                    sel("predictionFromFeatures:error:"),
+                    fp_in,
+                    &mut perr,
+                );
             }
             let dt = t.elapsed();
             let per = dt / n_iter;

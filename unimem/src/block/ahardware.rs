@@ -24,10 +24,7 @@ const USAGE_GPU_DATA_BUFFER: u64 = 1 << 24;
 
 #[link(name = "android")]
 unsafe extern "C" {
-    fn AHardwareBuffer_allocate(
-        desc: *const AHardwareBufferDesc,
-        out: *mut *mut c_void,
-    ) -> i32;
+    fn AHardwareBuffer_allocate(desc: *const AHardwareBufferDesc, out: *mut *mut c_void) -> i32;
     fn AHardwareBuffer_release(buffer: *mut c_void);
     fn AHardwareBuffer_lock(
         buffer: *mut c_void,

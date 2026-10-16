@@ -23,17 +23,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("       (constexpr_affine_dequantize int8→fp16 → matmul)");
     println!("input: fp16 [198, 40]   output: fp16 [1, 48, 144]\n");
 
-    unsafe { dlopen(CString::new("/System/Library/Frameworks/CoreML.framework/CoreML").unwrap().as_ptr(), RTLD_NOW | 0x8); }
+    unsafe {
+        dlopen(
+            CString::new("/System/Library/Frameworks/CoreML.framework/CoreML")
+                .unwrap()
+                .as_ptr(),
+            RTLD_NOW | 0x8,
+        );
+    }
 
     unsafe {
         type AllocFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
         type InitBytesFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const u8, usize, u64) -> ObjcId;
         type UrlFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId) -> ObjcId;
         type DictInitFn = unsafe extern "C" fn(ObjcId, ObjcSel) -> ObjcId;
-        type ModelWithUrlConfigFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
+        type ModelWithUrlConfigFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, ObjcId, *mut ObjcId) -> ObjcId;
         type SetCuFn = unsafe extern "C" fn(ObjcId, ObjcSel, i64);
         type PredictFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, *mut ObjcId) -> ObjcId;
-        type InitMaShapeFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, i64, *mut ObjcId) -> ObjcId;
+        type InitMaShapeFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, i64, *mut ObjcId) -> ObjcId;
         type ArrayWithObjsFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, u64) -> ObjcId;
         type NumberWithIntFn = unsafe extern "C" fn(ObjcId, ObjcSel, i64) -> ObjcId;
         type FpInitFn = unsafe extern "C" fn(ObjcId, ObjcSel, ObjcId, *mut ObjcId) -> ObjcId;
@@ -43,7 +52,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let initf: InitBytesFn = std::mem::transmute(objc_msgSend as *const c_void);
         let urlf: UrlFn = std::mem::transmute(objc_msgSend as *const c_void);
         let dict_init_f: DictInitFn = std::mem::transmute(objc_msgSend as *const c_void);
-        let model_url_cfg: ModelWithUrlConfigFn = std::mem::transmute(objc_msgSend as *const c_void);
+        let model_url_cfg: ModelWithUrlConfigFn =
+            std::mem::transmute(objc_msgSend as *const c_void);
         let set_cu: SetCuFn = std::mem::transmute(objc_msgSend as *const c_void);
         let predf: PredictFn = std::mem::transmute(objc_msgSend as *const c_void);
         let ma_init: InitMaShapeFn = std::mem::transmute(objc_msgSend as *const c_void);
@@ -68,29 +78,47 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         let make_nsstr = |s: &str| -> ObjcId {
             let raw = allocf(cls_str as ObjcId, sel("alloc"));
-            initf(raw, sel("initWithBytes:length:encoding:"), s.as_ptr(), s.len(), NSUTF8_ENCODING)
+            initf(
+                raw,
+                sel("initWithBytes:length:encoding:"),
+                s.as_ptr(),
+                s.len(),
+                NSUTF8_ENCODING,
+            )
         };
         let make_url = |path: &str| -> ObjcId {
             let ns = make_nsstr(path);
             urlf(cls_url as ObjcId, sel("fileURLWithPath:"), ns)
         };
-        let make_num = |v: i64| -> ObjcId {
-            num_init(cls_num as ObjcId, sel("numberWithLongLong:"), v)
-        };
+        let make_num =
+            |v: i64| -> ObjcId { num_init(cls_num as ObjcId, sel("numberWithLongLong:"), v) };
 
         // Build shape NSArray [198, 40]
         let s198 = make_num(198);
         let s40 = make_num(40);
         let shape_objs = [s198, s40];
-        let shape_arr = arr_with(cls_arr as ObjcId, sel("arrayWithObjects:count:"), shape_objs.as_ptr(), 2);
+        let shape_arr = arr_with(
+            cls_arr as ObjcId,
+            sel("arrayWithObjects:count:"),
+            shape_objs.as_ptr(),
+            2,
+        );
 
         // Build MLMultiArray
         let mut err: ObjcId = std::ptr::null_mut();
         let ma_raw = allocf(cls_ma as ObjcId, sel("alloc"));
-        let ma = ma_init(ma_raw, sel("initWithShape:dataType:error:"),
-                         shape_arr, MLAT_FLOAT16, &mut err);
+        let ma = ma_init(
+            ma_raw,
+            sel("initWithShape:dataType:error:"),
+            shape_arr,
+            MLAT_FLOAT16,
+            &mut err,
+        );
         if ma.is_null() {
-            println!("MLMultiArray init failed: {}", nserror_string(err).unwrap_or_default());
+            println!(
+                "MLMultiArray init failed: {}",
+                nserror_string(err).unwrap_or_default()
+            );
             return Ok(());
         }
         // Fill with random fp16 noise
@@ -99,7 +127,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let buf = std::slice::from_raw_parts_mut(dp as *mut u16, n);
         let mut state: u64 = 0xdeadbeefcafef00d;
         for x in buf.iter_mut() {
-            state = state.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+            state = state
+                .wrapping_mul(6364136223846793005)
+                .wrapping_add(1442695040888963407);
             // small fp16 normal-ish value
             *x = (((state >> 48) as u16) & 0x3BFF) | 0x3800; // ~[-1..1]
         }
@@ -111,18 +141,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let fp_dict: FpDictInitFn = std::mem::transmute(objc_msgSend as *const c_void);
         // Build NSDictionary
         let cls_dict = cls("NSDictionary");
-        type DictWithObjsKeysFn = unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, *const ObjcId, u64) -> ObjcId;
+        type DictWithObjsKeysFn =
+            unsafe extern "C" fn(ObjcId, ObjcSel, *const ObjcId, *const ObjcId, u64) -> ObjcId;
         let dict_with: DictWithObjsKeysFn = std::mem::transmute(objc_msgSend as *const c_void);
         let key = make_nsstr("input_wav");
         let objs = [ma];
         let keys = [key];
-        let in_dict = dict_with(cls_dict as ObjcId, sel("dictionaryWithObjects:forKeys:count:"),
-                                objs.as_ptr(), keys.as_ptr(), 1);
+        let in_dict = dict_with(
+            cls_dict as ObjcId,
+            sel("dictionaryWithObjects:forKeys:count:"),
+            objs.as_ptr(),
+            keys.as_ptr(),
+            1,
+        );
         let fp_raw = allocf(cls_fp as ObjcId, sel("alloc"));
         let mut fp_err: ObjcId = std::ptr::null_mut();
-        let fp_in = fp_dict(fp_raw, sel("initWithDictionary:error:"), in_dict, &mut fp_err);
+        let fp_in = fp_dict(
+            fp_raw,
+            sel("initWithDictionary:error:"),
+            in_dict,
+            &mut fp_err,
+        );
         if fp_in.is_null() {
-            println!("Feature provider init failed: {}", nserror_string(fp_err).unwrap_or_default());
+            println!(
+                "Feature provider init failed: {}",
+                nserror_string(fp_err).unwrap_or_default()
+            );
             return Ok(());
         }
 
@@ -131,19 +175,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // For each compute target
         let model_url = make_url(MODEL);
         for (label, cu) in &[
-            ("CPU_ONLY",     MLCOMPUTE_UNITS_CPU_ONLY),
-            ("CPU_AND_ANE",  MLCOMPUTE_UNITS_CPU_AND_ANE),
-            ("ALL",          MLCOMPUTE_UNITS_ALL),
+            ("CPU_ONLY", MLCOMPUTE_UNITS_CPU_ONLY),
+            ("CPU_AND_ANE", MLCOMPUTE_UNITS_CPU_AND_ANE),
+            ("ALL", MLCOMPUTE_UNITS_ALL),
         ] {
             let cfg_raw = allocf(cls_config as ObjcId, sel("alloc"));
             let cfg = dict_init_f(cfg_raw, sel("init"));
             set_cu(cfg, sel("setComputeUnits:"), *cu);
             let mut e: ObjcId = std::ptr::null_mut();
-            let m = model_url_cfg(cls_model as ObjcId,
+            let m = model_url_cfg(
+                cls_model as ObjcId,
                 sel("modelWithContentsOfURL:configuration:error:"),
-                model_url, cfg, &mut e);
+                model_url,
+                cfg,
+                &mut e,
+            );
             if m.is_null() {
-                println!("[{}] load failed: {}", label, nserror_string(e).unwrap_or_default());
+                println!(
+                    "[{}] load failed: {}",
+                    label,
+                    nserror_string(e).unwrap_or_default()
+                );
                 continue;
             }
             // Warmup
@@ -156,13 +208,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let mut perr: ObjcId = std::ptr::null_mut();
                 let out = predf(m, sel("predictionFromFeatures:error:"), fp_in, &mut perr);
                 if out.is_null() {
-                    println!("[{}] predict failed: {}", label, nserror_string(perr).unwrap_or_default());
+                    println!(
+                        "[{}] predict failed: {}",
+                        label,
+                        nserror_string(perr).unwrap_or_default()
+                    );
                     break;
                 }
             }
             let dt = t0.elapsed();
             let per = dt / n_iter;
-            println!("[{:<13}] {:?} per inference, {} iters in {:?}", label, per, n_iter, dt);
+            println!(
+                "[{:<13}] {:?} per inference, {} iters in {:?}",
+                label, per, n_iter, dt
+            );
         }
     }
 
