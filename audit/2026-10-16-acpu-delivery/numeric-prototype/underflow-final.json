@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "audit/2026-10-16-acpu-delivery/numeric-prototype/underflow.nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp"
+  ],
+  "input_sha256": "14e13ad7d8f6df871cfa0af90e5d8bd08b1ffff774300abc7cf02d9e022f01be",
+  "numerical_zero_rows": 649,
+  "largest_log_upper": -744.7213250540354,
+  "half_subnormal_log": -103.97207708399179,
+  "floating_log_evaluation": true,
+  "certified_interval": false,
+  "context_revision": "d5a78ed4865196241f6fd1e486fbb895fa59579a",
+  "probe_source_sha256": "28334830dc5df5a25887990a4ebc9142ee11239749abfd7e5052e76a56226c6b"
+}

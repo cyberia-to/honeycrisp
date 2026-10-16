@@ -1,0 +1,30 @@
+{
+  "command": [
+    "cargo",
+    "doc",
+    "-p",
+    "acpu",
+    "--no-deps",
+    "--locked",
+    "--offline"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "source_sha256": "bf7125964da4ffae87f6f419de482c4295e0975af7f5764018c5a1e11608371c",
+  "source_before_after": "equal",
+  "started": "2026-10-16T23:29:06.005260+00:00",
+  "finished": "2026-10-16T23:29:07.487093+00:00",
+  "exit_code": 0,
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "rustup_toolchain": "1.95.0",
+  "clippy": "clippy 0.1.95 (59807616e1 2026-04-14)",
+  "rustc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+  "rustdoc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+  "target": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "rustflags": "-Dwarnings",
+  "rustdocflags": "-Dwarnings",
+  "jobs": "2",
+  "extra_inputs": [],
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "4f69fc93b0a132fb7901c6c6ed096beb8a11a7df820f63b67f1c41def6f851a3"
+}

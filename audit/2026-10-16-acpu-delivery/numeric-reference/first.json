@@ -1,0 +1,25 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "-O",
+    "-D",
+    "warnings",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/numeric-reference/oracle.rs",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-reference/scaled-bessel-oracle-first"
+  ],
+  "run_command": [
+    "/Users/master/.cache/cyber/honeycrisp/acpu-delivery/numeric-reference/scaled-bessel-oracle-first"
+  ],
+  "context_revision": "c5177c56e4551c9896a2869c3b23d0c7bac9a6f9",
+  "tool": "rustc 1.95.0 (59807616e 2026-04-14) (Homebrew)",
+  "source_sha256": "dbc25d4de323cd395618f5c8d6410b3fcf135ab2b2d0e979f4d5fd126aa258e3",
+  "source_unchanged": true,
+  "compile_exit": 0,
+  "build_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "run_exit": 101,
+  "stdout_sha256": "36f9a84aed843204a1fb619517d616a3365b7c437759e4166638086dd04e4f7c",
+  "stderr_sha256": "a8d9479b92557025b62bf6e1ad201457b93bc22dbc958da83a71d42fc3af252d"
+}

@@ -1,0 +1,139 @@
+//! Independent diagnostic, using NIST DLMF 10.32.3 and 10.25.2.
+//! No production recurrence or Honeycrisp dependency is used.
+use std::f64::consts::PI;
+
+fn add(sum: &mut f64, correction: &mut f64, value: f64) {
+    let next = value - *correction;
+    let total = *sum + next;
+    *correction = (total - *sum) - next;
+    *sum = total;
+}
+
+// exp(-tau) I_n(tau), with u = sqrt(tau) theta. Writing cos(theta)-1
+// as -2 sin(theta/2)^2 avoids subtractive loss for very large tau.
+// On 0 <= theta <= pi, sin(theta/2) >= theta/pi, so the discarded
+// tail is bounded by integral exp(-2 u^2/pi^2) du / (pi sqrt(tau)).
+fn integral(tau: f64, n: usize, panels: usize) -> (f64, f64) {
+    if tau == 0.0 {
+        return (if n == 0 { 1.0 } else { 0.0 }, 0.0);
+    }
+    assert!(panels.is_multiple_of(2));
+    let root = tau.sqrt();
+    let upper = (PI * root).min(24.0);
+    let h = upper / panels as f64;
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for i in 0..=panels {
+        let u = i as f64 * h;
+        let sine = (u / (2.0 * root)).sin();
+        let weight = if i == 0 || i == panels {
+            1.0
+        } else if i % 2 == 0 {
+            2.0
+        } else {
+            4.0
+        };
+        add(
+            &mut sum,
+            &mut correction,
+            weight * (-2.0 * tau * sine * sine).exp() * (n as f64 * u / root).cos(),
+        );
+    }
+    let c = 2.0 / (PI * PI);
+    let tail = if upper < PI * root {
+        (-c * upper * upper).exp() / (2.0 * c * upper * PI * root)
+    } else {
+        0.0
+    };
+    (sum * h / (3.0 * PI * root), tail)
+}
+
+// Independent positive-term defining series. tau <= 700 keeps the unscaled
+// finite sum inside f64; no Miller recurrence or quadrature enters this path.
+fn series(tau: f64, n: usize) -> f64 {
+    assert!((0.0..=700.0).contains(&tau));
+    let mut term = 1.0;
+    for k in 1..=n {
+        term *= (tau / 2.0) / k as f64;
+    }
+    let mut sum = term;
+    let mut correction = 0.0;
+    for j in 1..10_000 {
+        let ratio = (tau * tau / 4.0) / (j as f64 * (n + j) as f64);
+        term *= ratio;
+        add(&mut sum, &mut correction, term);
+        assert!(sum.is_finite());
+        if ratio < 1.0 && (term == 0.0 || term < sum * f64::EPSILON / 4.0) {
+            return sum * (-tau).exp();
+        }
+    }
+    panic!("series did not converge");
+}
+
+fn main() {
+    let times = [
+        0.0,
+        0.125,
+        0.5,
+        1.0,
+        3.0,
+        5.0,
+        20.0,
+        80.0,
+        100.0,
+        104.0,
+        500.0,
+        700.0,
+        1000.0,
+        10_000.0,
+        1_000_000.0,
+        f32::MAX as f64,
+    ];
+    let orders = [0, 1, 2, 5, 10, 20, 40, 80, 160, 320];
+    let mut count = 0;
+    let mut series_count = 0;
+    let mut max_refinement = 0.0_f64;
+    let mut max_series_error = 0.0_f64;
+    println!("{{\"rows\":[");
+    for tau in times {
+        for n in orders {
+            let (coarse, _) = integral(tau, n, 16_384);
+            let (fine, tail) = integral(tau, n, 32_768);
+            let scale = tau.sqrt().max(1.0);
+            let refinement = (coarse - fine).abs();
+            max_refinement = max_refinement.max(refinement);
+            // A measured convergence check, not a proof of quadrature error.
+            assert!(refinement < 2e-13 / scale);
+            assert!(tail < 1e-49 / scale);
+            let (reference, method, series_json) = if tau <= 700.0 {
+                let value = series(tau, n);
+                let discrepancy = (value - fine).abs();
+                max_series_error = max_series_error.max(discrepancy);
+                assert!(discrepancy < 2e-13 / scale);
+                series_count += 1;
+                (value, "positive_series", format!("{value:.17e}"))
+            } else {
+                // Relative/reference rounding claims require a resolved signal.
+                assert!(fine > 1e-9 / scale);
+                (fine, "scaled_integral", "null".to_owned())
+            };
+            let coefficient = reference
+                * if n == 0 {
+                    1.0
+                } else if n % 2 == 0 {
+                    2.0
+                } else {
+                    -2.0
+                };
+            let separator = if count == 0 { "" } else { "," };
+            println!(
+                "{separator}{{\"tau\":{tau:.17e},\"n\":{n},\"integral_coarse\":{coarse:.17e},\"integral_fine\":{fine:.17e},\"tail_bound\":{tail:.17e},\"series\":{series_json},\"reference_method\":\"{method}\",\"coefficient\":{coefficient:.17e},\"coefficient_f32_bits\":{}}}",
+                (coefficient as f32).to_bits()
+            );
+            count += 1;
+        }
+    }
+    println!(
+        "],\"count\":{count},\"series_count\":{series_count},\"max_refinement_difference\":{max_refinement:.17e},\"max_series_integral_difference\":{max_series_error:.17e}}}"
+    );
+}

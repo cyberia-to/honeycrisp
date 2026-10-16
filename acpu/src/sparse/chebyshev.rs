@@ -5,13 +5,16 @@
 //! where L̃ = (2L − λ_max I) / λ_max  maps eigenvalues to [-1,1]
 //! (λ_max = 2 for the normalized Laplacian),
 //! T_k are Chebyshev polynomials (T_0=1, T_1=x, T_{k+1}=2xT_k − T_{k-1}),
-//! and c_k(τ) = exp(−τ) · I_k(τ) · (2 − δ_{k,0}) are coefficients from
+//! and c_k(τ) = exp(−τ) · I_k(τ) · (2 − δ_{k,0}) · (−1)^k are coefficients from
 //! the modified Bessel functions of the first kind.
 //!
 //! Reference: Shuman et al., "The Emerging Field of Signal Processing on Graphs",
 //! IEEE Signal Processing Magazine 2013 — Algorithm 1.
 
 use super::admission::Csr;
+pub use super::coefficients::{
+    try_chebyshev_coeffs, ChebyshevError, ChebyshevLimits, DEFAULT_CHEBYSHEV_LIMITS,
+};
 
 // ── Modified Bessel I_k ───────────────────────────────────────────────────────
 
@@ -104,15 +107,16 @@ pub fn bessel_i(k: usize, tau: f32) -> f32 {
 ///   exp(−τ x) = I_0(τ) T_0(x) + 2 Σ_{k≥1} (−1)^k I_k(τ) T_k(x)
 ///
 /// So c_0 = exp(−τ) · I_0(τ),  c_k = exp(−τ) · 2 · (−1)^k · I_k(τ) for k ≥ 1.
+///
+/// Uses [`DEFAULT_CHEBYSHEV_LIMITS`]. Use [`try_chebyshev_coeffs`] to override
+/// the coefficient-count/work budgets or handle refusal without panicking.
+///
+/// # Panics
+/// Panics on any checked coefficient error, including invalid time, capacity,
+/// exhausted work or numerical nonconvergence.
 pub fn chebyshev_coeffs(tau: f32, order: usize) -> Vec<f32> {
-    let exp_neg_tau = (-tau).exp();
-    (0..=order)
-        .map(|k| {
-            let factor = if k == 0 { 1.0 } else { 2.0 };
-            let sign = if k % 2 == 0 { 1.0f32 } else { -1.0 };
-            exp_neg_tau * factor * sign * bessel_i(k, tau)
-        })
-        .collect()
+    try_chebyshev_coeffs(tau, order, DEFAULT_CHEBYSHEV_LIMITS)
+        .unwrap_or_else(|error| panic!("Chebyshev coefficients: {error}"))
 }
 
 // ── Chebyshev matvec ──────────────────────────────────────────────────────────
@@ -138,6 +142,8 @@ pub fn chebyshev_coeffs(tau: f32, order: usize) -> Vec<f32> {
 /// Before allocation or mutation, checks the CSR conditions of
 /// [`super::csr_matvec`] and requires the row count and d_inv_sqrt/y/t0/t1
 /// lengths to equal x.len(). Shape failures preserve y, t0 and t1.
+/// Coefficient refusal under [`DEFAULT_CHEBYSHEV_LIMITS`] also panics before
+/// those arrays are written; the work limit covers coefficients, not matvec.
 #[allow(clippy::too_many_arguments)]
 pub fn chebyshev_matvec(
     row_ptr: &[u32],

@@ -1,0 +1,330 @@
+use acpu::sparse::chebyshev::{
+    chebyshev_coeffs, chebyshev_matvec, try_chebyshev_coeffs, ChebyshevError as Error,
+    ChebyshevLimits as Limits, DEFAULT_CHEBYSHEV_LIMITS as DEFAULT,
+};
+use std::panic::{catch_unwind, AssertUnwindSafe};
+
+#[path = "chebyshev_coefficients/reference.rs"]
+mod reference;
+
+fn agrees(actual: f32, expected: f64) {
+    let tolerance = expected.abs() * 2.0_f64.powi(-21) + f64::from(f32::from_bits(1));
+    assert!(
+        (f64::from(actual) - expected).abs() <= tolerance,
+        "actual={actual:e}, reference={expected:e}, tolerance={tolerance:e}"
+    );
+}
+
+#[test]
+fn independent_frozen_coefficients_cover_overflow_and_subnormals() {
+    // Independently acquired series/integral values; provenance and unresolved
+    // exclusions are frozen in audit/2026-10-16-acpu-delivery/numeric-reference.
+    let mut compared = 0;
+    for line in include_str!("chebyshev_coefficients/independent.tsv")
+        .lines()
+        .skip(1)
+    {
+        let mut cells = line.split('\t');
+        let tau: f32 = cells.next().unwrap().parse().unwrap();
+        let order: usize = cells.next().unwrap().parse().unwrap();
+        let expected: f64 = cells.next().unwrap().parse().unwrap();
+        let actual = try_chebyshev_coeffs(tau, order, DEFAULT).unwrap();
+        agrees(actual[order], expected);
+        compared += 1;
+    }
+    assert_eq!(compared, 149);
+    for tau in [100.0, 104.0] {
+        assert!(chebyshev_coeffs(tau, 20).iter().all(|c| c.is_finite()));
+    }
+    assert_eq!(
+        chebyshev_coeffs(f32::from_bits(1), 4),
+        [1.0, -f32::from_bits(1), 0.0, 0.0, 0.0]
+    );
+}
+
+#[test]
+fn exact_budget_and_refinement_budget_are_whole_request_limits() {
+    // tau=1/order=0: one tail probe, 16 paired backward rows, one coefficient.
+    assert!(try_chebyshev_coeffs(
+        1.0,
+        0,
+        Limits {
+            max_steps: 18,
+            ..DEFAULT
+        }
+    )
+    .is_ok());
+    assert_eq!(
+        try_chebyshev_coeffs(
+            1.0,
+            0,
+            Limits {
+                max_steps: 17,
+                ..DEFAULT
+            }
+        ),
+        Err(Error::WorkLimit)
+    );
+    // tau=500/order=320 needs both seed-refinement passes: 1+642+1+963.
+    assert!(try_chebyshev_coeffs(
+        500.0,
+        320,
+        Limits {
+            max_steps: 1607,
+            ..DEFAULT
+        }
+    )
+    .is_ok());
+    assert_eq!(
+        try_chebyshev_coeffs(
+            500.0,
+            320,
+            Limits {
+                max_steps: 1606,
+                ..DEFAULT
+            }
+        ),
+        Err(Error::WorkLimit)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(f32::MAX, 0, DEFAULT),
+        Err(Error::WorkLimit)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(1e10, 0, DEFAULT),
+        Err(Error::WorkLimit)
+    );
+    let raised = try_chebyshev_coeffs(
+        1e10,
+        0,
+        Limits {
+            max_steps: 2_000_000,
+            ..DEFAULT
+        },
+    )
+    .unwrap();
+    let (q, _) = reference::quadrature(1e10, 0);
+    agrees(
+        raised[0],
+        q.expect("large-time low-order integral is resolved"),
+    );
+}
+
+#[test]
+fn input_count_and_allocation_admission_are_explicit() {
+    assert_eq!(Limits::default(), DEFAULT);
+    for tau in [-1.0, f32::NEG_INFINITY, f32::INFINITY, f32::NAN] {
+        assert_eq!(
+            try_chebyshev_coeffs(tau, 0, DEFAULT),
+            Err(Error::InvalidTime)
+        );
+    }
+    assert_eq!(
+        try_chebyshev_coeffs(0.0, usize::MAX, DEFAULT),
+        Err(Error::OrderOverflow)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(1.0, DEFAULT.max_coefficients, DEFAULT),
+        Err(Error::OutputLimit)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(
+            0.0,
+            0,
+            Limits {
+                max_coefficients: 0,
+                ..DEFAULT
+            }
+        ),
+        Err(Error::OutputLimit)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(
+            0.0,
+            0,
+            Limits {
+                max_steps: 0,
+                ..DEFAULT
+            }
+        ),
+        Err(Error::WorkLimit)
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(
+            -0.0,
+            3,
+            Limits {
+                max_steps: 4,
+                ..DEFAULT
+            }
+        )
+        .unwrap(),
+        [1.0, 0.0, 0.0, 0.0]
+    );
+    assert_eq!(
+        try_chebyshev_coeffs(
+            0.0,
+            usize::MAX - 1,
+            Limits {
+                max_coefficients: usize::MAX,
+                max_steps: u64::MAX
+            }
+        ),
+        Err(Error::Allocation)
+    );
+}
+
+#[test]
+fn maximum_nonzero_output_and_custom_cap_preserve_prefix() {
+    let prefix = chebyshev_coeffs(1.0, 20);
+    let full = chebyshev_coeffs(1.0, DEFAULT.max_coefficients - 1);
+    assert_eq!(full.len(), DEFAULT.max_coefficients);
+    assert_eq!(&full[..prefix.len()], prefix);
+    for (order, c) in full.iter().enumerate() {
+        assert!(c.is_finite() && c.abs() <= 1.0);
+        if *c != 0.0 {
+            assert_eq!(c.is_sign_negative(), order % 2 == 1);
+        }
+    }
+    let raised = try_chebyshev_coeffs(
+        1.0,
+        DEFAULT.max_coefficients,
+        Limits {
+            max_coefficients: DEFAULT.max_coefficients + 1,
+            ..DEFAULT
+        },
+    )
+    .unwrap();
+    assert_eq!(&raised[..full.len()], full);
+}
+
+#[test]
+fn default_wrapper_refusals_preserve_matvec_outputs() {
+    for (tau, order) in [
+        (-1.0, 20),
+        (f32::NAN, 20),
+        (f32::INFINITY, 20),
+        (f32::MAX, 20),
+        (1.0, usize::MAX),
+        (1.0, DEFAULT.max_coefficients),
+    ] {
+        let mut y = [7.0, 8.0];
+        let mut t0 = [9.0, 10.0];
+        let mut t1 = [11.0, 12.0];
+        let failed = catch_unwind(AssertUnwindSafe(|| {
+            chebyshev_matvec(
+                &[0, 1, 2],
+                &[1, 0],
+                &[1.0, 1.0],
+                &[1.0, 1.0],
+                &[1.0, 0.0],
+                &mut y,
+                &mut t0,
+                &mut t1,
+                tau,
+                order,
+            )
+        }));
+        assert!(failed.is_err());
+        assert_eq!(y, [7.0, 8.0]);
+        assert_eq!(t0, [9.0, 10.0]);
+        assert_eq!(t1, [11.0, 12.0]);
+    }
+}
+
+#[test]
+fn analytic_two_and_three_element_heat_operators() {
+    // Fixed order160 makes the omitted coefficient mass negligible for these
+    // times. 2e-5 allows the existing f32 matvec accumulation/degree rounding;
+    // this is a heat-action control, not the coefficient target above.
+    for tau in [0.0_f32, 0.5, 5.0, 100.0, 104.0] {
+        let mut y = [0.0; 2];
+        chebyshev_matvec(
+            &[0, 1, 2],
+            &[1, 0],
+            &[1.0, 1.0],
+            &[1.0, 1.0],
+            &[1.0, 0.0],
+            &mut y,
+            &mut [0.0; 2],
+            &mut [0.0; 2],
+            tau,
+            160,
+        );
+        let decay = (-2.0 * f64::from(tau)).exp();
+        let expected = [(1.0 + decay) / 2.0, (1.0 - decay) / 2.0];
+        for (actual, reference) in y.into_iter().zip(expected) {
+            assert!((f64::from(actual) - reference).abs() < 2e-5);
+        }
+        let d = std::f32::consts::FRAC_1_SQRT_2;
+        let mut y = [0.0; 3];
+        chebyshev_matvec(
+            &[0, 2, 4, 6],
+            &[1, 2, 0, 2, 0, 1],
+            &[1.0; 6],
+            &[d; 3],
+            &[1.0, 0.0, 0.0],
+            &mut y,
+            &mut [0.0; 3],
+            &mut [0.0; 3],
+            tau,
+            160,
+        );
+        // Exact spectrum of the dense operator represented by this rounded d.
+        let weight = f64::from(d).powi(2);
+        let common = (-f64::from(tau) * (1.0 - 2.0 * weight)).exp() / 3.0;
+        let difference = (-f64::from(tau) * (1.0 + weight)).exp() / 3.0;
+        let expected = [
+            common + 2.0 * difference,
+            common - difference,
+            common - difference,
+        ];
+        for (actual, reference) in y.into_iter().zip(expected) {
+            assert!((f64::from(actual) - reference).abs() < 2e-5);
+        }
+    }
+}
+
+#[test]
+fn seeded_independent_series_and_integral_controls() {
+    let mut seed = 0x319f_a27d_2e88_4c15_u64;
+    let mut next = || {
+        seed ^= seed << 13;
+        seed ^= seed >> 7;
+        seed ^= seed << 17;
+        seed
+    };
+    for _ in 0..128 {
+        let bits = 1 + (next() % u64::from(700.0_f32.to_bits())) as u32;
+        let tau = f32::from_bits(bits);
+        let order = (next() % 513) as usize;
+        let q = reference::series(f64::from(tau), order);
+        let factor = if order == 0 {
+            1.0
+        } else if order % 2 == 0 {
+            2.0
+        } else {
+            -2.0
+        };
+        agrees(chebyshev_coeffs(tau, order)[order], q * factor);
+    }
+    for tau in [1e5_f32, 1e6, 1e7, 1e8, 1e9, 4e9] {
+        for order in [0, 1, 20, 320, 4096] {
+            // The retained audit identifies this integral below its cancellation
+            // floor; it provides no resolved numerical reference.
+            if tau == 1e5 && order == 4096 {
+                continue;
+            }
+            let (q, _) = reference::quadrature(f64::from(tau), order);
+            let q = q.expect("selected wide-time reference must be resolved");
+            let factor = if order == 0 {
+                1.0
+            } else if order % 2 == 0 {
+                2.0
+            } else {
+                -2.0
+            };
+            agrees(chebyshev_coeffs(tau, order)[order], q * factor);
+        }
+    }
+}

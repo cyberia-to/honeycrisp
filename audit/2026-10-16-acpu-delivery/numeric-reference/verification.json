@@ -1,0 +1,11 @@
+{
+  "verified": true,
+  "checked_at": "2026-10-16T22:51:10.259883+00:00",
+  "results": {
+    "count": 160,
+    "resolved_count": 159,
+    "series_count": 120,
+    "max_refinement_difference": 1.2593572922050639e-16,
+    "max_series_integral_difference": 8.664243548601087e-17
+  }
+}

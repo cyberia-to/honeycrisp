@@ -1,0 +1,10 @@
+{
+  "verified": true,
+  "recurrence_sha256": "3673c49f69c15256c7c15ca07e3791ebfcc81c83467ce70ebcb0ef73fd6ae1a3",
+  "receipts": [
+    "first",
+    "stress",
+    "random",
+    "limits"
+  ]
+}
