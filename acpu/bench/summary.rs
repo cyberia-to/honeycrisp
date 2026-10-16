@@ -2206,7 +2206,7 @@ fn main() {
     });
 
     // Poseidon2 permute: acpu vs theoretical floor
-    let rc: [u64; 144] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15));
+    let rc: [u64; 240] = core::array::from_fn(|i| (i as u64 + 1).wrapping_mul(0x9E3779B97F4A7C15));
     let diag: [u64; 16] = core::array::from_fn(|i| (i as u64 + 2).wrapping_mul(0x517CC1B727220A95));
     let mut st: [u64; 16] = core::array::from_fn(|i| i as u64 + 1);
     let t_p = best_of(
