@@ -1,0 +1,221 @@
+    Checking strata-core v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/core)
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: duplicated attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+note: first defined here
+    --> acpu/src/gemm/mod.rs:1093:9
+     |
+1093 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: remove this attribute
+    --> acpu/src/gemm/mod.rs:1094:9
+     |
+1094 | #[allow(clippy::too_many_arguments)]
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#duplicated_attributes
+     = note: `-D clippy::duplicated-attributes` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::duplicated_attributes)]`
+
+    Checking strata-compute v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/compute)
+    Checking strata-ext v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/ext)
+    Checking strata-proof v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/proof)
+    Checking strata-nebu v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/nebu/rs)
+error: manual implementation of an assign operation
+   --> acpu/src/sparse/chebyshev.rs:186:9
+    |
+186 |         t1[i] = -d_inv_sqrt[i] * t1[i];
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace it with: `t1[i] *= -d_inv_sqrt[i]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#assign_op_pattern
+    = note: `-D clippy::assign-op-pattern` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::assign_op_pattern)]`
+
+error: the loop variable `k` is used to index `coeffs`
+   --> acpu/src/sparse/chebyshev.rs:207:14
+    |
+207 |     for k in 2..=order {
+    |              ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+207 -     for k in 2..=order {
+207 +     for (k, <item>) in coeffs.iter().enumerate().take(order + 1).skip(2) {
+    |
+
+error: the loop variable `pf` is only used to index `cols`
+  --> acpu/src/sparse/mod.rs:56:23
+   |
+56 |             for pf in 0..len.min(PF) {
+   |                       ^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+   |
+56 -             for pf in 0..len.min(PF) {
+56 +             for <item> in cols.iter().take(len.min(PF)) {
+   |
+
+error: could not compile `acpu` (lib) due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: the loop variable `i` is used to index `state`
+   --> acpu/src/field/goldilocks.rs:299:18
+    |
+299 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+299 -         for i in 0..16 {
+299 +         for (i, <item>) in state.iter_mut().enumerate() {
+    |
+
+error: the loop variable `i` is only used to index `expected`
+   --> acpu/src/field/goldilocks.rs:303:18
+    |
+303 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+    |
+303 -         for i in 0..16 {
+303 +         for <item> in &mut expected {
+    |
+
+error: the loop variable `i` is used to index `rc`
+   --> acpu/src/field/permute.rs:146:18
+    |
+146 |         for i in 0..144 {
+    |                  ^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+146 -         for i in 0..144 {
+146 +         for (i, <item>) in rc.iter_mut().enumerate() {
+    |
+
+error: the loop variable `i` is used to index `d`
+   --> acpu/src/field/permute.rs:154:18
+    |
+154 |         for i in 0..16 {
+    |                  ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+154 -         for i in 0..16 {
+154 +         for (i, <item>) in d.iter_mut().enumerate() {
+    |
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> acpu/src/numeric/bf16.rs:167:13
+    |
+167 |             3.14,
+    |             ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+    = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: the loop variable `k` is used to index `coeffs`
+   --> acpu/src/sparse/chebyshev.rs:207:14
+    |
+207 |     for k in 2..=order {
+    |              ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+207 -     for k in 2..=order {
+207 +     for (k, <item>) in coeffs.iter().enumerate().take(order + 1).skip(2) {
+    |
+
+error: float has excessive precision
+   --> acpu/src/sparse/chebyshev.rs:262:33
+    |
+262 |             (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
+    |                                 ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#excessive_precision
+    = note: `-D clippy::excessive-precision` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::excessive_precision)]`
+help: consider changing the type or truncating it to
+    |
+262 -             (bessel_i(0, 1.0) - 1.266_065_9).abs() < 1e-4,
+262 +             (bessel_i(0, 1.0) - 1.266_066).abs() < 1e-4,
+    |
+
+error: the loop variable `i` is used to index `y`
+   --> acpu/src/sparse/mod.rs:192:18
+    |
+192 |         for i in 1..n {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+192 -         for i in 1..n {
+192 +         for (i, <item>) in y.iter().enumerate().take(n).skip(1) {
+    |
+
+error: casting to the same type is unnecessary (`i32` -> `i32`)
+   --> acpu/src/vector/integer.rs:411:45
+    |
+411 |         let v: Vec<i32> = (0..4096).map(|i| (i % 100) as i32 - 50).collect();
+    |                                             ^^^^^^^^^^^^^^^^ help: try: `(i % 100)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unnecessary_cast
+    = note: `-D clippy::unnecessary-cast` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_cast)]`
+
+error: the loop variable `c` is used to index `out`
+   --> acpu/src/vector/media.rs:417:18
+    |
+417 |         for c in 0..3 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+417 -         for c in 0..3 {
+417 +         for (c, <item>) in out.iter().enumerate().take(3) {
+    |
+
+error: useless use of `vec!`
+   --> acpu/src/crypto/mod.rs:362:21
+    |
+362 |         let mut w = vec![0u32; 44];
+    |                     ^^^^^^^^^^^^^^ help: you can use an array directly: `[0u32; 44]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+    = note: `-D clippy::useless-vec` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::useless_vec)]`
+
+error: useless use of `vec!`
+   --> acpu/src/vector/media.rs:386:30
+    |
+386 |         rgb_to_yuv(&mut yuv, &vec![0u8; 48]);
+    |                              ^^^^^^^^^^^^^^ help: you can use a slice directly: `&[0u8; 48]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: useless use of `vec!`
+   --> acpu/src/vector/media.rs:467:39
+    |
+467 |         resize_bilinear_f32(&mut dst, &vec![7.5f32; 16], 4, 4, 2, 2);
+    |                                       ^^^^^^^^^^^^^^^^^ help: you can use a slice directly: `&[7.5f32; 16]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+
+error: could not compile `acpu` (lib test) due to 16 previous errors

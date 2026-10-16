@@ -24,16 +24,33 @@ use super::goldilocks::{gl_add, gl_mul, gl_sub};
 /// vr = multilinear_eval(&evals[mid..], &point[1..])
 /// return vl + x * (vr - vl)
 /// ```
+///
+/// # Panics
+/// Panics unless evals has a nonzero power-of-two length and point has
+/// exactly log2(evals.len()) coordinates, in every build.
 pub fn multilinear_eval(evals: &[u64], point: &[u64]) -> u64 {
     let len = evals.len();
-    debug_assert!(len.is_power_of_two());
+    assert!(
+        len.is_power_of_two(),
+        "multilinear_eval: length must be a power of two"
+    );
+    assert_eq!(
+        point.len(),
+        len.trailing_zeros() as usize,
+        "multilinear_eval: coordinate count must equal log2(evals.len())"
+    );
+    interpolate(evals, point)
+}
+
+fn interpolate(evals: &[u64], point: &[u64]) -> u64 {
+    let len = evals.len();
     if len == 1 {
         return evals[0];
     }
     let mid = len / 2;
     let x = point[0];
-    let vl = multilinear_eval(&evals[..mid], &point[1..]);
-    let vr = multilinear_eval(&evals[mid..], &point[1..]);
+    let vl = interpolate(&evals[..mid], &point[1..]);
+    let vr = interpolate(&evals[mid..], &point[1..]);
     // vl + x * (vr - vl)
     gl_add(vl, gl_mul(x, gl_sub(vr, vl)))
 }

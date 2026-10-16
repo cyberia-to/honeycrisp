@@ -11,7 +11,7 @@
 //! Reference: Shuman et al., "The Emerging Field of Signal Processing on Graphs",
 //! IEEE Signal Processing Magazine 2013 — Algorithm 1.
 
-use super::csr_matvec_set;
+use super::admission::Csr;
 
 // ── Modified Bessel I_k ───────────────────────────────────────────────────────
 
@@ -133,6 +133,11 @@ pub fn chebyshev_coeffs(tau: f32, order: usize) -> Vec<f32> {
 /// * `t0`, `t1` — caller-provided scratch, each length n
 /// * `tau` — heat-kernel time scale τ
 /// * `order` — Chebyshev truncation order K (typically 20)
+///
+/// # Panics
+/// Before allocation or mutation, checks the CSR conditions of
+/// [`super::csr_matvec`] and requires the row count and d_inv_sqrt/y/t0/t1
+/// lengths to equal x.len(). Shape failures preserve y, t0 and t1.
 #[allow(clippy::too_many_arguments)]
 pub fn chebyshev_matvec(
     row_ptr: &[u32],
@@ -147,9 +152,19 @@ pub fn chebyshev_matvec(
     order: usize,
 ) {
     let n = x.len();
-    debug_assert_eq!(y.len(), n);
-    debug_assert_eq!(t0.len(), n);
-    debug_assert_eq!(t1.len(), n);
+    assert_eq!(y.len(), n, "Chebyshev: y length must equal x length");
+    assert_eq!(t0.len(), n, "Chebyshev: t0 length must equal x length");
+    assert_eq!(t1.len(), n, "Chebyshev: t1 length must equal x length");
+    assert_eq!(
+        d_inv_sqrt.len(),
+        n,
+        "Chebyshev: diagonal length must equal x length"
+    );
+    assert!(
+        !row_ptr.is_empty() && row_ptr.len() - 1 == n,
+        "Chebyshev: row count must equal x length"
+    );
+    let csr = Csr::new(row_ptr, col_idx, values, n);
 
     let coeffs = chebyshev_coeffs(tau, order);
 
@@ -165,7 +180,7 @@ pub fn chebyshev_matvec(
         az[i] = d_inv_sqrt[i] * x[i];
     }
     // Step 2: t1 = A · az
-    csr_matvec_set(row_ptr, col_idx, values, &az, t1);
+    csr.set(&az, t1);
     // Step 3: t1[i] = −d_inv_sqrt[i] * t1[i]
     for i in 0..n {
         t1[i] = -d_inv_sqrt[i] * t1[i];
@@ -206,7 +221,7 @@ pub fn chebyshev_matvec(
             // Pass 2: compute A·az into a fresh location (az itself is the input, need output).
             // Let's use a separate local vec:
             let mut az2 = vec![0.0f32; n];
-            csr_matvec_set(row_ptr, col_idx, values, &az, &mut az2);
+            csr.set(&az, &mut az2);
             // T_k[i] = −2*d_inv_sqrt[i]*az2[i] − t0[i]  (T_{k-2} is in t0)
             for i in 0..n {
                 t0[i] = -2.0 * d_inv_sqrt[i] * az2[i] - t0[i];
@@ -221,7 +236,7 @@ pub fn chebyshev_matvec(
                 az[i] = d_inv_sqrt[i] * t0[i];
             }
             let mut az2 = vec![0.0f32; n];
-            csr_matvec_set(row_ptr, col_idx, values, &az, &mut az2);
+            csr.set(&az, &mut az2);
             for i in 0..n {
                 t1[i] = -2.0 * d_inv_sqrt[i] * az2[i] - t1[i];
             }

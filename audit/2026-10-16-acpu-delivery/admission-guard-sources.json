@@ -1,0 +1,26 @@
+[
+  {
+    "path": "acpu/src/sparse/admission.rs",
+    "sha256": "00bcc7627565f37a68d597733fbc75d08d416c38a1931ddd72bdc676fe29fe75"
+  },
+  {
+    "path": "acpu/src/sparse/mod.rs",
+    "sha256": "76c1fb78c6931935a07582443543459a6fd10c8bbd8054a4f27483228041e584"
+  },
+  {
+    "path": "acpu/src/sparse/chebyshev.rs",
+    "sha256": "81fe22e41219c112d80b7b291745ca310e2c74d2dd71f1ab09fce24f3abe9046"
+  },
+  {
+    "path": "acpu/src/field/ntt.rs",
+    "sha256": "b7fe286165a149c92e83e900e041a41f8540ef393128287ffe72a5407fe32a11"
+  },
+  {
+    "path": "acpu/src/field/poly.rs",
+    "sha256": "5158bd3a875322001cba297db59ff0f4dd6da2740296c654fd49aa218eb5c920"
+  },
+  {
+    "path": "acpu/specs/README.md",
+    "sha256": "6b09741e09ead1d3fe7ae3e85f20a59743c46f89743a2fe5255b8ab72f113dd5"
+  }
+]

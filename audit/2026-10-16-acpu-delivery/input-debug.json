@@ -1,0 +1,40 @@
+{
+  "command": [
+    "cargo",
+    "run",
+    "--manifest-path",
+    "/tmp/honeycrisp-acpu-safe-input-probe/Cargo.toml",
+    "--locked",
+    "--offline"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "source_sha256": "9659c09eb4071c55d11e71e3e96f09b24ef74b42e8ace73006facc5be9293a34",
+  "source_before_after": "equal",
+  "started": "2026-10-16T22:28:11.243423+00:00",
+  "finished": "2026-10-16T22:28:13.521417+00:00",
+  "exit_code": 0,
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "rustc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+  "rustdoc_path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+  "target": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "rustflags": "-Dwarnings",
+  "rustdocflags": "-Dwarnings",
+  "jobs": "2",
+  "extra_inputs": [
+    {
+      "path": "/tmp/honeycrisp-acpu-safe-input-probe/Cargo.toml",
+      "sha256": "f279a4efa947f4ff1b642e397151a660065415fcac84d5c48c009e3edbe44808"
+    },
+    {
+      "path": "/tmp/honeycrisp-acpu-safe-input-probe/Cargo.lock",
+      "sha256": "5f654bc4effc6526cce9fffe0bd76418edfa3243f3b55e9a7acfbafa860ce58d"
+    },
+    {
+      "path": "audit/2026-10-16-acpu-delivery/safe-input-probe.rs",
+      "sha256": "a301717404a17ecc7665e0713aa87a7863a8124a7dbbcf535a99f42d4a188d50"
+    }
+  ],
+  "stdout_sha256": "f87f3a9e72bde532107d8fab23e48211aaa3683d5d80082605f467b0c3d4c74d",
+  "stderr_sha256": "4bb9ff6deb85eb774d1eae781c1d476f5585a7b183cb1f0bd4dc92e21352f489"
+}

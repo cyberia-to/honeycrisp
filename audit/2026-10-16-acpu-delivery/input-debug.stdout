@@ -1,0 +1,9 @@
+debug_assertions=true
+ntt non-power-of-two: panicked
+bit reversal non-power-of-two: panicked
+poly non-power-of-two: panicked
+poly too few coordinates: panicked
+poly extra coordinates: returned 1
+chebyshev tau=1: first=0.4657596; finite=21/21
+chebyshev tau=100: first=inf; finite=0/21
+chebyshev tau=104: first=NaN; finite=0/21

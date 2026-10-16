@@ -1,0 +1,6 @@
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.97s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/deps/acpu-d5ea79061f0f6707)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/deps/acpu_probe-65286f148011f74a)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/deps/input_admission-60e9cde9bcda8890)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/deps/integration-9404c8e399815f45)

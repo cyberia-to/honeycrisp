@@ -1,0 +1,20 @@
+   Compiling crossbeam-utils v0.8.23
+   Compiling crossbeam-queue v0.3.14
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+   Compiling honeycrisp-acpu-safe-input-probe v0.0.0 (/tmp/honeycrisp-acpu-safe-input-probe)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.90s
+     Running `/Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/safe-input-probe`
+
+thread 'main' (247354894) panicked at /Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/field/ntt.rs:62:5:
+ntt_forward: length must be a power of two
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'main' (247354894) panicked at /Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/field/ntt.rs:32:5:
+assertion failed: n.is_power_of_two()
+
+thread 'main' (247354894) panicked at /Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/field/poly.rs:29:5:
+assertion failed: len.is_power_of_two()
+
+thread 'main' (247354894) panicked at /Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu/src/field/poly.rs:34:13:
+index out of bounds: the len is 0 but the index is 0

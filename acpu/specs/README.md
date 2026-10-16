@@ -539,6 +539,30 @@ minimum, tail-masked.
 
 ---
 
+# sparse and field input admission
+
+`csr_matvec` accumulates A·x into y; `csr_matvec_set` overwrites y. A CSR
+partition has a nonempty `row_ptr` starting at zero, nondecreasing offsets,
+and a final offset equal to both `col_idx.len()` and `values.len()`. The
+output length equals `row_ptr.len() - 1`; every column is less than x's
+length. `[0]` denotes zero rows. Rectangular matrices, empty rows, unsorted
+columns and duplicate columns are valid. Floating-point values are unrestricted.
+
+`chebyshev_matvec` requires a square CSR with x, d_inv_sqrt, y, t0 and t1
+all equal in length to the row count. These shape/partition/index conditions
+are checked in all builds before allocation, pointer arithmetic or mutation;
+failure panics and preserves caller outputs and scratch. CSR admission is reused
+through the Chebyshev recurrence. Coefficient accuracy is a separate numerical
+contract; input admission does not constrain tau or truncation order.
+
+`bit_reverse_permute` and `ntt_forward` require a nonzero power-of-two length
+and panic before mutation otherwise. `multilinear_eval` requires exactly
+`2^k` evaluations and k coordinates, including one evaluation and no coordinates
+for a constant. Shape violations panic in every build. NTT roots and canonical
+field-element inputs retain their documented caller preconditions.
+
+---
+
 # errors
 
 ```
@@ -561,7 +585,8 @@ AffinityFailed(String)   QoS class change failed
 - all kernels are synchronous. no async dispatch model (this is CPU, not GPU)
 - parallel GEMM: partition M dimension across threads, each thread gets own Matrix
 - sync between threads: WFE/SEV + LSE atomics (no mutexes in hot path)
-- memory: all buffers are caller-owned slices. acpu allocates nothing on heap
+- memory: compute inputs and outputs are caller-owned slices; the Chebyshev
+  helper allocates coefficient and temporary vectors
 - all public functions are `#[inline]` or dispatch through cached function pointers
 
 ## driver stack

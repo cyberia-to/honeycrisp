@@ -1,0 +1,145 @@
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)` has the same output filename as the example target `matmul` in package `acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/acpu-delivery/debug/examples/matmul.dSYM
+  |
+  = note: the example target `matmul` in package `rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)` has the same output filename as the example target `matmul` in package `aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling crossbeam-utils v0.8.21
+   Compiling strata-core v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/core)
+   Compiling strata-compute v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/compute)
+   Compiling strata-ext v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/ext)
+   Compiling strata-proof v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/proof)
+   Compiling strata-nebu v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/nebu/rs)
+   Compiling unicode-ident v1.0.24
+   Compiling proc-macro2 v1.0.106
+   Compiling crossbeam-queue v0.3.12
+   Compiling quote v1.0.45
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+   Compiling syn v2.0.117
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+   Compiling libc v0.2.185
+   Compiling num-traits v0.2.19
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium)
+   Compiling libm v0.2.16
+   Compiling cfg-if v1.0.4
+   Compiling zerocopy-derive v0.8.48
+   Compiling zerocopy v0.8.48
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane)
+   Compiling once_cell v1.21.4
+   Compiling bitflags v2.11.0
+   Compiling serde_core v1.0.228
+   Compiling half v2.7.1
+   Compiling serde v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_derive v1.0.228
+   Compiling crossbeam-epoch v0.9.18
+   Compiling either v1.15.0
+   Compiling serde_json v1.0.149
+   Compiling rayon-core v1.13.0
+   Compiling crossbeam-deque v0.8.6
+   Compiling anstyle v1.0.14
+   Compiling plotters-backend v0.3.7
+   Compiling regex-syntax v0.8.10
+   Compiling core-foundation-sys v0.8.7
+   Compiling paste v1.0.15
+   Compiling memchr v2.8.0
+   Compiling thiserror v2.0.18
+   Compiling parking_lot_core v0.9.12
+   Compiling ciborium-io v0.2.2
+   Compiling clap_lex v1.1.0
+   Compiling log v0.4.29
+   Compiling itoa v1.0.18
+   Compiling objc2 v0.6.4
+   Compiling clap_builder v4.6.0
+   Compiling ciborium-ll v0.2.2
+   Compiling regex-automata v0.4.14
+   Compiling core-foundation v0.10.1
+   Compiling plotters-svg v0.3.7
+   Compiling itertools v0.10.5
+   Compiling naga v28.0.0
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.18
+   Compiling foreign-types-macros v0.2.3
+   Compiling malloc_buf v0.0.6
+   Compiling equivalent v1.0.2
+   Compiling smallvec v1.15.1
+   Compiling scopeguard v1.2.0
+   Compiling hashbrown v0.17.1
+   Compiling foldhash v0.2.0
+   Compiling foreign-types-shared v0.3.1
+   Compiling unicode-width v0.2.2
+   Compiling cast v0.3.0
+   Compiling bit-vec v0.8.0
+   Compiling same-file v1.0.6
+   Compiling objc2-encode v4.1.0
+   Compiling bit-set v0.8.0
+   Compiling walkdir v2.5.0
+   Compiling criterion-plot v0.5.0
+   Compiling indexmap v2.14.0
+   Compiling codespan-reporting v0.12.0
+   Compiling foreign-types v0.5.0
+   Compiling hashbrown v0.16.1
+   Compiling lock_api v0.4.14
+   Compiling objc v0.2.7
+   Compiling bytemuck v1.25.0
+   Compiling rayon v1.12.0
+   Compiling plotters v0.3.7
+   Compiling core-graphics-types v0.2.0
+   Compiling regex v1.12.3
+   Compiling clap v4.6.0
+   Compiling ciborium v0.2.2
+   Compiling tinytemplate v1.2.1
+   Compiling wgpu-hal v28.0.1
+   Compiling is-terminal v0.4.17
+   Compiling block v0.1.6
+   Compiling oorandom v11.1.5
+   Compiling anes v0.1.6
+   Compiling hexf-parse v0.2.1
+   Compiling arrayvec v0.7.6
+   Compiling rustc-hash v1.1.0
+   Compiling criterion v0.5.1
+   Compiling metal v0.33.0
+   Compiling wgpu-types v28.0.0
+   Compiling parking_lot v0.12.5
+   Compiling raw-window-handle v0.6.2
+   Compiling profiling v1.0.18
+   Compiling wgpu-core v28.0.1
+   Compiling litrs v1.0.0
+   Compiling document-features v0.2.12
+   Compiling wgpu-core-deps-apple v28.0.0
+   Compiling objc2-core-foundation v0.3.2
+   Compiling block2 v0.6.2
+   Compiling wgpu v28.0.0
+   Compiling objc2-foundation v0.3.2
+   Compiling dispatch2 v0.3.1
+   Compiling static_assertions v1.1.0
+   Compiling objc2-metal v0.3.2
+   Compiling pollster v0.4.0
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp)
+   Compiling rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/rane/benches)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/aruminium/benches)
+error: unused variable: `b_stride`
+   --> acpu/examples/trace64.rs:289:17
+    |
+289 |             let b_stride = N * 4; // bytes
+    |                 ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_b_stride`
+    |
+    = note: `-D unused-variables` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(unused_variables)]`
+
+error: could not compile `acpu` (example "trace64") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

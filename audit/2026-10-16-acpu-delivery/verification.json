@@ -1,0 +1,12 @@
+{
+  "command": [
+    "nu",
+    "audit/2026-10-16-acpu-delivery/verify.nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp"
+  ],
+  "finished": "2026-10-16T22:33:04.477948+00:00",
+  "exit_code": 0,
+  "stdout": "{\n  \"verified\": 7,\n  \"source_sha256\": \"9659c09eb4071c55d11e71e3e96f09b24ef74b42e8ace73006facc5be9293a34\",\n  \"verdict\": \"Historical evidence intact; admission and numerical repairs remain required.\"\n}\n",
+  "stderr": "",
+  "verifier_sha256": "b3ab207e55722a3af2dd95227d2b5cd74336dc212e644cf3a0262aa1a6c24e97"
+}

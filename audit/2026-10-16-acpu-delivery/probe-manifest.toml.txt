@@ -1,0 +1,14 @@
+[package]
+name = "honeycrisp-acpu-safe-input-probe"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+acpu = { path = "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu" }
+
+[[bin]]
+name = "safe-input-probe"
+path = "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/safe-input-probe.rs"

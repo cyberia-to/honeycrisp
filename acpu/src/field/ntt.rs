@@ -26,10 +26,19 @@ pub fn pow_gl(mut base: u64, mut exp: u64) -> u64 {
 
 /// Bit-reverse permute `vals` in-place.
 ///
-/// `vals.len()` must be a power of two.
+/// # Panics
+/// Panics before mutation unless `vals.len()` is a nonzero power of two.
 pub fn bit_reverse_permute(vals: &mut [u64]) {
     let n = vals.len();
-    debug_assert!(n.is_power_of_two());
+    assert!(
+        n.is_power_of_two(),
+        "bit_reverse_permute: length must be a power of two"
+    );
+    bit_reverse_permute_validated(vals);
+}
+
+fn bit_reverse_permute_validated(vals: &mut [u64]) {
+    let n = vals.len();
     let log_n = n.trailing_zeros() as usize;
     for i in 0..n {
         let j = bit_reverse(i, log_n);
@@ -57,6 +66,9 @@ fn bit_reverse(mut x: usize, bits: usize) -> usize {
 /// `omega`: primitive n-th root of unity, where n = vals.len().
 ///
 /// `vals.len()` must be a power of two and at least 1.
+///
+/// # Panics
+/// Panics before mutation if the length precondition is violated.
 pub fn ntt_forward(vals: &mut [u64], omega: u64) {
     let n = vals.len();
     assert!(
@@ -67,7 +79,7 @@ pub fn ntt_forward(vals: &mut [u64], omega: u64) {
         return;
     }
 
-    bit_reverse_permute(vals);
+    bit_reverse_permute_validated(vals);
 
     let mut len = 2usize;
     while len <= n {
