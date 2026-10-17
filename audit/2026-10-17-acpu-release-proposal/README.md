@@ -1,10 +1,13 @@
-# acpu0.2.1 preparation tooling — review stage
+# acpu0.2.1 preparation tooling and evidence
 
 Accepted [plan](../../.claude/plans/acpu-release-proposal.md), initially committed
 as `0995cf9e51b5858df13f8349b083d409e0b306f5`, now re-anchored to reviewed PR25
 merge `14373cc8a0e18302751844579d94d1f8f80bd8b1`. Pushed preparation
 `9e6cffe699278059c8940f13940727b10569e13e` and all prior epochs remain retained.
-No version edit, candidate package or publication has occurred.
+The source-only bump is committed separately at `2c70b3b929c791ca489bba12d2f5a6daef7d43e7`.
+[RESULTS-2.md](RESULTS-2.md) identifies the final capsule and independent replay.
+Owner-only bump merge, fresh default-branch delivery, tagging and publication
+remain pending.
 
 This directory contains Nu-only orchestration. `common.nu` imports the previous
 audit's generic byte/receipt/archive helpers unchanged. `replay.nu` binds raw
@@ -31,9 +34,9 @@ branch is active. Successful evidence later belongs on the preparation branch;
 the owner-facing bump PR contains only acpu/Cargo.toml, root Cargo.lock and
 acpu/CHANGELOG.md. Any red remains attached to its original epoch.
 
-Validation here concerns tooling only. Candidate-specific gates will run after
-source review/commit; no test result for acpu0.2.1 exists yet. Owner-only bump
-merge/tag/publication and fresh post-merge origin/main delivery remain required.
+Historical tooling validation below precedes the candidate gates retained in
+`candidate-2`. Those gates and root's independent portable replay passed;
+`independent-replay-candidate-2` preserves the root result and metadata receipt.
 
 `review-epoch-1` preserves the first review's source bytes and manifest unchanged.
 `validation-2` records parsed entrypoints and the real unbumped-source refusal.
@@ -72,19 +75,23 @@ commands `cargo test --workspace --locked --offline` (388 passing, five ignored,
 31 summaries) and `cargo test -p acpu --lib --tests --release --locked --offline`
 (212 passing, one ignored, eight summaries). Its complete source identity is
 `9de4e9df1ff33dfca56a83ba8074f698658124aae914f0c2a98707f76487ebc3` and its
-compiler inventory equals the explicit merged base. New package totals remain
-expectations until fresh candidate gates execute. The old 38-target and test
+compiler inventory equals the explicit merged base. At that preparation epoch,
+new package totals were expectations; the final capsule now retains the fresh
+candidate outcomes. The old 38-target and test
 counts are retained only as historical PR21 replay controls.
 
 `tooling-review-reanchor-1.json` freezes the new review inputs. New validation
 does not reuse the old root approval. Root reviews this closure before the
-three-file bump or frozen candidate gates. The normalized package keeps registry
+three-file bump or frozen candidate gates; that review and execution are now
+complete. The normalized package keeps registry
 unimem0.2.0: although acpu reexports its `Tape`, the owning-source Tape repair
 is not delivered by this acpu bump. The registry identity proof remains intact.
 
 `validation-repair-1.md` and `validation-repair-2.md` retain the candidate's
 tooling refusals and narrow repairs. Owning, acpu package and API commands keep
 their original production bundle; the corrected consumer and validator use a
-separate committed bundle. Both bundles must accompany the final capsule.
+separate committed bundle. The final capsule retains three exact bundles:
+original producer, successful consumer, and the later validator with the
+reviewed macOS path-alias repair. Each is bound to its own Git revision.
 The old package runner's missing result summary is never reconstructed; raw
 successful commands and archives are independently replayed by the validator.

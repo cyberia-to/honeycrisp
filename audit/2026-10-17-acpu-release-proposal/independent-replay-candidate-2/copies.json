@@ -1,0 +1,22 @@
+[
+  {
+    "source": "/tmp/acpu-candidate2-root-result-20261017a.json",
+    "destination": "result.json",
+    "sha256": "fb6a9571babfb49c94af82b58a98447110cd132d5617e4d01fcaed9cd8283bfd"
+  },
+  {
+    "source": "/tmp/acpu-candidate2-root-extract-20261017a/target-replay.json",
+    "destination": "target-replay.json",
+    "sha256": "ad21a2928b07015ad59a38d037088e85f5951142dae82b8d1b65a809ea31a11d"
+  },
+  {
+    "source": "/tmp/acpu-candidate2-root-extract-20261017a/target-replay.stdout",
+    "destination": "target-replay.stdout",
+    "sha256": "d99a309a67e67d94ee20d35b040e26e54715ed7851fd2427a08d0b679ed69617"
+  },
+  {
+    "source": "/tmp/acpu-candidate2-root-extract-20261017a/target-replay.stderr",
+    "destination": "target-replay.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

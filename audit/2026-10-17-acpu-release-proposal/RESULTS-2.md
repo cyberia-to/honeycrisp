@@ -56,6 +56,13 @@ still describes only pinned Nox `64d091e5`; Nox subsequently advanced to
 changes. Live adoption must validate current Nox separately, without relabeling
 this pinned diagnostic as latest-source or unpatched registry acceptance.
 
+Root independently replayed this final capsule successfully on 2026-10-17,
+using `/tmp/acpu-candidate2-root-20261017a`, a separate fresh `/tmp` extraction,
+and canonical Honeycrisp as the Git argument. The copied result and actual
+metadata receipt are in [independent-replay-candidate-2](independent-replay-candidate-2/README.md).
+They bind the same source/archive, eight owning gates, five package gates,
+API comparison, two consumer modes and all three exact tool bundles.
+
 Only the owner may merge the source-only bump, tag or publish. Fresh delivery
-must use pushed default-branch inputs after that merge. Root independent replay
-of this final capsule precedes opening the owner-facing bump PR.
+must use pushed default-branch inputs after that merge. Preparation evidence
+and the source-only owner proposal are separate PRs.
