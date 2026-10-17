@@ -39,6 +39,13 @@ still reexports registry unimem0.2.0's `Tape`; it does not deliver the owning
 workspace's later Tape repair. Strata remains at
 `56aedb2d12b3126c601eb333419136d403614dbb`.
 
+After this consumer completed, Nox master advanced to
+`262de214521c47d18cd539040280f22e4b1fd8a4` through PR39, incorporating the
+production/CLI changes merged by PR36. The retained diagnostic continues to
+describe only fixed Nox `64d091e5ad3f277cce77b88ae0de6eea4c49b4df` and its
+unchanged archive/probe. Live release adoption must validate the latest Nox
+source separately; this evidence is not relabeled as current-Nox acceptance.
+
 ## Preserved tooling epochs
 
 Owning, acpu package and API production used exact tools exported from
