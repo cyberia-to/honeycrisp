@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use /Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/common.nu *; let nox = \"/Users/master/cyber/nox\"; let path = \"audit/2026-10-16-honeycrisp-backend-design/probe.rs\"; let probe = (^git -C $nox show $\"($nox_revision):($path)\"); require (($probe | hash sha256) == $probe_sha256 and (digest ($nox | path join $path)) == $probe_sha256) \"original probe changed\""
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:08:53.262542+00:00",
+  "finished": "2026-10-17T14:08:53.285215+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "2df02b66e1d6c7190a30962de0a56c16886528405243bbab182290ca1e204b3e"
+}

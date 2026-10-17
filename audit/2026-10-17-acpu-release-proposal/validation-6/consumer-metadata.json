@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use audit/2026-10-17-acpu-release-proposal/replay.nu *; let folder = ($env.PWD | path join audit/2026-10-17-acpu-package-evidence/consumer-2); let argv = [cargo metadata --format-version \"1\" --locked --offline]; checked $folder metadata $argv true | select command cwd exit_code | to json"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:02:52.049978+00:00",
+  "finished": "2026-10-17T14:02:52.073305+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "73c52f11a2d94eee46fed31fb2f93a37ecb16edfb621e85ac792b068dcdd71c4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

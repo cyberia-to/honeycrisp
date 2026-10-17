@@ -1,0 +1,14 @@
+{
+  "validation_compact_sha256": "5aea17071d31c5fa224d0da8c9be7bd61b2f51b0ccc8f82922cd42d7b661a53e",
+  "manifest_sha256": "7df01bce1a41aa8b2b1c9c051cf3318745f18ba3914f087d5b9f28b83bf26527",
+  "candidate": "2c70b3b929c791ca489bba12d2f5a6daef7d43e7",
+  "production_tools_revision": "3b875c9850f8ebe232a6650aaff7913a28773803",
+  "raw_metadata_and_counts": "target-replay.json",
+  "retention_failure": "retention-before.json",
+  "retention_roundtrip": [
+    "retention-after.json",
+    "unpack.json"
+  ],
+  "root_review": "pending",
+  "compiler_gates_repeated": false
+}

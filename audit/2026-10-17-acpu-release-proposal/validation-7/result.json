@@ -1,0 +1,8 @@
+{
+  "review_compact_sha256": "1862b261a86d9f71b20b935035a4e12793f99c2d72879748101a5f387d0235ac",
+  "manifest_sha256": "0bacdaaca50c9e8294bbc9b6663610fcb2b4370a1e54eeb87fb994a0e019ded9",
+  "production_revision": "3b875c9850f8ebe232a6650aaff7913a28773803",
+  "candidate": "2c70b3b929c791ca489bba12d2f5a6daef7d43e7",
+  "compiler_or_api_gates_repeated": false,
+  "root_review": "pending"
+}

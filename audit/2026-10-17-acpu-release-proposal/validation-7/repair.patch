@@ -1,0 +1,143 @@
+diff --git a/audit/2026-10-17-acpu-release-proposal/common.nu b/audit/2026-10-17-acpu-release-proposal/common.nu
+index 72e2272..cf03e44 100644
+--- a/audit/2026-10-17-acpu-release-proposal/common.nu
++++ b/audit/2026-10-17-acpu-release-proposal/common.nu
+@@ -75,8 +75,11 @@ export def candidate-revision [root: string, revision: string] {
+     require ($ancestor.exit_code == 0) 'candidate does not descend from reviewed base'
+     let diff = (^git -C $root diff --name-only $base $head | lines | sort)
+     require ($diff == [Cargo.lock acpu/CHANGELOG.md acpu/Cargo.toml]) 'bump must contain exactly three source paths'
+-    let manifest = (^git -C $root show $'($head):acpu/Cargo.toml')
+-    let old_manifest = (^git -C $root show $'($base):acpu/Cargo.toml')
++    let manifest_read = (do { ^git -C $root show $'($head):acpu/Cargo.toml' } | complete)
++    let old_read = (do { ^git -C $root show $'($base):acpu/Cargo.toml' } | complete)
++    require ($manifest_read.exit_code == 0 and $old_read.exit_code == 0) 'manifest Git source is unavailable'
++    let manifest = $manifest_read.stdout
++    let old_manifest = $old_read.stdout
+     require ($manifest == ($old_manifest | str replace 'version.workspace = true' $'version = "($version)"')) 'crate manifest extends beyond exact package bump'
+     require (($manifest | from toml).package.version == $version) 'candidate version differs'
+     let locked = (^git -C $root show $'($head):Cargo.lock' | from toml)
+diff --git a/audit/2026-10-17-acpu-release-proposal/consumer.nu b/audit/2026-10-17-acpu-release-proposal/consumer.nu
+index c37f9dc..3d9233c 100644
+--- a/audit/2026-10-17-acpu-release-proposal/consumer.nu
++++ b/audit/2026-10-17-acpu-release-proposal/consumer.nu
+@@ -1,7 +1,7 @@
+ use common.nu *
+ use replay.nu *
+ 
+-def main [nox_repo: string, package: string, output: string, target: string, tools: string] {
++def main [nox_repo: string, package: string, output: string, target: string, tools: string, package_tools: string] {
+     let nox = ($nox_repo | path expand)
+     let pair = ($package | path expand)
+     let out = ($output | path expand)
+@@ -12,7 +12,8 @@ def main [nox_repo: string, package: string, output: string, target: string, too
+     let nox_inputs = (committed-owner $nox)
+     require ((^git -C $nox rev-parse HEAD | str trim) == $nox_revision) 'Nox source drift needs review'
+     let tooling = (tool-bundle ($tools | path expand))
+-    require ($tooling == $input.tooling) 'consumer tooling differs'
++    let producer = (tool-bundle ($package_tools | path expand))
++    require ($producer == $input.tooling) 'package producer tooling differs'
+     fresh $out
+     capture $out package [cargo package -p cyber-nox --locked --offline] $nox $envs | ignore
+     let archive = ($out | path join nox.crate)
+@@ -26,7 +27,9 @@ def main [nox_repo: string, package: string, output: string, target: string, too
+         | each {|f| $f | update path (if $f.path == Cargo.toml.orig { 'rs/Cargo.toml' } else { $'rs/($f.path)' })} | sort-by path)
+     require ($source == ($nox_inputs | where {|f| ($f.path | str starts-with rs/) and $f.path != 'rs/Cargo.lock'})) 'normalized Nox source differs'
+     let probe_path = 'audit/2026-10-16-honeycrisp-backend-design/probe.rs'
+-    let probe = (^git -C $nox show $'($nox_revision):($probe_path)')
++    let probe_read = (do { ^git -C $nox show $'($nox_revision):($probe_path)' } | complete)
++    require ($probe_read.exit_code == 0) 'original probe Git source unavailable'
++    let probe = $probe_read.stdout
+     require (($probe | hash sha256) == $probe_sha256 and (digest ($nox | path join $probe_path)) == $probe_sha256) 'original probe changed'
+     let scratch = ($out | path join scratch)
+     mkdir $scratch
+@@ -50,7 +53,8 @@ def main [nox_repo: string, package: string, output: string, target: string, too
+     capture $out debug [cargo test --test source_contract --locked --offline] $scratch $envs | ignore
+     capture $out release [cargo test --test source_contract --release --locked --offline] $scratch $envs | ignore
+     require ((files $scratch) == $before and (files $acpu) == $input.current.files and (files $normalized) == $package_files) 'consumer/package inputs changed'
+-    require ((committed-owner $nox) == $nox_inputs and (tool-bundle ($tools | path expand)) == $tooling) 'Nox/tooling inputs changed'
++    require ((committed-owner $nox) == $nox_inputs and (tool-bundle ($tools | path expand)) == $tooling
++        and (tool-bundle ($package_tools | path expand)) == $producer) 'Nox/tooling inputs changed'
+     {package_identity_sha256: (digest ($pair | path join identities.json)), nox_head: $nox_revision, nox_inputs: $nox_inputs,
+         nox: {root: $normalized, sha256: (digest $archive), vcs: $vcs, files: $package_files},
+         consumer: {root: $scratch, files: $before, probe_sha256: ($probe | hash sha256)},
+diff --git a/audit/2026-10-17-acpu-release-proposal/replay.nu b/audit/2026-10-17-acpu-release-proposal/replay.nu
+index 3dffdd8..4a1f7a8 100644
+--- a/audit/2026-10-17-acpu-release-proposal/replay.nu
++++ b/audit/2026-10-17-acpu-release-proposal/replay.nu
+@@ -82,7 +82,7 @@ export def normalized-targets [metadata: record, root: string] {
+ }
+ 
+ export def target-inventory [folder: string, current: string, owner: string] {
+-    let argv = [cargo metadata --no-deps --format-version 1 --locked --offline]
++    let argv = [cargo metadata --no-deps --format-version '1' --locked --offline]
+     let packaged = (checked $folder metadata $argv true)
+     let owning = (checked $folder owner-metadata $argv true)
+     require ($packaged.cwd == $current and $owning.cwd == $owner) 'target metadata cwd differs'
+diff --git a/audit/2026-10-17-acpu-release-proposal/retain.nu b/audit/2026-10-17-acpu-release-proposal/retain.nu
+index 9d395a7..6cc1a00 100644
+--- a/audit/2026-10-17-acpu-release-proposal/retain.nu
++++ b/audit/2026-10-17-acpu-release-proposal/retain.nu
+@@ -10,8 +10,8 @@ def 'main pack' [evidence: string, tools: string, output: string, staging: strin
+     fresh $stage
+     let tooling = (tool-bundle $tools)
+     let selected = (files $records | where {|f|
+-        not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
+-        and not ($f.path | str starts-with consumer/nox/)
++        (not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
++        and not ($f.path | str starts-with consumer/nox/))
+     })
+     for file in $selected {
+         let dest = ($stage | path join records $file.path)
+diff --git a/audit/2026-10-17-acpu-release-proposal/verify.nu b/audit/2026-10-17-acpu-release-proposal/verify.nu
+index a98d8ae..6e8e867 100644
+--- a/audit/2026-10-17-acpu-release-proposal/verify.nu
++++ b/audit/2026-10-17-acpu-release-proposal/verify.nu
+@@ -2,15 +2,19 @@ use common.nu *
+ use replay.nu *
+ 
+ # Replay an explicit candidate revision even while the checkout is on the audit branch.
+-def main [repo: string, evidence: string, tools: string, extraction: string] {
++def main [repo: string, evidence: string, tools: string, consumer_tools: string, validation_tools: string, extraction: string] {
+     let root = ($repo | path expand)
+     let records = ($evidence | path expand)
+     let tmp = ($extraction | path expand)
+     fresh $tmp
+     let tooling = (tool-bundle ($tools | path expand))
+-    for tool in $tooling.manifest.files {
+-        let committed = (^git -C $root show $'($tooling.manifest.revision):($tool.path)')
+-        require (($committed | hash sha256) == $tool.sha256) 'tool bundle differs from its Git revision'
++    let consumer_tooling = (tool-bundle ($consumer_tools | path expand))
++    let validation_tooling = (tool-bundle ($validation_tools | path expand))
++    for bundle in [$tooling $consumer_tooling $validation_tooling] {
++        for tool in $bundle.manifest.files {
++            let committed = (do { ^git -C $root show $'($bundle.manifest.revision):($tool.path)' } | complete)
++            require ($committed.exit_code == 0 and ($committed.stdout | hash sha256) == $tool.sha256) 'tool bundle differs from its Git revision'
++        }
+     }
+     let pair_dir = ($records | path join package)
+     let pair = (open ($pair_dir | path join identities.json))
+@@ -80,7 +84,7 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
+     require (($summary | str contains '229 checks: 229 pass, 31 skip') and ($summary | str contains 'Summary no semver update required')) 'raw API summary differs; review required'
+     let consumer_dir = ($records | path join consumer)
+     let consumer = (open ($consumer_dir | path join result.json))
+-    require ($consumer.package_identity_sha256 == (digest ($pair_dir | path join identities.json)) and $consumer.tooling == $tooling
++    require ($consumer.package_identity_sha256 == (digest ($pair_dir | path join identities.json)) and $consumer.tooling == $consumer_tooling
+         and $consumer.nox_head == $nox_revision and $consumer.diagnostic_override and not $consumer.unpatched_registry_acceptance) 'consumer source/scope differs'
+     let nox_archive = ($consumer_dir | path join nox.crate)
+     require ((digest $nox_archive) == $nox_archive_sha256 and $consumer.nox.sha256 == $nox_archive_sha256) 'Nox archive differs from independent PR21 anchor'
+@@ -97,7 +101,7 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
+     let manifest = (open ($scratch | path join Cargo.toml))
+     let lock = (open --raw ($scratch | path join Cargo.lock) | from toml)
+     let metadata = (open --raw ($consumer_dir | path join metadata.stdout) | from json)
+-    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version 1 --locked --offline] true)
++    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version '1' --locked --offline] true)
+     require ($metadata_receipt.cwd == $consumer.consumer.root) 'consumer metadata cwd differs'
+     require ((registry-identities $metadata $lock) == $consumer.dependencies) 'registry identity summary differs'
+     require ($consumer.nox.root == ($consumer.consumer.root | path dirname | path join nox cyber-nox-0.2.0)) 'consumer normalized Nox root differs'
+@@ -121,5 +125,6 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
+     }
+     {candidate: $candidate.head, version: $version, package_sha256: $pair.current.sha256,
+         owning: 8, package: 5, consumer_modes: 2, api: verified, publication_authorized: false,
++        production_tools: $tooling.sha256, consumer_tools: $consumer_tooling.sha256, validation_tools: $validation_tooling.sha256,
+         scope: 'replay of committed branch inputs; fresh origin/main delivery required after owner merge'} | to json
+ }
