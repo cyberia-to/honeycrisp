@@ -78,3 +78,10 @@ the complete post-gate inventory. Tape admits absolute alignment and preserves
 its cursor on refusal; the new integration suite covers actual pointer
 alignment, invalid alignment, zero size, overflow/exhaustion and typed takes.
 This branch contains no release candidate or publication authorization.
+
+The Tape source/evidence unit is committed as
+`ef783520d44c1dfdc854ebf9f6987d6d30447688`. Replay it with
+`nu audit/2026-10-17-gemv-tape-admission/verify.nu REPO tape-1 ef783520d44c1dfdc854ebf9f6987d6d30447688`.
+`verification-tape-1` retains successful replay and the expected refusal for the
+preceding source revision. The preceding acpu epoch remains independently
+replayable against its own commit.
