@@ -1,0 +1,58 @@
+=== Transformer layer pipeline: unimem vs standard ===
+    dim=512 heads=8 seq=128 ffn=1376
+
+>>> STANDARD (Vec + separate allocs) <<<
+
+  alloc:        793.875µs
+  CPU rmsnorm:  34.667µs
+  AMX qkv:      612.875µs
+  CPU rope:     30.833µs
+  AMX attn:     14.458µs
+  CPU softmax:  6.458µs
+  AMX attn@V:   7.875µs
+  AMX ffn up:   669.125µs
+  CPU silu:     78.583µs
+  AMX ffn down: 316.875µs
+  ANE compile:  41.440791ms
+  ANE run:      231.584µs
+  TOTAL:        46.979541ms
+  pass:         true
+
+>>> CYB-MEM (tape, zero-copy) <<<
+
+  alloc (tape): 908.625µs  (14.7 MB used / 15.7 MB cap)
+  CPU rmsnorm:   11.333µs
+  AMX qkv:       307.416µs
+  CPU rope:      17.167µs
+  AMX attn:      7.833µs
+  CPU softmax:   6.75µs
+  AMX attn@V:    5.042µs
+  AMX ffn up:    423.166µs
+  CPU silu:      81.167µs
+  AMX ffn down:  281.709µs
+  ANE compile:   17.151209ms
+  ANE run:       180.833µs
+  TOTAL:         19.985084ms
+  pass:          true
+
+
+=== Comparison ===
+
+  Stage                            Standard       unimem  Speedup
+  -----                            --------      -------  -------
+  alloc + fill                      793.9µs      908.6µs     0.9x
+  CPU: rmsnorm                       34.7µs       11.3µs     3.1x
+  AMX: qkv projection               612.9µs      307.4µs     2.0x
+  CPU: rope                          30.8µs       17.2µs     1.8x
+  AMX: attention matmul              14.5µs        7.8µs     1.8x
+  CPU: softmax                        6.5µs        6.8µs     1.0x
+  AMX: attn @ V                       7.9µs        5.0µs     1.6x
+  AMX: ffn up+gate                  669.1µs      423.2µs     1.6x
+  CPU: silu                          78.6µs       81.2µs     1.0x
+  AMX: ffn down                     316.9µs      281.7µs     1.1x
+  ANE: compile+load                  41.4ms       17.2ms     2.4x
+  ANE: matmul run                   231.6µs      180.8µs     1.3x
+  TOTAL                              47.0ms       20.0ms     2.4x
+
+  reference verified: true
+  unimem verified:   true

@@ -3,6 +3,12 @@ use crate::MemError;
 use core::ptr::NonNull;
 
 mod creation;
+mod image;
+mod image_native;
+mod image_validation;
+pub use image::{ImageBlockPlan, NativeImageFormat, NativeImageLayout, NativePlaneLayout};
+#[cfg(test)]
+mod image_tests;
 #[cfg(test)]
 mod tests;
 

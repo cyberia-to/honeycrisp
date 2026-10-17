@@ -1,0 +1,115 @@
+   Compiling strata-core v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/strata/core)
+   Compiling unicode-ident v1.0.24
+   Compiling strata-compute v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/strata/compute)
+   Compiling strata-ext v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/strata/ext)
+   Compiling strata-proof v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/strata/proof)
+   Compiling proc-macro2 v1.0.106
+   Compiling strata-nebu v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/strata/nebu/rs)
+   Compiling libm v0.2.16
+   Compiling quote v1.0.45
+   Compiling syn v2.0.117
+   Compiling num-traits v0.2.19
+   Compiling zerocopy-derive v0.8.48
+   Compiling cfg_aliases v0.2.1
+   Compiling bitflags v2.11.0
+   Compiling serde_derive v1.0.228
+   Compiling zerocopy v0.8.48
+   Compiling serde v1.0.228
+   Compiling plotters v0.3.7
+   Compiling half v2.7.1
+   Compiling tinytemplate v1.2.1
+   Compiling ciborium-ll v0.2.2
+   Compiling ciborium v0.2.2
+   Compiling paste v1.0.15
+   Compiling log v0.4.29
+   Compiling parking_lot_core v0.9.12
+   Compiling thiserror v2.0.18
+   Compiling core-foundation-sys v0.8.7
+   Compiling objc2 v0.6.4
+   Compiling criterion v0.5.1
+   Compiling core-foundation v0.10.1
+   Compiling naga v28.0.0
+   Compiling foreign-types-macros v0.2.3
+   Compiling thiserror-impl v2.0.18
+   Compiling bytemuck_derive v1.10.2
+   Compiling malloc_buf v0.0.6
+   Compiling equivalent v1.0.2
+   Compiling scopeguard v1.2.0
+   Compiling unicode-width v0.2.2
+   Compiling foldhash v0.2.0
+   Compiling bit-vec v0.8.0
+   Compiling objc2-encode v4.1.0
+   Compiling foreign-types-shared v0.3.1
+   Compiling hashbrown v0.17.1
+   Compiling smallvec v1.15.1
+   Compiling foreign-types v0.5.0
+   Compiling indexmap v2.14.0
+   Compiling bit-set v0.8.0
+   Compiling hashbrown v0.16.1
+   Compiling codespan-reporting v0.12.0
+   Compiling lock_api v0.4.14
+   Compiling objc v0.2.7
+   Compiling bytemuck v1.25.0
+   Compiling core-graphics-types v0.2.0
+   Compiling wgpu-hal v28.0.1
+   Compiling rustc-hash v1.1.0
+   Compiling hexf-parse v0.2.1
+   Compiling block v0.1.6
+   Compiling arrayvec v0.7.6
+   Compiling metal v0.33.0
+   Compiling wgpu-types v28.0.0
+   Compiling parking_lot v0.12.5
+   Compiling raw-window-handle v0.6.2
+   Compiling profiling v1.0.18
+   Compiling wgpu-core v28.0.1
+   Compiling litrs v1.0.0
+   Compiling document-features v0.2.12
+   Compiling wgpu-core-deps-apple v28.0.0
+   Compiling block2 v0.6.2
+   Compiling objc2-core-foundation v0.3.2
+   Compiling wgpu v28.0.0
+   Compiling objc2-foundation v0.3.2
+   Compiling dispatch2 v0.3.1
+   Compiling static_assertions v1.1.0
+   Compiling objc2-metal v0.3.2
+   Compiling pollster v0.4.0
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp)
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane)
+   Compiling rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/acpu)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.76s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/acpu-2a087d982ddd1821)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/acpu_probe-324a84c87192d9e7)
+     Running tests/chebyshev_coefficients.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/chebyshev_coefficients-f3483cb3b7ca2cce)
+     Running tests/chebyshev_independent.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/chebyshev_independent-df2bbf314c4e9208)
+     Running tests/gemv_admission.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/gemv_admission-1c616d5d72c4f985)
+     Running tests/gemv_independent.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/gemv_independent-dc4e6307a4a41f03)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/input_admission-80ad707c4c325c5c)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/integration-6ea63c4273daf3c9)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/aruminium-dd476dc3dcbfdf7c)
+     Running unittests src/probe.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/metal_probe-8cc3b7d62688f492)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/integration-ec6b506eed5a785c)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/honeycrisp-aa09e374d1bbddad)
+     Running unittests bench.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/bench-68fd359419ab4b3b)
+     Running unittests compare.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/compare-f4a227095e07d408)
+     Running unittests compare_render.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/compare_render-19b00769b6f71dd7)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/rane-a9a452e70b5f4b96)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/rane_probe-548e9a1e33979d4a)
+     Running tests/hardware.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/hardware-5b321ef0fcb11f9b)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/integration-3674b4d7c38bf565)
+     Running unittests bench.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/bench-4730378b4166ce68)
+     Running unittests compare.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/compare-dbc9a614ee005c94)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/unimem-9803edf3d4216c83)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_access-ad39fffcfc1a6108)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_creation-9235b82ded76b829)
+     Running tests/image_planes.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/image_planes-bc620bff3c8a86cb)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/roundtrip-f20e0bac356cf2ad)
+     Running tests/tape_alignment.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/tape_alignment-a8e2b46ac90c2c9f)
+   Doc-tests acpu
+   Doc-tests aruminium
+   Doc-tests honeycrisp
+   Doc-tests rane
+   Doc-tests unimem

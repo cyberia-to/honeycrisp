@@ -1,0 +1,89 @@
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/native-image-planes/target/release/bench
+  |
+  = note: the bin target `bench` in package `rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)` has the same output filename as the bin target `bench` in package `metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/native-image-planes/target/release/bench.dSYM
+  |
+  = note: the bin target `bench` in package `rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)` has the same output filename as the bin target `bench` in package `metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/native-image-planes/target/release/compare
+  |
+  = note: the bin target `compare` in package `rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)` has the same output filename as the bin target `compare` in package `metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+warning: output filename collision at /Users/master/.cache/cyber/honeycrisp/native-image-planes/target/release/compare.dSYM
+  |
+  = note: the bin target `compare` in package `rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)` has the same output filename as the bin target `compare` in package `metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)`
+  = note: this may become a hard error in the future; see <https://github.com/rust-lang/cargo/issues/6313>
+  = help: consider changing their names to be unique or compiling them separately
+   Compiling crossbeam-utils v0.8.21
+   Compiling cfg_aliases v0.2.1
+   Compiling bitflags v2.11.0
+   Compiling libm v0.2.16
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+   Compiling num-traits v0.2.19
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/acpu)
+   Compiling objc2 v0.6.4
+   Compiling thiserror v2.0.18
+   Compiling parking_lot_core v0.9.12
+   Compiling paste v1.0.15
+   Compiling core-foundation-sys v0.8.7
+   Compiling log v0.4.29
+   Compiling core-foundation v0.10.1
+   Compiling naga v28.0.0
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.18
+   Compiling malloc_buf v0.0.6
+   Compiling foreign-types-macros v0.2.3
+   Compiling scopeguard v1.2.0
+   Compiling objc2-encode v4.1.0
+   Compiling smallvec v1.15.1
+   Compiling foldhash v0.2.0
+   Compiling unicode-width v0.2.2
+   Compiling hashbrown v0.17.1
+   Compiling foreign-types-shared v0.3.1
+   Compiling equivalent v1.0.2
+   Compiling bit-vec v0.8.0
+   Compiling bit-set v0.8.0
+   Compiling indexmap v2.14.0
+   Compiling foreign-types v0.5.0
+   Compiling codespan-reporting v0.12.0
+   Compiling hashbrown v0.16.1
+   Compiling lock_api v0.4.14
+   Compiling objc v0.2.7
+   Compiling bytemuck v1.25.0
+   Compiling half v2.7.1
+   Compiling core-graphics-types v0.2.0
+   Compiling wgpu-hal v28.0.1
+   Compiling rustc-hash v1.1.0
+   Compiling block v0.1.6
+   Compiling once_cell v1.21.4
+   Compiling hexf-parse v0.2.1
+   Compiling unicode-ident v1.0.24
+   Compiling arrayvec v0.7.6
+   Compiling metal v0.33.0
+   Compiling wgpu-types v28.0.0
+   Compiling parking_lot v0.12.5
+   Compiling raw-window-handle v0.6.2
+   Compiling profiling v1.0.18
+   Compiling wgpu-core v28.0.1
+   Compiling litrs v1.0.0
+   Compiling document-features v0.2.12
+   Compiling wgpu-core-deps-apple v28.0.0
+   Compiling objc2-core-foundation v0.3.2
+   Compiling block2 v0.6.2
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium)
+   Compiling wgpu v28.0.0
+   Compiling objc2-foundation v0.3.2
+   Compiling dispatch2 v0.3.1
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane)
+   Compiling static_assertions v1.1.0
+   Compiling objc2-metal v0.3.2
+   Compiling pollster v0.4.0
+   Compiling rane-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane/benches)
+   Compiling metal-benches v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium/benches)
+   Compiling honeycrisp v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp)
+    Finished `release` profile [optimized] target(s) in 54.55s
