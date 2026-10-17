@@ -1,0 +1,8 @@
+{
+  "requested_before_creation": "/tmp/acpu-validator-alias-20261017b",
+  "canonical_after_creation": "/private/tmp/acpu-validator-alias-20261017b",
+  "manifest": "/private/tmp/acpu-validator-alias-20261017b/current/acpu-0.2.1/Cargo.toml",
+  "targets": 40,
+  "historical_receipts_changed": false,
+  "compiler_gates_executed": false
+}

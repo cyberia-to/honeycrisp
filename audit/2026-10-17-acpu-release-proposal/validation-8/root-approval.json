@@ -1,0 +1,7 @@
+{
+  "approved_by": "/root",
+  "approved_at": "2026-10-17T14:20:41.560779+00:00",
+  "manifest": "sources.json",
+  "compact_sha256": "fb02d1f3aa89ef20433822d1197e0622441e29e5795f980e75efe81488644f66",
+  "scope": "Only verifier extraction canonicalization after creation; distinct validator commit/export; preserve producer3b and consumere791 and original failed capsule; no compiler/API/consumer reruns; no owner PR until root replay passes"
+}
