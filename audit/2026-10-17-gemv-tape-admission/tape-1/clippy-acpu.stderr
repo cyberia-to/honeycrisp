@@ -1,0 +1,7 @@
+    Checking strata-core v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/core)
+    Checking strata-compute v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/compute)
+    Checking strata-ext v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/ext)
+    Checking strata-proof v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/proof)
+    Checking strata-nebu v0.1.1 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/strata/nebu/rs)
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.17s

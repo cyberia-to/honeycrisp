@@ -188,7 +188,9 @@ impl Tape {
     pub unsafe fn warm(&mut self);
 
     /// Allocate bytes. ~1ns. Lock-free compare_exchange loop.
-    /// Returns None if exhausted.
+    /// Returned address satisfies align; padding consumes capacity.
+    /// Zero size, address/extent overflow or exhaustion returns None without
+    /// moving the cursor. Invalid alignment panics before moving the cursor.
     pub fn take(&self, size: usize, align: usize) -> Option<*mut u8>;
 
     /// Typed allocation.
@@ -216,13 +218,19 @@ impl Tape {
 
 Alloc algorithm:
 ```rust
+assert!(align.is_power_of_two());
+if size == 0 { return None; }
+base = block.address();
+base_address = base as usize;
 loop {
     current = cursor.load(Relaxed);
-    aligned = (current + align - 1) & !(align - 1);
-    new_cursor = aligned + size;
+    address = base_address.checked_add(current)?;
+    aligned_address = address.checked_add(align - 1)? & !(align - 1);
+    aligned = aligned_address.checked_sub(base_address)?;
+    new_cursor = aligned.checked_add(size)?;
     if new_cursor > total { return None; }
     if cursor.compare_exchange_weak(current, new_cursor, Relaxed, Relaxed).is_ok() {
-        return Some(block.address() + aligned);
+        return Some(unsafe { base.add(aligned) });
     }
 }
 ```

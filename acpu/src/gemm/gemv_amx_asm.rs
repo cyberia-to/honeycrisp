@@ -134,7 +134,6 @@ core::arch::global_asm!(
     "orr x15, x12, x16",
     ".word 0x0020118F", // FMA32 x15
     "32:",
-    "mov x27, #0", // first_k = false
     "add x14, x14, #1",
     "cmp x14, x25",
     "b.lt 30b",
@@ -151,12 +150,12 @@ core::arch::global_asm!(
     "cbz x27, 37f",
     "orr x15, x13, x16",
     ".word 0x0020118F",
-    "mov x27, #0",
     "b 36f",
     "37:",
     "orr x15, x12, x16",
     ".word 0x0020118F",
     "36:",
+    "mov x27, #0", // first_k = false after every tile in this K sweep
     "add x10, x10, #1",
     "cmp x10, #8",
     "b.lt 20b",
@@ -201,20 +200,31 @@ extern "C" {
     );
 }
 
-/// Pure-asm AMX GEMV. Pre-broadcasts A, then calls asm kernel.
+/// Overwrite C with A × B. K must be divisible by eight.
+/// Uses NEON for partial tiles and outputs beyond the AMX capacity.
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::needless_range_loop)]
 pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert!(
+    assert!(
         k.is_multiple_of(8),
-        "gemv_pure_asm requires k divisible by 8"
+        "gemv_pure_asm requires k divisible by 8: k={k}"
     );
+    super::matvec::validate(a, b, c, n, k);
+    if n == 0 || k == 0 || n > 1024 || !n.is_multiple_of(16) {
+        super::matvec::neon_set(a, b, c, n, k);
+        return;
+    }
 
     crate::gemm::ensure_amx();
 
     let n_tiles = n / 16;
-    let layout = std::alloc::Layout::from_size_align(k * 64, 128).unwrap();
+    let bytes = k.checked_mul(64).expect("GEMV: broadcast size overflow");
+    let layout = std::alloc::Layout::from_size_align(bytes, 128)
+        .expect("GEMV: broadcast layout is unrepresentable");
     let a_ptr = unsafe { std::alloc::alloc_zeroed(layout) };
+    if a_ptr.is_null() {
+        std::alloc::handle_alloc_error(layout);
+    }
     for ki in 0..k {
         let val = a[ki];
         let dst = unsafe { std::slice::from_raw_parts_mut(a_ptr.add(ki * 64) as *mut f32, 16) };
@@ -226,5 +236,74 @@ pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     unsafe {
         acpu_gemv_amx(c.as_mut_ptr(), a_ptr, b.as_ptr(), n, k, n_tiles);
         std::alloc::dealloc(a_ptr, layout);
+    }
+}
+
+#[cfg(test)]
+#[cfg(target_arch = "aarch64")]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn matches_naive_gemv() {
+        let (n, k) = (64, 64);
+        let a: Vec<f32> = (0..k).map(|i| (i % 7) as f32 * 0.1).collect();
+        let b: Vec<f32> = (0..k * n).map(|i| (i % 11) as f32 * 0.01).collect();
+        let mut c = vec![0.0f32; n];
+        let mut r = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+        for ki in 0..k {
+            for j in 0..n {
+                r[j] += a[ki] * b[ki * n + j];
+            }
+        }
+        for j in 0..n {
+            assert!(
+                (c[j] - r[j]).abs() < r[j].abs() * 1e-3 + 1e-1,
+                "at {j}: {} vs {} (n={n},k={k})",
+                c[j],
+                r[j]
+            );
+        }
+    }
+
+    #[test]
+    #[should_panic(expected = "k divisible by 8")]
+    fn rejects_k_not_multiple_of_8() {
+        let (n, k) = (16, 9);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "a.len() must equal k")]
+    fn rejects_short_a() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k - 1];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "b.len() must equal k * n")]
+    fn rejects_short_b() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n - 1];
+        let mut c = vec![0.0f32; n];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
+    }
+
+    #[test]
+    #[should_panic(expected = "c.len() must equal n")]
+    fn rejects_short_c() {
+        let (n, k) = (16, 8);
+        let a = vec![0.0f32; k];
+        let b = vec![0.0f32; k * n];
+        let mut c = vec![0.0f32; n - 1];
+        gemv_pure_asm(&a, &b, &mut c, n, k);
     }
 }

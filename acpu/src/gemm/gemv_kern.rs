@@ -8,12 +8,15 @@ use crate::matrix::asm::{amx_op, OP_FMA32, OP_LDX, OP_LDY, OP_STZ};
 use crate::matrix::fma::FmaOp;
 use crate::matrix::regs::{XRow, YRow};
 
+/// Overwrite C with A × B, using NEON beyond the AMX output capacity.
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::needless_range_loop)]
 pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert_eq!(a.len(), k);
-    debug_assert_eq!(b.len(), k * n);
-    debug_assert_eq!(c.len(), n);
+    super::matvec::validate(a, b, c, n, k);
+    if n == 0 || k == 0 || n > 1024 {
+        super::matvec::neon_set(a, b, c, n, k);
+        return;
+    }
 
     crate::gemm::ensure_amx();
 
@@ -22,8 +25,13 @@ pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
     let k_rem = k % 8;
 
     // Pre-broadcast A values (128-byte aligned for AMX LDY)
-    let layout = std::alloc::Layout::from_size_align(k * 64, 128).unwrap();
+    let bytes = k.checked_mul(64).expect("GEMV: broadcast size overflow");
+    let layout = std::alloc::Layout::from_size_align(bytes, 128)
+        .expect("GEMV: broadcast layout is unrepresentable");
     let a_ptr = unsafe { std::alloc::alloc_zeroed(layout) };
+    if a_ptr.is_null() {
+        std::alloc::handle_alloc_error(layout);
+    }
     for ki in 0..k {
         let val = a[ki];
         let dst = unsafe { std::slice::from_raw_parts_mut(a_ptr.add(ki * 64) as *mut f32, 16) };
@@ -84,14 +92,13 @@ pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
                     amx_op::<OP_LDX>(b_row.add(t0 * 64) as u64 | (1u64 << 62));
                     amx_op::<OP_FMA32>(build_fma(t0, s, first_k));
                     amx_op::<OP_FMA32>(build_fma_x1(t1, s, first_k));
-                    first_k = false;
                 }
                 if n_tiles % 2 == 1 {
                     let t = n_tiles - 1;
                     amx_op::<OP_LDX>(b_row.add(t * 64) as u64);
                     amx_op::<OP_FMA32>(build_fma(t, s, first_k));
-                    first_k = false;
                 }
+                first_k = false;
             }
         }
 
@@ -107,8 +114,8 @@ pub fn gemv_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
                 for tile in 0..n_tiles {
                     amx_op::<OP_LDX>(b_row.add(tile * 64) as u64);
                     amx_op::<OP_FMA32>(build_fma(tile, s, first_k));
-                    first_k = false;
                 }
+                first_k = false;
             }
         }
 
@@ -189,5 +196,23 @@ mod tests {
     #[ignore] // n=48 (3 tiles) triggers inefficient path, use NEON fallback
     fn t_small() {
         check(48, 100);
+    }
+
+    #[test]
+    #[should_panic(expected = "a.len()")]
+    fn rejects_wrong_a_len() {
+        let a = vec![0.0f32; 3]; // k=4 expected
+        let b = vec![0.0f32; 4 * 128];
+        let mut c = vec![0.0f32; 128];
+        gemv_asm(&a, &b, &mut c, 128, 4);
+    }
+
+    #[test]
+    #[should_panic(expected = "c.len()")]
+    fn rejects_wrong_c_len() {
+        let a = vec![0.0f32; 4];
+        let b = vec![0.0f32; 4 * 128];
+        let mut c = vec![0.0f32; 127]; // n=128 expected
+        gemv_asm(&a, &b, &mut c, 128, 4);
     }
 }

@@ -53,7 +53,7 @@ def main [repo: string, output: string, target: string, tools: string, owning: s
     matmul-success (open --raw ($out | path join matmul.stdout))
     capture $out metadata [cargo metadata --no-deps --format-version 1 --locked --offline] $current $envs | ignore
     let targets = (open --raw ($out | path join metadata.stdout) | from json | get packages | where name == acpu | first | get targets)
-    require (($targets | length) == 38 and ($targets | where {|t| 'example' in $t.kind} | length) == 32) 'target count differs'
+    require (($targets | length) == 40 and ($targets | where {|t| 'example' in $t.kind} | length) == 32) 'target count differs'
     capture $out owner-metadata [cargo metadata --no-deps --format-version 1 --locked --offline] $root $envs | ignore
     let owning_targets = (open --raw ($out | path join owner-metadata.stdout) | from json | get packages | where name == acpu | first | get targets)
     let relative = {|rows, base| $rows | each {|t| $t | update src_path ($t.src_path | path relative-to $base)} | sort-by name }
@@ -61,6 +61,6 @@ def main [repo: string, output: string, target: string, tools: string, owning: s
     target-inventory $out $current $root | ignore
     require ((candidate $root) == $committed and (snapshot $root) == $before and (files $current) == $inputs) 'packaging inputs changed'
     require ((tool-bundle ($tools | path expand)) == $tooling) 'tooling changed'
-    {gates: 5, targets: 38, examples: 32, package_sha256: (digest $candidate_archive), candidate_commit: $committed.head}
+    {gates: 5, targets: 40, examples: 32, package_sha256: (digest $candidate_archive), candidate_commit: $committed.head}
     | to json | save ($out | path join result.json)
 }

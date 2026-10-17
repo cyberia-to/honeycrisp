@@ -1,7 +1,7 @@
 export use ../2026-10-17-acpu-package-evidence/support.nu *
 
 export const version = '0.2.1'
-export const base = '3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6'
+export const base = '14373cc8a0e18302751844579d94d1f8f80bd8b1'
 export const nox_revision = '64d091e5ad3f277cce77b88ae0de6eea4c49b4df'
 export const nox_archive_sha256 = '37b40ed9894b3656315555b58afaec86058b6eb122e453244bb858a34fe1ff5b'
 export const strata_revision = '56aedb2d12b3126c601eb333419136d403614dbb'

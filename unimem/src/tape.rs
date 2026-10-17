@@ -71,18 +71,24 @@ impl Tape {
 
     /// Take `size` bytes with given alignment.
     ///
-    /// Returns memory address, or None if tape is full.
+    /// Returns an address aligned to `align`. Padding consumes capacity.
+    /// Zero size, address/extent overflow and exhaustion return None without
+    /// moving the cursor. Invalid alignment panics before moving the cursor.
     /// Lock-free: single compare_exchange loop. ~1ns.
     #[inline]
     pub fn take(&self, size: usize, align: usize) -> Option<*mut u8> {
-        debug_assert!(align.is_power_of_two(), "alignment must be power of 2");
+        assert!(align.is_power_of_two(), "alignment must be power of 2");
         if size == 0 {
             return None;
         }
+        let base = self.block.address();
+        let base_address = base as usize;
         let mask = align - 1;
         loop {
             let current = self.head.load(Ordering::Relaxed);
-            let aligned = (current + mask) & !mask;
+            let address = base_address.checked_add(current)?;
+            let aligned_address = address.checked_add(mask)? & !mask;
+            let aligned = aligned_address.checked_sub(base_address)?;
             let new_head = aligned.checked_add(size)?;
             if new_head > self.total {
                 return None;
@@ -92,7 +98,9 @@ impl Tape {
                 .compare_exchange_weak(current, new_head, Ordering::Relaxed, Ordering::Relaxed)
                 .is_ok()
             {
-                return Some(unsafe { self.block.address().add(aligned) });
+                // Positive size and the checked extent put this offset inside
+                // the original allocation, preserving its pointer provenance.
+                return Some(unsafe { base.add(aligned) });
             }
         }
     }
@@ -141,5 +149,28 @@ impl Tape {
     #[inline]
     pub fn block(&self) -> &Block {
         &self.block
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected = "alignment must be power of 2")]
+    fn take_rejects_non_power_of_two_alignment_in_release_too() {
+        let tape = Tape::start(4096).unwrap();
+        // align=3: mask=2 computes a bogus, silently wrong aligned offset
+        // instead of failing, once the check is debug-only.
+        tape.take(8, 3);
+    }
+
+    #[test]
+    fn take_accepts_every_power_of_two_alignment_up_to_the_page_size() {
+        let tape = Tape::start(1 << 16).unwrap();
+        for shift in 0..16 {
+            let align = 1usize << shift;
+            assert!(tape.take(1, align).is_some(), "align={align}");
+        }
     }
 }

@@ -208,10 +208,16 @@ writes; safe `start_warm` operates on a fresh, unpublished Tape.
 
 ```
 fn take(size, align) -> Option<*mut u8>:
+    assert align is a nonzero power of two
+    if size == 0:
+        return None
+    base = block.address() as integer
     loop:
         current = cursor.load(Relaxed)
-        aligned = (current + align - 1) & !(align - 1)
-        new_cursor = aligned + size
+        address = base.checked_add(current)?
+        aligned_address = address.checked_add(align - 1)? & !(align - 1)
+        aligned = aligned_address.checked_sub(base)?
+        new_cursor = aligned.checked_add(size)?
         if new_cursor > capacity:
             return None
         if cursor.compare_exchange_weak(current, new_cursor, Relaxed, Relaxed).ok:
@@ -238,7 +244,11 @@ compare_exchange chosen over fetch_add because:
 ### Invariants
 
 - Take is lock-free — compare_exchange_weak, no mutex, no syscall
-- Alignment: must be power of 2. Minimum 1, recommended 64 for AMX SIMD
+- Alignment: must be power of 2. Minimum 1, recommended 64 for AMX SIMD.
+  Every returned address satisfies the requested alignment, including alignments
+  greater than the backing address's alignment. Invalid alignment panics before
+  moving the cursor. Zero size, address/extent overflow and exhaustion return
+  None with the cursor unchanged; padding counts toward consumed capacity.
 - Warm writes one zero byte at offsets 0,16384,… below total, independently of
   runtime VM page size. It preserves the cursor and leaves other bytes unchanged.
   Callers exclude conflicting CPU/raw/device access and live values invalidated

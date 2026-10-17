@@ -1,0 +1,62 @@
+[
+  {
+    "path": ".claude/plans/acpu-release-proposal.md",
+    "sha256": "50e2f04a27a5a9c5a493ac40c15ddc0ec5d7db4358e674b68180c9d3a9c12bd9"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-package-evidence/support.nu",
+    "sha256": "03436f7ee557dc671f7f26c8e39992cf74a9e7dfb23294284401683f915663c6"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/README.md",
+    "sha256": "178372d08bfa659fae6f06967d6a5ec895949120543df1f0d888ebf1c7c7fc76"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/api.nu",
+    "sha256": "4a549e8a5ce73d3500533b1724b06f08eb343d2fd1be396659e3c69f050b4296"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/common.nu",
+    "sha256": "3d92af37ea2ecdd6724c6597817db300709636b4aa5b2accd0fdd9a1fed04e7c"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/consumer.nu",
+    "sha256": "44e4c7d4eb4c05b667a85e13b9663ef7922368badd248c954ce08b3ebdef0d07"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/export.nu",
+    "sha256": "d289081e8023774ad4513abf8c7b52c2d5eb88465e754b27a0e60c2217d637ea"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/guard-check.nu",
+    "sha256": "bdaa94e9fa37d9309eec64924f3a041f94ef6dd36f1f1a1e94e1ee8eafc8be47"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/owning.nu",
+    "sha256": "f36f6f4e8c922c978baa1b019f65144c3e41c7ab0b94a573fa79e85687f41018"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/package.nu",
+    "sha256": "85c9c445b40760f4b28ea074170a05a748b5809830f93810d27286984fad1846"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/replay-check.nu",
+    "sha256": "ad14afa52a24e1d32f78a37b36b9b172eebe995e6ace7098dd40b59cbfe5e5b7"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/replay.nu",
+    "sha256": "ca5680cfd1d6372405f9f0481e615ef0b3bb1e0801197df280ffa28ff3abf91c"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/retain.nu",
+    "sha256": "0432125601c08e89a9fb4445ecacc10215994d1b9335ef188117695d9c4b8c5c"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/verify.nu",
+    "sha256": "95c05cea9392ef704a7d2fd393affe016f3477cc35d8a23c9e69ffd03b0762dd"
+  },
+  {
+    "path": "audit/2026-10-17-acpu-release-proposal/wrapper-context-reanchor-1.json",
+    "sha256": "1dfaeafd2d469b07bc1f2c2e4020ae957aa7f0b6b6046abc0e65ede21a1f5a97"
+  }
+]

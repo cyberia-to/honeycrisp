@@ -1,9 +1,10 @@
 # acpu0.2.1 preparation tooling — review stage
 
-Accepted [plan](../../.claude/plans/acpu-release-proposal.md), committed as
-`0995cf9e51b5858df13f8349b083d409e0b306f5`. Owning compiler inputs still equal
-the previous green source/package epoch; no version edit, branch switch,
-candidate package or publication has occurred. Existing 0.2.0 audits are read-only.
+Accepted [plan](../../.claude/plans/acpu-release-proposal.md), initially committed
+as `0995cf9e51b5858df13f8349b083d409e0b306f5`, now re-anchored to reviewed PR25
+merge `14373cc8a0e18302751844579d94d1f8f80bd8b1`. Pushed preparation
+`9e6cffe699278059c8940f13940727b10569e13e` and all prior epochs remain retained.
+No version edit, candidate package or publication has occurred.
 
 This directory contains Nu-only orchestration. `common.nu` imports the previous
 audit's generic byte/receipt/archive helpers unchanged. `replay.nu` binds raw
@@ -50,9 +51,33 @@ normalized package targets, consumer manifest/source paths, direct NeBu version,
 clean VCS, and the independently fixed Nox archive checksum. Synthetic changes
 are explicitly labeled and rejected; real inputs remain unchanged.
 
-The prior raw workspace evidence contains 365 passing and 5 ignored tests across
+The historical PR21 raw workspace evidence contains 365 passing and 5 ignored tests across
 28 summaries; each acpu library/integration run contains 196 passing and 1 ignored
 test across 6 summaries. These numbers are replayed from the merged PR21 receipts,
 identified in `replay.nu` and `replay-check.nu`; they are not acpu0.2.1 results.
-No compiler gate was rerun for this tooling-only unit. `tooling-review.json`
-freezes the active review inputs, including the unchanged shared helper.
+No compiler gate was rerun for that tooling-only unit. Its `tooling-review.json`
+and root approval are preserved unchanged; they apply only to the old source
+epoch. `review-epoch-2` preserves that approved preparation's active files.
+
+The new `reanchor-1` records fresh target metadata, the complete PR25 compiler
+source bridge, replay of its eleven gates, current raw totals, entrypoint parsing,
+unbumped-source refusal and the updated tooling controls. The metadata command
+is `cargo metadata --no-deps --format-version 1 --locked --offline`; its inputs
+equal base `14373cc8a0e18302751844579d94d1f8f80bd8b1`. It yields 40 targets:
+32 examples, six integrations, one library and one binary. The integrations
+include the new `gemv_admission` and `gemv_independent` targets.
+
+Current raw totals come from `audit/2026-10-17-gemv-tape-admission/tape-1`
+commands `cargo test --workspace --locked --offline` (388 passing, five ignored,
+31 summaries) and `cargo test -p acpu --lib --tests --release --locked --offline`
+(212 passing, one ignored, eight summaries). Its complete source identity is
+`9de4e9df1ff33dfca56a83ba8074f698658124aae914f0c2a98707f76487ebc3` and its
+compiler inventory equals the explicit merged base. New package totals remain
+expectations until fresh candidate gates execute. The old 38-target and test
+counts are retained only as historical PR21 replay controls.
+
+`tooling-review-reanchor-1.json` freezes the new review inputs. New validation
+does not reuse the old root approval. Root reviews this closure before the
+three-file bump or frozen candidate gates. The normalized package keeps registry
+unimem0.2.0: although acpu reexports its `Tape`, the owning-source Tape repair
+is not delivered by this acpu bump. The registry identity proof remains intact.

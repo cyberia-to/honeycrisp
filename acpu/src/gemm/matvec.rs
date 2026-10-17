@@ -10,19 +10,35 @@ use core::arch::aarch64::*;
 /// Matrix-vector multiply: `c[n] += a[k] * b[k][n]`, row-major B.
 #[cfg(target_arch = "aarch64")]
 pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    debug_assert_eq!(a.len(), k);
-    debug_assert_eq!(b.len(), k * n);
-    debug_assert_eq!(c.len(), n);
+    validate(a, b, c, n, k);
+    if n == 0 || k == 0 {
+        return;
+    }
+    accumulate_neon(a, b, c, n, k);
+}
 
-    if (128..=2048).contains(&n) {
-        // AMX: K-blocked by 8, Y preloaded, pair LDX, vector FMA
-        super::gemv_kern::gemv_asm(a, b, c, n, k);
-    } else if n < 128 {
-        // NEON tiled for small N (AMX overhead too high for < 8 tiles)
+pub(super) fn validate(a: &[f32], b: &[f32], c: &[f32], n: usize, k: usize) {
+    let entries = k.checked_mul(n).expect("GEMV: k*n overflow");
+    assert_eq!(a.len(), k, "GEMV: a.len() must equal k");
+    assert_eq!(b.len(), entries, "GEMV: b.len() must equal k * n");
+    assert_eq!(c.len(), n, "GEMV: c.len() must equal n");
+}
+
+#[cfg(target_arch = "aarch64")]
+fn accumulate_neon(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
+    if n < 128 {
         matvec_tiled(a, b, c, n, k);
     } else {
-        // NEON broadcast for large N
         matvec_broadcast(a, b, c, n, k);
+    }
+}
+
+// Callers validate dimensions before reaching this overwrite fallback.
+#[cfg(target_arch = "aarch64")]
+pub(super) fn neon_set(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
+    c.fill(0.0);
+    if n != 0 && k != 0 {
+        accumulate_neon(a, b, c, n, k);
     }
 }
 
@@ -195,12 +211,17 @@ fn matvec_broadcast(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
 /// Matrix-vector multiply: c = a × B (set, not accumulate).
 #[cfg(target_arch = "aarch64")]
 pub fn matvec_f32_set(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
-    c.fill(0.0);
-    matvec_f32(a, b, c, n, k);
+    validate(a, b, c, n, k);
+    if (128..=1024).contains(&n) {
+        super::gemv_kern::gemv_asm(a, b, c, n, k);
+    } else {
+        neon_set(a, b, c, n, k);
+    }
 }
 
 #[cfg(not(target_arch = "aarch64"))]
 pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
+    validate(a, b, c, n, k);
     for ki in 0..k {
         let av = a[ki];
         let row = ki * n;
@@ -212,6 +233,7 @@ pub fn matvec_f32(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
 
 #[cfg(not(target_arch = "aarch64"))]
 pub fn matvec_f32_set(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
+    validate(a, b, c, n, k);
     c.fill(0.0);
     matvec_f32(a, b, c, n, k);
 }
@@ -271,5 +293,32 @@ mod tests {
     #[test]
     fn matvec_rectangular() {
         check_matvec(11008, 4096);
+    }
+
+    #[test]
+    #[should_panic(expected = "a.len()")]
+    fn matvec_f32_rejects_wrong_a_len() {
+        let a = vec![0.0f32; 3]; // k=4096 expected
+        let b = vec![0.0f32; 4096 * 512];
+        let mut c = vec![0.0f32; 512];
+        matvec_f32(&a, &b, &mut c, 512, 4096);
+    }
+
+    #[test]
+    #[should_panic(expected = "b.len()")]
+    fn matvec_f32_rejects_wrong_b_len() {
+        let a = vec![0.0f32; 4096];
+        let b = vec![0.0f32; 4096 * 512 - 1]; // short by one
+        let mut c = vec![0.0f32; 512];
+        matvec_f32(&a, &b, &mut c, 512, 4096);
+    }
+
+    #[test]
+    #[should_panic(expected = "c.len()")]
+    fn matvec_f32_rejects_wrong_c_len() {
+        let a = vec![0.0f32; 4096];
+        let b = vec![0.0f32; 4096 * 512];
+        let mut c = vec![0.0f32; 511]; // n=512 expected
+        matvec_f32(&a, &b, &mut c, 512, 4096);
     }
 }

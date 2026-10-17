@@ -1,12 +1,16 @@
 # acpu 0.2.1 — owner release proposal
 
-Accepted by root on 2026-10-17. Preparation tooling must be reviewed before
-branch switching or bump edits; existing source gates apply unchanged to this
-plan/tooling-only unit. Owner-only merge/tag/publication remains mandatory.
+Accepted by root on 2026-10-17; re-anchored after ordinary PR25 merged at
+`14373cc8a0e18302751844579d94d1f8f80bd8b1`. This exact origin/main revision
+is the source base. The preparation branch preserves pushed `9e6cffe699278059c8940f13940727b10569e13e`
+and merges the reviewed source without rewriting history. Historical tooling,
+approval and receipts remain in their original epochs; `review-epoch-2`
+also preserves the pre-re-anchor active files. Root must approve the new
+tool closure before export use, bump edits or frozen bump executions.
 
-Proposed, 2026-10-17. Base `3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6`
-is committed origin/main; the reused checkout is clean on
-`chore/acpu-release-preparation`. This plan is the only new file so far.
+The existing PR25 Tape gate inventory equals the complete compiler inputs at
+this base. Its eleven gates, raw outcomes and portable replay bridge this
+tooling-only unit; new script bodies receive separate fresh validation.
 Deliverable: a reviewed, source-only `chore: acpu 0.2.1` PR for the owner.
 Owner alone merges the bump, tags or publishes. Branch-built archives are
 prepublication diagnostics; release delivery requires fresh origin/main inputs
@@ -25,6 +29,10 @@ Workspace/sibling package versions remain 0.2.0. The existing workspace acpu
 requirement `"0.2.0"` already accepts 0.2.1; no owning Nox or dependency pin edits
 belong to this PR. Existing 0.2.0 audits stay immutable. Any other required
 source correction is a separately reviewed ordinary repair before the bump.
+The owning workspace includes the reviewed Tape repair, but the normalized
+acpu package still reexports `Tape` from registry unimem0.2.0. This release
+does not deliver that dependency's owning-source Tape repair. Do not claim
+otherwise in the changelog or package evidence, or expand this into a unimem bump.
 
 ## One checkout, two branches
 
@@ -34,7 +42,8 @@ Keep build/probe outputs under `~/.cache/cyber/honeycrisp/acpu-0.2.1/`.
 
 1. After plan approval, preparation branch owns this plan and new version-aware
    tooling under `audit/2026-10-17-acpu-release-proposal/`. Commit reviewed
-   preparation with required owning gates; retain wrapper context there.
+   preparation with the exact-source PR25 gate bridge and fresh tooling checks;
+   retain wrapper context there. Preserve the old preparation commit and epochs.
 2. From a clean checkout, record the preparation commit and export its exact
    runner/support bytes to the external cache. Switch to a new bump branch
    `chore/acpu-0.2.1` from the reviewed origin/main base. No new checkout or
@@ -69,9 +78,22 @@ with `--locked --offline` where applicable. Matmul is a correctness smoke.
 Before `cargo package -p acpu --locked --offline`, require complete owning
 compiler/config/asset inventory equal the committed bump. Verify the untouched
 normalized acpu0.2.1 archive's VCS, source inventory, manifest, lock and checksum;
-assert the package version and all 38 existing targets. Run its strict all-target
+assert the package version and all 40 targets (32 examples, six integration
+tests, one library and one binary), freshly derived with locked offline
+`cargo metadata --no-deps --format-version 1` at the reviewed base. The two
+new GEMV targets are `gemv_admission` and `gemv_independent`; retain independent
+test SHA `d595e4799a602ba6b2f46987bac6c22d0cb60d7cf8b841900a388488272568ba`.
+Run its strict all-target
 Clippy, debug/release library+integration tests, strict docs and real matmul.
 No source/manifest overlay, omitted examples or dependency substitution there.
+
+The current source epoch's raw PR25 Tape receipts contain 388 passing and five
+ignored workspace tests across 31 summaries; acpu release has 212 passing and
+one ignored across eight summaries. Re-derive these totals in the new tooling
+validation and demand them from the fresh owning/package gates. Historical
+PR21 totals (365/5 workspace, 196/1 acpu) remain historical controls only.
+Package debug/release totals are expectations until the untouched candidate
+actually runs; no acpu0.2.1 gate result exists at preparation time.
 
 Fetch the official acpu0.2.0 archive/index again; preserve fixed checksum/VCS
 and refuse a newly occupied/yanked 0.2.1 rather than selecting another version.

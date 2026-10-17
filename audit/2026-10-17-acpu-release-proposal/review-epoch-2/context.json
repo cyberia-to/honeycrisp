@@ -1,0 +1,5 @@
+{
+  "revision": "9e6cffe699278059c8940f13940727b10569e13e",
+  "source_base": "3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6",
+  "reason": "Preserve the approved pre-PR25 preparation inputs before re-anchoring"
+}

@@ -1,0 +1,6 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running `/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/admission-repair/acpu-target/debug/examples/matmul`

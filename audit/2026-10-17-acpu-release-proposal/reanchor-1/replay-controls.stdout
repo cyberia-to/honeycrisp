@@ -1,0 +1,29 @@
+{
+  "real_api_tools": 4,
+  "current_raw_owner_workspace": {
+    "rows": 31,
+    "passed": 388,
+    "ignored": 5
+  },
+  "current_raw_acpu_release": {
+    "rows": 8,
+    "passed": 212,
+    "ignored": 1
+  },
+  "historical_workspace": {
+    "rows": 28,
+    "passed": 365,
+    "ignored": 5
+  },
+  "historical_acpu_and_package": {
+    "rows": 6,
+    "passed": 196,
+    "ignored": 1
+  },
+  "real_matmul_controls": 2,
+  "historical_normalized_targets": 38,
+  "current_targets": 40,
+  "synthetic_corruption_refusals": 11,
+  "candidate_gates_executed": false,
+  "prior_capsule_sha256": "0058a7f32b9dfb691f4592539bc2e33ac59ffc0a2f666ee056b0eb736ff33f7c"
+}

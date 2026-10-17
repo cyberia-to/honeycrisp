@@ -30,8 +30,9 @@ def main [repo: string] {
         } else { $node }
     }))
     rejects { registry-identities $wrong_type $locked } 'direct/Nox Goldilocks types differ'
-    require ((committed-owner $root) == (open ($root | path join audit/2026-10-17-acpu-package-evidence/package-3/identities.json)).owner_files) 'compiler source differs from prior green gates'
+    let source = (open ($root | path join audit/2026-10-17-gemv-tape-admission/tape-1/sources.json)).before.owner
+    require ((owner-files $root) == $source and (git-inputs $root $base) == $source) 'compiler source differs from reviewed merge and its green gates'
     {real_registry_control: passed, synthetic_corruption_refusals: 4,
-        source_bytes_equal_previous_green_epoch: true, candidate_gates_executed: false,
+        source_bytes_equal_pr25_green_epoch: true, source_base: $base, candidate_gates_executed: false,
         metadata_sha256: (digest ($old | path join metadata.stdout)), lock_sha256: (digest ($old | path join consumer-Cargo.lock.txt))} | to json
 }

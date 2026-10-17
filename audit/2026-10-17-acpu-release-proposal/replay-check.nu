@@ -6,7 +6,7 @@ def rejects [operation: closure, message: string] {
     require ($outcome.rejected and ($outcome.message | str contains $message)) 'guard accepted corrupt input or refused for another reason'
 }
 
-# Exercises replay guards with real PR21 receipts and explicitly synthetic damage.
+# Exercises replay guards with real PR21/PR25 receipts and synthetic damage.
 # Fresh work is limited to --version and metadata; no 0.2.1 source or gate exists.
 def main [repo: string, output: string, scratch: string] {
     let root = ($repo | path expand)
@@ -35,9 +35,16 @@ def main [repo: string, output: string, scratch: string] {
     'rustdoc 1.94.0 (synthetic damage)' | save -f ($damaged | path join tool-rustdoc.stdout)
     open ($damaged | path join tool-rustdoc.json) | update stdout_sha256 (digest ($damaged | path join tool-rustdoc.stdout)) | to json | save -f ($damaged | path join tool-rustdoc.json)
     rejects { api-binaries $damaged $api } 'API tool version/cwd differs'
-    let workspace = (test-count ($old | path join owner-2) tests-workspace true)
-    let release = (test-count ($old | path join owner-2) tests-acpu-release false)
-    for mode in [debug release] { test-count ($old | path join checks-2) $'tests-($mode)' false | ignore }
+    let historical_workspace = (test-summary (open --raw ($old | path join owner-2/tests-workspace.stdout)))
+    let historical_acpu = {rows: 6, passed: 196, ignored: 1}
+    require ($historical_workspace == {rows: 28, passed: 365, ignored: 5}) 'historical workspace totals differ'
+    for item in [owner-2/tests-acpu-release checks-2/tests-debug checks-2/tests-release] {
+        require ((test-summary (open --raw ($old | path join $'($item).stdout'))) == $historical_acpu) 'historical acpu totals differ'
+    }
+    let current = ($root | path join audit/2026-10-17-gemv-tape-admission/tape-1)
+    let workspace = (test-count $current tests-workspace true)
+    let release = (test-count $current tests-acpu-release false)
+    rejects { test-count ($old | path join owner-2) tests-workspace true } 'raw test totals differ'
     let raw = (open --raw ($old | path join owner-2/tests-acpu-release.stdout))
     rejects { test-summary ($raw | str replace '126 passed; 0 failed' '125 passed; 1 failed') } 'tests failed, measured or filtered'
     let matmul = (open --raw ($old | path join owner-2/matmul.stdout))
@@ -69,7 +76,13 @@ def main [repo: string, output: string, scratch: string] {
     require ($targets == (open ($old | path join target-inventory/result.json)).targets and ($targets | length) == 38) 'real target replay differs'
     let meta = (open --raw ($out | path join metadata.stdout) | from json)
     rejects { normalized-targets $meta '/synthetic/other/package' } 'target metadata source differs'
-    {real_api_tools: 4, raw_owner_workspace: $workspace, raw_acpu_and_package: $release,
-        real_matmul_controls: 2, normalized_targets: ($targets | length), synthetic_corruption_refusals: 10,
+    capture $out current-metadata [cargo metadata --no-deps --format-version 1 --locked --offline] $root (environment ($tmp | path join target)) | ignore
+    let current_targets = (normalized-targets (open --raw ($out | path join current-metadata.stdout) | from json) ($root | path join acpu))
+    require (($current_targets | length) == 40 and ($current_targets | where {|t| 'example' in $t.kind} | length) == 32
+        and ($current_targets | where {|t| 'test' in $t.kind} | get name) == [chebyshev_coefficients chebyshev_independent gemv_admission gemv_independent input_admission integration]) 'current target replay differs'
+    $current_targets | to json | save ($out | path join current-targets.json)
+    {real_api_tools: 4, current_raw_owner_workspace: $workspace, current_raw_acpu_release: $release,
+        historical_workspace: $historical_workspace, historical_acpu_and_package: $historical_acpu,
+        real_matmul_controls: 2, historical_normalized_targets: ($targets | length), current_targets: ($current_targets | length), synthetic_corruption_refusals: 11,
         candidate_gates_executed: false, prior_capsule_sha256: (digest $capsule)} | to json
 }

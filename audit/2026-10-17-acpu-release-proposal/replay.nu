@@ -55,11 +55,12 @@ export def test-summary [raw: string] {
     {rows: ($rows | length), passed: ($rows.passed | into int | math sum), ignored: ($rows.ignored | into int | math sum)}
 }
 
-# Counts rederived from PR21 owner-2/tests-{workspace,acpu-release}.stdout:
-# 0ea511f0eb14dba309e827f2300ae776ebdd2b4ffec7620104c0da7ba788d68a,
-# 455fcb2b42d64e10447d39c0b8193ecb901239fe92b30347c4628e4bb1835720.
+# Counts rederived from PR25 tape-1/tests-{workspace,acpu-release}.stdout,
+# whose complete compiler inventory equals base 14373cc8:
+# 3f9e1b15736009afd9daefecebcfa79dfabc8ddd1eaa5deea91c9acc97f3220a,
+# aaeeb1c08a3c813b96e8a4615a9756dcd68aefedd7dabd013233fbfb5416ef81.
 export def test-count [folder: string, name: string, workspace: bool] {
-    let expected = (if $workspace { {rows: 28, passed: 365, ignored: 5} } else { {rows: 6, passed: 196, ignored: 1} })
+    let expected = (if $workspace { {rows: 31, passed: 388, ignored: 5} } else { {rows: 8, passed: 212, ignored: 1} })
     let actual = (test-summary (open --raw ($folder | path join $'($name).stdout')))
     require ($actual == $expected) $'raw test totals differ: ($name)'
     $actual
@@ -87,8 +88,9 @@ export def target-inventory [folder: string, current: string, owner: string] {
     require ($packaged.cwd == $current and $owning.cwd == $owner) 'target metadata cwd differs'
     let targets = (normalized-targets (open --raw ($folder | path join metadata.stdout) | from json) $current)
     let original = (normalized-targets (open --raw ($folder | path join owner-metadata.stdout) | from json) ($owner | path join acpu))
-    require ($targets == $original and ($targets | length) == 38
+    require ($targets == $original and ($targets | length) == 40
         and ($targets | where {|t| 'example' in $t.kind} | length) == 32) 'normalized target inventory differs'
+    require (($targets | where {|t| 'test' in $t.kind} | get name) == [chebyshev_coefficients chebyshev_independent gemv_admission gemv_independent input_admission integration]) 'integration target inventory differs'
     $targets
 }
 
