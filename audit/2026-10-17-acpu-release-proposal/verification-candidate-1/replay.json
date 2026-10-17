@@ -1,0 +1,20 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1/records/validation-tools/audit/2026-10-17-acpu-release-proposal/verify.nu",
+    "/Users/master/cyber/honeycrisp",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1/records",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1/tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1/records/validation-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1/records/validation-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-replay-1"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:13:57.531370+00:00",
+  "finished": "2026-10-17T14:14:02.944412+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "5ec1e011b371c1d7b52646b7a852a60bd9ba1e005ba7ee4675de5dafd1b14930",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
