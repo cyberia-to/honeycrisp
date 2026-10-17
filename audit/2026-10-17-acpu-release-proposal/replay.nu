@@ -82,7 +82,7 @@ export def normalized-targets [metadata: record, root: string] {
 }
 
 export def target-inventory [folder: string, current: string, owner: string] {
-    let argv = [cargo metadata --no-deps --format-version 1 --locked --offline]
+    let argv = [cargo metadata --no-deps --format-version '1' --locked --offline]
     let packaged = (checked $folder metadata $argv true)
     let owning = (checked $folder owner-metadata $argv true)
     require ($packaged.cwd == $current and $owning.cwd == $owner) 'target metadata cwd differs'

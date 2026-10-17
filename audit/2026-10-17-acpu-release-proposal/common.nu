@@ -75,8 +75,11 @@ export def candidate-revision [root: string, revision: string] {
     require ($ancestor.exit_code == 0) 'candidate does not descend from reviewed base'
     let diff = (^git -C $root diff --name-only $base $head | lines | sort)
     require ($diff == [Cargo.lock acpu/CHANGELOG.md acpu/Cargo.toml]) 'bump must contain exactly three source paths'
-    let manifest = (^git -C $root show $'($head):acpu/Cargo.toml')
-    let old_manifest = (^git -C $root show $'($base):acpu/Cargo.toml')
+    let manifest_read = (do { ^git -C $root show $'($head):acpu/Cargo.toml' } | complete)
+    let old_read = (do { ^git -C $root show $'($base):acpu/Cargo.toml' } | complete)
+    require ($manifest_read.exit_code == 0 and $old_read.exit_code == 0) 'manifest Git source is unavailable'
+    let manifest = $manifest_read.stdout
+    let old_manifest = $old_read.stdout
     require ($manifest == ($old_manifest | str replace 'version.workspace = true' $'version = "($version)"')) 'crate manifest extends beyond exact package bump'
     require (($manifest | from toml).package.version == $version) 'candidate version differs'
     let locked = (^git -C $root show $'($head):Cargo.lock' | from toml)

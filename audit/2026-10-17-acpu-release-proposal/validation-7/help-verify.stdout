@@ -1,0 +1,27 @@
+Replay an explicit candidate revision even while the checkout is on the audit branch.
+
+Usage:
+  > verify.nu <repo> <evidence> <tools> <consumer_tools> <validation_tools> <extraction> 
+
+Flags:
+  -h, --help: Display the help message for this command
+
+Command Type:
+  > custom
+
+Parameters:
+  repo <string>
+  evidence <string>
+  tools <string>
+  consumer_tools <string>
+  validation_tools <string>
+  extraction <string>
+
+Input/output types:
+  ╭───┬───────┬────────╮
+  │ # │ input │ output │
+  ├───┼───────┼────────┤
+  │ 0 │ any   │ any    │
+  ╰───┴───────┴────────╯
+
+

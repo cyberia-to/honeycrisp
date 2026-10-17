@@ -1,0 +1,8 @@
+{
+  "probe_sha256": "eb0e4498e99aa7de6ddcaca18ee39ec38a160ebccd322dc30a8e070a6cfae77d",
+  "stripped_sha256": "7b0a9de300af3070ddf53fafdd8f646797aa0594911524a4b44ef4f7080f4d97",
+  "omitted": "one final newline",
+  "committed_tool_files": 10,
+  "candidate": "2c70b3b929c791ca489bba12d2f5a6daef7d43e7",
+  "candidate_manifest_exact_bytes": "passed"
+}

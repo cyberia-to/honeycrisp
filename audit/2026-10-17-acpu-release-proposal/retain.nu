@@ -10,8 +10,8 @@ def 'main pack' [evidence: string, tools: string, output: string, staging: strin
     fresh $stage
     let tooling = (tool-bundle $tools)
     let selected = (files $records | where {|f|
-        not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
-        and not ($f.path | str starts-with consumer/nox/)
+        (not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
+        and not ($f.path | str starts-with consumer/nox/))
     })
     for file in $selected {
         let dest = ($stage | path join records $file.path)

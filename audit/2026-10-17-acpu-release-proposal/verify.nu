@@ -2,15 +2,20 @@ use common.nu *
 use replay.nu *
 
 # Replay an explicit candidate revision even while the checkout is on the audit branch.
-def main [repo: string, evidence: string, tools: string, extraction: string] {
+def main [repo: string, evidence: string, tools: string, consumer_tools: string, validation_tools: string, extraction: string] {
     let root = ($repo | path expand)
     let records = ($evidence | path expand)
     let tmp = ($extraction | path expand)
+    require (($env.CURRENT_FILE | path expand) == ($validation_tools | path expand | path join audit/2026-10-17-acpu-release-proposal/verify.nu)) 'verifier must execute from the declared exported validation bundle'
     fresh $tmp
     let tooling = (tool-bundle ($tools | path expand))
-    for tool in $tooling.manifest.files {
-        let committed = (^git -C $root show $'($tooling.manifest.revision):($tool.path)')
-        require (($committed | hash sha256) == $tool.sha256) 'tool bundle differs from its Git revision'
+    let consumer_tooling = (tool-bundle ($consumer_tools | path expand))
+    let validation_tooling = (tool-bundle ($validation_tools | path expand))
+    for bundle in [$tooling $consumer_tooling $validation_tooling] {
+        for tool in $bundle.manifest.files {
+            let committed = (do { ^git -C $root show $'($bundle.manifest.revision):($tool.path)' } | complete)
+            require ($committed.exit_code == 0 and ($committed.stdout | hash sha256) == $tool.sha256) 'tool bundle differs from its Git revision'
+        }
     }
     let pair_dir = ($records | path join package)
     let pair = (open ($pair_dir | path join identities.json))
@@ -80,7 +85,7 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
     require (($summary | str contains '229 checks: 229 pass, 31 skip') and ($summary | str contains 'Summary no semver update required')) 'raw API summary differs; review required'
     let consumer_dir = ($records | path join consumer)
     let consumer = (open ($consumer_dir | path join result.json))
-    require ($consumer.package_identity_sha256 == (digest ($pair_dir | path join identities.json)) and $consumer.tooling == $tooling
+    require ($consumer.package_identity_sha256 == (digest ($pair_dir | path join identities.json)) and $consumer.tooling == $consumer_tooling
         and $consumer.nox_head == $nox_revision and $consumer.diagnostic_override and not $consumer.unpatched_registry_acceptance) 'consumer source/scope differs'
     let nox_archive = ($consumer_dir | path join nox.crate)
     require ((digest $nox_archive) == $nox_archive_sha256 and $consumer.nox.sha256 == $nox_archive_sha256) 'Nox archive differs from independent PR21 anchor'
@@ -97,7 +102,7 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
     let manifest = (open ($scratch | path join Cargo.toml))
     let lock = (open --raw ($scratch | path join Cargo.lock) | from toml)
     let metadata = (open --raw ($consumer_dir | path join metadata.stdout) | from json)
-    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version 1 --locked --offline] true)
+    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version '1' --locked --offline] true)
     require ($metadata_receipt.cwd == $consumer.consumer.root) 'consumer metadata cwd differs'
     require ((registry-identities $metadata $lock) == $consumer.dependencies) 'registry identity summary differs'
     require ($consumer.nox.root == ($consumer.consumer.root | path dirname | path join nox cyber-nox-0.2.0)) 'consumer normalized Nox root differs'
@@ -121,5 +126,6 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
     }
     {candidate: $candidate.head, version: $version, package_sha256: $pair.current.sha256,
         owning: 8, package: 5, consumer_modes: 2, api: verified, publication_authorized: false,
+        production_tools: $tooling.sha256, consumer_tools: $consumer_tooling.sha256, validation_tools: $validation_tooling.sha256,
         scope: 'replay of committed branch inputs; fresh origin/main delivery required after owner merge'} | to json
 }

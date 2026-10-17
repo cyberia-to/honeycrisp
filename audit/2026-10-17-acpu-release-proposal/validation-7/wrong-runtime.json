@@ -1,0 +1,20 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-release-proposal/verify.nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/records",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/wrong-runtime-extraction"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:10:25.638856+00:00",
+  "finished": "2026-10-17T14:10:25.662268+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3e5570e8429eadf503798686d652bf3ee7d3397327de3ef086d5a6f72feb3dd0"
+}

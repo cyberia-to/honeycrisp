@@ -1,0 +1,41 @@
+diff --git a/audit/2026-10-17-acpu-release-proposal/replay.nu b/audit/2026-10-17-acpu-release-proposal/replay.nu
+index 3dffdd8..4a1f7a8 100644
+--- a/audit/2026-10-17-acpu-release-proposal/replay.nu
++++ b/audit/2026-10-17-acpu-release-proposal/replay.nu
+@@ -82,7 +82,7 @@ export def normalized-targets [metadata: record, root: string] {
+ }
+ 
+ export def target-inventory [folder: string, current: string, owner: string] {
+-    let argv = [cargo metadata --no-deps --format-version 1 --locked --offline]
++    let argv = [cargo metadata --no-deps --format-version '1' --locked --offline]
+     let packaged = (checked $folder metadata $argv true)
+     let owning = (checked $folder owner-metadata $argv true)
+     require ($packaged.cwd == $current and $owning.cwd == $owner) 'target metadata cwd differs'
+diff --git a/audit/2026-10-17-acpu-release-proposal/retain.nu b/audit/2026-10-17-acpu-release-proposal/retain.nu
+index 9d395a7..6cc1a00 100644
+--- a/audit/2026-10-17-acpu-release-proposal/retain.nu
++++ b/audit/2026-10-17-acpu-release-proposal/retain.nu
+@@ -10,8 +10,8 @@ def 'main pack' [evidence: string, tools: string, output: string, staging: strin
+     fresh $stage
+     let tooling = (tool-bundle $tools)
+     let selected = (files $records | where {|f|
+-        not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
+-        and not ($f.path | str starts-with consumer/nox/)
++        (not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
++        and not ($f.path | str starts-with consumer/nox/))
+     })
+     for file in $selected {
+         let dest = ($stage | path join records $file.path)
+diff --git a/audit/2026-10-17-acpu-release-proposal/verify.nu b/audit/2026-10-17-acpu-release-proposal/verify.nu
+index a98d8ae..0bd9e9a 100644
+--- a/audit/2026-10-17-acpu-release-proposal/verify.nu
++++ b/audit/2026-10-17-acpu-release-proposal/verify.nu
+@@ -97,7 +97,7 @@ def main [repo: string, evidence: string, tools: string, extraction: string] {
+     let manifest = (open ($scratch | path join Cargo.toml))
+     let lock = (open --raw ($scratch | path join Cargo.lock) | from toml)
+     let metadata = (open --raw ($consumer_dir | path join metadata.stdout) | from json)
+-    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version 1 --locked --offline] true)
++    let metadata_receipt = (checked $consumer_dir metadata [cargo metadata --format-version '1' --locked --offline] true)
+     require ($metadata_receipt.cwd == $consumer.consumer.root) 'consumer metadata cwd differs'
+     require ((registry-identities $metadata $lock) == $consumer.dependencies) 'registry identity summary differs'
+     require ($consumer.nox.root == ($consumer.consumer.root | path dirname | path join nox cyber-nox-0.2.0)) 'consumer normalized Nox root differs'

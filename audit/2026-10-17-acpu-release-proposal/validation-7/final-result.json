@@ -1,0 +1,10 @@
+{
+  "reviewed_manifest": "sources.json",
+  "root_requested_additions": [
+    "actual exported verifier runtime binding",
+    "active README arguments"
+  ],
+  "final_compact_sha256": "5ac885c1d707b2af9bebdd62dc1ed5b0bca698698deba9bae2a1e64744a40836",
+  "final_manifest_sha256": "22489aa7e3e4436f34eb7654f2804f5ff2bbdbf03dda8e1044af39d73e1f1ec9",
+  "wrong_runtime_refusal": "wrong-runtime.json"
+}

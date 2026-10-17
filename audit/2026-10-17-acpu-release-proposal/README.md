@@ -21,8 +21,8 @@ After independent tooling review and its preparation commit, use explicit paths:
 | `owning.nu REPO RECORDS/owning TARGET TOOLS` | Eight fresh owning gates; complete source before/after each. |
 | `package.nu REPO RECORDS/package TARGET TOOLS RECORDS/owning` | Exactly three committed bump paths; manifest-only package version and generated lock identity; official baseline plus untouched candidate; all package gates and targets. |
 | `api.nu RECORDS/package RECORDS/api TARGET TOOLS` | Separate full-library baseline/candidate rustdoc artifacts; explicit pinned comparison. |
-| `consumer.nu NOX RECORDS/package RECORDS/consumer TARGET TOOLS` | Fixed committed normalized Nox, unchanged four-test probe, isolated candidate override, registry type identity proof. |
-| `verify.nu REPO RECORDS TOOLS FRESH_TMP` | Replay explicit candidate Git revision and archive even on unbumped preparation branch; no recorded historical cwd execution. |
+| `consumer.nu NOX RECORDS/package RECORDS/consumer TARGET CONSUMER_TOOLS PRODUCER_TOOLS` | Fixed committed normalized Nox, unchanged four-test probe, isolated candidate override, registry type identity proof; actual consumer and package producer bundles are explicit. |
+| `verify.nu REPO RECORDS PRODUCER_TOOLS CONSUMER_TOOLS VALIDATOR_TOOLS FRESH_TMP` | Replay explicit candidate Git revision and archive even on unbumped preparation branch; validate all three committed bundles and require execution from the declared validator bundle. |
 | `retain.nu pack RECORDS TOOLS CAPSULE FRESH_STAGE` | Keep raw records, crate/API/probe artifacts and tools once; omit extracted package copies. |
 | `retain.nu unpack CAPSULE FRESH_TMP` | Verify compressed inventory/hash before portable extraction. |
 
@@ -81,3 +81,10 @@ does not reuse the old root approval. Root reviews this closure before the
 three-file bump or frozen candidate gates. The normalized package keeps registry
 unimem0.2.0: although acpu reexports its `Tape`, the owning-source Tape repair
 is not delivered by this acpu bump. The registry identity proof remains intact.
+
+`validation-repair-1.md` and `validation-repair-2.md` retain the candidate's
+tooling refusals and narrow repairs. Owning, acpu package and API commands keep
+their original production bundle; the corrected consumer and validator use a
+separate committed bundle. Both bundles must accompany the final capsule.
+The old package runner's missing result summary is never reconstructed; raw
+successful commands and archives are independently replayed by the validator.
