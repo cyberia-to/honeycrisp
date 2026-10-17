@@ -1,0 +1,44 @@
+{
+  "revision": "b38bed1952a562054d29350020fcd5dea37b5ed2",
+  "epoch": "acpu-1",
+  "gates": 12,
+  "tests": [
+    {
+      "name": "tests-workspace",
+      "summaries": 30,
+      "passed": 383,
+      "ignored": 5
+    },
+    {
+      "name": "tests-acpu-release",
+      "summaries": 8,
+      "passed": 212,
+      "ignored": 1
+    },
+    {
+      "name": "gemv_admission-debug",
+      "summaries": 1,
+      "passed": 4,
+      "ignored": 0
+    },
+    {
+      "name": "gemv_independent-debug",
+      "summaries": 1,
+      "passed": 2,
+      "ignored": 0
+    },
+    {
+      "name": "gemv_admission-release",
+      "summaries": 1,
+      "passed": 4,
+      "ignored": 0
+    },
+    {
+      "name": "gemv_independent-release",
+      "summaries": 1,
+      "passed": 2,
+      "ignored": 0
+    }
+  ],
+  "source_sha256": "2e07b4bab71c2e94631e2fe357fc27de0713d83fd44d37201c68889a858b7670"
+}

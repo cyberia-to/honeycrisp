@@ -46,5 +46,13 @@ versions and dependency identities. It restores accumulation through existing
 NEON kernels and limits AMX overwrite dispatch to its supported tile capacity.
 Timing and performance acceptance are outside this correctness audit.
 
+The source/evidence unit is committed as
+`b38bed1952a562054d29350020fcd5dea37b5ed2`. Replay it with
+`nu audit/2026-10-17-gemv-tape-admission/verify.nu REPO acpu-1 b38bed1952a562054d29350020fcd5dea37b5ed2`.
+The verifier binds the complete source inventory to that Git revision, checks
+the commands/environments/raw hashes, and independently parses test totals.
+Historical recorded paths are evidence only. `verification-acpu-1` retains the
+successful replay and the explicit refusal when given the older origin source.
+
 Tape repair and its fresh evidence follow as a separate logical commit. This
 branch contains no release candidate or publication authorization.
