@@ -21,13 +21,15 @@ macro_rules! native_call {
         result
     }};
 }
+pub(super) use native_call;
 
-/// One Create-rule reference. Dictionary callbacks own their separate retains.
-struct OwnedCf(NonNull<c_void>);
+/// One owned CF reference. Collection callbacks own their separate retains.
+pub(super) struct OwnedCf(NonNull<c_void>);
 
 impl OwnedCf {
-    // Only native Create results enter here; a null result owns no reference.
-    fn from_create(raw: CFTypeRef) -> Option<Self> {
+    // Native Create results and explicit CFRetain results each transfer one
+    // owned reference here; a null result owns no reference.
+    pub(super) fn from_create(raw: CFTypeRef) -> Option<Self> {
         let raw = NonNull::new(raw.cast_mut())?;
         let owner = Self(raw);
         #[cfg(test)]
@@ -35,19 +37,19 @@ impl OwnedCf {
         Some(owner)
     }
 
-    fn raw(&self) -> CFTypeRef {
+    pub(super) fn raw(&self) -> CFTypeRef {
         self.0.as_ptr()
     }
 }
 
 impl Drop for OwnedCf {
     fn drop(&mut self) {
-        // SAFETY: This owner holds one native Create-rule reference.
+        // SAFETY: This owner holds one native Create-rule or retained reference.
         unsafe { release(self.raw()) }
     }
 }
 
-fn number(value: i64) -> Result<OwnedCf, MemError> {
+pub(super) fn number(value: i64) -> Result<OwnedCf, MemError> {
     // SAFETY: SInt64Type matches the live i64 value; the default allocator is valid.
     OwnedCf::from_create(native_call!(Number, ptr::null(), unsafe {
         CFNumberCreate(
@@ -97,17 +99,17 @@ fn properties(plan: &BlockPlan) -> Result<OwnedCf, MemError> {
     Ok(dictionary)
 }
 
-struct Surface {
-    owner: OwnedCf,
-    locked: bool,
+pub(super) struct Surface {
+    pub(super) owner: OwnedCf,
+    pub(super) locked: bool,
 }
 
 impl Surface {
-    fn raw(&self) -> IOSurfaceRef {
+    pub(super) fn raw(&self) -> IOSurfaceRef {
         self.owner.raw().cast_mut()
     }
 
-    fn into_raw(self) -> IOSurfaceRef {
+    pub(super) fn into_raw(self) -> IOSurfaceRef {
         let raw = self.raw();
         // Block takes both this owned reference and the successful lock.
         core::mem::forget(self);

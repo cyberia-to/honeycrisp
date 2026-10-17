@@ -129,7 +129,31 @@ Block is locked once at creation time and stays locked until drop. This makes VA
 
 No public lock/unlock API. Lock is internal implementation detail.
 
-### Data: Block
+### Native image planes
+
+`Block::plan_image(format, width, height)` plans NV12/P010 IOSurfaces with two
+planes and explicit video/full-range FourCC (`420v`, `420f`, `x420`, `xf20`).
+Dimensions are positive; chroma dimensions use ceiling division. NV12 elements
+are one-byte Y and two-byte UV pairs; P010 uses two/four bytes with high-ten-bit
+sample packing. Sample interpretation/initialization remains the producer's duty.
+The immutable image plan includes native-aligned rows/offsets and complete
+plane/allocation extents, including final-row padding. Planning creates no CF
+objects or backing. Opening creates actual plane metadata and returns `Block`.
+Native queried format, geometry, plane layout and allocation extent must equal
+the plan. Raw `Block::plan(size)` retains its existing one-row behavior.
+
+`Block::image_layout()` validates and reports supported actual native geometry;
+raw/unsupported pixel formats fail. Unsafe `Block::retain_image(surface)` adds
+one owned native reference and successful lifetime lock, validates actual planes
+and returns the same Block type. Valid padded native imports need not match the
+allocator's canonical stride/offset choices. Caller ownership is preserved on
+success and failure. Null/unsupported/malformed surfaces fail; non-null handles
+must be live IOSurfaces whose layout/mapping remains stable through Block drop.
+Retain/import establishes lifetime and bounds. Existing unsafe CPU views still
+require complete initialization, access exclusion and prior device completion.
+No safe readiness, physical-address or cross-platform guarantee is added.
+
+### Data: Block (raw owner fields)
 
 | Field | Type | Description |
 |-------|------|-------------|

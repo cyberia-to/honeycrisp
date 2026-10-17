@@ -1,0 +1,13 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/acpu)
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.61s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/unimem-9e0247429e2be340)
+
+thread 'tape::tests::take_rejects_non_power_of_two_alignment_in_release_too' (258334565) panicked at unimem/src/tape.rs:80:9:
+alignment must be power of 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+     Running tests/image_planes.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/image_planes-816ecac15cda0abd)

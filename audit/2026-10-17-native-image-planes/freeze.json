@@ -1,0 +1,202 @@
+{
+  "created": "2026-10-17T16:40:21.186403+00:00",
+  "heads": [
+    "4a3079cc49ea086121324af826091c559e5d8120",
+    "56aedb2d12b3126c601eb333419136d403614dbb"
+  ],
+  "source_manifest": "inputs/e37fe7a30ff0dac0bf740833ea94de21e503e703b73a275111e4f2f1ac3ff260.json",
+  "source_sha256": "e37fe7a30ff0dac0bf740833ea94de21e503e703b73a275111e4f2f1ac3ff260",
+  "runner_sha256": "2e475f10a36181dded4f076618b383716acaea9b83db90a3c058e00423102072",
+  "tools": [
+    {
+      "path": "/Users/master/.cargo/bin/rustup",
+      "sha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a"
+    },
+    {
+      "path": "/opt/homebrew/bin/nu",
+      "sha256": "6183fc5479db0dc99defa4b536d41de9defb537cbd1236486b3f0c505199e40e"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/cargo",
+      "sha256": "c512bff73c86143b557463f021d0c3d5b0490d97d65040ba59ea2b3427784758"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+      "sha256": "b829b733131d4e1673eeebd1f34d06ae1e9ff4977b051313cf42e2a9e79ecf1c"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+      "sha256": "59bc6a1caf617032284a2edc2aa03916396e70589c435a8b51e3957887f90ce5"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/cargo-clippy",
+      "sha256": "2ea40177fa3012adef8b57c093ce114ace8030cc51958571cfb1a09f88efd641"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/clippy-driver",
+      "sha256": "5c769ecd068eed4aeec1265fd8777c4d2227ec1bb4b7775c800ec2961e2b8307"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/cargo-fmt",
+      "sha256": "00f31e9dea5dc9c165472b76fd80d405ab851e955be08dc1448fdd4d2043828d"
+    },
+    {
+      "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustfmt",
+      "sha256": "2462eda2ece5926a3b09538850c6c21ffd9100c3bc4573093c9e9b0f60785c6f"
+    }
+  ],
+  "machine": {
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.4.1\nBuildVersion:\t\t25E253",
+    "architecture": "arm64"
+  },
+  "sdk": {
+    "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "version": "26.4.1",
+    "headers": [
+      {
+        "path": "System/Library/Frameworks/IOSurface.framework/Headers/IOSurfaceRef.h",
+        "sha256": "8ee2890f7a5392ac2040c2e0b3d3cb773cdebe3627ad3452881fc7d20a759bd5"
+      },
+      {
+        "path": "System/Library/Frameworks/CoreVideo.framework/Headers/CVPixelBuffer.h",
+        "sha256": "b3daeca1aa9b91b41246de56b2cf947d1c5471e7b727a9cd2fd1164d32699ca4"
+      },
+      {
+        "path": "System/Library/Frameworks/CoreVideo.framework/Headers/CVPixelBufferIOSurface.h",
+        "sha256": "0ce5126bc876437e6da462c7b9e76cc13e8a824e73985c0973e8c8e9b24d7d95"
+      }
+    ]
+  },
+  "authority_files": [
+    {
+      "path": ".claude/plans/native-image-planes.md",
+      "sha256": "8a4fa2edcd3619aa77509645d71a326d9c931edb8735980ef47a118a177953a6"
+    },
+    {
+      "path": "unimem/specs/README.md",
+      "sha256": "4fb0662d7979e0170c87da8f5bc98557517593ff9980feda10a4c41e2d1c538b"
+    },
+    {
+      "path": "unimem/specs/api-sketch.md",
+      "sha256": "04b4144f2c7ecba6fbbeec092802ef2284f148473f9bcc9dc6deaee95891e0c9"
+    }
+  ],
+  "gates": [
+    {
+      "name": "final-debug",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "unimem",
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "name": "final-release",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "unimem",
+        "--release",
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "name": "final-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "-p",
+        "unimem",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    {
+      "name": "final-doc",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "unimem",
+        "--no-deps",
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "name": "final-fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ]
+    },
+    {
+      "name": "final-no-std",
+      "argv": [
+        "nu",
+        "unimem/scripts/check-no-std.nu"
+      ]
+    },
+    {
+      "name": "workspace-test",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "name": "workspace-release",
+      "argv": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "name": "workspace-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    },
+    {
+      "name": "pipeline",
+      "argv": [
+        "cargo",
+        "run",
+        "-p",
+        "unimem",
+        "--example",
+        "pipeline",
+        "--release",
+        "--locked",
+        "--offline"
+      ]
+    }
+  ],
+  "scope": "Local workspace/sibling Rust and manifests/config plus no_std templates/script; dependency identities are locked, registry sources/tool binaries are not bundled"
+}

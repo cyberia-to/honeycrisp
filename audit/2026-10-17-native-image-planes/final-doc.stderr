@@ -1,0 +1,5 @@
+   Compiling crossbeam-utils v0.8.21
+    Checking crossbeam-queue v0.3.12
+ Documenting unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.78s
+   Generated /Users/master/.cache/cyber/honeycrisp/native-image-planes/target/doc/unimem/index.html

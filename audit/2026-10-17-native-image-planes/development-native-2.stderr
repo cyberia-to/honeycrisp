@@ -1,0 +1,12 @@
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/acpu)
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium)
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.46s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/unimem-9e0247429e2be340)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_access-8e5135fbf48b4abd)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_creation-ee64dae90b1094f1)
+     Running tests/image_planes.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/image_planes-816ecac15cda0abd)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/roundtrip-c25e641c9640dc77)
+     Running tests/tape_alignment.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/tape_alignment-b81c40cddc54b1ef)
+   Doc-tests unimem
