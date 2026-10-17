@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo-semver-checks",
+    "check-release",
+    "--baseline-rustdoc",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-root-verification-20261017/published-final-api.json",
+    "--current-rustdoc",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-root-verification-20261017/final-api.json",
+    "--release-type",
+    "patch",
+    "--color",
+    "never"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:45:04.360564+00:00",
+  "finished": "2026-10-17T10:45:04.448664+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "1a344b82c9f679481fd3b03e61da3c4b3c6dbd5d85be75cf84728a44d74e320e"
+}

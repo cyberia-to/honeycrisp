@@ -1,0 +1,399 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index ebeda0f..e063398 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -38,7 +38,7 @@ crossbeam-queue = { version = "0.3", default-features = false, features = ["allo
+ mutants = "0.0.3"
+ criterion = { version = "0.5", features = ["html_reports"] }
+ libc = "0.2"
+-nebu = { path = "../strata/nebu/rs", package = "strata-nebu" }
++nebu = { path = "../strata/nebu/rs", package = "strata-nebu", version = "0.1.1" }
+ objc2 = "0.6"
+ objc2-metal = { version = "0.3", features = ["MTLDevice", "MTLCommandQueue", "MTLCommandBuffer", "MTLComputeCommandEncoder", "MTLComputePipeline", "MTLResource", "MTLBuffer", "MTLLibrary"] }
+ objc2-foundation = { version = "0.3", features = ["NSString", "NSError"] }
+diff --git a/acpu/bench/cores.rs b/acpu/bench/cores.rs
+index 6aeaed9..e67752e 100644
+--- a/acpu/bench/cores.rs
++++ b/acpu/bench/cores.rs
+@@ -84,7 +84,8 @@ fn main() {
+     );
+     eprintln!("  {}", "─".repeat(50));
+ 
+-    let workloads: Vec<(&str, Arc<dyn Fn() + Send + Sync>)> = vec![
++    type Workload = (&'static str, Arc<dyn Fn() + Send + Sync>);
++    let workloads: Vec<Workload> = vec![
+         (
+             "sum 1M",
+             Arc::new({
+diff --git a/acpu/bench/crypto.rs b/acpu/bench/crypto.rs
+index 0844334..002d655 100644
+--- a/acpu/bench/crypto.rs
++++ b/acpu/bench/crypto.rs
+@@ -62,7 +62,7 @@ fn aes128_key_expand(key: &[u8; 16]) -> Vec<[u8; 16]> {
+             S[b[3] as usize],
+         ])
+     }
+-    let mut w = vec![0u32; 44];
++    let mut w = [0u32; 44];
+     for i in 0..4 {
+         w[i] = u32::from_be_bytes([key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]]);
+     }
+diff --git a/acpu/bench/elementwise.rs b/acpu/bench/elementwise.rs
+index f3b90ac..4f6af71 100644
+--- a/acpu/bench/elementwise.rs
++++ b/acpu/bench/elementwise.rs
+@@ -100,7 +100,7 @@ fn main() {
+             // x + 0.044715*x^3
+             vDSP_vadd(pos.as_ptr(), 1, tmp.as_ptr(), 1, tmp.as_mut_ptr(), 1, nu);
+             // sqrt(2/pi) * (...)
+-            let s2pi = 0.7978845608f32;
++            let s2pi = 0.797_884_6_f32;
+             vDSP_vsmul(tmp.as_ptr(), 1, &s2pi, tmp.as_mut_ptr(), 1, nu);
+             // tanh
+             vvtanhf(out.as_mut_ptr(), tmp.as_ptr(), &ni);
+diff --git a/acpu/bench/memory.rs b/acpu/bench/memory.rs
+index fc33446..3460bc8 100644
+--- a/acpu/bench/memory.rs
++++ b/acpu/bench/memory.rs
+@@ -281,7 +281,7 @@ fn main() {
+     let b_arr: Vec<f32> = (0..STREAM_N).map(|i| (i % 997) as f32 * 0.001).collect();
+     let mut c_arr = vec![0f32; STREAM_N];
+     let mut d_arr = vec![0f32; STREAM_N];
+-    let scalar = 3.14159f32;
++    let scalar = f32::from_bits(0x4049_0fd0); // Preserve the original 3.14159f32 value.
+     let bytes = STREAM_N as f64 * 4.0;
+ 
+     let specs: [(&str, f64, f64); 4] = [
+@@ -304,8 +304,8 @@ fn main() {
+     let iters_per = 20;
+     let mut all_times: [[Vec<u64>; 4]; 1] = [Default::default()];
+     let times = &mut all_times[0];
+-    for k in 0..4 {
+-        times[k] = Vec::with_capacity(rounds * iters_per);
++    for time in times.iter_mut() {
++        *time = Vec::with_capacity(rounds * iters_per);
+     }
+ 
+     for _ in 0..rounds {
+diff --git a/acpu/bench/sgemm.rs b/acpu/bench/sgemm.rs
+index 780e67a..7beb479 100644
+--- a/acpu/bench/sgemm.rs
++++ b/acpu/bench/sgemm.rs
+@@ -109,7 +109,7 @@ fn bench_mixed() {
+         }
+         let ns = best_of(|| acpu::matmul_f16(&a16, &b16, &mut c, n, n, n), 100);
+         let gf = flops / ns as f64;
+-        println!("{:<28} {:>8.1} GF   {}", "hgemm fp16", gf, "convert+sgemm");
++        println!("{:<28} {:>8.1} GF   convert+sgemm", "hgemm fp16", gf);
+     }
+ 
+     // bf16
+@@ -124,7 +124,7 @@ fn bench_mixed() {
+         }
+         let ns = best_of(|| acpu::matmul_bf16(&a16, &b16, &mut c, n, n, n), 100);
+         let gf = flops / ns as f64;
+-        println!("{:<28} {:>8.1} GF   {}", "bgemm bf16", gf, "convert+sgemm");
++        println!("{:<28} {:>8.1} GF   convert+sgemm", "bgemm bf16", gf);
+     }
+ 
+     // i8
+@@ -142,7 +142,7 @@ fn bench_mixed() {
+             100,
+         );
+         let gf = flops / ns as f64;
+-        println!("{:<28} {:>8.1} GF   {}", "qgemm i8", gf, "deq+sgemm");
++        println!("{:<28} {:>8.1} GF   deq+sgemm", "qgemm i8", gf);
+     }
+ }
+ 
+diff --git a/acpu/examples/amx_opcode_scan.rs b/acpu/examples/amx_opcode_scan.rs
+index 14f02e9..4af23fb 100644
+--- a/acpu/examples/amx_opcode_scan.rs
++++ b/acpu/examples/amx_opcode_scan.rs
+@@ -40,8 +40,8 @@ fn main() {
+             }
+ 
+             // Load X[0] and Y[0].
+-            amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+-            amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
++            amx_op::<OP_LDX>(x_buf as u64);
++            amx_op::<OP_LDY>(y_buf as u64);
+ 
+             // Try this opcode with operand 0 (simplest).
+             // Catch SIGILL — if opcode doesn't exist, it will crash.
+diff --git a/acpu/examples/amx_smoke.rs b/acpu/examples/amx_smoke.rs
+index 87b8bf5..3f1e42b 100644
+--- a/acpu/examples/amx_smoke.rs
++++ b/acpu/examples/amx_smoke.rs
+@@ -44,8 +44,8 @@ fn main() {
+         for row in 0u8..64 {
+             amx_op::<OP_LDZ>((zero_buf as u64) | ((row as u64) << 56));
+         }
+-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
++        amx_op::<OP_LDX>(x_buf as u64);
++        amx_op::<OP_LDY>(y_buf as u64);
+ 
+         let op = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 0);
+         amx_op::<OP_FMA32>(op);
+@@ -157,11 +157,11 @@ fn main() {
+         for i in 0..16 {
+             *x_buf.add(i) = 7.0;
+         }
+-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
++        amx_op::<OP_LDX>(x_buf as u64);
+         for j in 0..16 {
+             *y_buf.add(j) = 3.0;
+         }
+-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
++        amx_op::<OP_LDY>(y_buf as u64);
+ 
+         let op4 = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 1);
+         amx_op::<OP_FMA32>(op4);
+diff --git a/acpu/examples/decompose.rs b/acpu/examples/decompose.rs
+index a366a0b..6493a13 100644
+--- a/acpu/examples/decompose.rs
++++ b/acpu/examples/decompose.rs
+@@ -106,7 +106,7 @@ fn decompose(n: usize) {
+         #[repr(align(64))]
+         struct APack([MaybeUninit<f32>; 256 * 256]);
+ 
+-        let t = median_ns(|| {
++        median_ns(|| {
+             let mut buf: APack = unsafe { MaybeUninit::uninit().assume_init() };
+             let ap = &mut buf.0[..];
+             for s in 0..n_mr {
+@@ -126,8 +126,7 @@ fn decompose(n: usize) {
+                 }
+             }
+             std::hint::black_box(&buf);
+-        });
+-        t
++        })
+     };
+ 
+     // --- A pack: NEON (pack_a_strip_neon style) ---
+@@ -135,7 +134,7 @@ fn decompose(n: usize) {
+         #[repr(align(64))]
+         struct APack([f32; 256 * 256]);
+ 
+-        let t = median_ns(|| {
++        median_ns(|| {
+             let mut buf = APack([0.0f32; 256 * 256]);
+             let dst = &mut buf.0[..];
+             for s in 0..n_mr {
+@@ -190,8 +189,7 @@ fn decompose(n: usize) {
+                 }
+             }
+             std::hint::black_box(&buf);
+-        });
+-        t
++        })
+     };
+ 
+     // --- AMX compute: per-instruction LDX+LDY+FMA (small.rs inner loop) ---
+@@ -295,7 +293,7 @@ fn decompose(n: usize) {
+         #[repr(align(64))]
+         struct BPack([MaybeUninit<f32>; 256 * 256]);
+ 
+-        let t = median_ns(|| {
++        median_ns(|| {
+             let mut buf: BPack = unsafe { MaybeUninit::uninit().assume_init() };
+             let bp = &mut buf.0[..];
+             for s in 0..n_mr {
+@@ -311,8 +309,7 @@ fn decompose(n: usize) {
+                 }
+             }
+             std::hint::black_box(&buf);
+-        });
+-        t
++        })
+     };
+ 
+     // --- Preload + compute + store (new path) ---
+diff --git a/acpu/examples/matmul.rs b/acpu/examples/matmul.rs
+index f8b9783..6f3c493 100644
+--- a/acpu/examples/matmul.rs
++++ b/acpu/examples/matmul.rs
+@@ -23,8 +23,8 @@ fn main() {
+ 
+     // Verify: C should equal A (all ones) since B is identity.
+     let mut max_err = 0.0f32;
+-    for i in 0..N * N {
+-        let err = (c[i] - 1.0).abs();
++    for value in &c {
++        let err = (*value - 1.0).abs();
+         if err > max_err {
+             max_err = err;
+         }
+diff --git a/acpu/examples/neon_vs_amx.rs b/acpu/examples/neon_vs_amx.rs
+index 2a243d8..e9022e1 100644
+--- a/acpu/examples/neon_vs_amx.rs
++++ b/acpu/examples/neon_vs_amx.rs
+@@ -18,11 +18,11 @@ fn main() {
+ 
+         acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
+         let mut t = vec![0u64; iters];
+-        for i in 0..iters {
++        for time in &mut t {
+             c.fill(0.0);
+             let s = Instant::now();
+             acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
+-            t[i] = s.elapsed().as_nanos() as u64;
++            *time = s.elapsed().as_nanos() as u64;
+         }
+         let ns = median_of(&mut t);
+         let ops = 2.0 * (sz as f64).powi(3);
+diff --git a/acpu/examples/pair_test.rs b/acpu/examples/pair_test.rs
+index 0686fcd..22bf72b 100644
+--- a/acpu/examples/pair_test.rs
++++ b/acpu/examples/pair_test.rs
+@@ -22,8 +22,8 @@ fn main() {
+         // Test pair LDX at different alignments
+         let buf = A128({
+             let mut a = [0.0f32; 64];
+-            for i in 0..64 {
+-                a[i] = (i + 1) as f32;
++            for (i, value) in a.iter_mut().enumerate() {
++                *value = (i + 1) as f32;
+             }
+             a
+         });
+diff --git a/acpu/examples/phase_time.rs b/acpu/examples/phase_time.rs
+index 85219be..aecc6fd 100644
+--- a/acpu/examples/phase_time.rs
++++ b/acpu/examples/phase_time.rs
+@@ -18,20 +18,20 @@ fn main() {
+ 
+         // Total sgemm time
+         let mut t = vec![0u64; iters];
+-        for i in 0..iters {
++        for time in &mut t {
+             c.fill(0.0);
+             let s = Instant::now();
+             acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
+-            t[i] = s.elapsed().as_nanos() as u64;
++            *time = s.elapsed().as_nanos() as u64;
+         }
+         let total = median_of(&mut t);
+ 
+         // Time just c.fill(0.0) to subtract
+-        for i in 0..iters {
++        for time in &mut t {
+             let s = Instant::now();
+             c.fill(0.0);
+             std::hint::black_box(&c);
+-            t[i] = s.elapsed().as_nanos() as u64;
++            *time = s.elapsed().as_nanos() as u64;
+         }
+         let fill = median_of(&mut t);
+ 
+diff --git a/acpu/examples/profile64.rs b/acpu/examples/profile64.rs
+index a5853e9..f3cca0b 100644
+--- a/acpu/examples/profile64.rs
++++ b/acpu/examples/profile64.rs
+@@ -17,11 +17,11 @@ fn main() {
+     // Full sgemm (includes pack + preload + compute + store)
+     acpu::matmul_f32(&a, &b, &mut c, n, n, k);
+     let mut t = vec![0u64; iters];
+-    for i in 0..iters {
++    for time in &mut t {
+         c.fill(0.0);
+         let s = Instant::now();
+         acpu::matmul_f32(&a, &b, &mut c, n, n, k);
+-        t[i] = s.elapsed().as_nanos() as u64;
++        *time = s.elapsed().as_nanos() as u64;
+     }
+     eprintln!(
+         "full sgemm 64×64: {:>5} ns  {:.1} GFLOPS",
+@@ -36,11 +36,11 @@ fn main() {
+         let b2: Vec<f32> = (0..kk * n).map(|i| (i % 11) as f32 * 0.1).collect();
+         let mut c2 = vec![0.0f32; n * n];
+         acpu::matmul_f32(&a2, &b2, &mut c2, n, n, kk);
+-        for i in 0..iters {
++        for time in &mut t {
+             c2.fill(0.0);
+             let s = Instant::now();
+             acpu::matmul_f32(&a2, &b2, &mut c2, n, n, kk);
+-            t[i] = s.elapsed().as_nanos() as u64;
++            *time = s.elapsed().as_nanos() as u64;
+         }
+         let ns = median(&mut t);
+         let gf = 2.0 * n as f64 * n as f64 * kk as f64 / ns as f64;
+diff --git a/acpu/examples/single_vs_par.rs b/acpu/examples/single_vs_par.rs
+index a5c2a69..7d45241 100644
+--- a/acpu/examples/single_vs_par.rs
++++ b/acpu/examples/single_vs_par.rs
+@@ -14,11 +14,11 @@ fn main() {
+         acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
+         let iters = if sz >= 1024 { 5 } else { 10 };
+         let mut t = vec![0u64; iters];
+-        for i in 0..iters {
++        for time in &mut t {
+             c.fill(0.0);
+             let s = Instant::now();
+             acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
+-            t[i] = s.elapsed().as_nanos() as u64;
++            *time = s.elapsed().as_nanos() as u64;
+         }
+         let ns = median(&mut t);
+         let gf = 2.0 * (sz as f64).powi(3) / ns as f64;
+diff --git a/acpu/examples/trace64.rs b/acpu/examples/trace64.rs
+index 29e340e..acd7501 100644
+--- a/acpu/examples/trace64.rs
++++ b/acpu/examples/trace64.rs
+@@ -176,8 +176,8 @@ fn main() {
+             // µkernel 16×64
+             acpu::matrix::tile::microkernel_16x64_acc(
+                 ap,
+-                b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
+-                b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
++                b_pack.0.as_ptr() as *const u8,
++                b_pack.0.as_ptr().add(N * NR) as *const u8,
+                 b_pack.0.as_ptr().add(2 * N * NR) as *const u8,
+                 b_pack.0.as_ptr().add(3 * N * NR) as *const u8,
+                 N,
+@@ -220,8 +220,8 @@ fn main() {
+             }
+             acpu::matrix::tile::microkernel_16x64_acc(
+                 a_ptr,
+-                bp.as_ptr().add(0 * N * NR) as *const u8,
+-                bp.as_ptr().add(1 * N * NR) as *const u8,
++                bp.as_ptr() as *const u8,
++                bp.as_ptr().add(N * NR) as *const u8,
+                 bp.as_ptr().add(2 * N * NR) as *const u8,
+                 bp.as_ptr().add(3 * N * NR) as *const u8,
+                 N,
+@@ -421,8 +421,8 @@ fn main() {
+             }
+             acpu::matrix::tile::microkernel_16x64_acc(
+                 ap,
+-                sb.0.as_ptr().add(0 * N * NR) as *const u8,
+-                sb.0.as_ptr().add(1 * N * NR) as *const u8,
++                sb.0.as_ptr() as *const u8,
++                sb.0.as_ptr().add(N * NR) as *const u8,
+                 sb.0.as_ptr().add(2 * N * NR) as *const u8,
+                 sb.0.as_ptr().add(3 * N * NR) as *const u8,
+                 N,
+@@ -508,8 +508,8 @@ fn main() {
+             }
+             acpu::matrix::tile::microkernel_16x64_acc(
+                 ap,
+-                sb_slice.as_ptr().add(0 * N * NR) as *const u8,
+-                sb_slice.as_ptr().add(1 * N * NR) as *const u8,
++                sb_slice.as_ptr() as *const u8,
++                sb_slice.as_ptr().add(N * NR) as *const u8,
+                 sb_slice.as_ptr().add(2 * N * NR) as *const u8,
+                 sb_slice.as_ptr().add(3 * N * NR) as *const u8,
+                 N,
+@@ -539,8 +539,8 @@ fn main() {
+             }
+             acpu::matrix::tile::microkernel_16x64_acc(
+                 ap,
+-                b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
+-                b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
++                b_pack.0.as_ptr() as *const u8,
++                b_pack.0.as_ptr().add(N * NR) as *const u8,
+                 b_pack.0.as_ptr().add(2 * N * NR) as *const u8,
+                 b_pack.0.as_ptr().add(3 * N * NR) as *const u8,
+                 N,

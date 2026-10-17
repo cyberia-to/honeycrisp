@@ -176,8 +176,8 @@ fn main() {
             // µkernel 16×64
             acpu::matrix::tile::microkernel_16x64_acc(
                 ap,
-                b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
-                b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
+                b_pack.0.as_ptr() as *const u8,
+                b_pack.0.as_ptr().add(N * NR) as *const u8,
                 b_pack.0.as_ptr().add(2 * N * NR) as *const u8,
                 b_pack.0.as_ptr().add(3 * N * NR) as *const u8,
                 N,
@@ -220,8 +220,8 @@ fn main() {
             }
             acpu::matrix::tile::microkernel_16x64_acc(
                 a_ptr,
-                bp.as_ptr().add(0 * N * NR) as *const u8,
-                bp.as_ptr().add(1 * N * NR) as *const u8,
+                bp.as_ptr() as *const u8,
+                bp.as_ptr().add(N * NR) as *const u8,
                 bp.as_ptr().add(2 * N * NR) as *const u8,
                 bp.as_ptr().add(3 * N * NR) as *const u8,
                 N,
@@ -421,8 +421,8 @@ fn main() {
             }
             acpu::matrix::tile::microkernel_16x64_acc(
                 ap,
-                sb.0.as_ptr().add(0 * N * NR) as *const u8,
-                sb.0.as_ptr().add(1 * N * NR) as *const u8,
+                sb.0.as_ptr() as *const u8,
+                sb.0.as_ptr().add(N * NR) as *const u8,
                 sb.0.as_ptr().add(2 * N * NR) as *const u8,
                 sb.0.as_ptr().add(3 * N * NR) as *const u8,
                 N,
@@ -508,8 +508,8 @@ fn main() {
             }
             acpu::matrix::tile::microkernel_16x64_acc(
                 ap,
-                sb_slice.as_ptr().add(0 * N * NR) as *const u8,
-                sb_slice.as_ptr().add(1 * N * NR) as *const u8,
+                sb_slice.as_ptr() as *const u8,
+                sb_slice.as_ptr().add(N * NR) as *const u8,
                 sb_slice.as_ptr().add(2 * N * NR) as *const u8,
                 sb_slice.as_ptr().add(3 * N * NR) as *const u8,
                 N,
@@ -539,8 +539,8 @@ fn main() {
             }
             acpu::matrix::tile::microkernel_16x64_acc(
                 ap,
-                b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
-                b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
+                b_pack.0.as_ptr() as *const u8,
+                b_pack.0.as_ptr().add(N * NR) as *const u8,
                 b_pack.0.as_ptr().add(2 * N * NR) as *const u8,
                 b_pack.0.as_ptr().add(3 * N * NR) as *const u8,
                 N,

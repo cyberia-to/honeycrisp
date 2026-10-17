@@ -23,8 +23,8 @@ fn main() {
 
     // Verify: C should equal A (all ones) since B is identity.
     let mut max_err = 0.0f32;
-    for i in 0..N * N {
-        let err = (c[i] - 1.0).abs();
+    for value in &c {
+        let err = (*value - 1.0).abs();
         if err > max_err {
             max_err = err;
         }

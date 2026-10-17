@@ -17,11 +17,11 @@ fn main() {
     // Full sgemm (includes pack + preload + compute + store)
     acpu::matmul_f32(&a, &b, &mut c, n, n, k);
     let mut t = vec![0u64; iters];
-    for i in 0..iters {
+    for time in &mut t {
         c.fill(0.0);
         let s = Instant::now();
         acpu::matmul_f32(&a, &b, &mut c, n, n, k);
-        t[i] = s.elapsed().as_nanos() as u64;
+        *time = s.elapsed().as_nanos() as u64;
     }
     eprintln!(
         "full sgemm 64×64: {:>5} ns  {:.1} GFLOPS",
@@ -36,11 +36,11 @@ fn main() {
         let b2: Vec<f32> = (0..kk * n).map(|i| (i % 11) as f32 * 0.1).collect();
         let mut c2 = vec![0.0f32; n * n];
         acpu::matmul_f32(&a2, &b2, &mut c2, n, n, kk);
-        for i in 0..iters {
+        for time in &mut t {
             c2.fill(0.0);
             let s = Instant::now();
             acpu::matmul_f32(&a2, &b2, &mut c2, n, n, kk);
-            t[i] = s.elapsed().as_nanos() as u64;
+            *time = s.elapsed().as_nanos() as u64;
         }
         let ns = median(&mut t);
         let gf = 2.0 * n as f64 * n as f64 * kk as f64 / ns as f64;

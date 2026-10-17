@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "pair": "package-3",
+  "api": "api-2",
+  "consumer": "consumer-2",
+  "capsule_sha256": "0058a7f32b9dfb691f4592539bc2e33ac59ffc0a2f666ee056b0eb736ff33f7c",
+  "files": [
+    {
+      "path": "before-repair-api.json",
+      "sha256": "5d35d4a8d31ae7dec87c7b14688500f6cb82798f9a653f368529a1cd7936276d"
+    },
+    {
+      "path": "consumer-probe.rs",
+      "sha256": "eb0e4498e99aa7de6ddcaca18ee39ec38a160ebccd322dc30a8e070a6cfae77d"
+    },
+    {
+      "path": "current-before-repair.crate",
+      "sha256": "b99d16febc7ede51d4af9a494477edf9692166e201ab2ec422b03d8a02772a6a"
+    },
+    {
+      "path": "current-final.crate",
+      "sha256": "acd3929c3472443c92b977ed789e9494715bfbd9278a8d1e52fe6d1fdb9938a3"
+    },
+    {
+      "path": "final-api.json",
+      "sha256": "fd73baa9c101a85c33bde83d1560e5cbec665d08ed60f926d3c6a4069f04b1f1"
+    },
+    {
+      "path": "normalized-nox.crate",
+      "sha256": "37b40ed9894b3656315555b58afaec86058b6eb122e453244bb858a34fe1ff5b"
+    },
+    {
+      "path": "published-acpu-0.2.0.crate",
+      "sha256": "81089272e2a248781b1e2c38ad7247a98bea63a602c0a445dc63e955b2035375"
+    },
+    {
+      "path": "published-api.json",
+      "sha256": "a2361f2d680eff3738b690fe23a3c345fa7673fb8d94b7975b94f84439f4db06"
+    },
+    {
+      "path": "published-final-api.json",
+      "sha256": "e91442d43b36343dd66264ec4d32a2ab44eeaadf4b77d0f98d65c2905a0f8e82"
+    }
+  ],
+  "owner_head": "64866774f221112a6e83a55e557902a79b68722f",
+  "owner_sha256": "6f5eef6ed5c5b4e2168ba65710c52b683dad29b94751eac7384a9730f68d3378",
+  "release_ready": false
+}

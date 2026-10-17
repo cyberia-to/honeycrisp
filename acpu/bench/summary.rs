@@ -224,8 +224,8 @@ fn main() {
     // thermal warmup: light work to stabilize clocks
     let mut warmup_buf = vec![0f32; 4096];
     for _ in 0..1000 {
-        for i in 0..4096 {
-            warmup_buf[i] = (warmup_buf[i] + 1.0).sqrt();
+        for value in &mut warmup_buf {
+            *value = (*value + 1.0).sqrt();
         }
     }
     std::hint::black_box(&warmup_buf);
@@ -533,7 +533,7 @@ fn main() {
         let c = 0.044715f32;
         vDSP_vsmul(tmp.as_ptr(), 1, &c, tmp.as_mut_ptr(), 1, nu);
         vDSP_vadd(pos.as_ptr(), 1, tmp.as_ptr(), 1, tmp.as_mut_ptr(), 1, nu);
-        let s2pi = 0.7978845608f32;
+        let s2pi = 0.797_884_6_f32;
         vDSP_vsmul(tmp.as_ptr(), 1, &s2pi, tmp.as_mut_ptr(), 1, nu);
         vvtanhf(out2.as_mut_ptr(), tmp.as_ptr(), &nn);
         vDSP_vsadd(out2.as_ptr(), 1, &one, out2.as_mut_ptr(), 1, nu);
@@ -1190,7 +1190,8 @@ fn main() {
     });
     let t_b = ns(|| {
         for i in 0..n {
-            i8_buf[i] = (conv_src[i] / 0.1).round().max(-128.0).min(127.0) as i8;
+            let lower_bounded = (conv_src[i] / 0.1).round().max(-128.0);
+            i8_buf[i] = lower_bounded.min(127.0) as i8;
         }
         for i in 0..n {
             f32_dst[i] = i8_buf[i] as f32 * 0.1;
@@ -1455,7 +1456,7 @@ fn main() {
         let dim = n;
         for i in 0..dim / 2 {
             let freq = ai_freqs[i];
-            let (sin_v, cos_v) = (freq * 42.0 as f32).sin_cos();
+            let (sin_v, cos_v) = (freq * 42.0_f32).sin_cos();
             ai_out2[2 * i] = ai_x[2 * i] * cos_v - ai_x[2 * i + 1] * sin_v;
             ai_out2[2 * i + 1] = ai_x[2 * i] * sin_v + ai_x[2 * i + 1] * cos_v;
         }
@@ -2315,7 +2316,7 @@ fn main() {
     });
 
     // scale (read + write = 2× bytes) — NEON + STNP
-    let scalar = 3.14159f32;
+    let scalar = f32::from_bits(0x4049_0fd0); // Preserve the original 3.14159f32 value.
     for _ in 0..10 {
         neon_stream_scale(&sa, &mut sc, scalar);
     }
@@ -2377,7 +2378,7 @@ fn main() {
 
     // ══════════ PRINT TABLE ══════════
     let _ = acpu::sync::affinity::pin_any();
-    print_table(&caps, &rows);
+    print_table(caps, &rows);
 }
 
 // ── NEON STREAM kernels with STNP (non-temporal stores) ──
@@ -2497,12 +2498,8 @@ fn neon_stream_triad(a: &[f32], b: &[f32], d: &mut [f32], scalar: f32) {
 }
 
 fn fmt_val(v: f64) -> String {
-    if v >= 1_000_000.0 {
+    if v >= 10_000.0 {
         format!("{:.0}", v)
-    } else if v >= 10_000.0 {
-        format!("{:.0}", v)
-    } else if v >= 100.0 {
-        format!("{:.1}", v)
     } else if v >= 1.0 {
         format!("{:.1}", v)
     } else {
@@ -2633,7 +2630,7 @@ fn aes128_expand(key: &[u8; 16]) -> Vec<[u8; 16]> {
             S[b[3] as usize],
         ])
     }
-    let mut w = vec![0u32; 44];
+    let mut w = [0u32; 44];
     for i in 0..4 {
         w[i] = u32::from_be_bytes([key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]]);
     }

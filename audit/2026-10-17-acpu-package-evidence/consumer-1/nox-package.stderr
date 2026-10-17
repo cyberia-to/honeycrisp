@@ -1,0 +1,11 @@
+   Packaging cyber-nox v0.2.0 (/Users/master/cyber/nox/rs)
+    Packaged 53 files, 352.2KiB (75.6KiB compressed)
+   Verifying cyber-nox v0.2.0 (/Users/master/cyber/nox/rs)
+   Compiling strata-core v0.1.0
+   Compiling cyber-hemera v0.3.1
+   Compiling strata-compute v0.1.0
+   Compiling strata-proof v0.1.0
+   Compiling strata-ext v0.1.0
+   Compiling strata-nebu v0.1.1
+   Compiling cyber-nox v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-1/package-target/package/cyber-nox-0.2.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s

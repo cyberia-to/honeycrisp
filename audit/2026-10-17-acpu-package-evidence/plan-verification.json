@@ -1,0 +1,120 @@
+{
+  "head": "c7c9fabdb1e9a9b0be379917540355e89c899dfe",
+  "gates": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "clippy-workspace",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "clippy-acpu",
+      "command": [
+        "cargo",
+        "clippy",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "tests-workspace",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "build-release",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "tests-acpu-release",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "acpu",
+        "--lib",
+        "--tests",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "matmul",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "acpu",
+        "--example",
+        "matmul",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    },
+    {
+      "name": "docs-acpu",
+      "command": [
+        "cargo",
+        "doc",
+        "-p",
+        "acpu",
+        "--no-deps",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "source_sha256": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e"
+    }
+  ]
+}

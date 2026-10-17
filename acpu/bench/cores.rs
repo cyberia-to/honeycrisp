@@ -84,7 +84,8 @@ fn main() {
     );
     eprintln!("  {}", "─".repeat(50));
 
-    let workloads: Vec<(&str, Arc<dyn Fn() + Send + Sync>)> = vec![
+    type Workload = (&'static str, Arc<dyn Fn() + Send + Sync>);
+    let workloads: Vec<Workload> = vec![
         (
             "sum 1M",
             Arc::new({

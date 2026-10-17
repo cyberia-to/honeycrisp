@@ -284,7 +284,7 @@ fn main() {
     // Merkle path: log2(n) hashes per verification
     for &tree_size in &[1024u64, 1_000_000, 1_000_000_000] {
         let depth = 64 - tree_size.leading_zeros();
-        let path_ns = perm_ns as u64 * depth as u64;
+        let path_ns = perm_ns * depth as u64;
         println!(
             "  Merkle path (n={:>10}): {:>5}ns  ({} hashes, depth {})",
             tree_size, path_ns, depth, depth

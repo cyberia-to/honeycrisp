@@ -1,0 +1,616 @@
+    Checking acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0)
+error: very complex type used. Consider factoring parts into `type` definitions
+  --> bench/cores.rs:87:20
+   |
+87 |     let workloads: Vec<(&str, Arc<dyn Fn() + Send + Sync>)> = vec![
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#type_complexity
+   = note: `-D clippy::type-complexity` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: could not compile `acpu` (example "bench_cores") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: literal with an empty format string
+   --> bench/sgemm.rs:112:62
+    |
+112 |         println!("{:<28} {:>8.1} GF   {}", "hgemm fp16", gf, "convert+sgemm");
+    |                                                              ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#print_literal
+    = note: `-D clippy::print-literal` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::print_literal)]`
+help: try
+    |
+112 -         println!("{:<28} {:>8.1} GF   {}", "hgemm fp16", gf, "convert+sgemm");
+112 +         println!("{:<28} {:>8.1} GF   convert+sgemm", "hgemm fp16", gf);
+    |
+
+error: literal with an empty format string
+   --> bench/sgemm.rs:127:62
+    |
+127 |         println!("{:<28} {:>8.1} GF   {}", "bgemm bf16", gf, "convert+sgemm");
+    |                                                              ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#print_literal
+help: try
+    |
+127 -         println!("{:<28} {:>8.1} GF   {}", "bgemm bf16", gf, "convert+sgemm");
+127 +         println!("{:<28} {:>8.1} GF   convert+sgemm", "bgemm bf16", gf);
+    |
+
+error: literal with an empty format string
+   --> bench/sgemm.rs:145:60
+    |
+145 |         println!("{:<28} {:>8.1} GF   {}", "qgemm i8", gf, "deq+sgemm");
+    |                                                            ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#print_literal
+help: try
+    |
+145 -         println!("{:<28} {:>8.1} GF   {}", "qgemm i8", gf, "deq+sgemm");
+145 +         println!("{:<28} {:>8.1} GF   deq+sgemm", "qgemm i8", gf);
+    |
+
+error: could not compile `acpu` (example "bench_sgemm") due to 3 previous errors
+error: the loop variable `i` is used to index `a`
+  --> examples/pair_test.rs:25:22
+   |
+25 |             for i in 0..64 {
+   |                      ^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+   |
+25 -             for i in 0..64 {
+25 +             for (i, <item>) in a.iter_mut().enumerate() {
+   |
+
+error: could not compile `acpu` (example "pair_test") due to 1 previous error
+error: approximate value of `f32::consts::PI` found
+   --> bench/memory.rs:284:18
+    |
+284 |     let scalar = 3.14159f32;
+    |                  ^^^^^^^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+    = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: the loop variable `k` is only used to index `times`
+   --> bench/memory.rs:307:14
+    |
+307 |     for k in 0..4 {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+    |
+307 -     for k in 0..4 {
+307 +     for <item> in times.iter_mut().take(4) {
+    |
+
+error: could not compile `acpu` (example "bench_memory") due to 2 previous errors
+error: this operation has no effect
+  --> examples/amx_smoke.rs:47:26
+   |
+47 |         amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((x_buf as u64))`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+   = note: `-D clippy::identity-op` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::identity_op)]`
+
+error: this operation has no effect
+  --> examples/amx_smoke.rs:48:26
+   |
+48 |         amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((y_buf as u64))`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: this operation has no effect
+   --> examples/amx_smoke.rs:160:26
+    |
+160 |         amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((x_buf as u64))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: this operation has no effect
+   --> examples/amx_smoke.rs:164:26
+    |
+164 |         amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((y_buf as u64))`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: could not compile `acpu` (example "amx_smoke") due to 4 previous errors
+error: the loop variable `i` is only used to index `c`
+  --> examples/matmul.rs:26:14
+   |
+26 |     for i in 0..N * N {
+   |              ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+   |
+26 -     for i in 0..N * N {
+26 +     for <item> in c.iter().take(N * N) {
+   |
+
+error: could not compile `acpu` (example "matmul") due to 1 previous error
+error: float has excessive precision
+   --> bench/elementwise.rs:103:24
+    |
+103 |             let s2pi = 0.7978845608f32;
+    |                        ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#excessive_precision
+    = note: `-D clippy::excessive-precision` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::excessive_precision)]`
+help: consider changing the type or truncating it to
+    |
+103 -             let s2pi = 0.7978845608f32;
+103 +             let s2pi = 0.797_884_6_f32;
+    |
+
+error: could not compile `acpu` (example "bench_elementwise") due to 1 previous error
+error: this operation has no effect
+  --> examples/amx_opcode_scan.rs:43:30
+   |
+43 |             amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((x_buf as u64))`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+   = note: `-D clippy::identity-op` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::identity_op)]`
+
+error: this operation has no effect
+  --> examples/amx_opcode_scan.rs:44:30
+   |
+44 |             amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider reducing it to: `((y_buf as u64))`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: could not compile `acpu` (example "amx_opcode_scan") due to 2 previous errors
+error: the loop variable `i` is only used to index `t`
+  --> examples/neon_vs_amx.rs:21:18
+   |
+21 |         for i in 0..iters {
+   |                  ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+   |
+21 -         for i in 0..iters {
+21 +         for <item> in t.iter_mut().take(iters) {
+   |
+
+error: could not compile `acpu` (example "neon_vs_amx") due to 1 previous error
+error: this operation will always return zero. This is likely not the intended outcome
+   --> examples/trace64.rs:179:39
+    |
+179 |                 b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
+    |                                       ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#erasing_op
+    = note: `#[deny(clippy::erasing_op)]` on by default
+
+error: this operation has no effect
+   --> examples/trace64.rs:180:39
+    |
+180 |                 b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
+    |                                       ^^^^^ help: consider reducing it to: `N`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+    = note: `-D clippy::identity-op` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::identity_op)]`
+
+error: this operation will always return zero. This is likely not the intended outcome
+   --> examples/trace64.rs:223:33
+    |
+223 |                 bp.as_ptr().add(0 * N * NR) as *const u8,
+    |                                 ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#erasing_op
+
+error: this operation has no effect
+   --> examples/trace64.rs:224:33
+    |
+224 |                 bp.as_ptr().add(1 * N * NR) as *const u8,
+    |                                 ^^^^^ help: consider reducing it to: `N`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: this operation will always return zero. This is likely not the intended outcome
+   --> examples/trace64.rs:424:35
+    |
+424 |                 sb.0.as_ptr().add(0 * N * NR) as *const u8,
+    |                                   ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#erasing_op
+
+error: this operation has no effect
+   --> examples/trace64.rs:425:35
+    |
+425 |                 sb.0.as_ptr().add(1 * N * NR) as *const u8,
+    |                                   ^^^^^ help: consider reducing it to: `N`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: this operation will always return zero. This is likely not the intended outcome
+   --> examples/trace64.rs:511:39
+    |
+511 |                 sb_slice.as_ptr().add(0 * N * NR) as *const u8,
+    |                                       ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#erasing_op
+
+error: this operation has no effect
+   --> examples/trace64.rs:512:39
+    |
+512 |                 sb_slice.as_ptr().add(1 * N * NR) as *const u8,
+    |                                       ^^^^^ help: consider reducing it to: `N`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: this operation will always return zero. This is likely not the intended outcome
+   --> examples/trace64.rs:542:39
+    |
+542 |                 b_pack.0.as_ptr().add(0 * N * NR) as *const u8,
+    |                                       ^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#erasing_op
+
+error: this operation has no effect
+   --> examples/trace64.rs:543:39
+    |
+543 |                 b_pack.0.as_ptr().add(1 * N * NR) as *const u8,
+    |                                       ^^^^^ help: consider reducing it to: `N`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#identity_op
+
+error: could not compile `acpu` (example "trace64") due to 10 previous errors
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2238:33
+     |
+2238 |             raw.iter().map(|&v| nebu::Goldilocks::new(v)).collect();
+     |                                 ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error: useless use of `vec!`
+  --> bench/crypto.rs:65:17
+   |
+65 |     let mut w = vec![0u32; 44];
+   |                 ^^^^^^^^^^^^^^ help: you can use an array directly: `[0u32; 44]`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+   = note: `-D clippy::useless-vec` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::useless_vec)]`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2239:9
+     |
+2239 |         nebu::ntt::ntt(&mut ntt_data); // warmup
+     |         ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error: could not compile `acpu` (example "bench_crypto") due to 1 previous error
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2249:48
+     |
+2249 |                 ntt_data = raw.iter().map(|&v| nebu::Goldilocks::new(v)).collect();
+     |                                                ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2250:17
+     |
+2250 |                 nebu::ntt::ntt(&mut ntt_data);
+     |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error: returning the result of a `let` binding from a block
+   --> examples/decompose.rs:130:9
+    |
+109 | /         let t = median_ns(|| {
+110 | |             let mut buf: APack = unsafe { MaybeUninit::uninit().assume_init() };
+111 | |             let ap = &mut buf.0[..];
+112 | |             for s in 0..n_mr {
+...   |
+128 | |             std::hint::black_box(&buf);
+129 | |         });
+    | |___________- unnecessary `let` binding
+130 |           t
+    |           ^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#let_and_return
+    = note: `-D clippy::let-and-return` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::let_and_return)]`
+help: return the expression directly
+    |
+109 ~         
+110 ~         median_ns(|| {
+111 +             let mut buf: APack = unsafe { MaybeUninit::uninit().assume_init() };
+112 +             let ap = &mut buf.0[..];
+113 +             for s in 0..n_mr {
+114 +                 let rs = s * MR;
+115 +                 let rows = MR.min(n - rs);
+116 +                 let base = s * n * MR;
+117 +                 for i in 0..rows {
+118 +                     let a_row = (rs + i) * n;
+119 +                     for p in 0..n {
+120 +                         ap[base + p * MR + i] = MaybeUninit::new(a[a_row + p]);
+121 +                     }
+122 +                 }
+123 +                 for i in rows..MR {
+124 +                     for p in 0..n {
+125 +                         ap[base + p * MR + i] = MaybeUninit::new(0.0);
+126 +                     }
+127 +                 }
+128 +             }
+129 +             std::hint::black_box(&buf);
+130 +         })
+    |
+
+error: returning the result of a `let` binding from a block
+   --> examples/decompose.rs:194:9
+    |
+138 | /         let t = median_ns(|| {
+139 | |             let mut buf = APack([0.0f32; 256 * 256]);
+140 | |             let dst = &mut buf.0[..];
+141 | |             for s in 0..n_mr {
+...   |
+192 | |             std::hint::black_box(&buf);
+193 | |         });
+    | |___________- unnecessary `let` binding
+194 |           t
+    |           ^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#let_and_return
+help: return the expression directly
+    |
+138 ~         
+139 ~         median_ns(|| {
+140 +             let mut buf = APack([0.0f32; 256 * 256]);
+141 +             let dst = &mut buf.0[..];
+142 +             for s in 0..n_mr {
+143 +                 let row_start = s * MR;
+144 +                 let base = s * n * MR;
+145 +                 unsafe {
+146 +                     use core::arch::aarch64::*;
+147 +                     for ig in 0..(MR / 4) {
+148 +                         let ii = ig * 4;
+149 +                         let a0 = (row_start + ii) * n;
+150 +                         let a1 = (row_start + ii + 1) * n;
+151 +                         let a2 = (row_start + ii + 2) * n;
+152 +                         let a3 = (row_start + ii + 3) * n;
+153 + 
+154 +                         let mut p = 0;
+155 +                         while p + 4 <= n {
+156 +                             let r0 = vld1q_f32(a.as_ptr().add(a0 + p));
+157 +                             let r1 = vld1q_f32(a.as_ptr().add(a1 + p));
+158 +                             let r2 = vld1q_f32(a.as_ptr().add(a2 + p));
+159 +                             let r3 = vld1q_f32(a.as_ptr().add(a3 + p));
+160 + 
+161 +                             let lo01 = vzip1q_f32(r0, r1);
+162 +                             let hi01 = vzip2q_f32(r0, r1);
+163 +                             let lo23 = vzip1q_f32(r2, r3);
+164 +                             let hi23 = vzip2q_f32(r2, r3);
+165 + 
+166 +                             let c0 = vreinterpretq_f32_f64(vzip1q_f64(
+167 +                                 vreinterpretq_f64_f32(lo01),
+168 +                                 vreinterpretq_f64_f32(lo23),
+169 +                             ));
+170 +                             let c1 = vreinterpretq_f32_f64(vzip2q_f64(
+171 +                                 vreinterpretq_f64_f32(lo01),
+172 +                                 vreinterpretq_f64_f32(lo23),
+173 +                             ));
+174 +                             let c2 = vreinterpretq_f32_f64(vzip1q_f64(
+175 +                                 vreinterpretq_f64_f32(hi01),
+176 +                                 vreinterpretq_f64_f32(hi23),
+177 +                             ));
+178 +                             let c3 = vreinterpretq_f32_f64(vzip2q_f64(
+179 +                                 vreinterpretq_f64_f32(hi01),
+180 +                                 vreinterpretq_f64_f32(hi23),
+181 +                             ));
+182 + 
+183 +                             let d = dst.as_mut_ptr().add(base);
+184 +                             vst1q_f32(d.add(p * MR + ii), c0);
+185 +                             vst1q_f32(d.add((p + 1) * MR + ii), c1);
+186 +                             vst1q_f32(d.add((p + 2) * MR + ii), c2);
+187 +                             vst1q_f32(d.add((p + 3) * MR + ii), c3);
+188 +                             p += 4;
+189 +                         }
+190 +                     }
+191 +                 }
+192 +             }
+193 +             std::hint::black_box(&buf);
+194 +         })
+    |
+
+error: returning the result of a `let` binding from a block
+   --> examples/decompose.rs:315:9
+    |
+298 | /         let t = median_ns(|| {
+299 | |             let mut buf: BPack = unsafe { MaybeUninit::uninit().assume_init() };
+300 | |             let bp = &mut buf.0[..];
+301 | |             for s in 0..n_mr {
+...   |
+313 | |             std::hint::black_box(&buf);
+314 | |         });
+    | |___________- unnecessary `let` binding
+315 |           t
+    |           ^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#let_and_return
+help: return the expression directly
+    |
+298 ~         
+299 ~         median_ns(|| {
+300 +             let mut buf: BPack = unsafe { MaybeUninit::uninit().assume_init() };
+301 +             let bp = &mut buf.0[..];
+302 +             for s in 0..n_mr {
+303 +                 let cs = s * MR;
+304 +                 let cols = MR.min(n - cs);
+305 +                 let base = s * n * MR;
+306 +                 for p in 0..n {
+307 +                     let src = p * n + cs;
+308 +                     let dst = base + p * MR;
+309 +                     for j in 0..cols {
+310 +                         bp[dst + j] = MaybeUninit::new(b[src + j]);
+311 +                     }
+312 +                 }
+313 +             }
+314 +             std::hint::black_box(&buf);
+315 +         })
+    |
+
+error: could not compile `acpu` (example "decompose") due to 3 previous errors
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2237:31
+     |
+2237 |         let mut ntt_data: Vec<nebu::Goldilocks> =
+     |                               ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+For more information about this error, try `rustc --explain E0433`.
+error: the loop variable `i` is only used to index `t`
+  --> examples/phase_time.rs:21:18
+   |
+21 |         for i in 0..iters {
+   |                  ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+   |
+21 -         for i in 0..iters {
+21 +         for <item> in t.iter_mut().take(iters) {
+   |
+
+error: the loop variable `i` is only used to index `t`
+  --> examples/phase_time.rs:30:18
+   |
+30 |         for i in 0..iters {
+   |                  ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+   |
+30 -         for i in 0..iters {
+30 +         for <item> in t.iter_mut().take(iters) {
+   |
+
+error: could not compile `acpu` (example "bench_summary") due to 5 previous errors
+error: could not compile `acpu` (example "phase_time") due to 2 previous errors
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:227:22
+    |
+227 |             .map(|i| nebu::Goldilocks::new((i as u64).wrapping_mul(0x9E3779B97F4A7C15)))
+    |                      ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:231:9
+    |
+231 |         nebu::ntt::ntt(&mut data);
+    |         ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:232:9
+    |
+232 |         nebu::ntt::intt(&mut data);
+    |         ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:244:17
+    |
+244 |                 nebu::ntt::ntt(&mut data);
+    |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:252:17
+    |
+252 |                 nebu::ntt::intt(&mut data);
+    |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:226:27
+    |
+226 |         let mut data: Vec<nebu::Goldilocks> = (0..ntt_size)
+    |                           ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error: could not compile `acpu` (example "bench_zk") due to 6 previous errors
+error: the loop variable `i` is only used to index `t`
+  --> examples/single_vs_par.rs:17:18
+   |
+17 |         for i in 0..iters {
+   |                  ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+   |
+17 -         for i in 0..iters {
+17 +         for <item> in t.iter_mut().take(iters) {
+   |
+
+error: could not compile `acpu` (example "single_vs_par") due to 1 previous error
+error: the loop variable `i` is only used to index `t`
+  --> examples/profile64.rs:20:14
+   |
+20 |     for i in 0..iters {
+   |              ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+   = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+   |
+20 -     for i in 0..iters {
+20 +     for <item> in t.iter_mut().take(iters) {
+   |
+
+error: the loop variable `i` is only used to index `t`
+  --> examples/profile64.rs:39:18
+   |
+39 |         for i in 0..iters {
+   |                  ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+help: consider using an iterator
+   |
+39 -         for i in 0..iters {
+39 +         for <item> in t.iter_mut().take(iters) {
+   |
+
+error: could not compile `acpu` (example "profile64") due to 2 previous errors

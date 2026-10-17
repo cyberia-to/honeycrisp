@@ -1,0 +1,539 @@
+{
+  "same": true,
+  "targets": [
+    {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "acpu",
+      "src_path": "src/lib.rs",
+      "edition": "2021",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    {
+      "kind": [
+        "bin"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "acpu_probe",
+      "src_path": "src/probe/main.rs",
+      "edition": "2021",
+      "doc": true,
+      "doctest": false,
+      "test": true
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "amx_opcode_scan",
+      "src_path": "examples/amx_opcode_scan.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "amx_reverse",
+      "src_path": "examples/amx_reverse.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "amx_smoke",
+      "src_path": "examples/amx_smoke.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_ai",
+      "src_path": "bench/ai.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_amx",
+      "src_path": "bench/amx.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_cores",
+      "src_path": "bench/cores.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_crypto",
+      "src_path": "bench/crypto.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_elementwise",
+      "src_path": "bench/elementwise.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_integer",
+      "src_path": "bench/integer.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_memory",
+      "src_path": "bench/memory.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_numeric",
+      "src_path": "bench/numeric.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_render",
+      "src_path": "bench/render.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_sgemm",
+      "src_path": "bench/sgemm.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_summary",
+      "src_path": "bench/summary.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bench_zk",
+      "src_path": "bench/zk.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "chebyshev_coefficients",
+      "src_path": "tests/chebyshev_coefficients.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "chebyshev_independent",
+      "src_path": "tests/chebyshev_independent.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "decompose",
+      "src_path": "examples/decompose.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "diag_bench",
+      "src_path": "examples/diag_bench.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "exp_asm_test",
+      "src_path": "examples/exp_asm_test.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "input_admission",
+      "src_path": "tests/input_admission.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "integration",
+      "src_path": "tests/integration.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "matmul",
+      "src_path": "examples/matmul.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "neon_vs_amx",
+      "src_path": "examples/neon_vs_amx.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "overhead_test",
+      "src_path": "examples/overhead_test.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "pair_load_test",
+      "src_path": "examples/pair_load_test.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "pair_test",
+      "src_path": "examples/pair_test.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "phase_time",
+      "src_path": "examples/phase_time.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "profile64",
+      "src_path": "examples/profile64.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "profile_sgemm",
+      "src_path": "examples/profile_sgemm.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "sgemm_profile",
+      "src_path": "examples/sgemm_profile.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "single_vs_par",
+      "src_path": "examples/single_vs_par.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "test_hang",
+      "src_path": "examples/test_hang.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "thread_scale",
+      "src_path": "examples/thread_scale.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "trace64",
+      "src_path": "examples/trace64.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    },
+    {
+      "kind": [
+        "example"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "trace_accel",
+      "src_path": "examples/trace_accel.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": false
+    }
+  ],
+  "names_count": 38,
+  "examples": 32
+}

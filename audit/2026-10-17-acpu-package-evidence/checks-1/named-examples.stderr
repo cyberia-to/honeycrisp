@@ -1,0 +1,93 @@
+    Checking acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0)
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2238:33
+     |
+2238 |             raw.iter().map(|&v| nebu::Goldilocks::new(v)).collect();
+     |                                 ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:227:22
+    |
+227 |             .map(|i| nebu::Goldilocks::new((i as u64).wrapping_mul(0x9E3779B97F4A7C15)))
+    |                      ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:231:9
+    |
+231 |         nebu::ntt::ntt(&mut data);
+    |         ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2239:9
+     |
+2239 |         nebu::ntt::ntt(&mut ntt_data); // warmup
+     |         ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:232:9
+    |
+232 |         nebu::ntt::intt(&mut data);
+    |         ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2249:48
+     |
+2249 |                 ntt_data = raw.iter().map(|&v| nebu::Goldilocks::new(v)).collect();
+     |                                                ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:244:17
+    |
+244 |                 nebu::ntt::ntt(&mut data);
+    |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2250:17
+     |
+2250 |                 nebu::ntt::ntt(&mut ntt_data);
+     |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:252:17
+    |
+252 |                 nebu::ntt::intt(&mut data);
+    |                 ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find module or crate `nebu` in this scope
+   --> bench/zk.rs:226:27
+    |
+226 |         let mut data: Vec<nebu::Goldilocks> = (0..ntt_size)
+    |                           ^^^^ use of unresolved module or unlinked crate `nebu`
+    |
+    = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `acpu` (example "bench_zk") due to 6 previous errors
+warning: build failed, waiting for other jobs to finish...
+error[E0433]: cannot find module or crate `nebu` in this scope
+    --> bench/summary.rs:2237:31
+     |
+2237 |         let mut ntt_data: Vec<nebu::Goldilocks> =
+     |                               ^^^^ use of unresolved module or unlinked crate `nebu`
+     |
+     = help: if you wanted to use a crate named `nebu`, use `cargo add nebu` to add it to your `Cargo.toml`
+
+error: could not compile `acpu` (example "bench_summary") due to 5 previous errors

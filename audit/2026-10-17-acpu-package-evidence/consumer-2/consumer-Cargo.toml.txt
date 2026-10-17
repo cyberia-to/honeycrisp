@@ -1,0 +1,26 @@
+[package]
+name = "acpu-delivery-contract"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+acpu = "=0.2.0"
+
+[dependencies.nox]
+package = "cyber-nox"
+path = "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/package/cyber-nox-0.2.0"
+features = ["honeycrisp"]
+
+[dependencies.nebu]
+package = "strata-nebu"
+version = "=0.1.1"
+
+[patch.crates-io.acpu]
+path = "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0"
+
+[[test]]
+name = "source_contract"
+path = "probe.rs"

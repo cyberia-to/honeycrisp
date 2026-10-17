@@ -1,0 +1,212 @@
+[
+  {
+    "message": "very complex type used. Consider factoring parts into `type` definitions",
+    "file": "bench/cores.rs",
+    "line": "87",
+    "column": "20"
+  },
+  {
+    "message": "literal with an empty format string",
+    "file": "bench/sgemm.rs",
+    "line": "112",
+    "column": "62"
+  },
+  {
+    "message": "literal with an empty format string",
+    "file": "bench/sgemm.rs",
+    "line": "127",
+    "column": "62"
+  },
+  {
+    "message": "literal with an empty format string",
+    "file": "bench/sgemm.rs",
+    "line": "145",
+    "column": "60"
+  },
+  {
+    "message": "the loop variable `i` is used to index `a`",
+    "file": "examples/pair_test.rs",
+    "line": "25",
+    "column": "22"
+  },
+  {
+    "message": "approximate value of `f32::consts::PI` found",
+    "file": "bench/memory.rs",
+    "line": "284",
+    "column": "18"
+  },
+  {
+    "message": "the loop variable `k` is only used to index `times`",
+    "file": "bench/memory.rs",
+    "line": "307",
+    "column": "14"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_smoke.rs",
+    "line": "47",
+    "column": "26"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_smoke.rs",
+    "line": "48",
+    "column": "26"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_smoke.rs",
+    "line": "160",
+    "column": "26"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_smoke.rs",
+    "line": "164",
+    "column": "26"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `c`",
+    "file": "examples/matmul.rs",
+    "line": "26",
+    "column": "14"
+  },
+  {
+    "message": "float has excessive precision",
+    "file": "bench/elementwise.rs",
+    "line": "103",
+    "column": "24"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_opcode_scan.rs",
+    "line": "43",
+    "column": "30"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/amx_opcode_scan.rs",
+    "line": "44",
+    "column": "30"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/neon_vs_amx.rs",
+    "line": "21",
+    "column": "18"
+  },
+  {
+    "message": "this operation will always return zero. This is likely not the intended outcome",
+    "file": "examples/trace64.rs",
+    "line": "179",
+    "column": "39"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/trace64.rs",
+    "line": "180",
+    "column": "39"
+  },
+  {
+    "message": "this operation will always return zero. This is likely not the intended outcome",
+    "file": "examples/trace64.rs",
+    "line": "223",
+    "column": "33"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/trace64.rs",
+    "line": "224",
+    "column": "33"
+  },
+  {
+    "message": "this operation will always return zero. This is likely not the intended outcome",
+    "file": "examples/trace64.rs",
+    "line": "424",
+    "column": "35"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/trace64.rs",
+    "line": "425",
+    "column": "35"
+  },
+  {
+    "message": "this operation will always return zero. This is likely not the intended outcome",
+    "file": "examples/trace64.rs",
+    "line": "511",
+    "column": "39"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/trace64.rs",
+    "line": "512",
+    "column": "39"
+  },
+  {
+    "message": "this operation will always return zero. This is likely not the intended outcome",
+    "file": "examples/trace64.rs",
+    "line": "542",
+    "column": "39"
+  },
+  {
+    "message": "this operation has no effect",
+    "file": "examples/trace64.rs",
+    "line": "543",
+    "column": "39"
+  },
+  {
+    "message": "useless use of `vec!`",
+    "file": "bench/crypto.rs",
+    "line": "65",
+    "column": "17"
+  },
+  {
+    "message": "returning the result of a `let` binding from a block",
+    "file": "examples/decompose.rs",
+    "line": "130",
+    "column": "9"
+  },
+  {
+    "message": "returning the result of a `let` binding from a block",
+    "file": "examples/decompose.rs",
+    "line": "194",
+    "column": "9"
+  },
+  {
+    "message": "returning the result of a `let` binding from a block",
+    "file": "examples/decompose.rs",
+    "line": "315",
+    "column": "9"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/phase_time.rs",
+    "line": "21",
+    "column": "18"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/phase_time.rs",
+    "line": "30",
+    "column": "18"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/single_vs_par.rs",
+    "line": "17",
+    "column": "18"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/profile64.rs",
+    "line": "20",
+    "column": "14"
+  },
+  {
+    "message": "the loop variable `i` is only used to index `t`",
+    "file": "examples/profile64.rs",
+    "line": "39",
+    "column": "18"
+  }
+]

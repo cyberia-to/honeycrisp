@@ -1,0 +1,22 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0
+    Checking acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0)
+error: float has excessive precision
+   --> bench/elementwise.rs:103:24
+    |
+103 |             let s2pi = 0.7978845608f32;
+    |                        ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#excessive_precision
+    = note: `-D clippy::excessive-precision` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::excessive_precision)]`
+help: consider changing the type or truncating it to
+    |
+103 -             let s2pi = 0.7978845608f32;
+103 +             let s2pi = 0.797_884_6_f32;
+    |
+
+error: could not compile `acpu` (example "bench_elementwise") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

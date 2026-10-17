@@ -281,7 +281,7 @@ fn main() {
     let b_arr: Vec<f32> = (0..STREAM_N).map(|i| (i % 997) as f32 * 0.001).collect();
     let mut c_arr = vec![0f32; STREAM_N];
     let mut d_arr = vec![0f32; STREAM_N];
-    let scalar = 3.14159f32;
+    let scalar = f32::from_bits(0x4049_0fd0); // Preserve the original 3.14159f32 value.
     let bytes = STREAM_N as f64 * 4.0;
 
     let specs: [(&str, f64, f64); 4] = [
@@ -304,8 +304,8 @@ fn main() {
     let iters_per = 20;
     let mut all_times: [[Vec<u64>; 4]; 1] = [Default::default()];
     let times = &mut all_times[0];
-    for k in 0..4 {
-        times[k] = Vec::with_capacity(rounds * iters_per);
+    for time in times.iter_mut() {
+        *time = Vec::with_capacity(rounds * iters_per);
     }
 
     for _ in 0..rounds {

@@ -1,0 +1,3 @@
+   Compiling acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/debug/examples/matmul`

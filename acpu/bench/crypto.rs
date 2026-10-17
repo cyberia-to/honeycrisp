@@ -62,7 +62,7 @@ fn aes128_key_expand(key: &[u8; 16]) -> Vec<[u8; 16]> {
             S[b[3] as usize],
         ])
     }
-    let mut w = vec![0u32; 44];
+    let mut w = [0u32; 44];
     for i in 0..4 {
         w[i] = u32::from_be_bytes([key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]]);
     }

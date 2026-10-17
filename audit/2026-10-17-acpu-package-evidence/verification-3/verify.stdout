@@ -1,0 +1,11 @@
+{
+  "source": "64866774f221112a6e83a55e557902a79b68722f",
+  "owner_sha256": "6f5eef6ed5c5b4e2168ba65710c52b683dad29b94751eac7384a9730f68d3378",
+  "capsule_sha256": "0058a7f32b9dfb691f4592539bc2e33ac59ffc0a2f666ee056b0eb736ff33f7c",
+  "owning_gates": 8,
+  "packaged_gates": 5,
+  "consumer_modes": 2,
+  "api_comparison": "passed",
+  "historical_raw_streams": "verified",
+  "release_ready": false
+}

@@ -1,0 +1,9 @@
+   Packaging acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Packaged 101 files, 803.1KiB (174.5KiB compressed)
+   Verifying acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0
+   Compiling acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/target/package/acpu-0.2.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.30s

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "curl",
+    "--fail",
+    "--location",
+    "--silent",
+    "--show-error",
+    "--output",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/baseline.crate",
+    "https://static.crates.io/crates/acpu/acpu-0.2.0.crate"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:21:45.374865+00:00",
+  "finished": "2026-10-17T10:21:46.111890+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

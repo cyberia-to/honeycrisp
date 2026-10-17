@@ -106,7 +106,7 @@ fn decompose(n: usize) {
         #[repr(align(64))]
         struct APack([MaybeUninit<f32>; 256 * 256]);
 
-        let t = median_ns(|| {
+        median_ns(|| {
             let mut buf: APack = unsafe { MaybeUninit::uninit().assume_init() };
             let ap = &mut buf.0[..];
             for s in 0..n_mr {
@@ -126,8 +126,7 @@ fn decompose(n: usize) {
                 }
             }
             std::hint::black_box(&buf);
-        });
-        t
+        })
     };
 
     // --- A pack: NEON (pack_a_strip_neon style) ---
@@ -135,7 +134,7 @@ fn decompose(n: usize) {
         #[repr(align(64))]
         struct APack([f32; 256 * 256]);
 
-        let t = median_ns(|| {
+        median_ns(|| {
             let mut buf = APack([0.0f32; 256 * 256]);
             let dst = &mut buf.0[..];
             for s in 0..n_mr {
@@ -190,8 +189,7 @@ fn decompose(n: usize) {
                 }
             }
             std::hint::black_box(&buf);
-        });
-        t
+        })
     };
 
     // --- AMX compute: per-instruction LDX+LDY+FMA (small.rs inner loop) ---
@@ -295,7 +293,7 @@ fn decompose(n: usize) {
         #[repr(align(64))]
         struct BPack([MaybeUninit<f32>; 256 * 256]);
 
-        let t = median_ns(|| {
+        median_ns(|| {
             let mut buf: BPack = unsafe { MaybeUninit::uninit().assume_init() };
             let bp = &mut buf.0[..];
             for s in 0..n_mr {
@@ -311,8 +309,7 @@ fn decompose(n: usize) {
                 }
             }
             std::hint::black_box(&buf);
-        });
-        t
+        })
     };
 
     // --- Preload + compute + store (new path) ---

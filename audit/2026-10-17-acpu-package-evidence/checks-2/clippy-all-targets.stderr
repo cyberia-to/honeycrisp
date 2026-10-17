@@ -1,0 +1,11 @@
+   Compiling crossbeam-utils v0.8.21
+    Checking strata-core v0.1.0
+   Compiling mutants v0.0.3
+    Checking strata-ext v0.1.0
+    Checking strata-proof v0.1.0
+    Checking strata-compute v0.1.0
+    Checking strata-nebu v0.1.1
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0
+    Checking acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.26s

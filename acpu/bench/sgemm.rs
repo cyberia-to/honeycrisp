@@ -109,7 +109,7 @@ fn bench_mixed() {
         }
         let ns = best_of(|| acpu::matmul_f16(&a16, &b16, &mut c, n, n, n), 100);
         let gf = flops / ns as f64;
-        println!("{:<28} {:>8.1} GF   {}", "hgemm fp16", gf, "convert+sgemm");
+        println!("{:<28} {:>8.1} GF   convert+sgemm", "hgemm fp16", gf);
     }
 
     // bf16
@@ -124,7 +124,7 @@ fn bench_mixed() {
         }
         let ns = best_of(|| acpu::matmul_bf16(&a16, &b16, &mut c, n, n, n), 100);
         let gf = flops / ns as f64;
-        println!("{:<28} {:>8.1} GF   {}", "bgemm bf16", gf, "convert+sgemm");
+        println!("{:<28} {:>8.1} GF   convert+sgemm", "bgemm bf16", gf);
     }
 
     // i8
@@ -142,7 +142,7 @@ fn bench_mixed() {
             100,
         );
         let gf = flops / ns as f64;
-        println!("{:<28} {:>8.1} GF   {}", "qgemm i8", gf, "deq+sgemm");
+        println!("{:<28} {:>8.1} GF   deq+sgemm", "qgemm i8", gf);
     }
 }
 

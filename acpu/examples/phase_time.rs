@@ -18,20 +18,20 @@ fn main() {
 
         // Total sgemm time
         let mut t = vec![0u64; iters];
-        for i in 0..iters {
+        for time in &mut t {
             c.fill(0.0);
             let s = Instant::now();
             acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
-            t[i] = s.elapsed().as_nanos() as u64;
+            *time = s.elapsed().as_nanos() as u64;
         }
         let total = median_of(&mut t);
 
         // Time just c.fill(0.0) to subtract
-        for i in 0..iters {
+        for time in &mut t {
             let s = Instant::now();
             c.fill(0.0);
             std::hint::black_box(&c);
-            t[i] = s.elapsed().as_nanos() as u64;
+            *time = s.elapsed().as_nanos() as u64;
         }
         let fill = median_of(&mut t);
 

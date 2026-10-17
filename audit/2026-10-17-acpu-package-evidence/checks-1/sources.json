@@ -1,0 +1,14 @@
+{
+  "pair": "package-2",
+  "pair_sha256": "2bbecf412d79415e9240fc25b8f1745ce4b54da740ec979ffc6c01879b6a1236",
+  "tooling": [
+    {
+      "path": "support.nu",
+      "sha256": "03436f7ee557dc671f7f26c8e39992cf74a9e7dfb23294284401683f915663c6"
+    },
+    {
+      "path": "package-check.nu",
+      "sha256": "0363dced8f1d7910a7aa82f0276d4e102eb03bf0837979115ef75cd3c00a93b9"
+    }
+  ]
+}
