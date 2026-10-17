@@ -1,0 +1,20 @@
+{
+  "command": [
+    "nu",
+    "/tmp/acpu-candidate2-portable-20261017c/records/validator-tools/audit/2026-10-17-acpu-release-proposal/verify.nu",
+    "/Users/master/cyber/honeycrisp",
+    "/tmp/acpu-candidate2-portable-20261017c/records",
+    "/tmp/acpu-candidate2-portable-20261017c/tools",
+    "/tmp/acpu-candidate2-portable-20261017c/records/validation-tools",
+    "/tmp/acpu-candidate2-portable-20261017c/records/validator-tools",
+    "/tmp/acpu-candidate2-replay-20261017c"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:21:33.717526+00:00",
+  "finished": "2026-10-17T14:21:39.372320+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "fb6a9571babfb49c94af82b58a98447110cd132d5617e4d01fcaed9cd8283bfd",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
