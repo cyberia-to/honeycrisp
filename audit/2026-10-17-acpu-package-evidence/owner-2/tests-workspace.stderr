@@ -1,0 +1,30 @@
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.68s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/acpu-be8b6a975e885b47)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/acpu_probe-445a3cf46d830c82)
+     Running tests/chebyshev_coefficients.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/chebyshev_coefficients-09b0ebc5eeabb78e)
+     Running tests/chebyshev_independent.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/chebyshev_independent-4f5ac3bb3c4ea83d)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/input_admission-b20f9d891dce6074)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/integration-0b17b6d785f68be0)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/aruminium-dd476dc3dcbfdf7c)
+     Running unittests src/probe.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/metal_probe-8cc3b7d62688f492)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/integration-ec6b506eed5a785c)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/honeycrisp-aa09e374d1bbddad)
+     Running unittests bench.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/bench-68fd359419ab4b3b)
+     Running unittests compare.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/compare-f4a227095e07d408)
+     Running unittests compare_render.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/compare_render-19b00769b6f71dd7)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/rane-a9a452e70b5f4b96)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/rane_probe-548e9a1e33979d4a)
+     Running tests/hardware.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/hardware-5b321ef0fcb11f9b)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/integration-3674b4d7c38bf565)
+     Running unittests bench.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/bench-4730378b4166ce68)
+     Running unittests compare.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/compare-dbc9a614ee005c94)
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/unimem-9803edf3d4216c83)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/block_access-ad39fffcfc1a6108)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/block_creation-9235b82ded76b829)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/debug/deps/roundtrip-f20e0bac356cf2ad)
+   Doc-tests acpu
+   Doc-tests aruminium
+   Doc-tests honeycrisp
+   Doc-tests rane
+   Doc-tests unimem

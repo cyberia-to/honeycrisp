@@ -1,0 +1,72 @@
+export def require [ok: bool, message: string] {
+    if not $ok { error make {msg: $message} }
+}
+
+export def digest [path: string] { open --raw $path | hash sha256 }
+
+export def files [root: string] {
+    ^rg --files --hidden --no-ignore $root | lines | sort | each {|p|
+        {path: ($p | path relative-to $root), sha256: (digest $p)}
+    }
+}
+
+export def owner-files [root: string] {
+    let config = ($root | path join .cargo)
+    let configs = (if ($config | path exists) { files $config | each {|f| $'.cargo/($f.path)'} } else { [] })
+    ^git -C $root ls-files --cached --others --exclude-standard | lines | append $configs | sort | uniq
+    | where {|p| (not ($p | str starts-with audit/) and not ($p | str starts-with .claude/))}
+    | each {|p| {path: $p, sha256: (digest ($root | path join $p))}}
+}
+
+export def committed-owner [root: string] {
+    let input = (owner-files $root)
+    let paths = (^git -C $root ls-tree -r --name-only HEAD | lines | sort
+        | where {|p| (not ($p | str starts-with audit/) and not ($p | str starts-with .claude/))})
+    require (($input | get path) == $paths) 'owner inventory is not committed'
+    for file in $input {
+        let body = (do { ^git -C $root show $'HEAD:($file.path)' } | complete)
+        require ($body.exit_code == 0 and ($body.stdout | hash sha256) == $file.sha256) $'owner differs from HEAD: ($file.path)'
+    }
+    $input
+}
+
+export def capture [out: string, name: string, argv: list<string>, cwd: string, environment: record, expected: int = 0] {
+    for suffix in [json stdout stderr] { require (not ($out | path join $'($name).($suffix)' | path exists)) 'receipt exists' }
+    let started = (date now | format date '%+')
+    let result = (with-env $environment { cd $cwd; do { ^($argv | first) ...($argv | skip 1) } | complete })
+    $result.stdout | save ($out | path join $'($name).stdout')
+    $result.stderr | save ($out | path join $'($name).stderr')
+    let receipt = {command: $argv, cwd: $cwd, env: $environment, started: $started,
+        finished: (date now | format date '%+'), exit_code: $result.exit_code, expected_exit_code: $expected,
+        stdout_sha256: ($result.stdout | hash sha256), stderr_sha256: ($result.stderr | hash sha256)}
+    $receipt | to json | save ($out | path join $'($name).json')
+    require ($result.exit_code == $expected) $'unexpected command outcome: ($name), exit ($result.exit_code)'
+    $receipt
+}
+
+export def extract [archive: string, destination: string, package: string] {
+    require (not ($destination | path exists)) 'extraction destination exists'
+    let listing = (do { ^tar -tzf $archive } | complete)
+    require ($listing.exit_code == 0) 'cannot list package'
+    for entry in ($listing.stdout | lines) {
+        require (($entry | str starts-with $'($package)/') and not ('..' in ($entry | split row '/'))) 'unexpected package member'
+    }
+    mkdir $destination
+    let result = (do { ^tar -xzf $archive -C $destination } | complete)
+    require ($result.exit_code == 0) 'cannot extract package'
+    $destination | path join $package
+}
+
+export def package-source [repo: string, revision: string, package: string] {
+    let inputs = (files $package)
+    let expected = (^git -C $repo ls-tree -r --name-only $revision -- acpu | lines
+        | each {|p| $p | str substring 5..} | where {|p| $p != CLAUDE.md} | sort)
+    let source = ($inputs | where {|f| $f.path not-in ['.cargo_vcs_info.json' Cargo.lock Cargo.toml]}
+        | each {|f| if $f.path == Cargo.toml.orig { $f | upsert path Cargo.toml } else { $f }} | sort-by path)
+    require (($source | get path) == $expected) 'packaged source inventory differs from owner'
+    for file in $source {
+        let body = (do { ^git -C $repo show $'($revision):acpu/($file.path)' } | complete)
+        require ($body.exit_code == 0 and ($body.stdout | hash sha256) == $file.sha256) $'packaged source differs: ($file.path)'
+    }
+    $inputs
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/literal-proof"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:29:19.399465+00:00",
+  "finished": "2026-10-17T10:29:19.767325+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "74a6b57bdaa078719f72aa0f9fd62dfd866e5becda63890d77c355a44e625d7d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,12 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0
+   Compiling acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0)
+    Finished `release` profile [optimized] target(s) in 5.74s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/acpu-008ebab802e5362a)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/acpu_probe-ce322824eaa30dc5)
+     Running tests/chebyshev_coefficients.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/chebyshev_coefficients-b15283ab965eabeb)
+     Running tests/chebyshev_independent.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/chebyshev_independent-8b14e46db11cbb21)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/input_admission-e5aea57dc414d69a)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-1/release/deps/integration-653e6324b4bdadd9)

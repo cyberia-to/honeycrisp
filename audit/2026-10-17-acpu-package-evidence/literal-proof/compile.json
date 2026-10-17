@@ -1,0 +1,19 @@
+{
+  "command": [
+    "rustup",
+    "run",
+    "1.95.0",
+    "rustc",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-package-evidence/literal-proof.rs",
+    "-o",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/literal-proof"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:29:18.802060+00:00",
+  "finished": "2026-10-17T10:29:19.399217+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

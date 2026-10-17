@@ -44,8 +44,8 @@ fn main() {
         for row in 0u8..64 {
             amx_op::<OP_LDZ>((zero_buf as u64) | ((row as u64) << 56));
         }
-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+        amx_op::<OP_LDX>(x_buf as u64);
+        amx_op::<OP_LDY>(y_buf as u64);
 
         let op = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 0);
         amx_op::<OP_FMA32>(op);
@@ -157,11 +157,11 @@ fn main() {
         for i in 0..16 {
             *x_buf.add(i) = 7.0;
         }
-        amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
+        amx_op::<OP_LDX>(x_buf as u64);
         for j in 0..16 {
             *y_buf.add(j) = 3.0;
         }
-        amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+        amx_op::<OP_LDY>(y_buf as u64);
 
         let op4 = fma_first(XRow::new_unchecked(0), YRow::new_unchecked(0), 1);
         amx_op::<OP_FMA32>(op4);

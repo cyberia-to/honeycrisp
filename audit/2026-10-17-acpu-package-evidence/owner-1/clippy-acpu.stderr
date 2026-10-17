@@ -1,0 +1,136 @@
+    Checking acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+error: the loop variable `i` is only used to index `warmup_buf`
+   --> acpu/bench/summary.rs:227:18
+    |
+227 |         for i in 0..4096 {
+    |                  ^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator
+    |
+227 -         for i in 0..4096 {
+227 +         for <item> in warmup_buf.iter_mut().take(4096) {
+    |
+
+error: float has excessive precision
+   --> acpu/bench/summary.rs:536:20
+    |
+536 |         let s2pi = 0.7978845608f32;
+    |                    ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#excessive_precision
+    = note: `-D clippy::excessive-precision` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::excessive_precision)]`
+help: consider changing the type or truncating it to
+    |
+536 -         let s2pi = 0.7978845608f32;
+536 +         let s2pi = 0.797_884_6_f32;
+    |
+
+error: clamp-like pattern without using clamp function
+    --> acpu/bench/summary.rs:1193:25
+     |
+1193 |             i8_buf[i] = (conv_src[i] / 0.1).round().max(-128.0).min(127.0) as i8;
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with clamp: `(conv_src[i] / 0.1).round().clamp(-128.0, 127.0)`
+     |
+     = note: clamp will panic if max < min, min.is_nan(), or max.is_nan()
+     = note: clamp returns NaN if the input is NaN
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#manual_clamp
+     = note: `-D clippy::manual-clamp` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::manual_clamp)]`
+
+error: casting float literal to `f32` is unnecessary
+    --> acpu/bench/summary.rs:1458:42
+     |
+1458 |             let (sin_v, cos_v) = (freq * 42.0 as f32).sin_cos();
+     |                                          ^^^^^^^^^^^ help: try: `42.0_f32`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unnecessary_cast
+     = note: `-D clippy::unnecessary-cast` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::unnecessary_cast)]`
+
+error: approximate value of `f32::consts::PI` found
+    --> acpu/bench/summary.rs:2318:18
+     |
+2318 |     let scalar = 3.14159f32;
+     |                  ^^^^^^^^^^
+     |
+     = help: consider using the constant directly
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#approx_constant
+     = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+    --> acpu/bench/summary.rs:2380:17
+     |
+2380 |     print_table(&caps, &rows);
+     |                 ^^^^^ help: change this to: `caps`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_borrow
+     = note: `-D clippy::needless-borrow` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this `if` has identical blocks
+    --> acpu/bench/summary.rs:2500:25
+     |
+2500 |       if v >= 1_000_000.0 {
+     |  _________________________^
+2501 | |         format!("{:.0}", v)
+2502 | |     } else if v >= 10_000.0 {
+     | |_____^
+     |
+note: same as this
+    --> acpu/bench/summary.rs:2502:29
+     |
+2502 |       } else if v >= 10_000.0 {
+     |  _____________________________^
+2503 | |         format!("{:.0}", v)
+2504 | |     } else if v >= 100.0 {
+     | |_____^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#if_same_then_else
+     = note: `-D clippy::if-same-then-else` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::if_same_then_else)]`
+
+error: this `if` has identical blocks
+    --> acpu/bench/summary.rs:2504:26
+     |
+2504 |       } else if v >= 100.0 {
+     |  __________________________^
+2505 | |         format!("{:.1}", v)
+2506 | |     } else if v >= 1.0 {
+     | |_____^
+     |
+note: same as this
+    --> acpu/bench/summary.rs:2506:24
+     |
+2506 |       } else if v >= 1.0 {
+     |  ________________________^
+2507 | |         format!("{:.1}", v)
+2508 | |     } else {
+     | |_____^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#if_same_then_else
+
+error: useless use of `vec!`
+    --> acpu/bench/summary.rs:2636:17
+     |
+2636 |     let mut w = vec![0u32; 44];
+     |                 ^^^^^^^^^^^^^^ help: you can use an array directly: `[0u32; 44]`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#useless_vec
+     = note: `-D clippy::useless-vec` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::useless_vec)]`
+
+error: could not compile `acpu` (example "bench_summary") due to 9 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: casting to the same type is unnecessary (`u64` -> `u64`)
+   --> acpu/bench/zk.rs:287:23
+    |
+287 |         let path_ns = perm_ns as u64 * depth as u64;
+    |                       ^^^^^^^^^^^^^^ help: try: `perm_ns`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unnecessary_cast
+    = note: `-D clippy::unnecessary-cast` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_cast)]`
+
+error: could not compile `acpu` (example "bench_zk") due to 1 previous error

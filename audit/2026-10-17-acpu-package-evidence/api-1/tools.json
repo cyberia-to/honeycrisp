@@ -1,0 +1,22 @@
+[
+  {
+    "name": "cargo",
+    "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/cargo",
+    "sha256": "c512bff73c86143b557463f021d0c3d5b0490d97d65040ba59ea2b3427784758"
+  },
+  {
+    "name": "rustc",
+    "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+    "sha256": "b829b733131d4e1673eeebd1f34d06ae1e9ff4977b051313cf42e2a9e79ecf1c"
+  },
+  {
+    "name": "rustdoc",
+    "path": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+    "sha256": "59bc6a1caf617032284a2edc2aa03916396e70589c435a8b51e3957887f90ce5"
+  },
+  {
+    "name": "cargo-semver-checks",
+    "path": "/Users/master/.cargo/bin/cargo-semver-checks",
+    "sha256": "a4fcf9eae2dd1ee88f91dc71f1236b49faa7d90165d9c326dbf2f1fb7dd41c18"
+  }
+]

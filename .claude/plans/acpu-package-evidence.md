@@ -75,3 +75,28 @@ The occupied current version0.2.0 archive remains diagnostic. An acpu-only0.2.1
 bump is only a later proposal after actual package/API outcomes. Owner alone
 merges a bump, tags or publishes. Nox's later consumer repair must raise its acpu
 minimum to0.2.1, not merely refresh a lock; none of those edits belongs here.
+
+## Accepted normalization addendum — 2026-10-17
+
+Root approved the measured repair in
+`audit/2026-10-17-acpu-package-evidence/normalization-repair.md`: add only
+`version = "0.1.1"` to the existing root workspace NeBu path/package dependency.
+Keep its path, package, defaults, Strata target/revision and all crate versions.
+Inspect root Cargo.lock explicitly; no graph change is intended. The normalized
+package must retain the published NeBu dev dependency used by its examples.
+The initial package/all-target failures remain immutable evidence. The proposed
+15-file example lint repair is recorded separately for root review before edits.
+Final package preparation requires exact owning inputs equal committed HEAD;
+an intermediate red source commit, if needed, is explicitly `wip:` with the
+actual first error quoted. Ordinary owning all-target repairs come first.
+
+Root also approved `hygiene-proposal.md` in full: exactly the 15 listed
+example/bench files, preserved float bits/AMX operands/timed operation order,
+no lint allowances or target exclusion. The compiled literal proof succeeded
+before production edits. Any wider source correction requires separate review.
+
+Root approved the measured two-file extension `hygiene-addendum.md` after
+`owner-1` exposed the previously unresolved examples: summary.rs and zk.rs.
+Preserve quantization's round→max→min sequence/NaN result using a temporary;
+combine only identical formatting arms at the retained 10_000 and 1 thresholds.
+The original first-stage diff/manifest and its actual red remain retained.

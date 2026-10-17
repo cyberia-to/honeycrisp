@@ -40,8 +40,8 @@ fn main() {
             }
 
             // Load X[0] and Y[0].
-            amx_op::<OP_LDX>((x_buf as u64) | (0u64 << 56));
-            amx_op::<OP_LDY>((y_buf as u64) | (0u64 << 56));
+            amx_op::<OP_LDX>(x_buf as u64);
+            amx_op::<OP_LDY>(y_buf as u64);
 
             // Try this opcode with operand 0 (simplest).
             // Catch SIGILL — if opcode doesn't exist, it will crash.

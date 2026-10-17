@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use audit/2026-10-17-acpu-package-evidence/support.nu *; package-source . 96fa4f4509d7a966cb22a4bb9e12ac753cff43ae /Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-1/baseline/acpu-0.2.0"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:21:43.051930+00:00",
+  "finished": "2026-10-17T10:21:43.086245+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "2a019058659d90dbe23e1d2651a9df8147e897bfd517d8bfa984bcf8bcc60128"
+}

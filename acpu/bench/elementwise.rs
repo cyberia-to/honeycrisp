@@ -100,7 +100,7 @@ fn main() {
             // x + 0.044715*x^3
             vDSP_vadd(pos.as_ptr(), 1, tmp.as_ptr(), 1, tmp.as_mut_ptr(), 1, nu);
             // sqrt(2/pi) * (...)
-            let s2pi = 0.7978845608f32;
+            let s2pi = 0.797_884_6_f32;
             vDSP_vsmul(tmp.as_ptr(), 1, &s2pi, tmp.as_mut_ptr(), 1, nu);
             // tanh
             vvtanhf(out.as_mut_ptr(), tmp.as_ptr(), &ni);

@@ -14,11 +14,11 @@ fn main() {
         acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
         let iters = if sz >= 1024 { 5 } else { 10 };
         let mut t = vec![0u64; iters];
-        for i in 0..iters {
+        for time in &mut t {
             c.fill(0.0);
             let s = Instant::now();
             acpu::matmul_f32(&a, &b, &mut c, sz, sz, sz);
-            t[i] = s.elapsed().as_nanos() as u64;
+            *time = s.elapsed().as_nanos() as u64;
         }
         let ns = median(&mut t);
         let gf = 2.0 * (sz as f64).powi(3) / ns as f64;

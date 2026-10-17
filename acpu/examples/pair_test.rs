@@ -22,8 +22,8 @@ fn main() {
         // Test pair LDX at different alignments
         let buf = A128({
             let mut a = [0.0f32; 64];
-            for i in 0..64 {
-                a[i] = (i + 1) as f32;
+            for (i, value) in a.iter_mut().enumerate() {
+                *value = (i + 1) as f32;
             }
             a
         });

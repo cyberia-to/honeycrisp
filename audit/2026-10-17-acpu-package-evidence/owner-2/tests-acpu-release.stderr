@@ -1,0 +1,7 @@
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/acpu-3869af00e8f9bba4)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/acpu_probe-2dd480c616d892e8)
+     Running tests/chebyshev_coefficients.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/chebyshev_coefficients-c66c079f3f4e23d7)
+     Running tests/chebyshev_independent.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/chebyshev_independent-8ba7ba1b7a1cb716)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/input_admission-32a61e9e16c48bec)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/owner/release/deps/integration-a3bbfc3c7b9f070e)
