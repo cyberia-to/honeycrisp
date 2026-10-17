@@ -1,0 +1,26 @@
+{
+  "command": [
+    "tar",
+    "-czf",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-package-evidence/evidence.tar.gz",
+    "-C",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/retained",
+    "before-repair-api.json",
+    "consumer-probe.rs",
+    "current-before-repair.crate",
+    "current-final.crate",
+    "final-api.json",
+    "normalized-nox.crate",
+    "published-acpu-0.2.0.crate",
+    "published-api.json",
+    "published-final-api.json"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T10:38:38.624003+00:00",
+  "finished": "2026-10-17T10:38:38.662085+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

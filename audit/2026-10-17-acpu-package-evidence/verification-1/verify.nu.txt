@@ -1,0 +1,93 @@
+use support.nu *
+
+def receipt [audit: string, path: string, argv: list<string>, expected: int, strict: bool] {
+    let r = (open ($audit | path join $'($path).json'))
+    require ($r.command == $argv and $r.exit_code == $expected) $'command/outcome differs: ($path)'
+    for stream in [stdout stderr] {
+        require ((digest ($audit | path join $'($path).($stream)')) == ($r | get $'($stream)_sha256')) $'stream changed: ($path)'
+    }
+    if $strict {
+        let envs = ($r.env? | default {})
+        require (($envs.RUSTUP_TOOLCHAIN? | default $r.rustup_toolchain?) == '1.95.0') 'toolchain differs'
+        require (($envs.RUSTFLAGS? | default $r.rustflags?) == '-Dwarnings') 'RUSTFLAGS differs'
+        require (($envs.RUSTDOCFLAGS? | default $r.rustdocflags?) == '-Dwarnings') 'RUSTDOCFLAGS differs'
+    }
+    $r
+}
+
+# Verify historical evidence and current source without executing recorded paths.
+def main [repo: string, extraction: string] {
+    let root = ($repo | path expand)
+    let audit = ($root | path join audit/2026-10-17-acpu-package-evidence)
+    let extraction = ($extraction | path expand)
+    let bundle = (open ($audit | path join bundle.json))
+    let pair = (open ($audit | path join $bundle.pair identities.json))
+    let api = (open ($audit | path join $bundle.api result.json))
+    let consumer = (open ($audit | path join $bundle.consumer result.json))
+    let owner = (open ($audit | path join owner-2/sources.json))
+    require ((committed-owner $root) == $pair.owner_files and $pair.owner_files == $owner.inputs.0.files) 'current compiler inventory differs'
+    require ($pair.owner_sha256 == ($pair.owner_files | to json -r | hash sha256)) 'owner inventory digest differs'
+    let ancestor = (do { ^git -C $root merge-base --is-ancestor $pair.owner_head HEAD } | complete)
+    require ($ancestor.exit_code == 0) 'packaged owner is not an ancestor'
+    let strata = ($root | path dirname | path join strata | path expand)
+    require ((owner-files $strata) == $owner.inputs.1.files and (^git -C $strata rev-parse HEAD | str trim) == $owner.inputs.1.head) 'recorded sibling inputs differ'
+    for gate in [
+        {name: fmt, argv: [cargo fmt --all -- --check]}
+        {name: clippy-workspace, argv: [cargo clippy --workspace --locked --offline -- -D warnings]}
+        {name: clippy-acpu, argv: [cargo clippy -p acpu --all-targets --keep-going --locked --offline -- -D warnings]}
+        {name: tests-workspace, argv: [cargo test --workspace --locked --offline]}
+        {name: build-release, argv: [cargo build --release --workspace --locked --offline]}
+        {name: tests-acpu-release, argv: [cargo test -p acpu --lib --tests --release --locked --offline]}
+        {name: matmul, argv: [cargo run -p acpu --example matmul --locked --offline]}
+        {name: docs-acpu, argv: [cargo doc -p acpu --no-deps --locked --offline]}
+    ] {
+        let r = (receipt $audit $'owner-2/($gate.name)' $gate.argv 0 true)
+        require ($r.source_sha256 == $owner.source_sha256 and $r.source_before_after == equal) 'owning source epoch differs'
+    }
+    for gate in [
+        {name: clippy-all-targets, argv: [cargo clippy --all-targets --keep-going --locked --offline -- -D warnings]}
+        {name: tests-debug, argv: [cargo test --lib --tests --locked --offline]}
+        {name: tests-release, argv: [cargo test --lib --tests --release --locked --offline]}
+        {name: docs, argv: [cargo doc --no-deps --locked --offline]}
+        {name: matmul, argv: [cargo run --example matmul --locked --offline]}
+    ] { receipt $audit $'checks-2/($gate.name)' $gate.argv 0 true | ignore }
+    require ((open ($audit | path join checks-2/sources.json)).pair_sha256 == (digest ($audit | path join $bundle.pair identities.json))) 'checks bind another package'
+    for mode in [debug release] {
+        let argv = (if $mode == debug { [cargo test --test source_contract --locked --offline] } else { [cargo test --test source_contract --release --locked --offline] })
+        receipt $audit $'($bundle.consumer)/($mode)' $argv 0 true | ignore
+    }
+    require ($consumer.diagnostic_override and not $consumer.unpatched_registry_acceptance) 'consumer scope differs'
+    require ($consumer.pair_sha256 == (digest ($audit | path join $bundle.pair identities.json)) and $api.pair_sha256 == $consumer.pair_sha256) 'diagnostic pair identity differs'
+    let compare = (open ($audit | path join $bundle.api comparison.json))
+    require ($compare.command.0 == cargo-semver-checks and $compare.command.1 == check-release and $compare.command.2 == '--baseline-rustdoc' and $compare.command.4 == '--current-rustdoc'
+        and ($compare.command | skip 6) == ['--release-type' patch '--color' never]) 'explicit API argv differs'
+    receipt $audit $'($bundle.api)/comparison' $compare.command 0 false | ignore
+    require ((digest ($audit | path join evidence.tar.gz)) == $bundle.capsule_sha256) 'capsule changed'
+    require (not ($extraction | path exists)) 'extraction path exists'
+    let listing = (do { ^tar -tzf ($audit | path join evidence.tar.gz) } | complete)
+    require ($listing.exit_code == 0 and ($listing.stdout | lines | sort) == ($bundle.files.path | sort)) 'capsule inventory differs'
+    require ($bundle.files.path | all {|p| ($p | path basename) == $p}) 'unsafe capsule member'
+    mkdir $extraction
+    let unpack = (do { ^tar -xzf ($audit | path join evidence.tar.gz) -C $extraction } | complete)
+    require ($unpack.exit_code == 0 and (files $extraction) == $bundle.files) 'capsule bytes differ'
+    require ((digest ($extraction | path join current-final.crate)) == $pair.current.sha256
+        and (digest ($extraction | path join published-acpu-0.2.0.crate)) == $pair.published.cksum
+        and (digest ($extraction | path join normalized-nox.crate)) == $consumer.nox_archive.sha256
+        and (digest ($extraction | path join consumer-probe.rs)) == $consumer.consumer.probe_sha256) 'package/probe identities differ'
+    for artifact in $api.artifacts {
+        let name = (if $artifact.side == baseline { published-final-api.json } else { final-api.json })
+        require ((digest ($extraction | path join $name)) == $artifact.sha256) 'API artifact differs'
+    }
+    let restored = (extract ($extraction | path join current-final.crate) ($extraction | path join current) acpu-0.2.0)
+    require ((package-source $root $pair.owner_head $restored) == $pair.current.files) 'restored package source differs'
+    for r in (glob ($audit | path join '**/*.json')) {
+        let data = (open $r)
+        if ($data | describe | str starts-with record) and $data.stdout_sha256? != null and $data.stderr_sha256? != null {
+            let stem = ($r | str replace -r '\.json$' '')
+            for stream in [stdout stderr] { require ((digest $'($stem).($stream)') == ($data | get $'($stream)_sha256')) $'historical raw stream changed: ($r)' }
+        }
+    }
+    {source: $pair.owner_head, owner_sha256: $pair.owner_sha256, capsule_sha256: $bundle.capsule_sha256,
+        owning_gates: 8, packaged_gates: 5, consumer_modes: 2, api_comparison: passed,
+        historical_raw_streams: verified, release_ready: false} | to json
+}

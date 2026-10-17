@@ -1,0 +1,82 @@
+use support.nu *
+
+# Diagnostic only: exact normalized acpu override; owning Nox stays untouched.
+def main [repo: string, nox_repo: string, pair: string, pair_cache: string, cache: string, epoch: string] {
+    let root = ($repo | path expand)
+    let nox = ($nox_repo | path expand)
+    let cache = ($cache | path expand)
+    let audit = ($root | path join audit/2026-10-17-acpu-package-evidence)
+    let out = ($audit | path join $epoch)
+    require (($epoch | str replace -r '^[a-z0-9-]+$' '') == '') 'invalid epoch'
+    require (not ($out | path exists) and not ($cache | path exists)) 'epoch/cache exists'
+    let pair_file = ($audit | path join $pair identities.json)
+    let identity = (open $pair_file)
+    let acpu = ($pair_cache | path expand | path join current acpu-0.2.0)
+    require ((committed-owner $root) == $identity.owner_files) 'owner differs from package inputs'
+    require ((files $acpu) == $identity.current.files) 'acpu package changed'
+    let nox_inputs = (committed-owner $nox)
+    let nox_head = (^git -C $nox rev-parse HEAD | str trim)
+    mkdir $out $cache
+    [support.nu consumer.nu] | each {|p| {path: $p, sha256: (digest ($audit | path join $p))}}
+    | to json | save ($out | path join tooling.json)
+    let environment = ($identity.environment | upsert CARGO_TARGET_DIR ($cache | path join package-target))
+    capture $out nox-package [cargo package -p cyber-nox --locked --offline --allow-dirty] $nox $environment | ignore
+    let archive = ($environment.CARGO_TARGET_DIR | path join package cyber-nox-0.2.0.crate)
+    let package = (extract $archive ($cache | path join package) cyber-nox-0.2.0)
+    let vcs = (open ($package | path join .cargo_vcs_info.json))
+    require ($vcs.git.sha1 == $nox_head and $vcs.path_in_vcs == rs) 'Nox package VCS differs'
+    let package_files = (files $package)
+    let source = ($package_files | where {|f| $f.path not-in ['.cargo_vcs_info.json' Cargo.lock Cargo.toml]}
+        | each {|f| if $f.path == Cargo.toml.orig { $f | upsert path Cargo.toml } else { $f }} | sort-by path)
+    let expected = (^git -C $nox ls-tree -r --name-only HEAD -- rs | lines
+        | each {|p| $p | str substring 3..} | where {|p| $p != Cargo.lock} | sort)
+    require ($source.path == $expected) 'Nox package source inventory differs'
+    for file in $source {
+        let body = (do { ^git -C $nox show $'HEAD:rs/($file.path)' } | complete)
+        require ($body.exit_code == 0 and ($body.stdout | hash sha256) == $file.sha256) $'Nox source differs: ($file.path)'
+    }
+    let probe = ($nox | path join audit/2026-10-16-honeycrisp-backend-design/probe.rs)
+    let scratch = ($cache | path join consumer)
+    mkdir $scratch
+    cp $probe ($scratch | path join probe.rs)
+    let manifest = {package: {name: acpu-delivery-contract, version: '0.0.0', edition: '2024', publish: false}, workspace: {},
+        dependencies: {nox: {package: cyber-nox, path: $package, features: [honeycrisp]},
+            acpu: '=0.2.0', nebu: {package: strata-nebu, version: '=0.1.1'}},
+        patch: {'crates-io': {acpu: {path: $acpu}}}, test: [{name: source_contract, path: probe.rs}]}
+    $manifest | to toml | save ($scratch | path join Cargo.toml)
+    cp ($scratch | path join Cargo.toml) ($out | path join consumer-Cargo.toml.txt)
+    let envs = ($environment | upsert CARGO_TARGET_DIR ($cache | path join target))
+    capture $out lock [cargo generate-lockfile --offline] $scratch $envs | ignore
+    cp ($scratch | path join Cargo.lock) ($out | path join consumer-Cargo.lock.txt)
+    capture $out metadata [cargo metadata --format-version 1 --locked --offline] $scratch $envs | ignore
+    let metadata = (open --raw ($out | path join metadata.stdout) | from json)
+    let deps = ([
+        {name: unimem, version: '0.2.0', checksum: a91794fe345844d09b134c55fde134bc9d51593964b906dde2f667162e49918d}
+        {name: strata-nebu, version: '0.1.1', checksum: f4a881cdb3622cd6b38333246f516c70e3e5c63d2bc0c0e48344d8e7b0392766}
+    ] | each {|required|
+        let found = ($metadata.packages | where name == $required.name)
+        require (($found | length) == 1) $'multiple/missing identities: ($required.name)'
+        let found = ($found | first)
+        require ($found.version == $required.version and ($found.source | str starts-with 'registry+')) 'dependency identity is not registry'
+        let locked = (open --raw ($scratch | path join Cargo.lock) | from toml | get package | where name == $required.name | first)
+        require ($locked.checksum == $required.checksum) 'dependency checksum differs'
+        let features = ($metadata.resolve.nodes | where id == $found.id | first | get features)
+        if $required.name == strata-nebu { require ('fast' not-in $features) 'NeBu fast unexpectedly enabled' }
+        $required | merge {id: $found.id, features: $features}
+    })
+    let direct = ($metadata.resolve.nodes | where id == $metadata.resolve.root | first)
+    let nox_node = ($metadata.packages | where name == cyber-nox | first)
+    let nox_resolve = ($metadata.resolve.nodes | where id == $nox_node.id | first)
+    require (($direct.deps | where name == nebu | first | get pkg) == ($nox_resolve.deps | where name == nebu | first | get pkg)) 'Nox/direct Goldilocks type identities differ'
+    capture $out tree [cargo tree -e features --locked --offline] $scratch $envs | ignore
+    capture $out debug [cargo test --test source_contract --locked --offline] $scratch $envs | ignore
+    capture $out release [cargo test --test source_contract --release --locked --offline] $scratch $envs | ignore
+    require ((files $package) == $package_files and (files $acpu) == $identity.current.files) 'package changed during consumer checks'
+    require ((committed-owner $nox) == $nox_inputs and (committed-owner $root) == $identity.owner_files) 'owning inputs changed'
+    {pair: $pair, pair_sha256: (digest $pair_file), nox_head: $nox_head, nox_inputs: $nox_inputs,
+        nox_archive: {path: $archive, sha256: (digest $archive), vcs: $vcs, files: $package_files},
+        consumer: {root: $scratch, files: (files $scratch), probe_source: $probe, probe_sha256: (digest $probe)},
+        dependencies: $deps, diagnostic_override: true, unpatched_registry_acceptance: false}
+    | to json | save ($out | path join result.json)
+    {out: $out, result: diagnostic-only} | to json
+}

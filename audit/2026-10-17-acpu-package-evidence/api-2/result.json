@@ -1,0 +1,19 @@
+{
+  "pair": "package-3",
+  "pair_sha256": "0aa90446685b24cac3896cb82897f62382edd0f8891972fc72bfb967c9974d87",
+  "artifacts": [
+    {
+      "side": "baseline",
+      "path": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/api-2/baseline/aarch64-apple-darwin/doc/acpu.json",
+      "sha256": "e91442d43b36343dd66264ec4d32a2ab44eeaadf4b77d0f98d65c2905a0f8e82"
+    },
+    {
+      "side": "current",
+      "path": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/api-2/current/aarch64-apple-darwin/doc/acpu.json",
+      "sha256": "fd73baa9c101a85c33bde83d1560e5cbec665d08ed60f926d3c6a4069f04b1f1"
+    }
+  ],
+  "tooling_sha256": "ab85e1e024489887e7499ea76ed3e73273b75fa136f0c021164d938b6cd519ca",
+  "scope": "complete library API; aarch64-apple-darwin; no crate features",
+  "release_ready": false
+}

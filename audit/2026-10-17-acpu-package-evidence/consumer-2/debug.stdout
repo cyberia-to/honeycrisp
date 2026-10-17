@@ -1,0 +1,9 @@
+
+running 4 tests
+test raw_field_outputs_can_be_noncanonical ... ok
+test upstream_multilinear_matches_independent_hypercube_sum ... ok
+test upstream_ntt_matches_independent_dft_in_both_directions ... ok
+test nox_source_backend_matches_cpu_result_budget_and_trace ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+

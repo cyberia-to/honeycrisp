@@ -1,0 +1,10 @@
+Error: nu::shell::only_supports_this_input_type
+
+  x Input type not supported.
+   ,-[source:1:1]
+ 1 | open Cargo.lock | get package
+   : ^^|^              ^|^
+   :   |                `-- only list<any>, table, record, and nothing input data is supported
+   :   `-- input type: any
+   `----
+

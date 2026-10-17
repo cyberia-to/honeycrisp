@@ -1,0 +1,40 @@
+acpu-delivery-contract v0.0.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/consumer)
+├── acpu feature "default"
+│   └── acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0)
+│       └── unimem feature "default"
+│           └── unimem v0.2.0
+│               ├── crossbeam-queue feature "default"
+│               │   ├── crossbeam-queue v0.3.14
+│               │   │   └── crossbeam-utils v0.8.23
+│               │   └── crossbeam-queue feature "std"
+│               │       ├── crossbeam-queue v0.3.14 (*)
+│               │       ├── crossbeam-queue feature "alloc"
+│               │       │   └── crossbeam-queue v0.3.14 (*)
+│               │       └── crossbeam-utils feature "std"
+│               │           └── crossbeam-utils v0.8.23
+│               └── mutants feature "default"
+│                   └── mutants v0.0.3 (proc-macro)
+├── cyber-nox feature "default"
+│   └── cyber-nox v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/package/cyber-nox-0.2.0)
+│       ├── cyber-hemera v0.3.1
+│       ├── acpu feature "default" (*)
+│       └── strata-nebu feature "default"
+│           └── strata-nebu v0.1.1
+│               ├── strata-compute feature "default"
+│               │   └── strata-compute v0.1.0
+│               │       └── strata-core feature "default"
+│               │           └── strata-core v0.1.0
+│               ├── strata-core feature "default" (*)
+│               ├── strata-ext feature "default"
+│               │   └── strata-ext v0.1.0
+│               │       └── strata-core feature "default" (*)
+│               └── strata-proof feature "default"
+│                   └── strata-proof v0.1.0
+│                       └── strata-core feature "default" (*)
+├── cyber-nox feature "honeycrisp"
+│   ├── cyber-nox v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/package/cyber-nox-0.2.0) (*)
+│   └── cyber-nox feature "std"
+│       ├── cyber-nox v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/package/cyber-nox-0.2.0) (*)
+│       └── cyber-hemera feature "std"
+│           └── cyber-hemera v0.3.1
+└── strata-nebu feature "default" (*)

@@ -1,0 +1,15 @@
+   Compiling crossbeam-utils v0.8.23
+   Compiling strata-core v0.1.0
+   Compiling mutants v0.0.3
+   Compiling strata-ext v0.1.0
+   Compiling strata-proof v0.1.0
+   Compiling strata-compute v0.1.0
+   Compiling strata-nebu v0.1.1
+   Compiling cyber-hemera v0.3.1
+   Compiling crossbeam-queue v0.3.14
+   Compiling unimem v0.2.0
+   Compiling acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0)
+   Compiling cyber-nox v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/package/cyber-nox-0.2.0)
+   Compiling acpu-delivery-contract v0.0.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/consumer)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.86s
+     Running probe.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/target/debug/deps/source_contract-eaea6fb269cc616c)

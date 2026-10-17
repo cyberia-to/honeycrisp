@@ -1,0 +1,16 @@
+   Compiling strata-core v0.1.0
+   Compiling crossbeam-utils v0.8.21
+   Compiling strata-compute v0.1.0
+   Compiling strata-proof v0.1.0
+   Compiling strata-ext v0.1.0
+   Compiling strata-nebu v0.1.1
+   Compiling crossbeam-queue v0.3.12
+   Compiling unimem v0.2.0
+   Compiling acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.61s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/acpu-8e7ac4b4c1f3544b)
+     Running unittests src/probe/main.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/acpu_probe-6bec6380e6af7f21)
+     Running tests/chebyshev_coefficients.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/chebyshev_coefficients-4031c100dae16bd6)
+     Running tests/chebyshev_independent.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/chebyshev_independent-c1ff90876b4ff855)
+     Running tests/input_admission.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/input_admission-5663a7ce618b09e0)
+     Running tests/integration.rs (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-checks-2/debug/deps/integration-5e08a6c38c16dff0)

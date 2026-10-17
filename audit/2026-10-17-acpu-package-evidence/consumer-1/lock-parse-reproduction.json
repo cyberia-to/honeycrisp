@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "open Cargo.lock | get package"
+  ],
+  "cwd": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-1/consumer",
+  "env": {},
+  "started": "2026-10-17T10:37:27.732778+00:00",
+  "finished": "2026-10-17T10:37:27.751517+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "bcb7c0776a2e8452ff93c680589d0a6a0b8edf4a46cbaea3a2167d421d38e949"
+}

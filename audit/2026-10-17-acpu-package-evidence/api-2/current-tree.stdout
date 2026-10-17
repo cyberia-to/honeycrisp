@@ -1,0 +1,28 @@
+acpu v0.2.0 (/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/current/acpu-0.2.0)
+└── unimem feature "default"
+    └── unimem v0.2.0
+        ├── crossbeam-queue feature "default"
+        │   ├── crossbeam-queue v0.3.12
+        │   │   └── crossbeam-utils v0.8.21
+        │   └── crossbeam-queue feature "std"
+        │       ├── crossbeam-queue v0.3.12 (*)
+        │       ├── crossbeam-queue feature "alloc"
+        │       │   └── crossbeam-queue v0.3.12 (*)
+        │       └── crossbeam-utils feature "std"
+        │           └── crossbeam-utils v0.8.21
+        └── mutants feature "default"
+            └── mutants v0.0.3 (proc-macro)
+[dev-dependencies]
+└── strata-nebu feature "default"
+    └── strata-nebu v0.1.1
+        ├── strata-compute feature "default"
+        │   └── strata-compute v0.1.0
+        │       └── strata-core feature "default"
+        │           └── strata-core v0.1.0
+        ├── strata-core feature "default" (*)
+        ├── strata-ext feature "default"
+        │   └── strata-ext v0.1.0
+        │       └── strata-core feature "default" (*)
+        └── strata-proof feature "default"
+            └── strata-proof v0.1.0
+                └── strata-core feature "default" (*)

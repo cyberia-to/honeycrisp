@@ -1,0 +1,42 @@
+[
+  {
+    "path": "support.nu",
+    "sha256": "03436f7ee557dc671f7f26c8e39992cf74a9e7dfb23294284401683f915663c6"
+  },
+  {
+    "path": "prepare.nu",
+    "sha256": "debe3aef5039b5095d87d031fbf29584eadcb1638a875dee89f9c5536686dc1d"
+  },
+  {
+    "path": "api.nu",
+    "sha256": "d4635b956b20e8f21a34f405ac33372b9d7cb22c0bbb7449d0e1d9f14352fa80"
+  },
+  {
+    "path": "package-check.nu",
+    "sha256": "0363dced8f1d7910a7aa82f0276d4e102eb03bf0837979115ef75cd3c00a93b9"
+  },
+  {
+    "path": "consumer.nu",
+    "sha256": "3fd716d61d76d5a6de8fd26f39d02799c3e538441d38cc9dc08c4e9808695eee"
+  },
+  {
+    "path": "retain.nu",
+    "sha256": "edec10c51e635d09297c4783f78d76a8b145691ba9a8bf66fd0f4190091f8bfe"
+  },
+  {
+    "path": "verify.nu",
+    "sha256": "3b006c8bdd19e7e68351c32cadff925f14e9a0760cdff7744869b963c73bb215"
+  },
+  {
+    "path": "replay.nu",
+    "sha256": "0dab709d162a678d98caab55430f601cc95c2df3b621ba1f2951f4e4424dad03"
+  },
+  {
+    "path": "owner-check.nu",
+    "sha256": "a48c5144d95c5fced09164b086e1f6ca89a415e7cfa3f91122740f925c12bc6c"
+  },
+  {
+    "path": "owner-gates.nu",
+    "sha256": "edb65f073f75878f4ae7fb7754d01542584b56997cbfa4fbed48d9e634f024e4"
+  }
+]

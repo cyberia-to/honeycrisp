@@ -1,0 +1,29 @@
+{
+  "command": [
+    "cargo",
+    "metadata",
+    "--no-deps",
+    "--format-version",
+    "1",
+    "--locked",
+    "--offline"
+  ],
+  "cwd": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-2/current/acpu-0.2.0",
+  "env": {
+    "PATH": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin:/Users/master/.cargo/bin:/opt/homebrew/bin:/usr/bin:/bin",
+    "RUSTUP_TOOLCHAIN": "1.95.0",
+    "RUSTC": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+    "RUSTDOC": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+    "RUSTFLAGS": "-Dwarnings",
+    "RUSTDOCFLAGS": "-Dwarnings",
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_TARGET_DIR": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/package-3/target"
+  },
+  "started": "2026-10-17T10:38:23.062132+00:00",
+  "finished": "2026-10-17T10:38:23.069119+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "ed5cea623d63d328c3f8c4f6bb47b4dbe0f010882a855cffe3709b28d919379f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
