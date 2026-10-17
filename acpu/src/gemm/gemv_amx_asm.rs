@@ -134,7 +134,6 @@ core::arch::global_asm!(
     "orr x15, x12, x16",
     ".word 0x0020118F", // FMA32 x15
     "32:",
-    "mov x27, #0", // first_k = false
     "add x14, x14, #1",
     "cmp x14, x25",
     "b.lt 30b",
@@ -151,12 +150,12 @@ core::arch::global_asm!(
     "cbz x27, 37f",
     "orr x15, x13, x16",
     ".word 0x0020118F",
-    "mov x27, #0",
     "b 36f",
     "37:",
     "orr x15, x12, x16",
     ".word 0x0020118F",
     "36:",
+    "mov x27, #0", // first_k = false after every tile in this K sweep
     "add x10, x10, #1",
     "cmp x10, #8",
     "b.lt 20b",
@@ -201,7 +200,8 @@ extern "C" {
     );
 }
 
-/// Pure-asm AMX GEMV. Pre-broadcasts A, then calls asm kernel.
+/// Overwrite C with A × B. K must be divisible by eight.
+/// Uses NEON for partial tiles and outputs beyond the AMX capacity.
 #[cfg(target_arch = "aarch64")]
 #[allow(clippy::needless_range_loop)]
 pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
@@ -209,15 +209,22 @@ pub fn gemv_pure_asm(a: &[f32], b: &[f32], c: &mut [f32], n: usize, k: usize) {
         k.is_multiple_of(8),
         "gemv_pure_asm requires k divisible by 8: k={k}"
     );
-    assert_eq!(a.len(), k, "gemv_pure_asm: a.len() must equal k");
-    assert_eq!(b.len(), k * n, "gemv_pure_asm: b.len() must equal k * n");
-    assert_eq!(c.len(), n, "gemv_pure_asm: c.len() must equal n");
+    super::matvec::validate(a, b, c, n, k);
+    if n == 0 || k == 0 || n > 1024 || !n.is_multiple_of(16) {
+        super::matvec::neon_set(a, b, c, n, k);
+        return;
+    }
 
     crate::gemm::ensure_amx();
 
     let n_tiles = n / 16;
-    let layout = std::alloc::Layout::from_size_align(k * 64, 128).unwrap();
+    let bytes = k.checked_mul(64).expect("GEMV: broadcast size overflow");
+    let layout = std::alloc::Layout::from_size_align(bytes, 128)
+        .expect("GEMV: broadcast layout is unrepresentable");
     let a_ptr = unsafe { std::alloc::alloc_zeroed(layout) };
+    if a_ptr.is_null() {
+        std::alloc::handle_alloc_error(layout);
+    }
     for ki in 0..k {
         let val = a[ki];
         let dst = unsafe { std::slice::from_raw_parts_mut(a_ptr.add(ki * 64) as *mut f32, 16) };
