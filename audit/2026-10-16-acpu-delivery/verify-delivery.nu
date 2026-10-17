@@ -5,15 +5,22 @@ def main [repo: string] {
     let final = ($audit | path join delivery-v4)
     let frozen = (open ($final | path join sources.json))
     for input in $frozen.inputs {
-        let ancestry = (do { ^git -C $input.root merge-base --is-ancestor $input.head HEAD } | complete)
+        # Recorded roots describe the original run; resolve live inputs from the
+        # caller's checkout and its declared ../strata sibling instead.
+        let location = match $input.name {
+            honeycrisp => $root,
+            strata => ($root | path dirname | path join strata),
+            _ => { error make {msg: $'unknown source owner: ($input.name)'} }
+        }
+        let ancestry = (do { ^git -C $location merge-base --is-ancestor $input.head HEAD } | complete)
         if $ancestry.exit_code != 0 { error make {msg: $'source base is not an ancestor: ($input.name)'} }
-        let paths = (^git -C $input.root ls-files --cached --others --exclude-standard | lines
+        let paths = (^git -C $location ls-files --cached --others --exclude-standard | lines
             | where {|p| not ($p | str starts-with audit/) and not ($p | str starts-with .claude/)}
-            | sort | uniq | where {|p| ($input.root | path join $p | path exists)})
-        if $paths != $input.files.path { error make {msg: $'inventory changed: ($input.name)'} }
+            | sort | uniq | where {|p| ($location | path join $p | path exists)})
+        if $paths != $input.files.path { error make {msg: $'inventory changed: ($input.name); historical delivery-v4 source required'} }
         for f in $input.files {
-            if (open --raw ($input.root | path join $f.path) | hash sha256) != $f.sha256 {
-                error make {msg: $'source changed: ($input.name)/($f.path)'}
+            if (open --raw ($location | path join $f.path) | hash sha256) != $f.sha256 {
+                error make {msg: $'source changed: ($input.name)/($f.path); historical delivery-v4 source required'}
             }
         }
     }

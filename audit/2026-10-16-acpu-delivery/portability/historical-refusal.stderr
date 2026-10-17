@@ -1,0 +1,10 @@
+Error: nu::shell::error
+
+  x inventory changed: honeycrisp; historical delivery-v4 source required
+    ,-[/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-16-acpu-delivery/verify-delivery.nu:20:53]
+ 19 |             | sort | uniq | where {|p| ($location | path join $p | path exists)})
+ 20 |         if $paths != $input.files.path { error make {msg: $'inventory changed: ($input.name); historical delivery-v4 source required'} }
+    :                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 21 |         for f in $input.files {
+    `----
+
