@@ -1,0 +1,11 @@
+{
+  "command": [
+    "nu",
+    "audit/2026-10-16-acpu-delivery/numeric-implementation/verify.nu",
+    "."
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "exit_code": 0,
+  "stdout_sha256": "1e9969a69258ed0e4edc5af1b6fd954a88c1fc9599592dedbdb2f5a6b47103cf",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

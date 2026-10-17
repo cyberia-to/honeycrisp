@@ -1,0 +1,16 @@
+{
+  "task": "Make retained acpu delivery audit replay independent of retired task paths",
+  "owner": "honeycrisp",
+  "agent_session": "Codex /root/phase2_resume_audit under /root",
+  "branch": "fix/acpu-audit-portability",
+  "base": "c8450d0f008656a1260c094be7cb0a8f415daff6",
+  "dependencies": [
+    {
+      "name": "strata",
+      "target": "/Users/master/cyber/strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-delivery",
+  "retention_reason": "Completed: PR19 and PR20 merged into origin/main. Clean checkout removed without force; wrapper retains task/dependency metadata only, no active checkout."
+}

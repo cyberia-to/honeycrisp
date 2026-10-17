@@ -1,0 +1,6 @@
+{
+  "same_source_bytes": true,
+  "prior_closure": "bf7125964da4ffae87f6f419de482c4295e0975af7f5764018c5a1e11608371c",
+  "current_closure": "fe97d5e30b6436cd27ef9c4bd247729664a396bf4fd4428c157ac4222754251e",
+  "distinction": "recorded roots/heads differ; complete source inventories and bytes equal"
+}

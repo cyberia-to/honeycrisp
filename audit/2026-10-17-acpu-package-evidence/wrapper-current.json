@@ -1,0 +1,20 @@
+{
+  "old_context_sha256": "f3078023df006f22cd7211e0ee5906ac87503dc25528456c5f4499147ec40c8d",
+  "active_context": {
+    "task": "Verify committed normalized acpu package and complete published library API before owner version proposal",
+    "owner": "honeycrisp",
+    "agent_session": "Codex /root/phase2_resume_audit under /root",
+    "branch": "chore/acpu-package-evidence",
+    "base": "c7c9fabdb1e9a9b0be379917540355e89c899dfe",
+    "dependencies": [
+      {
+        "name": "strata",
+        "target": "/Users/master/cyber/strata",
+        "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+      }
+    ],
+    "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence",
+    "retention_reason": "Active diagnostic unit; preserve Strata dependency target/revision and all failed package epochs. No owning source/version edits or owner-only release actions."
+  },
+  "dependencies_unchanged": true
+}
