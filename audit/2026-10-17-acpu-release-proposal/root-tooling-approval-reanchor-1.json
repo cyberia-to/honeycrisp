@@ -1,0 +1,10 @@
+{
+  "approved_by": "/root",
+  "approved_at": "2026-10-17T13:48:42.355365+00:00",
+  "source_base": "14373cc8a0e18302751844579d94d1f8f80bd8b1",
+  "preparation_commit": "3b875c9850f8ebe232a6650aaff7913a28773803",
+  "review_manifest_sha256": "ac458c624b1e019cb1217f2053d1e3b60bfa9ae2a800c675b622f3cac3778865",
+  "review_compact_sha256": "fa2b7ce66dceda9e355423213524125c04d6cc40531a3cb9697dcc1543b3b08c",
+  "bridge": "Root independently verified all15 review files and exact complete compiler bytes equal reviewed PR25 merge14373",
+  "authorization": "After exact committed-export validation, create only three-file0.2.1 bump from14373 in same checkout; send changelog/manifest/lock diff before freeze; run accepted owning/package/API/Nox consumer gates; owner alone merges bump/tags/publishes"
+}
