@@ -1,0 +1,38 @@
+[
+  {
+    "path": "api.nu",
+    "sha256": "f2a215a4ff85ecb71c25de70142720e2e574942e9cbf0b0480d3b99df0197f3a"
+  },
+  {
+    "path": "common.nu",
+    "sha256": "a185b032f30cdc9c0a256cac51f870e2900e34f9bbb809c5505aacb0c3b9d7b0"
+  },
+  {
+    "path": "consumer.nu",
+    "sha256": "bca1f689e10c997cd3cba5b02e7a35e9aae2ff4277076e35b5a60c1bd7632581"
+  },
+  {
+    "path": "export.nu",
+    "sha256": "674769baf8e9ba517b79abe80c261aa2202232f377f4c8b81b077b45f9f5c273"
+  },
+  {
+    "path": "guard-check.nu",
+    "sha256": "0952afd261223eb37f9b3d989ecbd817f303cded055afbd09da34f48adc044fa"
+  },
+  {
+    "path": "owning.nu",
+    "sha256": "974816a9c13b14c1e6c3fdcafff45b0f4b75a56ba4e8be74b6b899a60d86af07"
+  },
+  {
+    "path": "package.nu",
+    "sha256": "143f9c10f9a49268bcd1978fa27ab1eb054f42de5bc21bdde29699e56df9e9d2"
+  },
+  {
+    "path": "retain.nu",
+    "sha256": "0432125601c08e89a9fb4445ecacc10215994d1b9335ef188117695d9c4b8c5c"
+  },
+  {
+    "path": "verify.nu",
+    "sha256": "af91c1ad533c8fce6aac4e03f3f6fa4aad2c6d8b46870edcaeca03c6e005db07"
+  }
+]

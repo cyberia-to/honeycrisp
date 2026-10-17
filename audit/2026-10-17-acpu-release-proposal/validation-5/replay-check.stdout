@@ -1,0 +1,25 @@
+Exercises replay guards with real PR21 receipts and explicitly synthetic damage.
+Fresh work is limited to --version and metadata; no 0.2.1 source or gate exists.
+
+Usage:
+  > replay-check.nu <repo> <output> <scratch> 
+
+Flags:
+  -h, --help: Display the help message for this command
+
+Command Type:
+  > custom
+
+Parameters:
+  repo <string>
+  output <string>
+  scratch <string>
+
+Input/output types:
+  ╭───┬───────┬────────╮
+  │ # │ input │ output │
+  ├───┼───────┼────────┤
+  │ 0 │ any   │ any    │
+  ╰───┴───────┴────────╯
+
+
