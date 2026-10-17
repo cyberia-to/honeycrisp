@@ -54,5 +54,27 @@ the commands/environments/raw hashes, and independently parses test totals.
 Historical recorded paths are evidence only. `verification-acpu-1` retains the
 successful replay and the explicit refusal when given the older origin source.
 
-Tape repair and its fresh evidence follow as a separate logical commit. This
-branch contains no release candidate or publication authorization.
+## Tape source epoch
+
+Root reviewed the implementation, deterministic native-address witness and
+both existing canonical specification corrections before freezing this unit.
+`tape-1/sources.json` binds the complete owner and Strata inputs at
+`e56790d` plus the recorded Tape edits. Its compact snapshot SHA-256 is
+`9de4e9df1ff33dfca56a83ba8074f698658124aae914f0c2a98707f76487ebc3`.
+`gates.nu REPO OUTPUT TARGET tape` passed all eleven recorded commands with
+the same strict toolchain/flags and unchanged inventories after every gate.
+
+| Command at that source epoch | Raw outcome |
+| --- | --- |
+| `cargo test --workspace --locked --offline` | 388 passed, 5 ignored, 31 summaries |
+| `cargo test -p acpu --lib --tests --release --locked --offline` | 212 passed, 1 ignored, 8 summaries |
+| `cargo test -p unimem --locked --offline` | 73 passed, 0 ignored, 6 summaries |
+| `cargo test -p unimem --release --locked --offline` | 73 passed, 0 ignored, 6 summaries |
+| `nu unimem/scripts/check-no-std.nu` | Isolated no_std consumer compiled successfully |
+
+Format, both strict Clippy commands, release workspace build, strict acpu docs
+and actual matmul also passed. The [raw result](tape-1/result.json) retains
+the complete post-gate inventory. Tape admits absolute alignment and preserves
+its cursor on refusal; the new integration suite covers actual pointer
+alignment, invalid alignment, zero size, overflow/exhaustion and typed takes.
+This branch contains no release candidate or publication authorization.

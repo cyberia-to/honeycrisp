@@ -1,0 +1,6 @@
+   Compiling crossbeam-utils v0.8.21
+   Compiling mutants v0.0.3
+    Checking crossbeam-queue v0.3.12
+    Checking unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/unimem)
+    Checking unimem-core-consumer v0.0.0 (/var/folders/gc/64p7ymwx60144drqltvslckr0000gn/T/unimem-no-std.s7dQfBct1F)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.86s

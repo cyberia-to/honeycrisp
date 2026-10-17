@@ -71,7 +71,9 @@ impl Tape {
 
     /// Take `size` bytes with given alignment.
     ///
-    /// Returns memory address, or None if tape is full.
+    /// Returns an address aligned to `align`. Padding consumes capacity.
+    /// Zero size, address/extent overflow and exhaustion return None without
+    /// moving the cursor. Invalid alignment panics before moving the cursor.
     /// Lock-free: single compare_exchange loop. ~1ns.
     #[inline]
     pub fn take(&self, size: usize, align: usize) -> Option<*mut u8> {
@@ -79,10 +81,14 @@ impl Tape {
         if size == 0 {
             return None;
         }
+        let base = self.block.address();
+        let base_address = base as usize;
         let mask = align - 1;
         loop {
             let current = self.head.load(Ordering::Relaxed);
-            let aligned = (current + mask) & !mask;
+            let address = base_address.checked_add(current)?;
+            let aligned_address = address.checked_add(mask)? & !mask;
+            let aligned = aligned_address.checked_sub(base_address)?;
             let new_head = aligned.checked_add(size)?;
             if new_head > self.total {
                 return None;
@@ -92,7 +98,9 @@ impl Tape {
                 .compare_exchange_weak(current, new_head, Ordering::Relaxed, Ordering::Relaxed)
                 .is_ok()
             {
-                return Some(unsafe { self.block.address().add(aligned) });
+                // Positive size and the checked extent put this offset inside
+                // the original allocation, preserving its pointer provenance.
+                return Some(unsafe { base.add(aligned) });
             }
         }
     }
