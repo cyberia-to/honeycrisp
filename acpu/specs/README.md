@@ -499,6 +499,22 @@ dispatch:
 - matmul_bf16: AMX fmabf16 → NEON bfmmla → NEON bfdot
 - matmul_i8: NEON I8MM smmla → NEON DotProd sdot → scalar
 
+`gemm::matvec::matvec_f32` accumulates A[1×K] × B[K×N] into C[1×N];
+`matvec_f32_set`, `gemm::gemv_kern::gemv_asm`, and
+`gemm::gemv_amx_asm::gemv_pure_asm` overwrite C with that product.
+Each admits a representable K×N and exact A, B and C lengths before any
+allocation, AMX operation or output write. Invalid dimensions panic and preserve
+C. The pure-assembly entry additionally requires K divisible by eight.
+N=0 produces an empty output; K=0 preserves C for accumulation and fills C with
+zero for overwrite. Both empty cases return before allocation or AMX access.
+
+The AMX GEMV path uses at most 64 Z rows (1024 f32 outputs), initializes every
+output tile on the first K step, and produces the same result across repeated
+calls on a thread. Larger N and pure-assembly partial tiles use NEON; the Rust
+GEMV kernel handles partial tiles with its NEON tail. Accumulation uses NEON;
+the set entry retains AMX dispatch for N in 128..=1024. Broadcast allocation
+checks its layout and handles allocation refusal before any pointer access.
+
 ## math (elementwise, vectorized)
 
 all operate in-place on fp32 slices. NEON vectorized, 4-wide

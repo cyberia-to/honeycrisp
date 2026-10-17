@@ -1,0 +1,9 @@
+
+running 4 tests
+test empty_dimensions_follow_accumulate_and_overwrite_contracts ... ok
+test pure_assembly_retains_k_multiple_of_eight_precondition ... ok
+test overflowing_dimensions_preserve_output ... ok
+test malformed_dimensions_preserve_output ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

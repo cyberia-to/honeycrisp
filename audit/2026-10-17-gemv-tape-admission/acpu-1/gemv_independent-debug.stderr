@@ -1,0 +1,3 @@
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/acpu)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running tests/gemv_independent.rs (/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/admission-repair/acpu-target/debug/deps/gemv_independent-77b0750316039c63)
