@@ -1,0 +1,61 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling crossbeam-utils v0.8.21
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling syn v2.0.117
+   Compiling serde_core v1.0.228
+   Compiling zerocopy v0.8.48
+   Compiling zerocopy-derive v0.8.48
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling autocfg v1.5.0
+   Compiling num-traits v0.2.19
+   Compiling serde_derive v1.0.228
+   Compiling crossbeam-queue v0.3.12
+   Compiling crossbeam-epoch v0.9.18
+   Compiling mutants v0.0.3
+   Compiling libc v0.2.185
+   Compiling either v1.15.0
+   Compiling cfg-if v1.0.4
+   Compiling rayon-core v1.13.0
+   Compiling serde_json v1.0.149
+   Compiling half v2.7.1
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+   Compiling crossbeam-deque v0.8.6
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.0
+   Compiling regex-syntax v0.8.10
+   Compiling clap_lex v1.1.0
+   Compiling plotters-backend v0.3.7
+   Compiling anstyle v1.0.14
+   Compiling ciborium-io v0.2.2
+   Compiling ciborium-ll v0.2.2
+   Compiling regex-automata v0.4.14
+   Compiling clap_builder v4.6.0
+   Compiling plotters-svg v0.3.7
+   Compiling acpu v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/acpu)
+   Compiling itertools v0.10.5
+   Compiling cast v0.3.0
+   Compiling same-file v1.0.6
+   Compiling walkdir v2.5.0
+   Compiling is-terminal v0.4.17
+   Compiling criterion-plot v0.5.0
+   Compiling rayon v1.12.0
+   Compiling plotters v0.3.7
+   Compiling tinytemplate v1.2.1
+   Compiling clap v4.6.0
+   Compiling regex v1.12.3
+   Compiling ciborium v0.2.2
+   Compiling oorandom v11.1.5
+   Compiling anes v0.1.6
+   Compiling once_cell v1.21.4
+   Compiling aruminium v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/aruminium)
+   Compiling criterion v0.5.1
+   Compiling rane v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/rane)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.94s
+     Running unittests src/lib.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/unimem-9e0247429e2be340)
+     Running tests/block_access.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_access-8e5135fbf48b4abd)
+     Running tests/block_creation.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/block_creation-ee64dae90b1094f1)
+     Running tests/roundtrip.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/roundtrip-c25e641c9640dc77)
+     Running tests/tape_alignment.rs (/Users/master/.cache/cyber/honeycrisp/native-image-planes/target/debug/deps/tape_alignment-b81c40cddc54b1ef)
+   Doc-tests unimem

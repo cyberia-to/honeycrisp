@@ -1,0 +1,28 @@
+diff --git a/audit/2026-10-17-acpu-release-proposal/replay.nu b/audit/2026-10-17-acpu-release-proposal/replay.nu
+index 3dffdd8..4a1f7a8 100644
+--- a/audit/2026-10-17-acpu-release-proposal/replay.nu
++++ b/audit/2026-10-17-acpu-release-proposal/replay.nu
+@@ -82,7 +82,7 @@ export def normalized-targets [metadata: record, root: string] {
+ }
+ 
+ export def target-inventory [folder: string, current: string, owner: string] {
+-    let argv = [cargo metadata --no-deps --format-version 1 --locked --offline]
++    let argv = [cargo metadata --no-deps --format-version '1' --locked --offline]
+     let packaged = (checked $folder metadata $argv true)
+     let owning = (checked $folder owner-metadata $argv true)
+     require ($packaged.cwd == $current and $owning.cwd == $owner) 'target metadata cwd differs'
+diff --git a/audit/2026-10-17-acpu-release-proposal/retain.nu b/audit/2026-10-17-acpu-release-proposal/retain.nu
+index 9d395a7..6cc1a00 100644
+--- a/audit/2026-10-17-acpu-release-proposal/retain.nu
++++ b/audit/2026-10-17-acpu-release-proposal/retain.nu
+@@ -10,8 +10,8 @@ def 'main pack' [evidence: string, tools: string, output: string, staging: strin
+     fresh $stage
+     let tooling = (tool-bundle $tools)
+     let selected = (files $records | where {|f|
+-        not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
+-        and not ($f.path | str starts-with consumer/nox/)
++        (not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
++        and not ($f.path | str starts-with consumer/nox/))
+     })
+     for file in $selected {
+         let dest = ($stage | path join records $file.path)

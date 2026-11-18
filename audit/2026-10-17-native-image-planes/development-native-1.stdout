@@ -1,0 +1,29 @@
+
+running 15 tests
+test block::tests::checked_numeric_boundaries_without_native_allocation ... ok
+test block::tests::checked_rounding_and_native_disagreement ... ok
+test block::image_tests::imported_geometry_checks_actual_extent_and_disjoint_full_planes ... ok
+test block::image_tests::literal_numeric_plans_include_full_rows_and_native_gaps ... ok
+test block::tests::rejected_sizes_and_planning_create_no_native_owners ... ok
+test block::tests::dictionary_and_surface_null_release_properties ... ok
+test block::tests::every_number_null_releases_only_preceding_create_references ... ok
+test block::tests::success_transfers_one_locked_owner_to_block_drop ... ok
+test block::tests::failed_lock_releases_without_unlock ... ok
+test tape::tests::take_accepts_every_power_of_two_alignment_up_to_the_page_size ... ok
+test block::image_tests::failed_import_preserves_original_owner_and_balances_only_its_own_lock ... ok
+test block::tests::mapping_rejections_unlock_then_release ... ok
+test tape::tests::take_rejects_non_power_of_two_alignment_in_release_too - should panic ... ok
+test block::tests::extent_mismatch_is_fatal_before_lock ... ok
+test block::image_tests::every_image_creation_stage_unwinds_its_own_references_and_locks ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 4 tests
+test planning_is_allocation_free_with_literal_odd_geometry ... ok
+test raw_blocks_and_null_import_are_not_image_layouts ... ok
+test created_planes_wrap_in_corevideo_without_copying_and_survive_block_drop ... ok
+test corevideo_allocated_planes_retain_import_and_survive_original_owner_drop ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

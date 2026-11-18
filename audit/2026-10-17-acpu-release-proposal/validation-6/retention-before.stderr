@@ -1,0 +1,12 @@
+Error: nu::shell::external_command
+
+  x External command failed
+    ,-[/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/retain.nu:14:9]
+ 13 |         not ($f.path | str starts-with package/baseline/) and not ($f.path | str starts-with package/current/)
+ 14 |         and not ($f.path | str starts-with consumer/nox/)
+    :         ^|^
+    :          `-- Command `and` not found
+ 15 |     })
+    `----
+  help: Did you mean `all`?
+

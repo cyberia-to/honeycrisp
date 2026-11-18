@@ -1,0 +1,7 @@
+{
+  "stage": "final launcher parse",
+  "command": "nu audit/2026-10-17-native-image-planes/final.nu REPO CACHE",
+  "error": "nu::parser::parse_mismatch: expected operator at --freeze on line 8",
+  "gates_started": 0,
+  "launcher_sha256": "303aea0a4428caba1aa72985e76c838d3f3c6c15a9078c2830ed3912df3a33c3"
+}

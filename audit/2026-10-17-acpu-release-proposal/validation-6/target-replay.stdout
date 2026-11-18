@@ -1,0 +1,13 @@
+{
+  "targets": 40,
+  "debug": {
+    "rows": 8,
+    "passed": 212,
+    "ignored": 1
+  },
+  "release": {
+    "rows": 8,
+    "passed": 212,
+    "ignored": 1
+  }
+}

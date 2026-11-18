@@ -14,6 +14,9 @@ pub(super) enum Call {
     Lock,
     Base,
     Id,
+    Array,
+    Retain,
+    ImageQuery,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -26,13 +29,15 @@ pub(super) enum Event {
 }
 
 #[derive(Clone, Copy)]
-enum Fault {
+pub(super) enum Fault {
     None,
     Fail(Call, usize),
     Extent(usize),
     NullBase,
     MisalignedBase,
     WrappingBase,
+    ImageCount(usize),
+    ImageFormat(u32),
 }
 
 struct Trace {
@@ -87,7 +92,7 @@ pub(super) fn base(actual: *mut u8) -> *mut u8 {
     })
 }
 
-fn traced(fault: Fault, f: impl FnOnce()) -> Vec<Event> {
+pub(super) fn traced(fault: Fault, f: impl FnOnce()) -> Vec<Event> {
     struct Reset;
     impl Drop for Reset {
         fn drop(&mut self) {
@@ -106,7 +111,7 @@ fn traced(fault: Fault, f: impl FnOnce()) -> Vec<Event> {
     TRACE.with_borrow_mut(|trace| trace.take().unwrap().events)
 }
 
-fn assert_balanced(events: &[Event], acquisitions: usize) {
+pub(super) fn assert_balanced(events: &[Event], acquisitions: usize) {
     let mut references = HashMap::<usize, usize>::new();
     let mut total = 0;
     for event in events {
@@ -130,6 +135,18 @@ fn assert_balanced(events: &[Event], acquisitions: usize) {
         references.values().all(|count| *count == 0),
         "leaked reference: {events:?}"
     );
+}
+
+pub(super) fn image_query(
+    mut query: super::image_validation::ImageQuery,
+) -> super::image_validation::ImageQuery {
+    record(Event::Call(Call::ImageQuery));
+    TRACE.with_borrow(|trace| match trace.as_ref().map(|t| t.fault) {
+        Some(Fault::ImageCount(count)) => query.count = count,
+        Some(Fault::ImageFormat(format)) => query.format = format,
+        _ => {}
+    });
+    query
 }
 
 fn calls(events: &[Event]) -> Vec<Call> {

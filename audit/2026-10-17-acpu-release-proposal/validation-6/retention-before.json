@@ -1,0 +1,19 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/retain.nu",
+    "pack",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/records",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/failed-retention-reproduction",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/failed-retention-reproduction-stage"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T13:58:58.661391+00:00",
+  "finished": "2026-10-17T13:58:58.690416+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "454b5878aa4c142ecaec3086dc129d34b7124e587865402adae5cdb96b9fa2da"
+}

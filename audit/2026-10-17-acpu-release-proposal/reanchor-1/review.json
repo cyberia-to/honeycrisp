@@ -1,0 +1,10 @@
+{
+  "base": "14373cc8a0e18302751844579d94d1f8f80bd8b1",
+  "review_manifest_sha256": "ac458c624b1e019cb1217f2053d1e3b60bfa9ae2a800c675b622f3cac3778865",
+  "review_compact_sha256": "fa2b7ce66dceda9e355423213524125c04d6cc40531a3cb9697dcc1543b3b08c",
+  "scripts_sha256": "94ebe47dd9063f6fbf1ad941b96d8075062ef70aa95e475befa491380ded73fc",
+  "targets_sha256": "2a5fc8c117d0c2b2e107d30c2226dc1811131493e464dd2e7f385f7f43481542",
+  "preserved_preparation": "9e6cffe699278059c8940f13940727b10569e13e",
+  "root_approval": "pending",
+  "candidate_gates_executed": false
+}

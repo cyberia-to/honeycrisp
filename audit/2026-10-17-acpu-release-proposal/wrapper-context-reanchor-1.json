@@ -1,0 +1,21 @@
+{
+  "task": "Re-anchor owner-only acpu0.2.1 release preparation after reviewed PR25",
+  "owner": "honeycrisp",
+  "agent_session": "Codex /root/acpu_release_finish under /root",
+  "branch": "chore/acpu-release-preparation",
+  "base": "14373cc8a0e18302751844579d94d1f8f80bd8b1",
+  "dependencies": [
+    {
+      "name": "strata",
+      "target": "/Users/master/cyber/strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1",
+  "retention_reason": "Retain preparation9e6 history and re-anchored tooling/evidence pending root closure approval; exact three-file bump remains uncreated and owner-only merge/tag/publication prohibited",
+  "completed_package_pr": "https://github.com/cyberia-to/honeycrisp/pull/21",
+  "package_merge_revision": "3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6",
+  "ordinary_repair_pr": "https://github.com/cyberia-to/honeycrisp/pull/25",
+  "ordinary_repair_head": "db3726726d30e615417f1c54305e2cb737fdc02a",
+  "ordinary_repair_merge": "14373cc8a0e18302751844579d94d1f8f80bd8b1"
+}

@@ -1,0 +1,12 @@
+{
+  "approved_by": "/root",
+  "approved_at": "2026-10-17T13:15:32.920378+00:00",
+  "checkout_head": "0995cf9e51b5858df13f8349b083d409e0b306f5",
+  "source_base": "3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6",
+  "review_manifest_sha256": "4c3d253d9e9118eb24b4c59a6837ee22e004c812f489b28ce454ca6d63af0ff1",
+  "review_compact_sha256": "0a34b1758381952ac5ea041c18e88e936fd12759b8753c12d53c2097db4e0527",
+  "bridge": "Complete committed owner bytes equal immutable PR21 package-3 owner_files; accepted unchanged-source gates apply to tooling-only commit",
+  "validation": "validation-5/result.json",
+  "action": "Commit and push preparation branch; hold bump pending review of origin/main PR23 source drift",
+  "observed_origin": "e86310f564287a720d56e2d8204fd6c7181e6f6a"
+}

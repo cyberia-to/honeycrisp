@@ -1,0 +1,17 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/final-records/validation-tools/audit/2026-10-17-acpu-release-proposal/retain.nu",
+    "unpack",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-release-proposal/candidate-1",
+    "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/portable-1"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T14:13:57.427225+00:00",
+  "finished": "2026-10-17T14:13:57.531239+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "ba102ad625376dca6025339796afdeb47d1022e920c176d112874ef1d3bd8077",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

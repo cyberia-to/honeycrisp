@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-release-proposal/export.nu",
+    "--help"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T11:10:53.913432+00:00",
+  "finished": "2026-10-17T11:10:53.938757+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "14ef4d7dd3eab1eec47a0024a0ac9176eea42ff104ed4923ce8d4b449239c07c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

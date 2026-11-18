@@ -1,0 +1,103 @@
+
+running 11 tests
+test block::tests::checked_numeric_boundaries_without_native_allocation ... ok
+test block::tests::checked_rounding_and_native_disagreement ... ok
+test block::tests::dictionary_and_surface_null_release_properties ... ok
+test block::tests::every_number_null_releases_only_preceding_create_references ... ok
+test block::tests::rejected_sizes_and_planning_create_no_native_owners ... ok
+test tape::tests::take_accepts_every_power_of_two_alignment_up_to_the_page_size ... ok
+test block::tests::success_transfers_one_locked_owner_to_block_drop ... ok
+test block::tests::failed_lock_releases_without_unlock ... ok
+test block::tests::extent_mismatch_is_fatal_before_lock ... ok
+test block::tests::mapping_rejections_unlock_then_release ... ok
+test tape::tests::take_rejects_non_power_of_two_alignment_in_release_too - should panic ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 7 tests
+test block_cross_view_f32_bytes ... ok
+test block_slice_pointer ... ok
+test block_slice_lengths ... ok
+test block_cross_view_u16_bytes ... ok
+test awkward_extents_include_padding_and_preserve_lane_order ... ok
+test initialized_owner_moves_and_shared_reads_finish_before_mutation ... ok
+test warm_changes_only_fixed_stride_bytes_and_preserves_cursor ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 5 tests
+test public_invalid_requests_are_classified ... ok
+test precise_error_displays ... ok
+test large_extent_equality_and_initialized_endpoints ... ok
+test caller_can_account_before_open_and_reuse_numeric_plan ... ok
+test native_alignment_extent_and_raw_row_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 32 tests
+test block_zero_size_errors ... ok
+test cell_bytes ... ok
+test grid_tape_access ... ok
+test block_open_and_access ... ok
+test block_handle ... ok
+test grid_address_spacing ... ok
+test cell_id_distinct ... ok
+test grid_take_give ... ok
+test grid_full ... ok
+test block_id_unique ... ok
+test grid_reuse ... ok
+test block_large ... ok
+test mem_error_display_block_lock_failed ... ok
+test layout_clear_talk ... ok
+test layout_clear_pass ... ok
+test mem_error_display_zero_size ... ok
+test mem_error_display_block_create_failed ... ok
+test layout_new_total ... ok
+test layout_stat ... ok
+test tape_alignment ... ok
+test tape_basic_take ... ok
+test tape_block_access ... ok
+test tape_clear ... ok
+test tape_owns ... ok
+test tape_full ... ok
+test tape_owns_boundary ... ok
+test layout_tape_accessors ... ok
+test tape_start_warm ... ok
+test tape_take_one ... ok
+test stat_display ... ok
+test tape_warm_after_start ... ok
+test block_drop_no_leak ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+
+running 5 tests
+test overflow_and_exhaustion_leave_the_cursor_unchanged ... ok
+test take_one_respects_overaligned_type_without_forming_a_reference ... ok
+test alignment_unsatisfied_by_actual_base_is_respected_or_exhausted ... ok
+test returned_addresses_satisfy_alignment_through_one_mebibyte ... ok
+test invalid_alignment_panics_without_advancing_even_for_zero_size ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 13 tests
+test unimem/src/block.rs - block::Block::as_bytes_mut (line 207) - compile fail ... ok
+test unimem/src/tape.rs - tape::Tape::warm (line 54) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_bytes_mut (line 210) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_bytes_mut (line 217) - compile fail ... ok
+test unimem/src/block.rs - block::BlockPlan (line 18) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_u16 (line 269) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_bytes_mut (line 204) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_u16_mut (line 285) - compile fail ... ok
+test unimem/src/tape.rs - tape::Tape::warm (line 51) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_bytes (line 188) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_f32_mut (line 253) - compile fail ... ok
+test unimem/src/block.rs - block::Block::as_f32 (line 237) - compile fail ... ok
+test unimem/src/block.rs - block::BlockPlan (line 23) - compile fail ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+

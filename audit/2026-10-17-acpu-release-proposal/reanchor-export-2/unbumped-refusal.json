@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use /Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/common.nu *; candidate $env.PWD"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T13:49:32.014371+00:00",
+  "finished": "2026-10-17T13:49:32.067082+00:00",
+  "exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "b98e33288b097cd8f76bf87f3c44ed984aa835fd044a236da476fbb35a125e4e"
+}

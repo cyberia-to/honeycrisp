@@ -1,0 +1,10 @@
+Error: nu::shell::error
+
+  x verifier must execute from the declared exported validation bundle
+   ,-[/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-release-proposal/../2026-10-17-acpu-package-evidence/support.nu:2:29]
+ 1 | export def require [ok: bool, message: string] {
+ 2 |     if not $ok { error make {msg: $message} }
+   :                             ^^^^^^^^^^^^^^^
+ 3 | }
+   `----
+

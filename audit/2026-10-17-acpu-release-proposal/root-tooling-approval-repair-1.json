@@ -1,0 +1,15 @@
+{
+  "approved_by": "/root",
+  "approved_at": "2026-10-17T14:11:02.068009+00:00",
+  "reviewed_compact_sha256": "1862b261a86d9f71b20b935035a4e12793f99c2d72879748101a5f387d0235ac",
+  "reviewed_manifest": "validation-7/sources.json",
+  "requested_additions": [
+    "active README new arguments",
+    "bind verifier command itself to actual exported bundle"
+  ],
+  "final_compact_sha256": "5ac885c1d707b2af9bebdd62dc1ed5b0bca698698deba9bae2a1e64744a40836",
+  "final_manifest": "validation-7/final-sources.json",
+  "candidate": "2c70b3b929c791ca489bba12d2f5a6daef7d43e7",
+  "original_production_tools": "3b875c9850f8ebe232a6650aaff7913a28773803",
+  "authorization": "Commit/export coherent repair; fresh consumer under actual new bundle; retain both bundles and old failures; root portable replay before owner-only bump PR; no source/build/API reruns or owner merge/tag/publication"
+}

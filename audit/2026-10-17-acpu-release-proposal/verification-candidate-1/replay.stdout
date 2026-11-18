@@ -1,0 +1,14 @@
+{
+  "candidate": "2c70b3b929c791ca489bba12d2f5a6daef7d43e7",
+  "version": "0.2.1",
+  "package_sha256": "74967ea98831cd29d69fd3cef0cc08a8236f66d8d2fdcb2e99223428488d1159",
+  "owning": 8,
+  "package": 5,
+  "consumer_modes": 2,
+  "api": "verified",
+  "publication_authorized": false,
+  "production_tools": "5c74d87123d860ce25800f300cac8f2425770d6ba9bf57a33489603000bb0811",
+  "consumer_tools": "78f184494b7095f5804202a9cd661e1975b945577e8f8f705774e5aade170b9b",
+  "validation_tools": "78f184494b7095f5804202a9cd661e1975b945577e8f8f705774e5aade170b9b",
+  "scope": "replay of committed branch inputs; fresh origin/main delivery required after owner merge"
+}

@@ -14,7 +14,9 @@ pub mod grid;
 pub mod layout;
 pub mod tape;
 
-pub use block::{Block, BlockPlan};
+pub use block::{
+    Block, BlockPlan, ImageBlockPlan, NativeImageFormat, NativeImageLayout, NativePlaneLayout,
+};
 pub use grid::{Cell, Grid};
 pub use layout::{Layout, Stat};
 pub use tape::Tape;
@@ -29,6 +31,9 @@ pub enum MemError {
     BlockLockFailed(i32),
     BlockExtentMismatch { expected: usize, actual: usize },
     BlockAddressInvalid,
+    ImageFormatUnsupported(u32),
+    ImageLayoutInvalid,
+    BlockRetainFailed,
 }
 
 impl core::fmt::Display for MemError {
@@ -47,6 +52,11 @@ impl core::fmt::Display for MemError {
                 )
             }
             MemError::BlockAddressInvalid => write!(f, "invalid IOSurface CPU mapping"),
+            MemError::ImageFormatUnsupported(format) => {
+                write!(f, "unsupported IOSurface image format {format:#010x}")
+            }
+            MemError::ImageLayoutInvalid => write!(f, "invalid IOSurface image plane layout"),
+            MemError::BlockRetainFailed => write!(f, "IOSurface retain failed"),
         }
     }
 }

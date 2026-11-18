@@ -1,0 +1,23 @@
+Usage:
+  > api.nu <package> <output> <target> <tools> 
+
+Flags:
+  -h, --help: Display the help message for this command
+
+Command Type:
+  > custom
+
+Parameters:
+  package <string>
+  output <string>
+  target <string>
+  tools <string>
+
+Input/output types:
+  ╭───┬───────┬────────╮
+  │ # │ input │ output │
+  ├───┼───────┼────────┤
+  │ 0 │ any   │ any    │
+  ╰───┴───────┴────────╯
+
+

@@ -1,0 +1,18 @@
+{
+  "task": "Prepare separate acpu0.2.1 release proposal for owner delivery",
+  "owner": "honeycrisp",
+  "agent_session": "Codex /root/acpu_release_finish under /root",
+  "branch": "chore/acpu-release-preparation",
+  "base": "3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6",
+  "dependencies": [
+    {
+      "name": "strata",
+      "target": "/Users/master/cyber/strata",
+      "head": "56aedb2d12b3126c601eb333419136d403614dbb"
+    }
+  ],
+  "build_cache": "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1",
+  "retention_reason": "Retain accepted preparation plan, reviewed tooling and all validation epochs; pending owner-only acpu0.2.1 release proposal. Preserve Strata target/revision and merged PR21 evidence.",
+  "completed_package_pr": "https://github.com/cyberia-to/honeycrisp/pull/21",
+  "package_merge_revision": "3ffc0d5e6f268d28658b8ad279b7adcfa0735fa6"
+}

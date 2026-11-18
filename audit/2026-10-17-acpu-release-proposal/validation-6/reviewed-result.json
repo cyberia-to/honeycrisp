@@ -1,0 +1,8 @@
+{
+  "validation_compact_sha256": "d0edf0723eff24633317c32788619f1d3d63e7bddc16fc4005388a2e24a2c39f",
+  "manifest_sha256": "bf4560f0792ff177a5637ea1834dfe666d9c913c39edcf5539c7c89058171ea3",
+  "prior_validation": "result.json",
+  "additional_regression": "consumer-metadata.json",
+  "production_tools_unchanged": true,
+  "compiler_gates_repeated": false
+}

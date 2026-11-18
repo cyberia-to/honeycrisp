@@ -12,6 +12,7 @@ pub type CFTypeRef = *const c_void;
 pub type CFStringRef = *const c_void;
 pub type CFDictionaryRef = *const c_void;
 pub type CFMutableDictionaryRef = *mut c_void;
+pub type CFArrayRef = *const c_void;
 /// SDK signed pointer-width index (`long` on the supported Apple LP64 target).
 pub type CFIndex = isize;
 pub type CFNumberType = CFIndex;
@@ -30,6 +31,17 @@ extern "C" {
     pub fn IOSurfaceGetBaseAddress(surface: IOSurfaceRef) -> *mut c_void;
     pub fn IOSurfaceGetAllocSize(surface: IOSurfaceRef) -> usize;
     pub fn IOSurfaceGetID(surface: IOSurfaceRef) -> u32;
+    pub fn IOSurfaceGetWidth(surface: IOSurfaceRef) -> usize;
+    pub fn IOSurfaceGetHeight(surface: IOSurfaceRef) -> usize;
+    pub fn IOSurfaceGetPixelFormat(surface: IOSurfaceRef) -> u32;
+    pub fn IOSurfaceGetPlaneCount(surface: IOSurfaceRef) -> usize;
+    pub fn IOSurfaceGetWidthOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
+    pub fn IOSurfaceGetHeightOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
+    pub fn IOSurfaceGetBytesPerElementOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
+    pub fn IOSurfaceGetBytesPerRowOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
+    pub fn IOSurfaceGetBaseAddressOfPlane(surface: IOSurfaceRef, plane: usize) -> *mut c_void;
+    pub fn IOSurfaceGetElementWidthOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
+    pub fn IOSurfaceGetElementHeightOfPlane(surface: IOSurfaceRef, plane: usize) -> usize;
     pub fn IOSurfaceGetPropertyAlignment(property: CFStringRef) -> usize;
     pub fn IOSurfaceAlignProperty(property: CFStringRef, value: usize) -> usize;
 
@@ -39,12 +51,28 @@ extern "C" {
     pub static kIOSurfaceBytesPerRow: CFStringRef;
     pub static kIOSurfaceAllocSize: CFStringRef;
     pub static kIOSurfacePixelFormat: CFStringRef;
+    pub static kIOSurfacePlaneInfo: CFStringRef;
+    pub static kIOSurfacePlaneWidth: CFStringRef;
+    pub static kIOSurfacePlaneHeight: CFStringRef;
+    pub static kIOSurfacePlaneBytesPerElement: CFStringRef;
+    pub static kIOSurfacePlaneBytesPerRow: CFStringRef;
+    pub static kIOSurfacePlaneOffset: CFStringRef;
+    pub static kIOSurfacePlaneSize: CFStringRef;
+    pub static kIOSurfacePlaneElementWidth: CFStringRef;
+    pub static kIOSurfacePlaneElementHeight: CFStringRef;
 }
 
 // CoreFoundation
 
 #[link(name = "CoreFoundation", kind = "framework")]
 extern "C" {
+    pub fn CFRetain(cf: CFTypeRef) -> CFTypeRef;
+    pub fn CFArrayCreate(
+        allocator: *const c_void,
+        values: *const CFTypeRef,
+        count: CFIndex,
+        callbacks: *const c_void,
+    ) -> CFArrayRef;
     pub fn CFDictionaryCreate(
         allocator: *const c_void,
         keys: *const *const c_void,
@@ -78,6 +106,7 @@ extern "C" {
 
     pub static kCFTypeDictionaryKeyCallBacks: c_void;
     pub static kCFTypeDictionaryValueCallBacks: c_void;
+    pub static kCFTypeArrayCallBacks: c_void;
 }
 
 pub const kCFStringEncodingUTF8: u32 = 0x08000100;

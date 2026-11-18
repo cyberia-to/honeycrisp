@@ -1,0 +1,17 @@
+{
+  "command": [
+    "nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-gemv-tape-admission/verify.nu",
+    "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+    "tape-1",
+    "14373cc8a0e18302751844579d94d1f8f80bd8b1"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T13:46:09.027146+00:00",
+  "finished": "2026-10-17T13:46:13.850498+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "1d37b9971f27442822f3e3fc91d5e775bddbc15c8dcb77cf0e3a5b42880b0bdb",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,5 @@
+{
+  "status": "partial validation preserved",
+  "exported_revision": "3b875c9",
+  "reason": "Harness reused export receipt name for exported export.nu --help; immutable receipt guard refused overwrite. Export succeeded; help/replay incomplete; no candidate gate ran."
+}

@@ -1,0 +1,130 @@
+   Compiling unimem v0.2.0 (/Users/master/cyber/honeycrisp/.worktrees/native-image-planes/honeycrisp/unimem)
+error[E0432]: unresolved import `unimem::NativeImageFormat`
+ --> unimem/tests/image_planes.rs:1:21
+  |
+1 | use unimem::{Block, NativeImageFormat};
+  |                     ^^^^^^^^^^^^^^^^^ no `NativeImageFormat` in the root
+
+error[E0432]: unresolved import `unimem::NativeImageFormat`
+ --> unimem/tests/image_support/mod.rs:6:21
+  |
+6 | use unimem::{Block, NativeImageFormat};
+  |                     ^^^^^^^^^^^^^^^^^ no `NativeImageFormat` in the root
+
+error[E0599]: no method named `image_layout` found for reference `&Block` in the current scope
+  --> unimem/tests/image_support/mod.rs:97:60
+   |
+97 |         assert_eq!(result, 0, "CoreVideo wrap {:?}", block.image_layout());
+   |                                                            ^^^^^^^^^^^^ method not found in `&Block`
+
+error[E0599]: no method named `image_layout` found for reference `&Block` in the current scope
+   --> unimem/tests/image_support/mod.rs:112:28
+    |
+112 |         let layout = block.image_layout().unwrap();
+    |                            ^^^^^^^^^^^^ method not found in `&Block`
+
+error[E0599]: no method named `image_layout` found for mutable reference `&mut Block` in the current scope
+   --> unimem/tests/image_support/mod.rs:159:24
+    |
+159 |     let layout = block.image_layout().unwrap();
+    |                        ^^^^^^^^^^^^ method not found in `&mut Block`
+
+error[E0599]: no method named `image_layout` found for reference `&Block` in the current scope
+   --> unimem/tests/image_support/mod.rs:181:24
+    |
+181 |     let layout = block.image_layout().unwrap();
+    |                        ^^^^^^^^^^^^ method not found in `&Block`
+
+error[E0599]: no function or associated item named `plan_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:23:24
+    |
+ 23 |                 Block::plan_image(format, 5, 3),
+    |                        ^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `plan_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:24:24
+    |
+ 24 |                 Block::plan_image(format, 0, 3),
+    |                        ^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `plan_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:25:24
+    |
+ 25 |                 Block::plan_image(format, usize::MAX, 3),
+    |                        ^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `plan_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:61:31
+    |
+ 61 |             let plan = Block::plan_image(format, width, height).unwrap();
+    |                               ^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `retain_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:83:45
+    |
+ 83 |             let mut block = unsafe { Block::retain_image(pixel.surface()) }.unwrap();
+    |                                             ^^^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `image_layout` found for struct `Block` in the current scope
+  --> unimem/tests/image_planes.rs:99:17
+   |
+99 |     assert!(raw.image_layout().is_err());
+   |                 ^^^^^^^^^^^^ method not found in `Block`
+
+error[E0599]: no function or associated item named `retain_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:101:29
+    |
+101 |     assert!(unsafe { Block::retain_image(std::ptr::null_mut()) }.is_err());
+    |                             ^^^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `retain_image` found for struct `Block` in the current scope
+   --> unimem/tests/image_planes.rs:104:29
+    |
+104 |     assert!(unsafe { Block::retain_image(raw.handle()) }.is_err());
+    |                             ^^^^^^^^^^^^ function or associated item not found in `Block`
+    |
+note: if you're trying to build a new `Block`, consider using `Block::open` which returns `Result<Block, MemError>`
+   --> unimem/src/block.rs:149:5
+    |
+149 |     pub fn open(size: usize) -> Result<Self, MemError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some errors have detailed explanations: E0432, E0599.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `unimem` (test "image_planes") due to 14 previous errors

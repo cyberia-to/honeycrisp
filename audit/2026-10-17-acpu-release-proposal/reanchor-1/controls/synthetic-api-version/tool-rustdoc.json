@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+    "--version"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp/audit/2026-10-17-acpu-release-proposal/reanchor-1/controls/tools",
+  "env": {
+    "PATH": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin:/Users/master/.cargo/bin:/opt/homebrew/bin:/usr/bin:/bin",
+    "RUSTUP_TOOLCHAIN": "1.95.0",
+    "RUSTC": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+    "RUSTDOC": "/Users/master/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustdoc",
+    "RUSTFLAGS": "",
+    "RUSTDOCFLAGS": "",
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_TARGET_DIR": "/Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-1-controls/target",
+    "RUSTC_BOOTSTRAP": "1"
+  },
+  "started": "2026-10-17T13:46:08.623364+00:00",
+  "finished": "2026-10-17T13:46:08.639972+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "36db433136da1b61926436546416da042598481478284af4a994a0d07f24e604",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

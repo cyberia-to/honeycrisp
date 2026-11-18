@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use /Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/common.nu *; use /Users/master/.cache/cyber/honeycrisp/acpu-0.2.1/reanchor-2-tools/audit/2026-10-17-acpu-release-proposal/replay.nu *; \n        let root = $env.PWD\n        let epoch = ($root | path join audit/2026-10-17-gemv-tape-admission/tape-1)\n        let current = (open ($epoch | path join sources.json)).before.owner\n        require ((committed-owner $root) == $current and (git-inputs $root $base) == $current) source-drift\n        {workspace: (test-count $epoch tests-workspace true), acpu_release: (test-count $epoch tests-acpu-release false)} | to json"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T13:49:32.067335+00:00",
+  "finished": "2026-10-17T13:49:37.324145+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "519443314164c2f5bcd1bd176faa8317f8b3a332f80c0192b1f5aee1a0519a30",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

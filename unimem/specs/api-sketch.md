@@ -76,6 +76,29 @@ extern "C" {
 
 ## block.rs
 
+Native image addition uses the existing Block owner:
+
+```rust,ignore
+enum NativeImageFormat { Nv12VideoRange, Nv12FullRange, P010VideoRange, P010FullRange }
+// fourcc() returns the explicit native range/packing identifier.
+Block::plan_image(format, width, height) -> Result<ImageBlockPlan, MemError>
+ImageBlockPlan::layout(&self) -> &NativeImageLayout
+ImageBlockPlan::allocation_size(&self) -> usize
+ImageBlockPlan::open(&self) -> Result<Block, MemError>
+Block::image_layout(&self) -> Result<NativeImageLayout, MemError>
+unsafe Block::retain_image(surface: IOSurfaceRef) -> Result<Block, MemError>
+```
+
+NativeImageLayout exposes format, dimensions, total allocation and two immutable
+NativePlaneLayout records (width/height, element bytes, byte stride/offset and
+full-row extent). `row_extent()` covers stride times height; extra native gaps
+and rounding are included in the total allocation size. Fields are private and
+constructors checked. Import accepts
+valid native padding, rejects overlapping/outside planes and retains its own
+native owner; pointer validity and stable layout are unsafe caller duties.
+Neither a layout nor a retained handle supplies initialization, alias exclusion
+or completion/visibility. Native errors preserve existing raw Block cleanup.
+
 Pinned shared memory. Locked at creation, VA stable for lifetime.
 
 ```rust

@@ -1,0 +1,25 @@
+Usage:
+  > consumer.nu <nox_repo> <package> <output> <target> <tools> <package_tools> 
+
+Flags:
+  -h, --help: Display the help message for this command
+
+Command Type:
+  > custom
+
+Parameters:
+  nox_repo <string>
+  package <string>
+  output <string>
+  target <string>
+  tools <string>
+  package_tools <string>
+
+Input/output types:
+  ╭───┬───────┬────────╮
+  │ # │ input │ output │
+  ├───┼───────┼────────┤
+  │ 0 │ any   │ any    │
+  ╰───┴───────┴────────╯
+
+

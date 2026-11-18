@@ -1,0 +1,9 @@
+{
+  "revision": "3b875c9850f8ebe232a6650aaff7913a28773803",
+  "manifest_sha256": "5c74d87123d860ce25800f300cac8f2425770d6ba9bf57a33489603000bb0811",
+  "files": 10,
+  "parsed_runners": 9,
+  "source_bridge_and_raw_replay": "passed",
+  "candidate_refusal": "passed",
+  "candidate_gates_executed": false
+}

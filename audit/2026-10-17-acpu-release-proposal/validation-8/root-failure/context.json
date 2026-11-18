@@ -1,0 +1,6 @@
+{
+  "original_extraction": "/tmp/acpu-candidate1-root-extract-20261017a",
+  "metadata_receipt_cwd": "/tmp/acpu-candidate1-root-extract-20261017a/current/acpu-0.2.1",
+  "metadata_manifest": "/private/tmp/acpu-candidate1-root-extract-20261017a/current/acpu-0.2.1/Cargo.toml",
+  "scope": "Root independent replay failed target metadata source differs; exact raw metadata receipt/streams retained unchanged"
+}

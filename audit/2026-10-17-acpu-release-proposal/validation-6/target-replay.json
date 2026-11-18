@@ -1,0 +1,15 @@
+{
+  "command": [
+    "nu",
+    "-c",
+    "use audit/2026-10-17-acpu-release-proposal/replay.nu *; let folder = ($env.HOME | path join .cache/cyber/honeycrisp/acpu-0.2.1/candidate-1/records/package); let identity = (open ($folder | path join identities.json)); let targets = (target-inventory $folder $identity.current.root (open ($folder | path join owner-metadata.json)).cwd); {targets: ($targets | length), debug: (test-count $folder debug false), release: (test-count $folder release false)} | to json"
+  ],
+  "cwd": "/Users/master/cyber/honeycrisp/.worktrees/acpu-delivery/honeycrisp",
+  "env": {},
+  "started": "2026-10-17T13:58:00.655895+00:00",
+  "finished": "2026-10-17T13:58:00.724960+00:00",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "stdout_sha256": "2d92fd3574169f763c925bb8846808c6b98683193e387f3e2966db5dad6ba949",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

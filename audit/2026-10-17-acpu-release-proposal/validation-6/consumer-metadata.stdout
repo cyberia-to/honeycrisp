@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "metadata",
+    "--format-version",
+    "1",
+    "--locked",
+    "--offline"
+  ],
+  "cwd": "/Users/master/.cache/cyber/honeycrisp/acpu-package-evidence/consumer-2/consumer",
+  "exit_code": 0
+}

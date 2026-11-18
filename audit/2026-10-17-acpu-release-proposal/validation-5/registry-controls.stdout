@@ -1,0 +1,8 @@
+{
+  "real_registry_control": "passed",
+  "synthetic_corruption_refusals": 4,
+  "source_bytes_equal_previous_green_epoch": true,
+  "candidate_gates_executed": false,
+  "metadata_sha256": "f0cad40a321b67d7df7e46180858ae59aaf115fa86fae6d0f95e2fb35b2fdd18",
+  "lock_sha256": "42ab065bb91bb99a725fc18be5920e91e1c56508cd1f740ad5bb23dc104fa118"
+}

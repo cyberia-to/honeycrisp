@@ -1,0 +1,12 @@
+{
+  "workspace": {
+    "rows": 31,
+    "passed": 388,
+    "ignored": 5
+  },
+  "acpu_release": {
+    "rows": 8,
+    "passed": 212,
+    "ignored": 1
+  }
+}

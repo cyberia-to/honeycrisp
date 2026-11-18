@@ -1,0 +1,17 @@
+diff --git a/audit/2026-10-17-acpu-release-proposal/verify.nu b/audit/2026-10-17-acpu-release-proposal/verify.nu
+index 1466abb..b1cd18a 100644
+--- a/audit/2026-10-17-acpu-release-proposal/verify.nu
++++ b/audit/2026-10-17-acpu-release-proposal/verify.nu
+@@ -5,9 +5,10 @@ use replay.nu *
+ def main [repo: string, evidence: string, tools: string, consumer_tools: string, validation_tools: string, extraction: string] {
+     let root = ($repo | path expand)
+     let records = ($evidence | path expand)
+-    let tmp = ($extraction | path expand)
++    let requested = ($extraction | path expand)
+     require (($env.CURRENT_FILE | path expand) == ($validation_tools | path expand | path join audit/2026-10-17-acpu-release-proposal/verify.nu)) 'verifier must execute from the declared exported validation bundle'
+-    fresh $tmp
++    fresh $requested
++    let tmp = ($requested | path expand)
+     let tooling = (tool-bundle ($tools | path expand))
+     let consumer_tooling = (tool-bundle ($consumer_tools | path expand))
+     let validation_tooling = (tool-bundle ($validation_tools | path expand))
