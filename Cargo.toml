@@ -30,7 +30,7 @@ rane.workspace = true
 [workspace.dependencies]
 # internal — path for local dev, version for crates.io publish
 unimem = { path = "unimem", version = "0.2.0" }
-acpu = { path = "acpu", version = "0.2.0" }
+acpu = { path = "acpu", version = "0.2.1" }
 rane = { path = "rane", version = "0.2.0" }
 aruminium = { path = "aruminium", version = "0.2.0" }
 # external

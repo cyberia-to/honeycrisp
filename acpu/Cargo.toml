@@ -1,6 +1,7 @@
 [package]
 name = "acpu"
-version.workspace = true
+# acpu releases ahead of the workspace version; keep Cargo.toml:33 in step
+version = "0.2.1"
 edition.workspace = true
 license.workspace = true
 description = "pure Rust driver for Apple Silicon CPU compute + AMX & NEON"
@@ -9,7 +10,7 @@ homepage = "https://github.com/cyberia-to/honeycrisp/tree/master/acpu"
 keywords = ["apple-silicon", "amx", "neon", "simd", "matmul"]
 categories = ["os::macos-apis", "hardware-support", "science"]
 readme = "README.md"
-exclude = ["CLAUDE.md"]
+exclude = ["AGENTS.md"]
 
 [dependencies]
 unimem.workspace = true
