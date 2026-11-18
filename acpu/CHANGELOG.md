@@ -19,5 +19,11 @@ Changes since the published 0.2.0 crate:
   restore strict lint checks across all packaged examples.
   ([package repair](https://github.com/cyberia-to/honeycrisp/pull/21))
 
+The added APIs arrive under a patch number by deliberate choice: under the 0.x
+rule the whole 0.2 line is one compatibility range, and 0.2.1 keeps every 0.2.0
+signature. The cost is that Cargo may resolve `acpu = "0.2"` to 0.2.0, which
+lacks them, so a dependant that calls the sparse, Chebyshev or field APIs above
+must require `acpu = "0.2.1"`.
+
 The normalized crate still uses registry unimem 0.2.0. Its reexported `Tape`
 therefore does not include the owning workspace's subsequent Tape repair.
